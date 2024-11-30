@@ -18,6 +18,32 @@ class _NavScreenState extends State<NavScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: screens[selectedIndex],
+      bottomNavigationBar: CurvedNavigationBar(
+          height: 65,
+          index: selectedIndex,
+          onTap: (index) {
+            selectedIndex = index;
+            setState(() {});
+          },
+          color: Colors.white,
+          backgroundColor: Colors.blue,
+          items: const [
+            Icon(
+              Icons.home_outlined,
+              color: Colors.blue,
+              size: 30,
+            ),
+            Icon(
+              Icons.list,
+              color: Colors.blue,
+              size: 30,
+            ),
+            Icon(
+              Icons.settings,
+              color: Colors.blue,
+              size: 30,
+            ),
+          ]),
     );
   }
 }
