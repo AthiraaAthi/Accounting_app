@@ -13,7 +13,11 @@ class NavScreen extends StatefulWidget {
 
 class _NavScreenState extends State<NavScreen> {
   int selectedIndex = 0;
-  List<Widget> screens = const [];
+  List<Widget> screens = const [
+    Home(),
+    ListScreen(),
+    SettingsScreen(),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
