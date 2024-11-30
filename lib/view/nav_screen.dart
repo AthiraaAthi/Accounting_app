@@ -14,8 +14,8 @@ class NavScreen extends StatefulWidget {
 class _NavScreenState extends State<NavScreen> {
   int selectedIndex = 0;
   List<Widget> screens = const [
-    Home(),
     ListScreen(),
+    Home(),
     SettingsScreen(),
   ];
   @override
@@ -33,12 +33,12 @@ class _NavScreenState extends State<NavScreen> {
           backgroundColor: Colors.blue,
           items: const [
             Icon(
-              Icons.home_outlined,
+              Icons.list,
               color: Colors.blue,
               size: 30,
             ),
             Icon(
-              Icons.list,
+              Icons.home_outlined,
               color: Colors.blue,
               size: 30,
             ),
