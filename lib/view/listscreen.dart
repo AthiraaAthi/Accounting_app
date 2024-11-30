@@ -7,8 +7,12 @@ class ListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Colors.blue,
-        title: const Text("Track Your Expense here"),
+        title: const Text(
+          "Track Your Expense here",
+          style: TextStyle(color: Colors.white, fontSize: 17),
+        ),
       ),
       body: const Center(
         child: Column(
