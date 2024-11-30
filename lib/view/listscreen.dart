@@ -1,8 +1,27 @@
+import 'package:curved_nav/view/utils/event.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class ListScreen extends StatelessWidget {
+class ListScreen extends StatefulWidget {
   const ListScreen({super.key});
+
+  @override
+  State<ListScreen> createState() => _ListScreenState();
+}
+
+class _ListScreenState extends State<ListScreen> {
+  late final ValueNotifier<List<Event>> _selectedEvents;
+  DateTime _focusedDay = DateTime.now();
+  DateTime? _selectedDay;
+  DateTime? _rangeStart;
+  DateTime? _rangeEnd;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _selectedDay = _focusedDay;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +41,15 @@ class ListScreen extends StatelessWidget {
               firstDay: DateTime.utc(2010, 10, 16),
               lastDay: DateTime.utc(2030, 3, 14),
               focusedDay: DateTime.now(),
+              selectedDayPredicate: (day) {
+                return isSameDay(_selectedDay, day);
+              },
+              onDaySelected: (selectedDay, focusedDay) {
+                setState(() {
+                  _selectedDay = selectedDay;
+                  _focusedDay = focusedDay; // update `_focusedDay` here as well
+                });
+              },
             )
           ],
         ),
