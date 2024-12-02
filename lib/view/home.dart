@@ -53,31 +53,6 @@ class Home extends StatelessWidget {
               child: Column(
                 children: [
                   Text("Add New Card"),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        "Money Lender",
-                      ),
-                      Switch(
-                        activeColor: ColorConstant.defBlue,
-                        value: true,
-                        thumbColor: WidgetStatePropertyAll(Colors.white),
-                        inactiveThumbColor: ColorConstant.defBlue,
-                        focusColor: ColorConstant.defBlue,
-                        trackColor: WidgetStatePropertyAll(
-                          ColorConstant.defBlue,
-                        ),
-                        onChanged: (value) {},
-                      ),
-                      Text(
-                        "To Give",
-                      ),
-                    ],
-                  ),
                   TabBar(
                     indicatorSize: TabBarIndicatorSize.tab,
                     indicatorColor: Colors.blue,
@@ -89,26 +64,129 @@ class Home extends StatelessWidget {
                       Tab(text: "Join"),
                     ],
                   ),
-                  SizedBox(
-                    height: 30,
-                  ),
                   Expanded(
-                    child: TabBarView(children: [
-                      Column(
-                        children: [
-                          Container(
-                            height: 35,
-                            child: TextField(
-                              decoration: InputDecoration(
-                                labelText: "Name",
-                                border: OutlineInputBorder(),
+                    child: TabBarView(
+                      children: [
+                        SingleChildScrollView(
+                          child: Column(children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Money Lender",
+                                ),
+                                Switch(
+                                  activeColor: ColorConstant.defBlue,
+                                  value: true,
+                                  thumbColor:
+                                      WidgetStatePropertyAll(Colors.white),
+                                  inactiveThumbColor: ColorConstant.defBlue,
+                                  focusColor: ColorConstant.defBlue,
+                                  trackColor: WidgetStatePropertyAll(
+                                    ColorConstant.defBlue,
+                                  ),
+                                  onChanged: (value) {},
+                                ),
+                                Text(
+                                  "To Give",
+                                ),
+                              ],
+                            ),
+                            Container(
+                              height: 35,
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  labelText: "Name",
+                                  border: OutlineInputBorder(),
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      )
-                    ]),
-                  )
+                            SizedBox(height: 10),
+                            Container(
+                              height: 35,
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  labelText: "Phone (Optional)",
+                                  border: OutlineInputBorder(),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Container(
+                              height: 35,
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  labelText: "Description (Optional)",
+                                  border: OutlineInputBorder(),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Container(
+                              height: 35,
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  labelText: "Amount (With interest if any)",
+                                  border: OutlineInputBorder(),
+                                ),
+                                keyboardType: TextInputType.number,
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Container(
+                              height: 35,
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  labelText: "Installment Amount",
+                                  border: OutlineInputBorder(),
+                                ),
+                                keyboardType: TextInputType.number,
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            DropdownButtonFormField<String>(
+                              decoration: InputDecoration(
+                                labelText: "Installment Type",
+                                border: OutlineInputBorder(),
+                              ),
+                              items: const [
+                                DropdownMenuItem(
+                                  value: "Monthly",
+                                  child: Text("Monthly"),
+                                ),
+                                DropdownMenuItem(
+                                  value: "Weekly",
+                                  child: Text("Weekly"),
+                                ),
+                              ],
+                              onChanged: (value) {},
+                            ),
+                            const SizedBox(height: 20),
+
+                            // Buttons
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text("Cancel"),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    // Add your create action here
+                                  },
+                                  child: const Text("Create"),
+                                ),
+                              ],
+                            )
+                          ]),
+                        ),
+                        Column()
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
