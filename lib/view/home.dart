@@ -13,6 +13,7 @@ class Home extends StatelessWidget {
           "App Name",
           style: TextStyle(color: Colors.white),
         ),
+        actions: [],
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
