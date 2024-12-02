@@ -9,7 +9,7 @@ class Home extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ColorConstant.defBlue,
-        title: Text(""),
+        title: Text("App Name"),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
