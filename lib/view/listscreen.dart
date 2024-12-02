@@ -100,6 +100,8 @@ class _ListScreenState extends State<ListScreen> {
               firstDay: kFirstDay,
               lastDay: kLastDay,
               selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+              rangeStartDay: _rangeStart,
+              rangeEndDay: _rangeEnd,
             ),
           ],
         ),
