@@ -99,6 +99,7 @@ class _ListScreenState extends State<ListScreen> {
               focusedDay: _focusedDay,
               firstDay: kFirstDay,
               lastDay: kLastDay,
+              selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
             ),
           ],
         ),
