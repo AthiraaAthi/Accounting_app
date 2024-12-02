@@ -11,15 +11,34 @@ class Home extends StatelessWidget {
         backgroundColor: ColorConstant.defBlue,
         title: Text(
           "App Name",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(
+            color: Colors.white,
+          ),
         ),
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.add_box))],
+        actions: [
+          IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.add_box_outlined,
+                color: Colors.white,
+                size: 30,
+              ))
+        ],
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [],
       ),
+    );
+  }
+
+  showdialogFunction(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog();
+      },
     );
   }
 }
