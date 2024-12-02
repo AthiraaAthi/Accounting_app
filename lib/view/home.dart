@@ -13,7 +13,7 @@ class Home extends StatelessWidget {
           "App Name",
           style: TextStyle(color: Colors.white),
         ),
-        actions: [],
+        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.add_box))],
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
