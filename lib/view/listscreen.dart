@@ -1,3 +1,4 @@
+import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:curved_nav/view/utils/event.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -85,7 +86,7 @@ class _ListScreenState extends State<ListScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.blue,
+        backgroundColor: ColorConstant.defBlue,
         title: const Text(
           "Track Your Expense here",
           style: TextStyle(color: Colors.white, fontSize: 17),
@@ -94,20 +95,11 @@ class _ListScreenState extends State<ListScreen> {
       body: Center(
         child: Column(
           children: [
-            TableCalendar(
-              firstDay: DateTime.utc(2010, 10, 16),
-              lastDay: DateTime.utc(2030, 3, 14),
-              focusedDay: DateTime.now(),
-              selectedDayPredicate: (day) {
-                return isSameDay(_selectedDay, day);
-              },
-              onDaySelected: (selectedDay, focusedDay) {
-                setState(() {
-                  _selectedDay = selectedDay;
-                  _focusedDay = focusedDay; // update `_focusedDay` here as well
-                });
-              },
-            )
+            TableCalendar<Event>(
+              focusedDay: _focusedDay,
+              firstDay: kFirstDay,
+              lastDay: kLastDay,
+            ),
           ],
         ),
       ),

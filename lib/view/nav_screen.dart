@@ -1,6 +1,7 @@
 import 'package:curved_nav/view/home.dart';
 import 'package:curved_nav/view/listscreen.dart';
 import 'package:curved_nav/view/settings_screen.dart';
+import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -30,21 +31,21 @@ class _NavScreenState extends State<NavScreen> {
             setState(() {});
           },
           color: Colors.white,
-          backgroundColor: Colors.blue,
-          items: const [
+          backgroundColor: ColorConstant.defBlue,
+          items: [
             Icon(
               Icons.list,
-              color: Colors.blue,
+              color: ColorConstant.defBlue,
               size: 30,
             ),
             Icon(
               Icons.home_outlined,
-              color: Colors.blue,
+              color: ColorConstant.defBlue,
               size: 30,
             ),
             Icon(
               Icons.settings,
-              color: Colors.blue,
+              color: ColorConstant.defBlue,
               size: 30,
             ),
           ]),
