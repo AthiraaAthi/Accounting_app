@@ -11,7 +11,7 @@ class Home extends StatelessWidget {
         backgroundColor: ColorConstant.defBlue,
         title: Text(
           "App Name",
-          style: TextStyle(),
+          style: TextStyle(color: Colors.white),
         ),
       ),
       body: Column(
