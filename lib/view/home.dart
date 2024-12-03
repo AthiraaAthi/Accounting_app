@@ -174,7 +174,6 @@ class Home extends StatelessWidget {
                               ],
                               onChanged: (value) {},
                             ),
-                            const SizedBox(height: 20),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
