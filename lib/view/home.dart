@@ -38,6 +38,7 @@ class Home extends StatelessWidget {
   }
 
   _showdialogFunction(BuildContext context) {
+    bool isMoneyLender = true;
     showDialog(
       context: context,
       builder: (context) {
@@ -46,7 +47,7 @@ class Home extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           ),
           content: Container(
-            height: 600,
+            height: 550,
             width: 600,
             child: DefaultTabController(
               length: 2,
@@ -85,7 +86,9 @@ class Home extends StatelessWidget {
                                   trackColor: WidgetStatePropertyAll(
                                     ColorConstant.defBlue,
                                   ),
-                                  onChanged: (value) {},
+                                  onChanged: (value) {
+                                    isMoneyLender = !isMoneyLender;
+                                  },
                                 ),
                                 Text(
                                   "To Give",
@@ -97,56 +100,66 @@ class Home extends StatelessWidget {
                               child: TextField(
                                 decoration: InputDecoration(
                                   labelText: "Name",
+                                  labelStyle: TextStyle(fontSize: 15),
                                   border: OutlineInputBorder(),
                                 ),
                               ),
                             ),
-                            SizedBox(height: 10),
+                            SizedBox(height: 15),
                             Container(
                               height: 35,
                               child: TextField(
                                 decoration: InputDecoration(
                                   labelText: "Phone (Optional)",
+                                  labelStyle: TextStyle(fontSize: 15),
                                   border: OutlineInputBorder(),
                                 ),
                               ),
                             ),
-                            SizedBox(height: 10),
+                            SizedBox(height: 15),
                             Container(
-                              height: 35,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey)),
                               child: TextField(
                                 decoration: InputDecoration(
-                                  labelText: "Description (Optional)",
-                                  border: OutlineInputBorder(),
+                                  contentPadding:
+                                      EdgeInsets.only(left: 50, top: 30),
+                                  border: InputBorder.none,
+                                  hintText: "Description (Optional)",
+                                  hintStyle: TextStyle(fontSize: 15),
                                 ),
                               ),
                             ),
-                            SizedBox(height: 10),
+                            SizedBox(height: 15),
                             Container(
                               height: 35,
                               child: TextField(
                                 decoration: InputDecoration(
                                   labelText: "Amount (With interest if any)",
+                                  labelStyle: TextStyle(fontSize: 15),
                                   border: OutlineInputBorder(),
                                 ),
                                 keyboardType: TextInputType.number,
                               ),
                             ),
-                            SizedBox(height: 10),
+                            SizedBox(height: 15),
                             Container(
                               height: 35,
                               child: TextField(
                                 decoration: InputDecoration(
                                   labelText: "Installment Amount",
+                                  labelStyle: TextStyle(fontSize: 15),
                                   border: OutlineInputBorder(),
                                 ),
                                 keyboardType: TextInputType.number,
                               ),
                             ),
-                            SizedBox(height: 10),
+                            SizedBox(height: 15),
                             DropdownButtonFormField<String>(
                               decoration: InputDecoration(
                                 labelText: "Installment Type",
+                                labelStyle: TextStyle(fontSize: 15),
                                 border: OutlineInputBorder(),
                               ),
                               items: const [
@@ -162,8 +175,6 @@ class Home extends StatelessWidget {
                               onChanged: (value) {},
                             ),
                             const SizedBox(height: 20),
-
-                            // Buttons
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -171,19 +182,27 @@ class Home extends StatelessWidget {
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
-                                  child: const Text("Cancel"),
+                                  child: const Text(
+                                    "Cancel",
+                                    style: TextStyle(color: Colors.black),
+                                  ),
                                 ),
-                                ElevatedButton(
+                                TextButton(
                                   onPressed: () {
-                                    // Add your create action here
+                                    Navigator.pop(context);
                                   },
-                                  child: const Text("Create"),
+                                  child: Text(
+                                    "Create",
+                                    style: TextStyle(
+                                      color: ColorConstant.defBlue,
+                                    ),
+                                  ),
                                 ),
                               ],
                             )
                           ]),
                         ),
-                        Column()
+                        SizedBox(height: 100, child: Column())
                       ],
                     ),
                   ),
@@ -196,103 +215,3 @@ class Home extends StatelessWidget {
     );
   }
 }
-//  content: SizedBox(
-//             width: double.maxFinite,
-//             child: Column(
-//               mainAxisSize: MainAxisSize.min,
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 // Toggle Switch
-//                 Row(
-//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                   children: [
-//                     const Text(
-//                       "Money Lender",
-//                       style: TextStyle(fontWeight: FontWeight.bold),
-//                     ),
-//                     Switch(
-//                       value: false,
-//                       onChanged: (value) {},
-//                     ),
-//                   ],
-//                 ),
-//                 const SizedBox(height: 10),
-
-//                 // Input Fields
-//                 TextField(
-//                   decoration: InputDecoration(
-//                     labelText: "Name",
-//                     border: OutlineInputBorder(),
-//                   ),
-//                 ),
-//                 const SizedBox(height: 10),
-//                 TextField(
-//                   decoration: InputDecoration(
-//                     labelText: "Phone (Optional)",
-//                     border: OutlineInputBorder(),
-//                   ),
-//                 ),
-//                 const SizedBox(height: 10),
-//                 TextField(
-//                   decoration: InputDecoration(
-//                     labelText: "Description (Optional)",
-//                     border: OutlineInputBorder(),
-//                   ),
-//                 ),
-//                 const SizedBox(height: 10),
-//                 TextField(
-//                   decoration: InputDecoration(
-//                     labelText: "Amount (With interest if any)",
-//                     border: OutlineInputBorder(),
-//                   ),
-//                   keyboardType: TextInputType.number,
-//                 ),
-//                 const SizedBox(height: 10),
-//                 TextField(
-//                   decoration: InputDecoration(
-//                     labelText: "Installment Amount",
-//                     border: OutlineInputBorder(),
-//                   ),
-//                   keyboardType: TextInputType.number,
-//                 ),
-//                 const SizedBox(height: 10),
-//                 DropdownButtonFormField<String>(
-//                   decoration: InputDecoration(
-//                     labelText: "Installment Type",
-//                     border: OutlineInputBorder(),
-//                   ),
-//                   items: const [
-//                     DropdownMenuItem(
-//                       value: "Monthly",
-//                       child: Text("Monthly"),
-//                     ),
-//                     DropdownMenuItem(
-//                       value: "Weekly",
-//                       child: Text("Weekly"),
-//                     ),
-//                   ],
-//                   onChanged: (value) {},
-//                 ),
-//                 const SizedBox(height: 20),
-
-//                 // Buttons
-//                 Row(
-//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                   children: [
-//                     TextButton(
-//                       onPressed: () {
-//                         Navigator.pop(context);
-//                       },
-//                       child: const Text("Cancel"),
-//                     ),
-//                     ElevatedButton(
-//                       onPressed: () {
-//                         // Add your create action here
-//                       },
-//                       child: const Text("Create"),
-//                     ),
-//                   ],
-//                 ),
-//               ],
-//             ),
-//           ),
