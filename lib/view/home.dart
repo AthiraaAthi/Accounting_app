@@ -148,7 +148,8 @@ class Home extends StatelessWidget {
                                 decoration: InputDecoration(
                                   labelText: "Installment Amount",
                                   labelStyle: TextStyle(fontSize: 15),
-                                  border: OutlineInputBorder(),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10)),
                                 ),
                                 keyboardType: TextInputType.number,
                               ),
