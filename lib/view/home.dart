@@ -51,7 +51,10 @@ class Home extends StatelessWidget {
               length: 2,
               child: Column(
                 children: [
-                  Text("Add New Card"),
+                  Text(
+                    "Add New Card",
+                    style: TextStyle(),
+                  ),
                   TabBar(
                     indicatorSize: TabBarIndicatorSize.tab,
                     indicatorColor: Colors.blue,
