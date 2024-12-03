@@ -1,8 +1,7 @@
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
-import 'package:curved_nav/view/utils/event.dart';
+
 import 'package:flutter/material.dart';
 import 'package:horizontal_week_calendar/horizontal_week_calendar.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 class ListScreen extends StatefulWidget {
   const ListScreen({super.key});
