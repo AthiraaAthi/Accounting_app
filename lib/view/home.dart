@@ -10,10 +10,8 @@ class Home extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: ColorConstant.defBlue,
         title: Text(
-          "App Name",
-          style: TextStyle(
-            color: Colors.white,
-          ),
+          "Shukkudu :)",
+          style: TextStyle(color: Colors.white, fontSize: 19),
         ),
         actions: [
           IconButton(
