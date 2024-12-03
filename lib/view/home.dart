@@ -53,7 +53,7 @@ class Home extends StatelessWidget {
                 children: [
                   Text(
                     "Add New Card",
-                    style: TextStyle(),
+                    style: TextStyle(fontSize: 16),
                   ),
                   TabBar(
                     indicatorSize: TabBarIndicatorSize.tab,
