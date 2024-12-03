@@ -111,7 +111,8 @@ class Home extends StatelessWidget {
                                 decoration: InputDecoration(
                                   labelText: "Phone (Optional)",
                                   labelStyle: TextStyle(fontSize: 15),
-                                  border: OutlineInputBorder(),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10)),
                                 ),
                               ),
                             ),
