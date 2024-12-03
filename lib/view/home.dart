@@ -99,7 +99,8 @@ class Home extends StatelessWidget {
                                 decoration: InputDecoration(
                                   labelText: "Name",
                                   labelStyle: TextStyle(fontSize: 15),
-                                  border: OutlineInputBorder(),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10)),
                                 ),
                               ),
                             ),
