@@ -11,7 +11,8 @@ class Home extends StatelessWidget {
         backgroundColor: ColorConstant.defBlue,
         title: Text(
           "Shukkudu :)",
-          style: TextStyle(color: Colors.white, fontSize: 19),
+          style: TextStyle(
+              color: Colors.white, fontSize: 19, fontWeight: FontWeight.w600),
         ),
         actions: [
           IconButton(
