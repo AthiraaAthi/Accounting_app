@@ -135,7 +135,8 @@ class Home extends StatelessWidget {
                                 decoration: InputDecoration(
                                   labelText: "Amount (With interest if any)",
                                   labelStyle: TextStyle(fontSize: 15),
-                                  border: OutlineInputBorder(),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10)),
                                 ),
                                 keyboardType: TextInputType.number,
                               ),
