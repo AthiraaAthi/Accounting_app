@@ -1,7 +1,5 @@
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -117,18 +115,14 @@ class Home extends StatelessWidget {
                               ),
                             ),
                             SizedBox(height: 15),
-                            Container(
-                              height: 100,
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey)),
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  contentPadding:
-                                      EdgeInsets.only(left: 50, top: 30),
-                                  border: InputBorder.none,
-                                  hintText: "Description (Optional)",
-                                  hintStyle: TextStyle(fontSize: 15),
-                                ),
+                            TextField(
+                              maxLines: 4,
+                              decoration: InputDecoration(
+                                contentPadding:
+                                    EdgeInsets.only(left: 50, top: 30),
+                                border: OutlineInputBorder(),
+                                labelText: "Description (Optional)",
+                                hintStyle: TextStyle(fontSize: 15),
                               ),
                             ),
                             SizedBox(height: 15),
