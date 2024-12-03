@@ -122,7 +122,8 @@ class Home extends StatelessWidget {
                               decoration: InputDecoration(
                                 contentPadding:
                                     EdgeInsets.only(left: 50, top: 30),
-                                border: OutlineInputBorder(),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10)),
                                 labelText: "Description (Optional)",
                                 hintStyle: TextStyle(fontSize: 15),
                               ),
