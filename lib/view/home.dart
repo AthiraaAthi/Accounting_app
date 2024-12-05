@@ -260,14 +260,38 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                                     SizedBox(
                                                       height: 30,
                                                     ),
-                                                    TextField(
-                                                      decoration: InputDecoration(
+                                                    Container(
+                                                      height: 40,
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                          border: Border.all(
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      183,
+                                                                      181,
+                                                                      181))),
+                                                      child: TextField(
+                                                        decoration:
+                                                            InputDecoration(
+                                                          contentPadding:
+                                                              EdgeInsets.only(
+                                                                  left: 25),
+                                                          border:
+                                                              InputBorder.none,
                                                           hintText:
                                                               "Enter Code",
-                                                          hintStyle:
-                                                              TextStyle(),
-                                                          border:
-                                                              OutlineInputBorder()),
+                                                          hintStyle: TextStyle(
+                                                              color: const Color
+                                                                  .fromARGB(
+                                                                  255,
+                                                                  183,
+                                                                  181,
+                                                                  181)),
+                                                        ),
+                                                      ),
                                                     )
                                                   ],
                                                 ))
