@@ -1,5 +1,5 @@
 import 'package:curved_nav/view/utils/Home/home.dart';
-import 'package:curved_nav/view/utils/Expense/listscreen.dart';
+import 'package:curved_nav/view/utils/Expense/expense_screen.dart';
 import 'package:curved_nav/view/utils/Settings/settings_screen.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
