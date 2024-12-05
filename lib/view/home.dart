@@ -257,8 +257,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                                 child: Column(
                                                   children: [
                                                     TextField(
-                                                      decoration:
-                                                          InputDecoration(),
+                                                      decoration: InputDecoration(
+                                                          border:
+                                                              OutlineInputBorder()),
                                                     )
                                                   ],
                                                 ))
