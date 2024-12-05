@@ -9,7 +9,10 @@ class ExpenseScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ColorConstant.defBlue,
-        title: Text("Expense Screen"),
+        title: Text(
+          "Expense Screen",
+          style: TextStyle(),
+        ),
       ),
     );
   }
