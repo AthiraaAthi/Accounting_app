@@ -1,3 +1,4 @@
+import 'package:curved_nav/view/expense_screen.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 
 import 'package:flutter/material.dart';
@@ -24,7 +25,13 @@ class _ListScreenState extends State<ListScreen> {
         ),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ExpenseScreen(),
+                    ));
+              },
               icon: Icon(
                 Icons.add,
                 color: Colors.white,
