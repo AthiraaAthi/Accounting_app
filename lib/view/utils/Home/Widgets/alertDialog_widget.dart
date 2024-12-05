@@ -231,12 +231,7 @@ AlertDialog alertWidget(
     actions: [
       TextButton(
         onPressed: () {
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (context) => NavScreen(),
-              ),
-              (Route<dynamic> route) => false);
+          Navigator.pop(context);
         },
         child: const Text(
           "Cancel",
