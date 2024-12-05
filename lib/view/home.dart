@@ -264,6 +264,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                                       decoration: InputDecoration(
                                                           hintText:
                                                               "Enter Code",
+                                                          hintStyle:
+                                                              TextStyle(),
                                                           border:
                                                               OutlineInputBorder()),
                                                     )
