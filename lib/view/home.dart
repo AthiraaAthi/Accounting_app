@@ -262,6 +262,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                                     ),
                                                     TextField(
                                                       decoration: InputDecoration(
+                                                          hintText:
+                                                              "Enter Code",
                                                           border:
                                                               OutlineInputBorder()),
                                                     )
