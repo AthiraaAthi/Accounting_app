@@ -1,3 +1,4 @@
+import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
 
 class ExpenseScreen extends StatelessWidget {
@@ -6,7 +7,9 @@ class ExpenseScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: ColorConstant.defBlue,
+      ),
     );
   }
 }
