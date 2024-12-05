@@ -253,9 +253,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                               )
                                             ]),
                                             SizedBox(
+                                                //???
                                                 height: 100,
                                                 child: Column(
                                                   children: [
+                                                    SizedBox(
+                                                      height: 30,
+                                                    ),
                                                     TextField(
                                                       decoration: InputDecoration(
                                                           border:
