@@ -17,6 +17,7 @@ class ExpenseScreen extends StatelessWidget {
         title: Text(
           "Expense Screen",
           style: TextStyle(
+            fontSize: 18,
             color: Colors.white,
           ),
         ),
