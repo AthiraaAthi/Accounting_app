@@ -5,52 +5,56 @@ import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:flutter/material.dart';
 
-class NavScreen extends StatefulWidget {
+final ValueNotifier _pagenotifier = ValueNotifier(0);
+
+class NavScreen extends StatelessWidget {
   const NavScreen({super.key});
 
   @override
-  State<NavScreen> createState() => _NavScreenState();
-}
-
-class _NavScreenState extends State<NavScreen> {
-  int selectedIndex = 1;
-  List<Widget> screens = const [
-    ListScreen(),
-    Home(),
-    SettingsScreen(),
-  ];
-  @override
   Widget build(BuildContext context) {
+    List<Widget> screens = const [
+      ListScreen(),
+      Home(),
+      SettingsScreen(),
+    ];
     return Scaffold(
-      body: screens[selectedIndex],
-      bottomNavigationBar: GNav(
-        onTabChange: (value) {
-          setState(() {
-            selectedIndex = value;
-          });
+      body: ValueListenableBuilder(
+        valueListenable: _pagenotifier,
+        builder: (context, value, child) {
+          return screens[value];
         },
-        tabBorderRadius: 15,
-        gap: 8,
-        selectedIndex: selectedIndex,
-        tabs: [
-          GButton(
-            icon: Icons.calculate_outlined,
-            text: 'Expense',
-            textColor: primaryColorBlue,
-            iconActiveColor: primaryColorBlue,
-            backgroundColor: primaryColorBlue.withOpacity(0.2),
-            borderRadius: BorderRadius.circular(20),
-            padding: EdgeInsets.all(10),
-          ),
-          GButton(
-            icon: Icons.home_outlined,
-            text: 'home',
-          ),
-          GButton(
-            icon: Icons.settings_outlined,
-            text: 'Settings',
-          ),
-        ],
+      ),
+      bottomNavigationBar: ValueListenableBuilder(
+        valueListenable: _pagenotifier,
+        builder: (context, value, child) {
+          return GNav(
+            onTabChange: (value) {
+              _pagenotifier.value = value;
+            },
+            tabBorderRadius: 15,
+            gap: 8,
+            selectedIndex: value,
+            tabs: [
+              GButton(
+                icon: Icons.calculate_outlined,
+                text: 'Expense',
+                textColor: primaryColorBlue,
+                iconActiveColor: primaryColorBlue,
+                backgroundColor: primaryColorBlue.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(20),
+                padding: EdgeInsets.all(10),
+              ),
+              GButton(
+                icon: Icons.home_outlined,
+                text: 'home',
+              ),
+              GButton(
+                icon: Icons.settings_outlined,
+                text: 'Settings',
+              ),
+            ],
+          );
+        },
       ),
     );
   }
