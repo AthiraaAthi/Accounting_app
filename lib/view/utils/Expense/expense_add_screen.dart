@@ -22,8 +22,18 @@ class ExpenseScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Column(
-        children: [],
+      body: Padding(
+        padding: const EdgeInsets.only(top: 40, left: 20, right: 20),
+        child: Column(
+          children: [
+            TextField(
+              decoration: InputDecoration(
+                  hintText: "Amount",
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20))),
+            )
+          ],
+        ),
       ),
     );
   }
