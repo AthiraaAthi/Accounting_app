@@ -64,5 +64,12 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
     );
   }
 
-  void _showCategoryDialog(BuildContext context) {}
+  void _showCategoryDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog();
+      },
+    );
+  }
 }
