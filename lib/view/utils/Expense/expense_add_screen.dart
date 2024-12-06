@@ -1,3 +1,4 @@
+import 'package:curved_nav/view/utils/Expense/add_category.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
 
@@ -82,26 +83,30 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                     setState(() {
                       selectedCategory = value!;
                     });
-                    Navigator.of(context).pop();
                   },
                 ),
               ),
               ListTile(
                 title: Text("Travel"),
-                leading: Radio(
+                trailing: Radio(
                   value: "Travel",
                   groupValue: selectedCategory,
                   onChanged: (String? value) {
                     setState(() {
                       selectedCategory = value!;
                     });
-                    Navigator.of(context).pop();
                   },
                 ),
               ),
               ListTile(
                 title: Text("Add Category"),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AddCategory(),
+                      ));
+                },
               ),
             ],
           ),
