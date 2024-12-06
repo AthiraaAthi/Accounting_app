@@ -85,6 +85,19 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                   },
                 ),
               ),
+              ListTile(
+                title: Text("Travel"),
+                leading: Radio(
+                  value: "Travel",
+                  groupValue: selectedCategory,
+                  onChanged: (String? value) {
+                    setState(() {
+                      selectedCategory = value!;
+                    });
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ),
             ],
           ),
         );
