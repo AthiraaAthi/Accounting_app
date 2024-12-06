@@ -11,7 +11,7 @@ class ExpenseScreen extends StatelessWidget {
         backgroundColor: ColorConstant.defBlue,
         title: Text(
           "Expense Screen",
-          style: TextStyle(),
+          style: TextStyle(color: Colors.white),
         ),
       ),
     );
