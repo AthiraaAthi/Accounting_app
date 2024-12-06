@@ -70,11 +70,12 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           content: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
                 title: Text("Food"),
-                leading: Radio(
+                trailing: Radio(
                   value: "Food",
                   groupValue: selectedCategory,
                   onChanged: (String? value) {
@@ -97,6 +98,10 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                     Navigator.of(context).pop();
                   },
                 ),
+              ),
+              ListTile(
+                title: Text("Add Category"),
+                onTap: () {},
               ),
             ],
           ),
