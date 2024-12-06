@@ -1,4 +1,4 @@
-import 'package:curved_nav/view/expense_screen.dart';
+import 'package:curved_nav/view/utils/Expense/expense_add_screen.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 
 import 'package:flutter/material.dart';
