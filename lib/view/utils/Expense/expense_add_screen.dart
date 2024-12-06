@@ -22,6 +22,9 @@ class ExpenseScreen extends StatelessWidget {
           ),
         ),
       ),
+      body: Column(
+        children: [],
+      ),
     );
   }
 }
