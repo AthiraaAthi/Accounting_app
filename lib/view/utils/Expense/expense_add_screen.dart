@@ -8,6 +8,7 @@ class ExpenseScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: Icon(Icons.keyboard_arrow_left),
         backgroundColor: ColorConstant.defBlue,
         title: Text(
           "Expense Screen",
