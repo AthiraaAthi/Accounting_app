@@ -68,7 +68,26 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog();
+        return AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                title: Text("Food"),
+                leading: Radio(
+                  value: "Food",
+                  groupValue: selectedCategory,
+                  onChanged: (String? value) {
+                    setState(() {
+                      selectedCategory = value!;
+                    });
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
       },
     );
   }
