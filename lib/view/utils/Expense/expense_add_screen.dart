@@ -11,6 +11,7 @@ class ExpenseScreen extends StatelessWidget {
         leading: Icon(
           Icons.keyboard_arrow_left,
           size: 30,
+          color: Colors.white,
         ),
         backgroundColor: ColorConstant.defBlue,
         title: Text(
