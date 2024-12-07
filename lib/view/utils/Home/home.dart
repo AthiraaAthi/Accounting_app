@@ -28,6 +28,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               onPressed: () {
                 showDialog(
                   context: context,
+                  barrierDismissible: false,
                   builder: (context) {
                     bool isSelected = true;
                     return alertWidget(isSelected, context, _tabController);
