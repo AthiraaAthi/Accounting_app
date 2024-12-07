@@ -231,7 +231,14 @@ AlertDialog alertWidget(
     actions: [
       TextButton(
         onPressed: () {
-          Navigator.pop(context);
+          isSelected
+              ? Navigator.pop(context)
+              : Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => NavScreen(),
+                  ),
+                  (Route<dynamic> route) => false);
         },
         child: const Text(
           "Cancel",
@@ -240,20 +247,52 @@ AlertDialog alertWidget(
       ),
       TextButton(
         onPressed: () {
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (context) => NavScreen(),
-              ),
-              (Route<dynamic> route) => false);
+          isSelected
+              ? Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => NavScreen(),
+                  ),
+                  (Route<dynamic> route) => false)
+              : showDialog(
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Center(child: Text('Code details')),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [Text('Name: Name'), Text('Amount: 30000/-')],
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          style: ButtonStyle(
+                              foregroundColor: WidgetStatePropertyAll(black)),
+                          child: Text('Cancel'),
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            style: ButtonStyle(
+                                foregroundColor:
+                                    WidgetStatePropertyAll(primaryColorBlue)),
+                            child: Text('Add'))
+                      ],
+                    );
+                  });
         },
         child: Text(
-          "Create",
+          isSelected ? 'Create' : 'Add',
           style: TextStyle(
             color: ColorConstant.defBlue,
           ),
         ),
-      )
+      ),
     ],
   );
 }
