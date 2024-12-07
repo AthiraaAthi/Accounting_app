@@ -11,10 +11,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
-  late TabController _tabController = TabController(length: 2, vsync: this);
-
   @override
   Widget build(BuildContext context) {
+    late TabController _tabController = TabController(length: 2, vsync: this);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ColorConstant.defBlue,
@@ -28,6 +27,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               onPressed: () {
                 showDialog(
                   context: context,
+                  barrierDismissible: false,
                   builder: (context) {
                     bool isSelected = true;
                     return alertWidget(isSelected, context, _tabController);
@@ -93,11 +93,5 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         ],
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
   }
 }
