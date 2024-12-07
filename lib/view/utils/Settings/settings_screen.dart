@@ -8,6 +8,8 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  List<String> options = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,6 +24,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               ListView.builder(
                 shrinkWrap: true,
+                itemCount: options.length,
                 itemBuilder: (context, index) => ListTile(),
               )
             ],
