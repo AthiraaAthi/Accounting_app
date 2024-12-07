@@ -40,7 +40,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   padding: const EdgeInsets.only(top: 10),
                   child: ListTile(
                     title: Text(
-                      "dcnd",
+                      options[index],
                       style: TextStyle(fontSize: 19),
                     ),
                     trailing: Icon(Icons.keyboard_arrow_right),
