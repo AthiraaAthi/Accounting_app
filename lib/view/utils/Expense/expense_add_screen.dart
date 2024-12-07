@@ -58,91 +58,94 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 40, left: 20, right: 20),
-        child: Column(
-          children: [
-            TextField(
-              decoration: InputDecoration(
-                  hintText: "Amount",
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15))),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            TextField(
-              readOnly: true,
-              decoration: InputDecoration(
-                  hintText: "Category",
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      Icons.arrow_drop_down,
-                      size: 40,
-                      color: ColorConstant.defBlue,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 40, left: 20, right: 20),
+          child: Column(
+            children: [
+              TextField(
+                decoration: InputDecoration(
+                    focusColor: ColorConstant.defBlue,
+                    hintText: "Amount",
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15))),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              TextField(
+                readOnly: true,
+                decoration: InputDecoration(
+                    hintText: "Category",
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        Icons.arrow_drop_down,
+                        size: 40,
+                        color: ColorConstant.defBlue,
+                      ),
+                      onPressed: () {
+                        _showCategoryDialog(context);
+                      },
                     ),
-                    onPressed: () {
-                      _showCategoryDialog(context);
-                    },
-                  ),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15))),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            TextField(
-              maxLines: 3,
-              decoration: InputDecoration(
-                  hintText: "Description",
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15))),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            TextField(
-              controller: _dateController,
-              readOnly: true,
-              onTap: () {
-                _selectDate(context);
-              },
-              decoration: InputDecoration(
-                  hintText: "Date",
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15))),
-            ),
-            SizedBox(
-              height: 50,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        backgroundColor: ColorConstant.defBlue),
-                    onPressed: () {},
-                    child: Text(
-                      "Cancel",
-                      style: TextStyle(color: Colors.white),
-                    )),
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        backgroundColor: ColorConstant.defBlue),
-                    onPressed: () {},
-                    child: Text(
-                      "Add",
-                      style: TextStyle(color: Colors.white),
-                    ))
-              ],
-            )
-          ],
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15))),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              TextField(
+                maxLines: 3,
+                decoration: InputDecoration(
+                    hintText: "Description",
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15))),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              TextField(
+                controller: _dateController,
+                readOnly: true,
+                onTap: () {
+                  _selectDate(context);
+                },
+                decoration: InputDecoration(
+                    hintText: "Date",
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15))),
+              ),
+              SizedBox(
+                height: 50,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          backgroundColor: ColorConstant.defBlue),
+                      onPressed: () {},
+                      child: Text(
+                        "Cancel",
+                        style: TextStyle(color: Colors.white),
+                      )),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          backgroundColor: ColorConstant.defBlue),
+                      onPressed: () {},
+                      child: Text(
+                        "Add",
+                        style: TextStyle(color: Colors.white),
+                      ))
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
