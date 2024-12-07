@@ -7,8 +7,16 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(),
-        body: Column(
-          children: [],
+        body: Padding(
+          padding: const EdgeInsets.all(15),
+          child: Column(
+            children: [
+              Text(
+                "Settings",
+                style: TextStyle(fontSize: 30),
+              )
+            ],
+          ),
         ));
   }
 }
