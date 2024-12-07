@@ -2,6 +2,7 @@ import 'package:curved_nav/view/utils/Expense/expense_add_screen.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 
 import 'package:flutter/material.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class ListScreen extends StatefulWidget {
   const ListScreen({super.key});
@@ -40,7 +41,18 @@ class _ListScreenState extends State<ListScreen>
         ],
       ),
       body: Column(
-        children: [],
+        children: [
+          TableCalendar(
+            calendarFormat: CalendarFormat.week,
+            availableCalendarFormats: {CalendarFormat.week: 'weeks'},
+            calendarStyle: CalendarStyle(
+                todayDecoration: BoxDecoration(
+                    color: primaryColorBlue, shape: BoxShape.circle)),
+            focusedDay: DateTime.now(),
+            firstDay: DateTime.utc(2020, 1, 1),
+            lastDay: DateTime.utc(2030, 12, 31),
+          )
+        ],
       ),
     );
   }
