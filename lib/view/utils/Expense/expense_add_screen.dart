@@ -11,6 +11,30 @@ class ExpenseScreen extends StatefulWidget {
 
 class _ExpenseScreenState extends State<ExpenseScreen> {
   String selectedCategory = 'Category';
+  TextEditingController _dateController = TextEditingController();
+  @override
+  void dispose() {
+    _dateController.dispose(); // Dispose the controller to avoid memory leaks
+    super.dispose();
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000), // Earliest selectable date
+      lastDate: DateTime(2100), // Latest selectable date
+    );
+    if (pickedDate != null) {
+      // Format the date and set it in the TextField
+      String formattedDate =
+          "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+      setState(() {
+        _dateController.text = formattedDate;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,6 +83,60 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15))),
             ),
+            SizedBox(
+              height: 15,
+            ),
+            TextField(
+              maxLines: 3,
+              decoration: InputDecoration(
+                  hintText: "Description",
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15))),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            TextField(
+              controller: _dateController,
+              readOnly: true,
+              onTap: () {
+                _selectDate(context);
+              },
+              decoration: InputDecoration(
+                  hintText: "Date",
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15))),
+            ),
+            SizedBox(
+              height: 50,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        backgroundColor: ColorConstant.defBlue),
+                    onPressed: () {},
+                    child: Text(
+                      "Cancel",
+                      style: TextStyle(color: Colors.white),
+                    )),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        backgroundColor: ColorConstant.defBlue),
+                    onPressed: () {},
+                    child: Text(
+                      "Add",
+                      style: TextStyle(color: Colors.white),
+                    ))
+              ],
+            )
           ],
         ),
       ),
