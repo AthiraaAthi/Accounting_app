@@ -1,3 +1,8 @@
+import 'package:curved_nav/view/utils/Settings/options_screens/getting_started.dart';
+import 'package:curved_nav/view/utils/Settings/options_screens/help_screen.dart';
+import 'package:curved_nav/view/utils/Settings/options_screens/notifications_screen.dart';
+import 'package:curved_nav/view/utils/Settings/options_screens/privacy_policy.dart';
+import 'package:curved_nav/view/utils/Settings/options_screens/terms_conditions.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -15,7 +20,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
     "Privacy Policy",
     "Terms & Conditions"
   ];
-
+  List<Widget> optionsScreens = [
+    NotificationsScreen(),
+    GettingStarted(),
+    HelpScreen(),
+    PrivacyPolicy(),
+    TermsConditions()
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +39,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             children: [
               Text(
                 "Settings",
-                style: TextStyle(fontSize: 30),
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
               ),
               SizedBox(
                 height: 30,
@@ -39,6 +50,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 itemBuilder: (context, index) => Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: ListTile(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => optionsScreens[index],
+                          ));
+                    },
                     title: Text(
                       options[index],
                       style: TextStyle(fontSize: 19),
@@ -46,6 +64,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     trailing: Icon(Icons.keyboard_arrow_right),
                   ),
                 ),
+              ),
+              Spacer(),
+              Text(
+                "App Version",
+                style: TextStyle(fontSize: 23, fontWeight: FontWeight.w500),
+              ),
+              Text(
+                "v1.0.0",
+                style: TextStyle(
+                    color: const Color.fromARGB(255, 198, 196, 196),
+                    fontWeight: FontWeight.w500),
               )
             ],
           ),
