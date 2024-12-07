@@ -10,7 +10,8 @@ class ListScreen extends StatefulWidget {
   State<ListScreen> createState() => _ListScreenState();
 }
 
-class _ListScreenState extends State<ListScreen> {
+class _ListScreenState extends State<ListScreen>
+    with SingleTickerProviderStateMixin {
   var selectedDate = DateTime.now();
 
   @override
