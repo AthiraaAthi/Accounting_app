@@ -46,6 +46,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: SearchBar(
+              elevation: WidgetStatePropertyAll(0),
               hintText: 'Search',
               leading: Icon(
                 Icons.search_outlined,
