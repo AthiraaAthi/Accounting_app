@@ -11,6 +11,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
   List<String> options = [
     "Notifications",
     "Getting Started",
+    "Help",
+    "Privacy Policy",
+    "Terms & Conditions"
   ];
 
   @override
@@ -32,6 +35,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   title: Text(
                     "dcnd",
                   ),
+                  trailing: Icon(Icons.keyboard_arrow_right),
                 ),
               )
             ],
