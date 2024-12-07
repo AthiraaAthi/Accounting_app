@@ -8,7 +8,10 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  List<String> options = [];
+  List<String> options = [
+    "Notifications",
+    "Getting Started",
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +28,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ListView.builder(
                 shrinkWrap: true,
                 itemCount: options.length,
-                itemBuilder: (context, index) => ListTile(),
+                itemBuilder: (context, index) => ListTile(
+                  title: Text(
+                    "dcnd",
+                  ),
+                ),
               )
             ],
           ),
