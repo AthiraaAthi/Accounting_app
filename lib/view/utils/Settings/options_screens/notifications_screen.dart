@@ -8,6 +8,14 @@ class NotificationsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: InkWell(
+          onTap: () {},
+          child: Icon(
+            Icons.keyboard_arrow_left,
+            size: 30,
+            color: Colors.white,
+          ),
+        ),
         backgroundColor: ColorConstant.defBlue,
         title: Text(
           "Notifications",
