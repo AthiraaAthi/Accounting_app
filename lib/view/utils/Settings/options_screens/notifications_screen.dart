@@ -11,7 +11,7 @@ class NotificationsScreen extends StatelessWidget {
         backgroundColor: ColorConstant.defBlue,
         title: Text(
           "Notifications",
-          style: TextStyle(),
+          style: TextStyle(color: Colors.white),
         ),
       ),
     );
