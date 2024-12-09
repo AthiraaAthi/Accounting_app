@@ -33,7 +33,7 @@ class _HelpScreenState extends State<HelpScreen> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.only(left: 16, right: 16, top: 50),
         child: Column(
           children: [
             TextField(
@@ -51,7 +51,7 @@ class _HelpScreenState extends State<HelpScreen> {
               ),
             ),
             SizedBox(
-              height: 20,
+              height: 30,
             ),
             TextField(
               controller: phoneController,
@@ -59,6 +59,31 @@ class _HelpScreenState extends State<HelpScreen> {
               decoration: InputDecoration(
                 labelText: 'Phone',
                 labelStyle: const TextStyle(color: Colors.grey),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: ColorConstant.defBlue),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide:
+                      BorderSide(color: ColorConstant.defBlue, width: 2.0),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            TextField(
+              controller: problemController,
+              maxLines: 4,
+              decoration: InputDecoration(
+                labelText: 'What’s your problem?',
+                labelStyle: TextStyle(color: Colors.grey),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: ColorConstant.defBlue),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide:
+                      BorderSide(color: ColorConstant.defBlue, width: 2.0),
+                ),
               ),
             ),
           ],
