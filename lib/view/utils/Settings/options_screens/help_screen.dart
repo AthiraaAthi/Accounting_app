@@ -53,6 +53,14 @@ class _HelpScreenState extends State<HelpScreen> {
             SizedBox(
               height: 20,
             ),
+            TextField(
+              controller: phoneController,
+              keyboardType: TextInputType.phone,
+              decoration: InputDecoration(
+                labelText: 'Phone',
+                labelStyle: const TextStyle(color: Colors.grey),
+              ),
+            ),
           ],
         ),
       ),
