@@ -65,7 +65,13 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
             children: [
               TextField(
                 decoration: InputDecoration(
-                    focusColor: ColorConstant.defBlue,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: ColorConstant.defBlue),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: ColorConstant.defBlue, width: 2.0),
+                    ),
                     hintText: "Amount",
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15))),
@@ -76,6 +82,13 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
               TextField(
                 readOnly: true,
                 decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: ColorConstant.defBlue),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: ColorConstant.defBlue, width: 2.0),
+                    ),
                     hintText: "Category",
                     suffixIcon: IconButton(
                       icon: Icon(
@@ -96,6 +109,13 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
               TextField(
                 maxLines: 3,
                 decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: ColorConstant.defBlue),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: ColorConstant.defBlue, width: 2.0),
+                    ),
                     hintText: "Description",
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15))),
@@ -110,6 +130,13 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                   _selectDate(context);
                 },
                 decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: ColorConstant.defBlue),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: ColorConstant.defBlue, width: 2.0),
+                    ),
                     hintText: "Date",
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15))),
@@ -118,7 +145,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                 height: 50,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -131,6 +158,9 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                         "Cancel",
                         style: TextStyle(color: Colors.white),
                       )),
+                  SizedBox(
+                    width: 35,
+                  ),
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(

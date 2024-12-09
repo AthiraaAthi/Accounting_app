@@ -86,6 +86,21 @@ class _HelpScreenState extends State<HelpScreen> {
                 ),
               ),
             ),
+            SizedBox(height: 24),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                backgroundColor: ColorConstant.defBlue,
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 30),
+              ),
+              onPressed: () {},
+              child: const Text(
+                'submit',
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              ),
+            ),
           ],
         ),
       ),
