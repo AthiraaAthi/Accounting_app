@@ -72,10 +72,10 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   activeTrackColor: ColorConstant.defBlue,
                   thumbColor: WidgetStatePropertyAll(Colors.white),
                   inactiveTrackColor: Colors.grey,
-                  value: isGeneralNotificationOn,
+                  value: isDueReminderOn,
                   onChanged: (value) {
                     setState(() {
-                      isGeneralNotificationOn = value;
+                      isDueReminderOn = value;
                     });
                   },
                 )
