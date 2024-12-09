@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:curved_nav/view/utils/Expense/expense_add_screen.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 
@@ -14,6 +16,7 @@ class ListScreen extends StatefulWidget {
 class _ListScreenState extends State<ListScreen>
     with SingleTickerProviderStateMixin {
   var selectedDate = DateTime.now();
+  late String date;
 
   @override
   Widget build(BuildContext context) {
@@ -48,10 +51,24 @@ class _ListScreenState extends State<ListScreen>
             calendarStyle: CalendarStyle(
                 todayDecoration: BoxDecoration(
                     color: primaryColorBlue, shape: BoxShape.circle)),
-            focusedDay: DateTime.now(),
+            focusedDay: selectedDate,
             firstDay: DateTime.utc(2020, 1, 1),
             lastDay: DateTime.utc(2030, 12, 31),
-          )
+            onDaySelected: (selectedDay, focusedDay) {
+              selectedDate = selectedDay;
+              setState(() {
+                final day = selectedDay.toString();
+                date = day;
+                log(date);
+              });
+            },
+          ),
+          Expanded(
+              child: Container(
+            child: Center(
+              child: Text(date.isEmpty ? ' ' : date),
+            ),
+          ))
         ],
       ),
     );
