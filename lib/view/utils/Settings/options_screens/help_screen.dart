@@ -32,8 +32,26 @@ class _HelpScreenState extends State<HelpScreen> {
           style: TextStyle(color: Colors.white),
         ),
       ),
-      body: Column(
-        children: [],
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            TextField(
+              controller: nameController,
+              decoration: InputDecoration(
+                labelText: 'your name',
+                labelStyle: TextStyle(color: Colors.grey),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: ColorConstant.defBlue),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide:
+                      BorderSide(color: ColorConstant.defBlue, width: 2.0),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
