@@ -50,6 +50,9 @@ class _HelpScreenState extends State<HelpScreen> {
                 ),
               ),
             ),
+            SizedBox(
+              height: 20,
+            ),
           ],
         ),
       ),
