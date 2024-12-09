@@ -27,7 +27,11 @@ class NotificationsScreen extends StatelessWidget {
       body: Column(
         children: [
           Row(
-            children: [],
+            children: [
+              Text(
+                'General Notification',
+              ),
+            ],
           )
         ],
       ),
