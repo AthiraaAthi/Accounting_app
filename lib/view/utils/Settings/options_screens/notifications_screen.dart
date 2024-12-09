@@ -25,7 +25,11 @@ class NotificationsScreen extends StatelessWidget {
         ),
       ),
       body: Column(
-        children: [],
+        children: [
+          Row(
+            children: [],
+          )
+        ],
       ),
     );
   }
