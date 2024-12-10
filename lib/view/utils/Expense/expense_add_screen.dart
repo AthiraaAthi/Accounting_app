@@ -121,9 +121,6 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                   _selectDate(context);
                 },
                 decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: ColorConstant.defBlue),
-                    ),
                     focusedBorder: OutlineInputBorder(
                       borderSide:
                           BorderSide(color: ColorConstant.defBlue, width: 2.0),
