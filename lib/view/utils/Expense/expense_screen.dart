@@ -17,6 +17,23 @@ class ListScreen extends StatefulWidget {
 class _ListScreenState extends State<ListScreen>
     with SingleTickerProviderStateMixin {
   var selectedDate = DateTime.now();
+  var focusdDate = DateTime.now();
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: focusdDate,
+      firstDate: DateTime(2000, 1, 1),
+      lastDate: DateTime(2100, 12, 31),
+    );
+
+    if (pickedDate != null && pickedDate != focusdDate) {
+      setState(() {
+        focusdDate = pickedDate;
+        selectedDate = pickedDate;
+      });
+    }
+  }
 
   late String date;
   @override
@@ -52,33 +69,85 @@ class _ListScreenState extends State<ListScreen>
       ),
       body: Column(
         children: [
-          TableCalendar(
-            calendarFormat: CalendarFormat.week,
-            availableCalendarFormats: {CalendarFormat.week: 'weeks'},
-            calendarStyle: CalendarStyle(
-                todayDecoration: BoxDecoration(
-                    color: primaryColorBlue, shape: BoxShape.circle)),
-            focusedDay: selectedDate,
-            firstDay: DateTime.utc(2020, 1, 1),
-            lastDay: DateTime.utc(2030, 12, 31),
-            onDaySelected: (selectedDay, focusedDay) {
-              selectedDate = selectedDay;
-              final moDate = DateFormat.yMd().format(selectedDate);
-              setState(() {
-                final day = moDate;
-                date = day;
-                final modifiedDate = DateFormat.yMd().format(selectedDay);
-                date = modifiedDate;
-                log(date);
-              });
-            },
+          Container(
+            color: white,
+            child: TableCalendar(
+              calendarFormat: CalendarFormat.week,
+              availableCalendarFormats: {
+                CalendarFormat.week: 'weeks',
+              },
+              calendarStyle: CalendarStyle(
+                  todayDecoration: BoxDecoration(
+                    color: focusdDate != DateTime.now()
+                        ? primaryColorBlue.withOpacity(0.5)
+                        : primaryColorBlue,
+                    shape: BoxShape.circle,
+                  ),
+                  selectedDecoration: BoxDecoration(
+                    color: primaryColorBlue,
+                    shape: BoxShape.circle,
+                  )),
+              focusedDay: focusdDate,
+              firstDay: DateTime.utc(2020, 1, 1),
+              lastDay: DateTime.utc(2030, 12, 31),
+              selectedDayPredicate: (day) {
+                return isSameDay(selectedDate, day);
+              },
+              onPageChanged: (focusedDay) {
+                setState(() {
+                  focusdDate = focusedDay;
+                });
+              },
+              onDaySelected: (selectedDay, focusedDay) {
+                selectedDate = selectedDay;
+                final moDate = DateFormat.yMd().format(selectedDate);
+                if (selectedDay.isBefore(DateTime.now()) ||
+                    isSameDay(selectedDay, DateTime.now())) {
+                  setState(() {
+                    focusdDate = focusedDay;
+                    final day = moDate;
+                    date = day;
+                    final modifiedDate = DateFormat.yMd().format(selectedDay);
+                    date = modifiedDate;
+                    log(date);
+                  });
+                }
+              },
+              enabledDayPredicate: (day) {
+                return day.isBefore(DateTime.now()) ||
+                    isSameDay(day, DateTime.now());
+              },
+              onHeaderTapped: (focusedDay) {
+                _selectDate(context);
+              },
+            ),
           ),
           Expanded(
+              flex: 8,
               child: Container(
-            child: Center(
-              child: Text(date),
-            ),
-          ))
+                  child: ListView.builder(
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListTile(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      tileColor: primaryColorBlue.withOpacity(0.2),
+                      title: Text('Category Name - - - Date: $date'),
+                      subtitle: Text('Amount/- (${index + 1})'),
+                      trailing: Icon(Icons.keyboard_arrow_right_outlined),
+                    ),
+                  );
+                },
+              ))),
+          Expanded(
+              flex: 1,
+              child: Container(
+                color: white,
+                child: Center(child: Text('Total Expense: 100/-')),
+              ))
         ],
       ),
     );
