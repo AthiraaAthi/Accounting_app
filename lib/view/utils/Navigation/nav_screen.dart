@@ -31,6 +31,7 @@ class NavScreen extends StatelessWidget {
         valueListenable: _pagenotifier,
         builder: (context, value, _) {
           return SalomonBottomBar(
+              backgroundColor: white,
               currentIndex: value,
               onTap: (value) {
                 _pagenotifier.value = value;
