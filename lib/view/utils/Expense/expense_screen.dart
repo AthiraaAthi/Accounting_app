@@ -4,6 +4,7 @@ import 'package:curved_nav/view/utils/Expense/expense_add_screen.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class ListScreen extends StatefulWidget {
@@ -16,7 +17,13 @@ class ListScreen extends StatefulWidget {
 class _ListScreenState extends State<ListScreen>
     with SingleTickerProviderStateMixin {
   var selectedDate = DateTime.now();
+
   late String date;
+  @override
+  void initState() {
+    super.initState();
+    date = DateFormat.yMd().format(DateTime.now());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,9 +63,12 @@ class _ListScreenState extends State<ListScreen>
             lastDay: DateTime.utc(2030, 12, 31),
             onDaySelected: (selectedDay, focusedDay) {
               selectedDate = selectedDay;
+              final moDate = DateFormat.yMd().format(selectedDate);
               setState(() {
-                final day = selectedDay.toString();
+                final day = moDate;
                 date = day;
+                final modifiedDate = DateFormat.yMd().format(selectedDay);
+                date = modifiedDate;
                 log(date);
               });
             },
@@ -66,7 +76,7 @@ class _ListScreenState extends State<ListScreen>
           Expanded(
               child: Container(
             child: Center(
-              child: Text(date.isEmpty ? ' ' : date),
+              child: Text(date),
             ),
           ))
         ],
