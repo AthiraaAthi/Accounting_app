@@ -56,9 +56,6 @@ class _HelpScreenState extends State<HelpScreen> {
               decoration: InputDecoration(
                 labelText: 'Phone',
                 labelStyle: const TextStyle(color: Colors.grey),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: ColorConstant.defBlue),
-                ),
                 focusedBorder: OutlineInputBorder(
                   borderSide:
                       BorderSide(color: ColorConstant.defBlue, width: 2.0),
@@ -72,11 +69,8 @@ class _HelpScreenState extends State<HelpScreen> {
               controller: problemController,
               maxLines: 4,
               decoration: InputDecoration(
-                labelText: 'What’s your problem?',
+                labelText: "What's your problem?",
                 labelStyle: TextStyle(color: Colors.grey),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: ColorConstant.defBlue),
-                ),
                 focusedBorder: OutlineInputBorder(
                   borderSide:
                       BorderSide(color: ColorConstant.defBlue, width: 2.0),
