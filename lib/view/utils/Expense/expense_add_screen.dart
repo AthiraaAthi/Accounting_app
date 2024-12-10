@@ -65,9 +65,6 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
             children: [
               TextField(
                 decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: ColorConstant.defBlue),
-                    ),
                     focusedBorder: OutlineInputBorder(
                       borderSide:
                           BorderSide(color: ColorConstant.defBlue, width: 2.0),
@@ -82,9 +79,6 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
               TextField(
                 readOnly: true,
                 decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: ColorConstant.defBlue),
-                    ),
                     focusedBorder: OutlineInputBorder(
                       borderSide:
                           BorderSide(color: ColorConstant.defBlue, width: 2.0),
@@ -109,9 +103,6 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
               TextField(
                 maxLines: 3,
                 decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: ColorConstant.defBlue),
-                    ),
                     focusedBorder: OutlineInputBorder(
                       borderSide:
                           BorderSide(color: ColorConstant.defBlue, width: 2.0),
