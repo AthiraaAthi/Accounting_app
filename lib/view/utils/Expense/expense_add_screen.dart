@@ -24,12 +24,12 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: ColorScheme.light(
-                primary: ColorConstant.defBlue, // header background color
-                onPrimary: Colors.black, // header text color
-                onSurface: ColorConstant.defBlue),
+                primary: ColorConstant.defBlue,
+                onPrimary: Colors.white, // header text color
+                onSurface: Colors.black),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                foregroundColor: Colors.red, // button text color
+                foregroundColor: ColorConstant.defBlue, // button text color
               ),
             ),
           ),
