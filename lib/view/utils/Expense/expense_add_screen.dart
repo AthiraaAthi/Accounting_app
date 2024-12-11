@@ -20,10 +20,28 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
 
   Future<void> _selectDate(BuildContext context) async {
     DateTime? pickedDate = await showDatePicker(
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: Colors.yellow, // header background color
+              onPrimary: Colors.black, // header text color
+              onSurface: Colors.green, // body text color
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.red, // button text color
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+      barrierDismissible: false,
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(2000), // Earliest selectable date
-      lastDate: DateTime(2100), // Latest selectable date
+      lastDate: DateTime.now(),
     );
     if (pickedDate != null) {
       // Format the date and set it in the TextField

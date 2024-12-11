@@ -24,7 +24,7 @@ class _ListScreenState extends State<ListScreen>
       context: context,
       initialDate: focusdDate,
       firstDate: DateTime(2000, 1, 1),
-      lastDate: DateTime(2100, 12, 31),
+      lastDate: DateTime.now(),
     );
 
     if (pickedDate != null && pickedDate != focusdDate) {
