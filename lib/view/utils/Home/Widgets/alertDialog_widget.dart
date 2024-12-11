@@ -123,10 +123,10 @@ AlertDialog alertWidget(bool isSelected, BuildContext context,
                               ),
                               TextField(
                                 decoration: InputDecoration(
-                                  labelText: "Name",
+                                  hintText: "Name",
                                   floatingLabelStyle:
                                       TextStyle(color: primaryColorBlue),
-                                  labelStyle: TextStyle(fontSize: 15),
+                                  hintStyle: TextStyle(fontSize: 15),
                                   focusedBorder: OutlineInputBorder(
                                       borderSide:
                                           BorderSide(color: primaryColorBlue),
