@@ -21,6 +21,22 @@ class _ListScreenState extends State<ListScreen>
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+                primary: ColorConstant.defBlue,
+                onPrimary: Colors.white, // header text color
+                onSurface: Colors.black),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor: ColorConstant.defBlue, // button text color
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
       context: context,
       initialDate: focusdDate,
       firstDate: DateTime(2000, 1, 1),
