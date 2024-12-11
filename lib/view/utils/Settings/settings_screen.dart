@@ -3,6 +3,7 @@ import 'package:curved_nav/view/utils/Settings/options_screens/help_screen.dart'
 import 'package:curved_nav/view/utils/Settings/options_screens/notifications_screen.dart';
 import 'package:curved_nav/view/utils/Settings/options_screens/privacy_policy.dart';
 import 'package:curved_nav/view/utils/Settings/options_screens/terms_conditions.dart';
+import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -31,7 +32,9 @@ class _SettingsScreenState extends State<SettingsScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          backgroundColor: white,
+        ),
         body: Padding(
           padding: const EdgeInsets.all(15),
           child: Column(
