@@ -39,8 +39,8 @@ class _HelpScreenState extends State<HelpScreen> {
             TextField(
               controller: nameController,
               decoration: InputDecoration(
-                labelText: 'your name',
-                labelStyle: TextStyle(color: Colors.grey),
+                hintText: 'your name',
+                hintStyle: TextStyle(color: Colors.grey),
                 enabledBorder: OutlineInputBorder(),
                 focusedBorder: OutlineInputBorder(
                   borderSide:
@@ -55,8 +55,8 @@ class _HelpScreenState extends State<HelpScreen> {
               controller: phoneController,
               keyboardType: TextInputType.phone,
               decoration: InputDecoration(
-                labelText: 'Phone',
-                labelStyle: const TextStyle(color: Colors.grey),
+                hintText: 'Phone',
+                hintStyle: const TextStyle(color: Colors.grey),
                 enabledBorder: OutlineInputBorder(),
                 focusedBorder: OutlineInputBorder(
                   borderSide:
