@@ -8,7 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
-final ValueNotifier _pagenotifier = ValueNotifier(0);
+final ValueNotifier _pagenotifier = ValueNotifier(1);
 
 class NavScreen extends StatelessWidget {
   const NavScreen({super.key});
@@ -31,6 +31,7 @@ class NavScreen extends StatelessWidget {
         valueListenable: _pagenotifier,
         builder: (context, value, _) {
           return SalomonBottomBar(
+              backgroundColor: white,
               currentIndex: value,
               onTap: (value) {
                 _pagenotifier.value = value;

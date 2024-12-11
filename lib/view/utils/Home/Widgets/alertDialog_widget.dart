@@ -4,9 +4,10 @@ import 'package:curved_nav/view/utils/Navigation/nav_screen.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
 
-AlertDialog alertWidget(
-    bool isSelected, BuildContext context, TabController controller) {
+AlertDialog alertWidget(bool isSelected, BuildContext context,
+    TabController controller, bool isMoneyLending, double? height) {
   return AlertDialog(
+    backgroundColor: white,
     title: Center(
       child: Text('Add new card'),
     ),
@@ -54,9 +55,36 @@ AlertDialog alertWidget(
                       }
                     });
 
+                    if (isSelected) {
+                      setState(
+                        () {
+                          height = 550;
+                        },
+                      );
+                    } else if (!isSelected) {
+                      setState(
+                        () {
+                          height = 120;
+                        },
+                      );
+                    } else if (isMoneyLending) {
+                      setState(
+                        () {
+                          height = 550;
+                        },
+                      );
+                    } else if (!isMoneyLending) {
+                      setState(
+                        () {
+                          height = 400;
+                        },
+                      );
+                    }
+
                     return AnimatedContainer(
                       duration: Duration(milliseconds: 200),
-                      height: isSelected ? 550 : 120,
+                      height: height,
+                      //  isSelected ? 550 : 120,
                       width: 600,
                       child: TabBarView(
                         controller: controller,
@@ -72,7 +100,7 @@ AlertDialog alertWidget(
                                   ),
                                   Switch(
                                     activeColor: ColorConstant.defBlue,
-                                    value: true,
+                                    value: isMoneyLending,
                                     thumbColor:
                                         WidgetStatePropertyAll(Colors.white),
                                     inactiveThumbColor: ColorConstant.defBlue,
@@ -80,7 +108,13 @@ AlertDialog alertWidget(
                                     trackColor: WidgetStatePropertyAll(
                                       ColorConstant.defBlue,
                                     ),
-                                    onChanged: (value) {},
+                                    onChanged: (value) {
+                                      setState(
+                                        () {
+                                          isMoneyLending = value;
+                                        },
+                                      );
+                                    },
                                   ),
                                   Text(
                                     "To Give",
@@ -151,49 +185,57 @@ AlertDialog alertWidget(
                                 keyboardType: TextInputType.number,
                               ),
                               SizedBox(height: 15),
-                              TextField(
-                                decoration: InputDecoration(
-                                  labelText: "Installment Amount",
-                                  floatingLabelStyle:
-                                      TextStyle(color: primaryColorBlue),
-                                  labelStyle: TextStyle(fontSize: 15),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: primaryColorBlue),
-                                      borderRadius: BorderRadius.circular(10)),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10)),
-                                ),
-                                keyboardType: TextInputType.number,
-                              ),
+                              isMoneyLending
+                                  ? SizedBox()
+                                  : TextField(
+                                      decoration: InputDecoration(
+                                        labelText: "Installment Amount",
+                                        floatingLabelStyle:
+                                            TextStyle(color: primaryColorBlue),
+                                        labelStyle: TextStyle(fontSize: 15),
+                                        focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: primaryColorBlue),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                      ),
+                                      keyboardType: TextInputType.number,
+                                    ),
                               SizedBox(height: 15),
-                              DropdownButtonFormField<String>(
-                                decoration: InputDecoration(
-                                  labelText: "Installment Type",
-                                  labelStyle: TextStyle(fontSize: 15),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: primaryColorBlue),
-                                      borderRadius: BorderRadius.circular(10)),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10)),
-                                ),
-                                items: const [
-                                  DropdownMenuItem(
-                                    value: "Daily",
-                                    child: Text("Daily"),
-                                  ),
-                                  DropdownMenuItem(
-                                    value: "Weekly",
-                                    child: Text("Weekly"),
-                                  ),
-                                  DropdownMenuItem(
-                                    value: "Monthly",
-                                    child: Text("Monthly"),
-                                  ),
-                                ],
-                                onChanged: (value) {},
-                              ),
+                              isMoneyLending
+                                  ? SizedBox()
+                                  : DropdownButtonFormField<String>(
+                                      decoration: InputDecoration(
+                                        labelText: "Installment Type",
+                                        labelStyle: TextStyle(fontSize: 15),
+                                        focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: primaryColorBlue),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                      ),
+                                      items: const [
+                                        DropdownMenuItem(
+                                          value: "Daily",
+                                          child: Text("Daily"),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: "Weekly",
+                                          child: Text("Weekly"),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: "Monthly",
+                                          child: Text("Monthly"),
+                                        ),
+                                      ],
+                                      onChanged: (value) {},
+                                    ),
                             ]),
                           ),
                           Column(

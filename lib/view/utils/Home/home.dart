@@ -11,6 +11,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
+  bool isMoneyLendingSelected = false;
+  double? height;
   @override
   Widget build(BuildContext context) {
     late TabController _tabController = TabController(length: 2, vsync: this);
@@ -30,7 +32,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   barrierDismissible: false,
                   builder: (context) {
                     bool isSelected = true;
-                    return alertWidget(isSelected, context, _tabController);
+                    return alertWidget(isSelected, context, _tabController,
+                        isMoneyLendingSelected, height);
                   },
                 );
               },
