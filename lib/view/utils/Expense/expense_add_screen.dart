@@ -104,6 +104,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                 maxLines: 3,
                 decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
                       borderSide:
                           BorderSide(color: ColorConstant.defBlue, width: 2.0),
                     ),
@@ -122,6 +123,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                 },
                 decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
                       borderSide:
                           BorderSide(color: ColorConstant.defBlue, width: 2.0),
                     ),
