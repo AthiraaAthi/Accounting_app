@@ -138,10 +138,10 @@ AlertDialog alertWidget(bool isSelected, BuildContext context,
                               SizedBox(height: 15),
                               TextField(
                                 decoration: InputDecoration(
-                                  labelText: "Phone (Optional)",
+                                  hintText: "Phone (Optional)",
                                   floatingLabelStyle:
                                       TextStyle(color: primaryColorBlue),
-                                  labelStyle: TextStyle(fontSize: 15),
+                                  hintStyle: TextStyle(fontSize: 15),
                                   focusedBorder: OutlineInputBorder(
                                       borderSide:
                                           BorderSide(color: primaryColorBlue),
@@ -162,7 +162,7 @@ AlertDialog alertWidget(bool isSelected, BuildContext context,
                                       borderRadius: BorderRadius.circular(10)),
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10)),
-                                  labelText: "Description (Optional)",
+                                  hintText: "Description (Optional)",
                                   floatingLabelStyle:
                                       TextStyle(color: primaryColorBlue),
                                   hintStyle: TextStyle(fontSize: 15),
@@ -173,8 +173,8 @@ AlertDialog alertWidget(bool isSelected, BuildContext context,
                                 decoration: InputDecoration(
                                   floatingLabelStyle:
                                       TextStyle(color: primaryColorBlue),
-                                  labelText: "Amount (With interest if any)",
-                                  labelStyle: TextStyle(fontSize: 15),
+                                  hintText: "Amount (With interest if any)",
+                                  hintStyle: TextStyle(fontSize: 15),
                                   focusedBorder: OutlineInputBorder(
                                       borderSide:
                                           BorderSide(color: primaryColorBlue),
@@ -189,10 +189,10 @@ AlertDialog alertWidget(bool isSelected, BuildContext context,
                                   ? SizedBox()
                                   : TextField(
                                       decoration: InputDecoration(
-                                        labelText: "Installment Amount",
+                                        hintText: "Installment Amount",
                                         floatingLabelStyle:
                                             TextStyle(color: primaryColorBlue),
-                                        labelStyle: TextStyle(fontSize: 15),
+                                        hintStyle: TextStyle(fontSize: 15),
                                         focusedBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
                                                 color: primaryColorBlue),
@@ -209,8 +209,8 @@ AlertDialog alertWidget(bool isSelected, BuildContext context,
                                   ? SizedBox()
                                   : DropdownButtonFormField<String>(
                                       decoration: InputDecoration(
-                                        labelText: "Installment Type",
-                                        labelStyle: TextStyle(fontSize: 15),
+                                        hintText: "Installment Type",
+                                        hintStyle: TextStyle(fontSize: 15),
                                         focusedBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
                                                 color: primaryColorBlue),
@@ -245,10 +245,10 @@ AlertDialog alertWidget(bool isSelected, BuildContext context,
                               ),
                               TextField(
                                 decoration: InputDecoration(
-                                  labelText: "Enter code",
+                                  hintText: "Enter code",
                                   floatingLabelStyle:
                                       TextStyle(color: primaryColorBlue),
-                                  labelStyle: TextStyle(fontSize: 15),
+                                  hintStyle: TextStyle(fontSize: 15),
                                   focusedBorder: OutlineInputBorder(
                                       borderSide:
                                           BorderSide(color: primaryColorBlue),
