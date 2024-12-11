@@ -41,6 +41,7 @@ class _HelpScreenState extends State<HelpScreen> {
               decoration: InputDecoration(
                 labelText: 'your name',
                 labelStyle: TextStyle(color: Colors.grey),
+                enabledBorder: OutlineInputBorder(),
                 focusedBorder: OutlineInputBorder(
                   borderSide:
                       BorderSide(color: ColorConstant.defBlue, width: 2.0),
@@ -56,6 +57,7 @@ class _HelpScreenState extends State<HelpScreen> {
               decoration: InputDecoration(
                 labelText: 'Phone',
                 labelStyle: const TextStyle(color: Colors.grey),
+                enabledBorder: OutlineInputBorder(),
                 focusedBorder: OutlineInputBorder(
                   borderSide:
                       BorderSide(color: ColorConstant.defBlue, width: 2.0),
