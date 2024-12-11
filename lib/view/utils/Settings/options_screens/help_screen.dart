@@ -71,8 +71,8 @@ class _HelpScreenState extends State<HelpScreen> {
               controller: problemController,
               maxLines: 4,
               decoration: InputDecoration(
-                labelText: "What's your problem?",
-                labelStyle: TextStyle(color: Colors.grey),
+                hintText: "What's your problem?",
+                hintStyle: TextStyle(color: Colors.grey),
                 enabledBorder: OutlineInputBorder(),
                 focusedBorder: OutlineInputBorder(
                   borderSide:
