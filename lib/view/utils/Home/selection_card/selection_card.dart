@@ -12,8 +12,15 @@ class SelectionCard extends StatelessWidget {
         bottom: PreferredSize(
           preferredSize: Size(double.infinity, 50),
           child: Container(
-            child: Row(
-              children: [],
+            decoration: BoxDecoration(color: white),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [Text("Amount"), Text("10000/-")],
+                ),
+                Text("Weekly Pay")
+              ],
             ),
           ),
         ),

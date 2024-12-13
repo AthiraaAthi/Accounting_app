@@ -1,4 +1,5 @@
 import 'package:curved_nav/view/utils/Home/Widgets/alertDialog_widget.dart';
+import 'package:curved_nav/view/utils/Home/selection_card/selection_card.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -60,33 +61,42 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        left: 18, right: 18, bottom: 12, top: 18),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('Name of the person'),
-                                Text('Balance amount/-'),
-                                Text('Last money given date'),
-                              ],
-                            ),
-                            IconButton(
-                                onPressed: () {},
-                                icon: FaIcon(FontAwesomeIcons.penToSquare))
-                          ],
-                        ),
-                        Text(
-                          'Due Date',
-                          style: TextStyle(color: Colors.orangeAccent),
-                        )
-                      ],
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SelectionCard(),
+                        ));
+                  },
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          left: 18, right: 18, bottom: 12, top: 18),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Name of the person'),
+                                  Text('Balance amount/-'),
+                                  Text('Last money given date'),
+                                ],
+                              ),
+                              IconButton(
+                                  onPressed: () {},
+                                  icon: FaIcon(FontAwesomeIcons.penToSquare))
+                            ],
+                          ),
+                          Text(
+                            'Due Date',
+                            style: TextStyle(color: Colors.orangeAccent),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
