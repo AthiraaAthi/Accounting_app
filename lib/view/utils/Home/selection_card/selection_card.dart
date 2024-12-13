@@ -8,6 +8,15 @@ class SelectionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(onPressed: () {}, icon: Icon(Icons.info_outline)),
+          IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.more_vert,
+              ))
+        ],
+        surfaceTintColor: primaryColorBlue,
         foregroundColor: white,
         title: Text("Person Name"),
         backgroundColor: ColorConstant.defBlue,
