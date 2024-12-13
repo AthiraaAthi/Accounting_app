@@ -55,31 +55,17 @@ AlertDialog alertWidget(bool isSelected, BuildContext context,
                       }
                     });
 
-                    if (isSelected) {
-                      setState(
-                        () {
-                          height = 550;
-                        },
-                      );
-                    } else if (!isSelected) {
-                      setState(
-                        () {
-                          height = 120;
-                        },
-                      );
-                    } else if (isMoneyLending) {
-                      setState(
-                        () {
-                          height = 550;
-                        },
-                      );
-                    } else if (!isMoneyLending) {
-                      setState(
-                        () {
+                    setState(
+                      () {
+                        if (isMoneyLending) {
                           height = 400;
-                        },
-                      );
-                    }
+                        } else if (!isSelected) {
+                          height = 120;
+                        } else {
+                          height = 550;
+                        }
+                      },
+                    );
 
                     return AnimatedContainer(
                       duration: Duration(milliseconds: 200),
