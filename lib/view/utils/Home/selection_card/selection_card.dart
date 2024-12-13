@@ -44,7 +44,18 @@ class SelectionCard extends StatelessWidget {
               calendarFormat: CalendarFormat.month,
               focusedDay: DateTime.now(),
               firstDay: DateTime(2000, 1, 1),
-              lastDay: DateTime(2100, 12, 31))
+              lastDay: DateTime(2100, 12, 31)),
+          SizedBox(
+            height: 20,
+          ),
+          ElevatedButton(
+              style: ButtonStyle(
+                  shape: WidgetStatePropertyAll(RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10))),
+                  foregroundColor: WidgetStatePropertyAll(white),
+                  backgroundColor: WidgetStatePropertyAll(primaryColorBlue)),
+              onPressed: () {},
+              child: Text("Add Payment"))
         ],
       ),
     );
