@@ -37,38 +37,62 @@ class SelectionCard extends StatelessWidget {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          TableCalendar(
-              availableCalendarFormats: {CalendarFormat.month: "Month"},
-              calendarFormat: CalendarFormat.month,
-              focusedDay: DateTime.now(),
-              firstDay: DateTime(2000, 1, 1),
-              lastDay: DateTime(2100, 12, 31)),
-          SizedBox(
-            height: 20,
-          ),
-          ElevatedButton(
-              style: ButtonStyle(
-                  shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10))),
-                  foregroundColor: WidgetStatePropertyAll(white),
-                  backgroundColor: WidgetStatePropertyAll(primaryColorBlue)),
-              onPressed: () {},
-              child: Text("Add Payment")),
-          SizedBox(
-            height: 10,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: ListTile(
-              tileColor: Color.fromARGB(255, 182, 182, 186),
-              leading: Text("Selected date Event"),
-              trailing: Text("No Data"),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TableCalendar(
+                availableCalendarFormats: {CalendarFormat.month: "Month"},
+                calendarFormat: CalendarFormat.month,
+                focusedDay: DateTime.now(),
+                firstDay: DateTime(2000, 1, 1),
+                lastDay: DateTime(2100, 12, 31)),
+            SizedBox(
+              height: 20,
             ),
-          )
-        ],
+            ElevatedButton(
+                style: ButtonStyle(
+                    shape: WidgetStatePropertyAll(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10))),
+                    foregroundColor: WidgetStatePropertyAll(white),
+                    backgroundColor: WidgetStatePropertyAll(primaryColorBlue)),
+                onPressed: () {},
+                child: Text("Add Payment")),
+            SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: ListTile(
+                tileColor: Color.fromARGB(255, 182, 182, 186),
+                leading: Text("Selected date Event"),
+                trailing: Text("No Data"),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text("History"),
+            SizedBox(
+              height: 10,
+            ),
+            // Expanded(
+            //     child: Container(
+            //   height: 500,
+            //   width: double.infinity,
+            //   child: ListView.builder(
+            //     itemCount: 3,
+            //     physics: NeverScrollableScrollPhysics(),
+            //     shrinkWrap: true,
+            //     itemBuilder: (context, index) => ListTile(
+            //       leading: Text("huu"),
+            //     ),
+            //   ),
+            // ))
+          ],
+        ),
       ),
+      bottomNavigationBar: Container(),
     );
   }
 }
