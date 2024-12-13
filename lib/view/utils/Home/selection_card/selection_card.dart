@@ -39,7 +39,6 @@ class SelectionCard extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           children: [
             TableCalendar(
                 availableCalendarFormats: {CalendarFormat.month: "Month"},
@@ -92,7 +91,6 @@ class SelectionCard extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: Container(),
     );
   }
 }
