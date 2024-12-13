@@ -60,10 +60,11 @@ class SelectionCard extends StatelessWidget {
             height: 10,
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             child: ListTile(
               tileColor: Color.fromARGB(255, 182, 182, 186),
               leading: Text("Selected date Event"),
+              trailing: Text("No Data"),
             ),
           )
         ],
