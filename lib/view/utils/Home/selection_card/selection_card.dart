@@ -40,87 +40,90 @@ class SelectionCard extends StatelessWidget {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            TableCalendar(
+      body: Column(
+        children: [
+          Container(
+            color: white,
+            child: TableCalendar(
                 availableCalendarFormats: {CalendarFormat.month: "Month"},
                 calendarFormat: CalendarFormat.month,
                 focusedDay: DateTime.now(),
                 firstDay: DateTime(2000, 1, 1),
                 lastDay: DateTime(2100, 12, 31)),
-            SizedBox(
-              height: 20,
-            ),
-            ElevatedButton(
-                style: ButtonStyle(
-                    shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10))),
-                    foregroundColor: WidgetStatePropertyAll(white),
-                    backgroundColor: WidgetStatePropertyAll(primaryColorBlue)),
-                onPressed: () {},
-                child: Text("Add Payment")),
-            SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: ListTile(
-                tileColor: Color.fromARGB(255, 182, 182, 186),
-                leading: Text("Selected date Event"),
-                trailing: Text("No Data"),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text("History"),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              color: Colors.amber,
-              height: 60,
-              width: 350,
-            )
-            // Expanded(
-            //     child: Container(
-            //   height: 500,
-            //   width: double.infinity,
-            //   child: ListView.builder(
-            //     itemCount: 3,
-            //     physics: NeverScrollableScrollPhysics(),
-            //     shrinkWrap: true,
-            //     itemBuilder: (context, index) => ListTile(
-            //       leading: Text("huu"),
-            //     ),
-            //   ),
-            // ))
-          ],
-        ),
-      ),
-      bottomSheet: Container(
-        height: 60,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: primaryColorBlue,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Balance amount:',
-                style: TextStyle(color: white),
-              ),
-              Text(
-                "4000\\-",
-                style: TextStyle(color: white),
-              ),
-            ],
           ),
-        ),
+          SizedBox(
+            height: 20,
+          ),
+          ElevatedButton(
+              style: ButtonStyle(
+                  shape: WidgetStatePropertyAll(RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10))),
+                  foregroundColor: WidgetStatePropertyAll(white),
+                  backgroundColor: WidgetStatePropertyAll(primaryColorBlue)),
+              onPressed: () {},
+              child: Text("Add Payment")),
+          SizedBox(
+            height: 10,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: ListTile(
+              tileColor: Color.fromARGB(255, 182, 182, 186),
+              leading: Text("Selected date Event"),
+              trailing: Text("No Data"),
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text("History"),
+          SizedBox(
+            height: 10,
+          ),
+          Expanded(
+              flex: 3,
+              child: ListView.builder(
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 15, vertical: 6),
+                    child: ListTile(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      tileColor: lightGreen,
+                      leading: Text('01/01/2000---${index + 1}'),
+                      trailing: Text('-2000/-'),
+                    ),
+                  );
+                },
+              )),
+          Expanded(
+            flex: 1,
+            child: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: primaryColorBlue,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Balance amount:',
+                      style: TextStyle(color: white),
+                    ),
+                    Text(
+                      "4000\\-",
+                      style: TextStyle(color: white),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
