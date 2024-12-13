@@ -55,7 +55,17 @@ class SelectionCard extends StatelessWidget {
                   foregroundColor: WidgetStatePropertyAll(white),
                   backgroundColor: WidgetStatePropertyAll(primaryColorBlue)),
               onPressed: () {},
-              child: Text("Add Payment"))
+              child: Text("Add Payment")),
+          SizedBox(
+            height: 10,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListTile(
+              tileColor: Color.fromARGB(255, 182, 182, 186),
+              leading: Text("Selected date Event"),
+            ),
+          )
         ],
       ),
     );
