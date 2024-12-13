@@ -27,9 +27,12 @@ class SelectionCard extends StatelessWidget {
             decoration: BoxDecoration(color: white),
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [Text("Amount"), Text("10000/-")],
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [Text("Amount"), Text("10000/-")],
+                  ),
                 ),
                 Text("Weekly Pay")
               ],
@@ -94,6 +97,29 @@ class SelectionCard extends StatelessWidget {
             //   ),
             // ))
           ],
+        ),
+      ),
+      bottomSheet: Container(
+        height: 60,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: primaryColorBlue,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Balance amount:',
+                style: TextStyle(color: white),
+              ),
+              Text(
+                "4000\\-",
+                style: TextStyle(color: white),
+              ),
+            ],
+          ),
         ),
       ),
     );
