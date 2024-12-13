@@ -75,6 +75,11 @@ class SelectionCard extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
+            Container(
+              color: Colors.amber,
+              height: 100,
+              width: 300,
+            )
             // Expanded(
             //     child: Container(
             //   height: 500,
