@@ -8,6 +8,8 @@ class SelectionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        foregroundColor: white,
+        title: Text("Person Name"),
         backgroundColor: ColorConstant.defBlue,
         bottom: PreferredSize(
           preferredSize: Size(double.infinity, 50),
