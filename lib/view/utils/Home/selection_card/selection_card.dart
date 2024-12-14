@@ -10,7 +10,16 @@ class SelectionCard extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.info_outline)),
+          IconButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => Dialog(
+                    child: Container(),
+                  ),
+                );
+              },
+              icon: Icon(Icons.info_outline)),
           PopupMenuButton<String>(
             icon: const Icon(Icons.more_vert),
             onSelected: (String value) {},
@@ -70,8 +79,9 @@ class SelectionCard extends StatelessWidget {
                 firstDay: DateTime(2000, 1, 1),
                 lastDay: DateTime(2100, 12, 31)),
           ),
-          SizedBox(
+          Container(
             height: 20,
+            color: white,
           ),
           ElevatedButton(
               style: ButtonStyle(
@@ -81,8 +91,9 @@ class SelectionCard extends StatelessWidget {
                   backgroundColor: WidgetStatePropertyAll(primaryColorBlue)),
               onPressed: () {},
               child: Text("Add Payment")),
-          SizedBox(
+          Container(
             height: 10,
+            color: white,
           ),
           Container(
             child: Padding(
@@ -94,14 +105,20 @@ class SelectionCard extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
+          Container(
             height: 10,
+            color: white,
           ),
-          Row(
-            children: [Text("History"), Icon(Icons.keyboard_arrow_right)],
+          Container(
+            color: white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [Text("History"), Icon(Icons.keyboard_arrow_right)],
+            ),
           ),
-          SizedBox(
+          Container(
             height: 10,
+            color: white,
           ),
           Expanded(
               flex: 3,
