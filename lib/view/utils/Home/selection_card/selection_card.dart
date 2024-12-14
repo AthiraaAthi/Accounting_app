@@ -81,7 +81,8 @@ class SelectionCard extends StatelessWidget {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [Text("Amount"), Text("10000/-")],
@@ -134,11 +135,17 @@ class SelectionCard extends StatelessWidget {
             height: 10,
             color: white,
           ),
-          Container(
-            color: white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [Text("History"), Icon(Icons.keyboard_arrow_right)],
+          InkWell(
+            onTap: () {},
+            child: Container(
+              margin: EdgeInsets.symmetric(
+                horizontal: 10,
+              ),
+              color: white,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [Text("History"), Icon(Icons.keyboard_arrow_right)],
+              ),
             ),
           ),
           Container(
