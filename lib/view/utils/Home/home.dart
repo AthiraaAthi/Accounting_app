@@ -61,42 +61,39 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SelectionCard(),
-                        ));
-                  },
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          left: 18, right: 18, bottom: 12, top: 18),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Name of the person'),
-                                  Text('Balance amount/-'),
-                                  Text('Last money given date'),
-                                ],
-                              ),
-                              IconButton(
-                                  onPressed: () {},
-                                  icon: FaIcon(FontAwesomeIcons.penToSquare))
-                            ],
-                          ),
-                          Text(
-                            'Due Date',
-                            style: TextStyle(color: Colors.orangeAccent),
-                          )
-                        ],
-                      ),
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 18, right: 18, bottom: 12, top: 18),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Name of the person'),
+                                Text('Balance amount/-'),
+                                Text('Last money given date'),
+                              ],
+                            ),
+                            IconButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => SelectionCard(),
+                                      ));
+                                },
+                                icon: FaIcon(FontAwesomeIcons.penToSquare))
+                          ],
+                        ),
+                        Text(
+                          'Due Date',
+                          style: TextStyle(color: Colors.orangeAccent),
+                        )
+                      ],
                     ),
                   ),
                 ),
