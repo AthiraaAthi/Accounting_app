@@ -7,11 +7,31 @@ class HistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: primaryColorBlue,
-        foregroundColor: white,
-        title: Text("History"),
-      ),
-    );
+        appBar: AppBar(
+          leading: IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.keyboard_arrow_left,
+                size: 30,
+              )),
+          backgroundColor: primaryColorBlue,
+          foregroundColor: white,
+          title: Text("History"),
+        ),
+        body: ListView.builder(
+          itemCount: 10,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 6),
+              child: ListTile(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                tileColor: lightGreen,
+                leading: Text('01/01/2000---${index + 1}'),
+                trailing: Text('-2000/-'),
+              ),
+            );
+          },
+        ));
   }
 }

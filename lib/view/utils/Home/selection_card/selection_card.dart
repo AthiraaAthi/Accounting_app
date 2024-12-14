@@ -162,7 +162,7 @@ class SelectionCard extends StatelessWidget {
           Expanded(
               flex: 3,
               child: ListView.builder(
-                itemCount: 10,
+                itemCount: 4,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding:
