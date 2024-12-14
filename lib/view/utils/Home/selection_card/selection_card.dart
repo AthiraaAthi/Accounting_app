@@ -15,7 +15,19 @@ class SelectionCard extends StatelessWidget {
                 showDialog(
                   context: context,
                   builder: (context) => Dialog(
-                    child: Container(),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ListTile(
+                          title: Center(child: Text("======>")),
+                          leading: CircleAvatar(
+                            radius: 10,
+                            backgroundColor: lightGreen,
+                          ),
+                          trailing: Text("Paid"),
+                        )
+                      ],
+                    ),
                   ),
                 );
               },
