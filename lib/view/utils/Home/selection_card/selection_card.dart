@@ -20,6 +20,18 @@ class SelectionCard extends StatelessWidget {
                   value: 'Add Amount',
                   child: Text('Add Amount'),
                 ),
+                PopupMenuItem(
+                  value: 'Delete Account',
+                  child: Text('Delete Account'),
+                ),
+                PopupMenuItem(
+                  value: 'Share',
+                  child: Text('Share'),
+                ),
+                PopupMenuItem(
+                  value: 'Help',
+                  child: Text('Help'),
+                ),
               ];
             },
           ),
@@ -85,7 +97,9 @@ class SelectionCard extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          Text("History"),
+          Row(
+            children: [Text("History"), Icon(Icons.keyboard_arrow_right)],
+          ),
           SizedBox(
             height: 10,
           ),
