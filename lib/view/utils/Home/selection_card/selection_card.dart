@@ -11,11 +11,11 @@ class SelectionCard extends StatelessWidget {
       appBar: AppBar(
         actions: [
           IconButton(onPressed: () {}, icon: Icon(Icons.info_outline)),
-          IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.more_vert,
-              ))
+          PopupMenuButton<String>(
+            itemBuilder: (BuildContext context) {
+              return [];
+            },
+          ),
         ],
         surfaceTintColor: primaryColorBlue,
         foregroundColor: white,
