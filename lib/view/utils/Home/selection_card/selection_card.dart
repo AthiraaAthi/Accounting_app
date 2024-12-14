@@ -12,6 +12,7 @@ class SelectionCard extends StatelessWidget {
         actions: [
           IconButton(onPressed: () {}, icon: Icon(Icons.info_outline)),
           PopupMenuButton<String>(
+            icon: const Icon(Icons.more_vert),
             itemBuilder: (BuildContext context) {
               return [];
             },
