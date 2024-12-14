@@ -15,7 +15,12 @@ class SelectionCard extends StatelessWidget {
             icon: const Icon(Icons.more_vert),
             onSelected: (String value) {},
             itemBuilder: (BuildContext context) {
-              return [];
+              return [
+                PopupMenuItem(
+                  value: 'Add Amount',
+                  child: Text('Add Amount'),
+                ),
+              ];
             },
           ),
         ],
@@ -67,12 +72,14 @@ class SelectionCard extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: ListTile(
-              tileColor: Color.fromARGB(255, 182, 182, 186),
-              leading: Text("Selected date Event"),
-              trailing: Text("No Data"),
+          Container(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: ListTile(
+                tileColor: Color.fromARGB(255, 182, 182, 186),
+                leading: Text("Selected date Event"),
+                trailing: Text("No Data"),
+              ),
             ),
           ),
           SizedBox(
