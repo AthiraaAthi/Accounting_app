@@ -19,13 +19,26 @@ class SelectionCard extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         ListTile(
-                          title: Center(child: Text("======>")),
-                          leading: CircleAvatar(
+                          trailing: CircleAvatar(
+                            radius: 10,
+                            backgroundColor: lightRed,
+                          ),
+                          title: Text("Added amount"),
+                        ),
+                        ListTile(
+                          trailing: CircleAvatar(
                             radius: 10,
                             backgroundColor: lightGreen,
                           ),
-                          trailing: Text("Paid"),
-                        )
+                          title: Text("Paid"),
+                        ),
+                        ListTile(
+                          trailing: CircleAvatar(
+                            radius: 10,
+                            backgroundColor: orenge,
+                          ),
+                          title: Text("Pending"),
+                        ),
                       ],
                     ),
                   ),
