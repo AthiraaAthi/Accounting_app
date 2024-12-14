@@ -116,7 +116,12 @@ class SelectionCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10))),
                   foregroundColor: WidgetStatePropertyAll(white),
                   backgroundColor: WidgetStatePropertyAll(primaryColorBlue)),
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(),
+                );
+              },
               child: Text("Add Payment")),
           Container(
             height: 10,
