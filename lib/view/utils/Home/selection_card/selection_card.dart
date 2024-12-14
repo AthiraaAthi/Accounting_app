@@ -1,3 +1,4 @@
+import 'package:curved_nav/view/utils/Home/selection_card/history_screen.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -136,7 +137,13 @@ class SelectionCard extends StatelessWidget {
             color: white,
           ),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HistoryScreen(),
+                  ));
+            },
             child: Container(
               margin: EdgeInsets.symmetric(
                 horizontal: 10,
