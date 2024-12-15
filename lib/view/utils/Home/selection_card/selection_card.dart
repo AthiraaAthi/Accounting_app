@@ -1,10 +1,15 @@
+import 'package:curved_nav/view/utils/Home/Widgets/calender.dart';
+import 'package:curved_nav/view/utils/Home/Widgets/infoAlert.dart';
+import 'package:curved_nav/view/utils/Home/Widgets/popUpMenu.dart';
 import 'package:curved_nav/view/utils/Home/selection_card/history_screen.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
-import 'package:table_calendar/table_calendar.dart';
+
+import '../Widgets/addAmount_dialog.dart';
 
 class SelectionCard extends StatelessWidget {
-  const SelectionCard({super.key});
+  final bool isCreator;
+  const SelectionCard({super.key, required this.isCreator});
 
   @override
   Widget build(BuildContext context) {
@@ -15,61 +20,11 @@ class SelectionCard extends StatelessWidget {
               onPressed: () {
                 showDialog(
                   context: context,
-                  builder: (context) => Dialog(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        ListTile(
-                          trailing: CircleAvatar(
-                            radius: 10,
-                            backgroundColor: lightRed,
-                          ),
-                          title: Text("Added amount"),
-                        ),
-                        ListTile(
-                          trailing: CircleAvatar(
-                            radius: 10,
-                            backgroundColor: lightGreen,
-                          ),
-                          title: Text("Paid"),
-                        ),
-                        ListTile(
-                          trailing: CircleAvatar(
-                            radius: 10,
-                            backgroundColor: orenge,
-                          ),
-                          title: Text("Pending"),
-                        ),
-                      ],
-                    ),
-                  ),
+                  builder: (context) => InfoWidget(),
                 );
               },
               icon: Icon(Icons.info_outline)),
-          PopupMenuButton<String>(
-            icon: const Icon(Icons.more_vert),
-            onSelected: (String value) {},
-            itemBuilder: (BuildContext context) {
-              return [
-                PopupMenuItem(
-                  value: 'Add Amount',
-                  child: Text('Add Amount'),
-                ),
-                PopupMenuItem(
-                  value: 'Delete Account',
-                  child: Text('Delete Account'),
-                ),
-                PopupMenuItem(
-                  value: 'Share',
-                  child: Text('Share'),
-                ),
-                PopupMenuItem(
-                  value: 'Help',
-                  child: Text('Help'),
-                ),
-              ];
-            },
-          ),
+          isCreator ? MenuButtonWidget() : SizedBox(),
         ],
         surfaceTintColor: primaryColorBlue,
         foregroundColor: white,
@@ -83,7 +38,7 @@ class SelectionCard extends StatelessWidget {
               children: [
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [Text("Amount"), Text("10000/-")],
@@ -95,99 +50,143 @@ class SelectionCard extends StatelessWidget {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Container(
-            color: white,
-            child: TableCalendar(
-                availableCalendarFormats: {CalendarFormat.month: "Month"},
-                calendarFormat: CalendarFormat.month,
-                focusedDay: DateTime.now(),
-                firstDay: DateTime(2000, 1, 1),
-                lastDay: DateTime(2100, 12, 31)),
-          ),
-          Container(
-            height: 20,
-            color: white,
-          ),
-          ElevatedButton(
-              style: ButtonStyle(
-                  shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10))),
-                  foregroundColor: WidgetStatePropertyAll(white),
-                  backgroundColor: WidgetStatePropertyAll(primaryColorBlue)),
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: Text("Enter Amount"),
-                  ),
-                );
-              },
-              child: Text("Add Payment")),
-          Container(
-            height: 10,
-            color: white,
-          ),
-          Container(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: ListTile(
-                tileColor: Color.fromARGB(255, 182, 182, 186),
-                leading: Text("Selected date Event"),
-                trailing: Text("No Data"),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            CalenderWidget(),
+            Container(
+              height: 20,
+              color: white,
+            ),
+            isCreator
+                ? ElevatedButton(
+                    style: ButtonStyle(
+                        shape: WidgetStatePropertyAll(RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                        foregroundColor: WidgetStatePropertyAll(white),
+                        backgroundColor:
+                            WidgetStatePropertyAll(primaryColorBlue)),
+                    onPressed: () {
+                      showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (context) => AddPaymentDialog(),
+                      );
+                    },
+                    child: Text("Add Payment"))
+                : SizedBox(),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: ListTile(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  tileColor: lightBlue,
+                  leading: Text("Selected date Event"),
+                  trailing: Text("No Data"),
+                ),
               ),
             ),
-          ),
-          Container(
-            height: 10,
-            color: white,
-          ),
-          InkWell(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => HistoryScreen(),
-                  ));
-            },
-            child: Container(
-              margin: EdgeInsets.symmetric(
-                horizontal: 10,
-              ),
-              color: white,
+            SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [Text("History"), Icon(Icons.keyboard_arrow_right)],
+                children: [
+                  Text(
+                    "History",
+                    style: TextStyle(color: black),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            const HistoryScreen(),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          var tween = Tween(
+                            begin: const Offset(1.0, 0.0),
+                            end: Offset.zero,
+                          ).chain(CurveTween(curve: Curves.easeIn));
+                          return SlideTransition(
+                            position: animation.drive(tween),
+                            child: child,
+                          );
+                        },
+                      ));
+                    },
+                    child: Text(
+                      "Show more >",
+                      style: TextStyle(
+                          color: primaryColorBlue, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
-          Container(
-            height: 10,
-            color: white,
-          ),
-          Expanded(
-              flex: 3,
-              child: ListView.builder(
-                itemCount: 4,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 15, vertical: 6),
-                    child: ListTile(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      tileColor: lightGreen,
-                      leading: Text('01/01/2000---${index + 1}'),
-                      trailing: Text('-2000/-'),
-                    ),
-                  );
-                },
-              )),
-          Expanded(
-            flex: 1,
-            child: Container(
+            SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: ListTile(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                tileColor: lightGreen,
+                leading: Text('01/01/2000'),
+                trailing: Text('-2000/-'),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: ListTile(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                tileColor: lightGreen,
+                leading: Text('01/01/2000'),
+                trailing: Text('-2000/-'),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: ListTile(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                tileColor: lightGreen,
+                leading: Text('01/01/2000'),
+                trailing: Text('-2000/-'),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: ListTile(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                tileColor: lightGreen,
+                leading: Text('01/01/2000'),
+                trailing: Text('-2000/-'),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
               width: double.infinity,
+              height: 50,
               decoration: BoxDecoration(
                 color: primaryColorBlue,
               ),
@@ -207,9 +206,9 @@ class SelectionCard extends StatelessWidget {
                   ],
                 ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

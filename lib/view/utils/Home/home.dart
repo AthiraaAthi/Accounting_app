@@ -83,7 +83,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => SelectionCard(),
+                                        builder: (context) => SelectionCard(
+                                          isCreator: true,
+                                        ),
                                       ));
                                 },
                                 icon: FaIcon(FontAwesomeIcons.penToSquare))
