@@ -45,7 +45,7 @@ AlertDialog alertWidget(bool isSelected, BuildContext context,
                             log(isSelected.toString());
                           },
                         );
-                      } else if (controller.index == 1) {
+                      } else if (isMoneyLending || controller.index == 1) {
                         setState(
                           () {
                             isSelected = false;
