@@ -106,11 +106,37 @@ class SelectionCard extends StatelessWidget {
                 ),
                 color: white,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       "History",
-                      style: TextStyle(color: primaryColorBlue),
+                      style: TextStyle(color: black),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                                  const HistoryScreen(),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            var tween = Tween(
+                              begin: const Offset(1.0, 0.0),
+                              end: Offset.zero,
+                            ).chain(CurveTween(curve: Curves.easeIn));
+                            return SlideTransition(
+                              position: animation.drive(tween),
+                              child: child,
+                            );
+                          },
+                        ));
+                      },
+                      child: Text(
+                        "Show more >",
+                        style: TextStyle(
+                            color: primaryColorBlue,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ],
                 ),
@@ -171,36 +197,9 @@ class SelectionCard extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            ElevatedButton(
-                style: ButtonStyle(
-                    shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10))),
-                    foregroundColor: WidgetStatePropertyAll(white),
-                    backgroundColor: WidgetStatePropertyAll(primaryColorBlue)),
-                onPressed: () {
-                  Navigator.of(context).push(PageRouteBuilder(
-                    pageBuilder: (context, animation, secondaryAnimation) =>
-                        const HistoryScreen(),
-                    transitionsBuilder:
-                        (context, animation, secondaryAnimation, child) {
-                      var tween = Tween(
-                        begin: const Offset(1.0, 0.0),
-                        end: Offset.zero,
-                      ).chain(CurveTween(curve: Curves.easeIn));
-                      return SlideTransition(
-                        position: animation.drive(tween),
-                        child: child,
-                      );
-                    },
-                  ));
-                },
-                child: Text("Show more")),
-            SizedBox(
-              height: 10,
-            ),
             Container(
               width: double.infinity,
-              height: 40,
+              height: 50,
               decoration: BoxDecoration(
                 color: primaryColorBlue,
               ),
