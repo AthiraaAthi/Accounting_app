@@ -17,6 +17,7 @@ class CalenderWidget extends StatefulWidget {
 class _CalenderWidgetState extends State<CalenderWidget> {
   var selectedDate = DateTime.now();
   var focusdDate = DateTime.now();
+  late Map<DateTime, List<String>> _events;
 
   Future<void> selectDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
@@ -55,6 +56,25 @@ class _CalenderWidgetState extends State<CalenderWidget> {
   void initState() {
     super.initState();
     date = DateFormat.yMd().format(DateTime.now());
+    _events = {
+      DateTime(2024, 12, 2): ['Paid'], // Correct format
+      DateTime(2024, 12, 9): ['Not Paid'], // Correct format
+      DateTime(2024, 12, 16): ['Pending'], // Correct format
+      DateTime(2024, 12, 23): ['Pending'], // Correct format
+    };
+  }
+
+  Color _getEventColor(String event) {
+    switch (event) {
+      case 'Paid':
+        return lightGreen;
+      case 'Not Paid':
+        return lightRed;
+      case 'Pending':
+        return orenge;
+      default:
+        return Colors.grey;
+    }
   }
 
   @override
@@ -71,7 +91,8 @@ class _CalenderWidgetState extends State<CalenderWidget> {
           selectedDecoration: BoxDecoration(
             color: primaryColorBlue,
             shape: BoxShape.circle,
-          )),
+          ),
+          markerSize: 0),
       rowHeight: 40,
       availableCalendarFormats: {CalendarFormat.month: "Month"},
       calendarFormat: CalendarFormat.month,
@@ -87,6 +108,9 @@ class _CalenderWidgetState extends State<CalenderWidget> {
         });
       },
       onDaySelected: (selectedDay, focusedDay) {
+        final events = _events[
+            DateTime(selectedDay.year, selectedDay.month, selectedDay.day)];
+
         selectedDate = selectedDay;
         final moDate = DateFormat.yMd().format(selectedDate);
         if (selectedDay.isBefore(DateTime.now()) ||
@@ -99,21 +123,46 @@ class _CalenderWidgetState extends State<CalenderWidget> {
             date = modifiedDate;
             log(date);
           });
+        } else if (events != null && events.contains('Pending')) {
+          // Prevent any action for pending days
+          return;
         }
       },
       enabledDayPredicate: (day) {
+        final events = _events[DateTime(day.year, day.month, day.day)];
+        if (events != null && events.contains('Pending')) {
+          return true;
+        }
         return day.isBefore(DateTime.now()) || isSameDay(day, DateTime.now());
       },
       onHeaderTapped: (focusedDay) {
         selectDate(context);
       },
       eventLoader: (day) {
-        return [];
+        return _events[DateTime(day.year, day.month, day.day)] ?? [];
       },
-      // calendarBuilders: CalendarBuilders(markerBuilder: (context, day, events) {
-
-      // },
-      // ),
+      calendarBuilders: CalendarBuilders(
+        defaultBuilder: (context, day, focusedDay) {
+          final events = _events[DateTime(day.year, day.month, day.day)];
+          if (events != null && events.isNotEmpty) {
+            final eventType = events.first; // Get the first event
+            return Container(
+              margin: const EdgeInsets.all(4), // Cell margin
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: _getEventColor(eventType), // Event-specific color
+              ),
+              child: Center(
+                child: Text(
+                  '${day.day}',
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ),
+            );
+          }
+          return null;
+        },
+      ),
     );
   }
 }
