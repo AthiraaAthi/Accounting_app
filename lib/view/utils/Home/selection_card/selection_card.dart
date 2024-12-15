@@ -5,6 +5,8 @@ import 'package:curved_nav/view/utils/Home/selection_card/history_screen.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
 
+import '../Widgets/addAmount_dialog.dart';
+
 class SelectionCard extends StatelessWidget {
   final bool isCreator;
   const SelectionCard({super.key, required this.isCreator});
@@ -66,10 +68,9 @@ class SelectionCard extends StatelessWidget {
                             WidgetStatePropertyAll(primaryColorBlue)),
                     onPressed: () {
                       showDialog(
+                        barrierDismissible: false,
                         context: context,
-                        builder: (context) => AlertDialog(
-                          title: Text("Enter Amount"),
-                        ),
+                        builder: (context) => AddPaymentDialog(),
                       );
                     },
                     child: Text("Add Payment"))
@@ -92,54 +93,40 @@ class SelectionCard extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            InkWell(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => HistoryScreen(),
-                    ));
-              },
-              child: Container(
-                margin: EdgeInsets.symmetric(
-                  horizontal: 10,
-                ),
-                color: white,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "History",
-                      style: TextStyle(color: black),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "History",
+                    style: TextStyle(color: black),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            const HistoryScreen(),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          var tween = Tween(
+                            begin: const Offset(1.0, 0.0),
+                            end: Offset.zero,
+                          ).chain(CurveTween(curve: Curves.easeIn));
+                          return SlideTransition(
+                            position: animation.drive(tween),
+                            child: child,
+                          );
+                        },
+                      ));
+                    },
+                    child: Text(
+                      "Show more >",
+                      style: TextStyle(
+                          color: primaryColorBlue, fontWeight: FontWeight.bold),
                     ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(PageRouteBuilder(
-                          pageBuilder:
-                              (context, animation, secondaryAnimation) =>
-                                  const HistoryScreen(),
-                          transitionsBuilder:
-                              (context, animation, secondaryAnimation, child) {
-                            var tween = Tween(
-                              begin: const Offset(1.0, 0.0),
-                              end: Offset.zero,
-                            ).chain(CurveTween(curve: Curves.easeIn));
-                            return SlideTransition(
-                              position: animation.drive(tween),
-                              child: child,
-                            );
-                          },
-                        ));
-                      },
-                      child: Text(
-                        "Show more >",
-                        style: TextStyle(
-                            color: primaryColorBlue,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
             SizedBox(
