@@ -82,6 +82,27 @@ class MenuButtonWidget extends StatelessWidget {
               );
             },
           );
+        } else if (value == '2') {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                contentPadding:
+                    EdgeInsets.symmetric(vertical: 50, horizontal: 10),
+                backgroundColor: white,
+                content: Text("Do You Want to Delete this Account?"),
+                actions: [
+                  TextButton(onPressed: () {}, child: Text("No")),
+                  TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        "Yes",
+                        style: TextStyle(),
+                      )),
+                ],
+              );
+            },
+          );
         } else if (value == '3') {
           showDialog(
             context: context,
@@ -94,7 +115,7 @@ class MenuButtonWidget extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      '(TYPE-ANYTHING)',
+                      'H29A260302',
                       style: TextStyle(fontSize: 30),
                     ),
                     SizedBox(
