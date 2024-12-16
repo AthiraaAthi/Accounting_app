@@ -50,51 +50,6 @@ class SelectionCard extends StatelessWidget {
           ),
         ),
       ),
-<<<<<<< HEAD
-      body: Column(
-        children: [
-          Container(
-            color: white,
-            child: TableCalendar(
-                availableCalendarFormats: {CalendarFormat.month: "Month"},
-                calendarFormat: CalendarFormat.month,
-                focusedDay: DateTime.now(),
-                firstDay: DateTime(2000, 1, 1),
-                lastDay: DateTime(2100, 12, 31)),
-          ),
-          Container(
-            height: 20,
-            color: white,
-          ),
-          ElevatedButton(
-              style: ButtonStyle(
-                  shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10))),
-                  foregroundColor: WidgetStatePropertyAll(white),
-                  backgroundColor: WidgetStatePropertyAll(primaryColorBlue)),
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: Text(
-                      "Enter Amount",
-                    ),
-                  ),
-                );
-              },
-              child: Text("Add Payment")),
-          Container(
-            height: 10,
-            color: white,
-          ),
-          Container(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: ListTile(
-                tileColor: Color.fromARGB(255, 182, 182, 186),
-                leading: Text("Selected date Event"),
-                trailing: Text("No Data"),
-=======
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -133,7 +88,6 @@ class SelectionCard extends StatelessWidget {
                   leading: Text("Selected date Event"),
                   trailing: Text("No Data"),
                 ),
->>>>>>> 1c1cdd9864fc679b99ef899cd237f08607b550b4
               ),
             ),
             SizedBox(
