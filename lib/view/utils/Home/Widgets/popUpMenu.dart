@@ -84,20 +84,32 @@ class MenuButtonWidget extends StatelessWidget {
           );
         } else if (value == '2') {
           showDialog(
+            barrierDismissible: false,
             context: context,
             builder: (context) {
               return AlertDialog(
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 50, horizontal: 10),
                 backgroundColor: white,
-                content: Text("Do You Want to Delete this Account?"),
+                content: Text(
+                  "Do You Want to Delete this Account?",
+                ),
                 actions: [
-                  TextButton(onPressed: () {}, child: Text("No")),
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                        "No",
+                        style: TextStyle(color: black),
+                      )),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                       child: Text(
                         "Yes",
-                        style: TextStyle(),
+                        style: TextStyle(color: lightRed),
                       )),
                 ],
               );
