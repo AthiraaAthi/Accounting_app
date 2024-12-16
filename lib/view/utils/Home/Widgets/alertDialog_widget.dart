@@ -37,19 +37,19 @@ AlertDialog alertWidget(bool isSelected, BuildContext context,
                 ),
                 StatefulBuilder(
                   builder: (context, setState) {
+                    log(isSelected.toString());
                     controller.addListener(() {
                       if (controller.index == 0) {
                         setState(
                           () {
                             isSelected = true;
-                            log(isSelected.toString());
                           },
                         );
-                      } else if (isMoneyLending || controller.index == 1) {
+                      } else if (controller.index == 1) {
                         setState(
                           () {
                             isSelected = false;
-                            log(isSelected.toString());
+                            // controller.index = 0;
                           },
                         );
                       }
@@ -59,6 +59,15 @@ AlertDialog alertWidget(bool isSelected, BuildContext context,
                       () {
                         if (isMoneyLending) {
                           height = 400;
+                          controller.addListener(
+                            () {
+                              if (isMoneyLending) {
+                                controller.index = 0;
+                              } else {
+                                null;
+                              }
+                            },
+                          );
                         } else if (!isSelected) {
                           height = 120;
                         } else {
