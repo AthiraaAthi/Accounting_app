@@ -120,7 +120,9 @@ class SelectionCard extends StatelessWidget {
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
-                    title: Text("Enter Amount"),
+                    title: Text(
+                      "Enter Amount",
+                    ),
                   ),
                 );
               },
