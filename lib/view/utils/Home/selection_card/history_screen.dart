@@ -26,10 +26,11 @@ class HistoryScreen extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 6),
               child: ListTile(
+                subtitle: Text("Balance Amount:1000"),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)),
                 tileColor: lightGreen,
-                leading: Text('01/01/2000---${index + 1}'),
+                title: Text('01/01/2000---${index + 1}'),
                 trailing: Text('-2000/-'),
               ),
             );
