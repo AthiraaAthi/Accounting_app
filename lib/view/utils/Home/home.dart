@@ -50,6 +50,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: SearchBar(
+              backgroundColor: WidgetStatePropertyAll(
+                  const Color.fromARGB(255, 235, 235, 235)),
               elevation: WidgetStatePropertyAll(0),
               hintText: 'Search',
               leading: Icon(
@@ -62,6 +64,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                 child: Card(
+                  color: const Color.fromARGB(255, 235, 235, 235),
                   child: Padding(
                     padding: const EdgeInsets.only(
                         left: 18, right: 18, bottom: 12, top: 18),
