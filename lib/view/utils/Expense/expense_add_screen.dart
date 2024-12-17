@@ -1,4 +1,4 @@
-import 'package:curved_nav/view/utils/Expense/add_category.dart';
+import 'package:curved_nav/view/utils/Expense/Widgets/categoryAdd_dialog.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +10,6 @@ class ExpenseScreen extends StatefulWidget {
 }
 
 class _ExpenseScreenState extends State<ExpenseScreen> {
-  String selectedCategory = 'Category';
   TextEditingController _dateController = TextEditingController();
   @override
   void dispose() {
@@ -110,7 +109,10 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                         color: ColorConstant.defBlue,
                       ),
                       onPressed: () {
-                        _showCategoryDialog(context);
+                        showDialog(
+                          context: context,
+                          builder: (context) => CategoryAddingDialog(),
+                        );
                       },
                     ),
                     border: OutlineInputBorder(
@@ -187,56 +189,6 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
           ),
         ),
       ),
-    );
-  }
-
-  void _showCategoryDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          content: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ListTile(
-                title: Text("Food"),
-                trailing: Radio(
-                  value: "Food",
-                  groupValue: selectedCategory,
-                  onChanged: (String? value) {
-                    setState(() {
-                      selectedCategory = value!;
-                    });
-                  },
-                ),
-              ),
-              ListTile(
-                title: Text("Travel"),
-                trailing: Radio(
-                  value: "Travel",
-                  groupValue: selectedCategory,
-                  onChanged: (String? value) {
-                    setState(() {
-                      selectedCategory = value!;
-                    });
-                  },
-                ),
-              ),
-              ListTile(
-                title: Text("Add Category"),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => AddCategory(),
-                      ));
-                },
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 }
