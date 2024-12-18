@@ -7,13 +7,13 @@ import 'package:injectable/injectable.dart';
 @LazySingleton(as: ICategoryRepository)
 class CategoryFunctions implements ICategoryRepository {
   @override
-  Future<void> categoryAdd() {
+  Future<void> categoryAdd(CategoryModel values) {
     // TODO: implement categoryAdd
     throw UnimplementedError();
   }
 
   @override
-  Future<void> categoryDelete() {
+  Future<void> categoryDelete(CategoryModel values) {
     // TODO: implement categoryDelete
     throw UnimplementedError();
   }
