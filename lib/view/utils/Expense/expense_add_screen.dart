@@ -234,21 +234,9 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                             borderRadius: BorderRadius.circular(15),
                           ),
                           backgroundColor: ColorConstant.defBlue),
-                      onPressed: () {},
-                      child: Text(
-                        "Cancel",
-                        style: TextStyle(color: Colors.white),
-                      )),
-                  SizedBox(
-                    width: 35,
-                  ),
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          backgroundColor: ColorConstant.defBlue),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                       child: Text(
                         "Add",
                         style: TextStyle(color: Colors.white),
