@@ -8,6 +8,7 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:curved_nav/Application/Category/category_bloc.dart' as _i402;
 import 'package:curved_nav/domain/models/i_category_repository.dart' as _i794;
 import 'package:curved_nav/Infrastructure/Category/category_repository.dart'
     as _i660;
@@ -27,6 +28,8 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i794.ICategoryRepository>(
         () => _i660.CategoryFunctions());
+    gh.factory<_i402.CategoryBloc>(
+        () => _i402.CategoryBloc(gh<_i794.ICategoryRepository>()));
     return this;
   }
 }
