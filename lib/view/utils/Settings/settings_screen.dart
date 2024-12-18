@@ -1,3 +1,4 @@
+import 'package:curved_nav/view/utils/Settings/options_screens/category_settings.dart';
 import 'package:curved_nav/view/utils/Settings/options_screens/getting_started.dart';
 import 'package:curved_nav/view/utils/Settings/options_screens/help_screen.dart';
 import 'package:curved_nav/view/utils/Settings/options_screens/notifications_screen.dart';
@@ -17,6 +18,7 @@ class _SettingsScreenState extends State<SettingsScreen>
     with SingleTickerProviderStateMixin {
   List<String> options = [
     "Notifications",
+    'Categories',
     "Getting Started",
     "Help",
     "Privacy Policy",
@@ -24,6 +26,7 @@ class _SettingsScreenState extends State<SettingsScreen>
   ];
   List<Widget> optionsScreens = [
     NotificationsScreen(),
+    CategorySettings(),
     GettingStarted(),
     HelpScreen(),
     PrivacyPolicy(),
