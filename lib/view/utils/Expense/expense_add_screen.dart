@@ -1,6 +1,8 @@
-import 'package:curved_nav/view/utils/Expense/Widgets/categoryAdd_dialog.dart';
+import 'package:curved_nav/view/utils/Expense/Widgets/add_category.dart';
+
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ExpenseScreen extends StatefulWidget {
   const ExpenseScreen({super.key});
@@ -9,13 +11,13 @@ class ExpenseScreen extends StatefulWidget {
   State<ExpenseScreen> createState() => _ExpenseScreenState();
 }
 
+final date = DateFormat.yMd().format(DateTime(2024, 12, 31));
+
 class _ExpenseScreenState extends State<ExpenseScreen> {
-  TextEditingController _dateController = TextEditingController();
-  @override
-  void dispose() {
-    _dateController.dispose(); // Dispose the controller to avoid memory leaks
-    super.dispose();
-  }
+  TextEditingController _dateController = TextEditingController(text: date);
+  TextEditingController _amountController = TextEditingController();
+  TextEditingController _categoryController = TextEditingController();
+  TextEditingController _descriptionController = TextEditingController();
 
   Future<void> _selectDate(BuildContext context) async {
     DateTime? pickedDate = await showDatePicker(
@@ -43,12 +45,82 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
     );
     if (pickedDate != null) {
       // Format the date and set it in the TextField
-      String formattedDate =
-          "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+
+      final formattedDate = DateFormat.yMMMd().format(pickedDate);
+
       setState(() {
         _dateController.text = formattedDate;
       });
     }
+  }
+
+  Future<dynamic> catogaryListBottomSheet(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      showDragHandle: true,
+      backgroundColor: white,
+      builder: (context) {
+        return Wrap(
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: 4,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text(
+                        "Food",
+                        style: TextStyle(fontSize: 15),
+                      ),
+                      trailing: Radio(
+                        value: "Food",
+                        activeColor: primaryColorBlue,
+                        groupValue: '1',
+                        fillColor: WidgetStatePropertyAll(primaryColorBlue),
+                        onChanged: (String? value) {
+                          setState(() {
+                            _categoryController.text = value!;
+                          });
+                        },
+                      ),
+                    );
+                  },
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: TextButton(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (context) => CategoryAddDialog(),
+                        );
+                      },
+                      child: Text(
+                        'Add Category',
+                        style: TextStyle(fontSize: 17),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    _dateController.dispose(); // Dispose the controller to avoid memory leaks
+    super.dispose();
   }
 
   @override
@@ -94,6 +166,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                 height: 15,
               ),
               TextField(
+                controller: _categoryController,
                 readOnly: true,
                 decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
@@ -109,10 +182,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                         color: ColorConstant.defBlue,
                       ),
                       onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) => CategoryAddingDialog(),
-                        );
+                        catogaryListBottomSheet(context);
                       },
                     ),
                     border: OutlineInputBorder(
