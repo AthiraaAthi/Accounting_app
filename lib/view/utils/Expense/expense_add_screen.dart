@@ -1,7 +1,11 @@
+import 'dart:developer';
+
+import 'package:curved_nav/Application/Category/category_bloc.dart';
 import 'package:curved_nav/view/utils/Expense/Widgets/add_category.dart';
 
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class ExpenseScreen extends StatefulWidget {
@@ -66,26 +70,31 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: 4,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(
-                        "Food",
-                        style: TextStyle(fontSize: 15),
-                      ),
-                      trailing: Radio(
-                        value: "Food",
-                        activeColor: primaryColorBlue,
-                        groupValue: '1',
-                        fillColor: WidgetStatePropertyAll(primaryColorBlue),
-                        onChanged: (String? value) {
-                          setState(() {
-                            _categoryController.text = value!;
-                          });
-                        },
-                      ),
+                BlocBuilder<CategoryBloc, CategoryState>(
+                  builder: (context, state) {
+                    log(state.categoryNames.toString());
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: 4,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: Text(
+                            "Food",
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          trailing: Radio(
+                            value: "Food",
+                            activeColor: primaryColorBlue,
+                            groupValue: '1',
+                            fillColor: WidgetStatePropertyAll(primaryColorBlue),
+                            onChanged: (String? value) {
+                              setState(() {
+                                _categoryController.text = value!;
+                              });
+                            },
+                          ),
+                        );
+                      },
                     );
                   },
                 ),

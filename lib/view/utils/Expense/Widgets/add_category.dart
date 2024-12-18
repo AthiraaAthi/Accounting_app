@@ -1,10 +1,14 @@
+import 'package:curved_nav/Infrastructure/Category/category_repository.dart';
+import 'package:curved_nav/domain/models/category%20model/category_model.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
 
 class CategoryAddDialog extends StatelessWidget {
-  const CategoryAddDialog({
+  CategoryAddDialog({
     super.key,
   });
+
+  final TextEditingController _amountController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -12,12 +16,13 @@ class CategoryAddDialog extends StatelessWidget {
       backgroundColor: white,
       title: Text('Add category'),
       content: TextField(
+        controller: _amountController,
         decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
               borderSide: BorderSide(color: ColorConstant.defBlue, width: 2.0),
             ),
-            hintText: "Amount",
+            hintText: "Name",
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(15))),
       ),
@@ -33,6 +38,10 @@ class CategoryAddDialog extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
+            final name = _amountController.text;
+
+            CategoryFunctions().categoryAdd(CategoryModel(categoryName: name));
+
             Navigator.pop(context);
           },
           child: Text(
