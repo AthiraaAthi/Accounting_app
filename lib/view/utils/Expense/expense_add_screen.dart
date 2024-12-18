@@ -72,18 +72,19 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
               children: [
                 BlocBuilder<CategoryBloc, CategoryState>(
                   builder: (context, state) {
-                    log(state.categoryNames.toString());
                     return ListView.builder(
                       shrinkWrap: true,
-                      itemCount: 4,
+                      itemCount: state.categoryNames.length,
                       itemBuilder: (context, index) {
+                        log(state.categoryNames[index].categoryName);
+                        final names = state.categoryNames[index].categoryName;
                         return ListTile(
                           title: Text(
-                            "Food",
+                            names,
                             style: TextStyle(fontSize: 15),
                           ),
                           trailing: Radio(
-                            value: "Food",
+                            value: names,
                             activeColor: primaryColorBlue,
                             groupValue: '1',
                             fillColor: WidgetStatePropertyAll(primaryColorBlue),
@@ -191,6 +192,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                         color: ColorConstant.defBlue,
                       ),
                       onPressed: () {
+                        context.read<CategoryBloc>().add(GetCategory());
                         catogaryListBottomSheet(context);
                       },
                     ),
