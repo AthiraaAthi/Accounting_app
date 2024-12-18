@@ -3,5 +3,7 @@ import 'package:curved_nav/domain/models/category%20model/category_model.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class ICategoryRepository {
-  Future<Either<MainFailures, List<CategoryModel>>> categoryAddAndGet();
+  Future<Either<MainFailures, List<CategoryModel>>> categoryGet();
+  Future<void> categoryAdd();
+  Future<void> categoryDelete();
 }
