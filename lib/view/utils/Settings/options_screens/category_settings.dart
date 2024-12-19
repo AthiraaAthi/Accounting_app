@@ -51,6 +51,7 @@ class CategorySettings extends StatelessWidget {
       ),
       body: BlocBuilder<CategoryBloc, CategoryState>(
         builder: (context, state) {
+          log(state.categoryNames.toString());
           if (state.isLoading) {
             return Center(child: Text('No categories,'));
           } else if (state.categoryNames.isEmpty) {

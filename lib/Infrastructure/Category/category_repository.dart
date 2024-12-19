@@ -43,7 +43,7 @@ class CategoryFunctions implements ICategoryRepository {
         return Right(data);
       }
       log('Empty');
-      return left(MainFailures.clientfailure());
+      return right([]);
     } catch (e) {
       log(e.toString());
       return left(MainFailures.clientfailure());

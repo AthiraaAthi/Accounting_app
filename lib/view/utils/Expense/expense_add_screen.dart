@@ -1,5 +1,9 @@
+import 'dart:developer';
+
 import 'package:curved_nav/Application/Category/category_bloc.dart';
 import 'package:curved_nav/view/utils/Expense/Widgets/add_category.dart';
+
+import 'package:curved_nav/view/utils/Navigation/nav_screen.dart';
 
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
@@ -73,7 +77,12 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
       appBar: AppBar(
         leading: InkWell(
           onTap: () {
-            Navigator.pop(context);
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NavScreen(),
+                ),
+                (Route<dynamic> route) => false);
           },
           child: Icon(
             Icons.keyboard_arrow_left,
@@ -133,21 +142,40 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                           builder: (context) {
                             return BlocBuilder<CategoryBloc, CategoryState>(
                               builder: (context, state) {
+                                log(state.categoryNames.toString());
                                 if (state.categoryNames.isEmpty) {
-                                  Center(
-                                    child: Text(
-                                      'No category',
-                                      style:
-                                          TextStyle(color: black, fontSize: 14),
-                                    ),
-                                  );
-                                } else if (state.isLoading) {
-                                  Center(
-                                    child: Text(
-                                      'No category',
-                                      style:
-                                          TextStyle(color: black, fontSize: 14),
-                                    ),
+                                  return Wrap(
+                                    children: [
+                                      Center(
+                                        child: Text(
+                                          'No category',
+                                          style: TextStyle(
+                                              color: black, fontSize: 14),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 10, horizontal: 15),
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: TextButton(
+                                            onPressed: () {
+                                              showDialog(
+                                                context: context,
+                                                barrierDismissible: false,
+                                                builder: (context) =>
+                                                    CategoryAddDialog(),
+                                              );
+                                            },
+                                            child: Text(
+                                              'Add Category',
+                                              style: TextStyle(
+                                                  fontSize: 17, color: black),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   );
                                 }
                                 return Wrap(
