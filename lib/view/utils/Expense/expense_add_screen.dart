@@ -131,50 +131,53 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                           showDragHandle: true,
                           backgroundColor: white,
                           builder: (context) {
-                            return Wrap(
-                              children: [
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.min,
+                            return BlocBuilder<CategoryBloc, CategoryState>(
+                              builder: (context, state) {
+                                if (state.categoryNames.isEmpty) {
+                                  Center(
+                                    child: Text(
+                                      'No category',
+                                      style:
+                                          TextStyle(color: black, fontSize: 14),
+                                    ),
+                                  );
+                                } else if (state.isLoading) {
+                                  Center(
+                                    child: Text(
+                                      'No category',
+                                      style:
+                                          TextStyle(color: black, fontSize: 14),
+                                    ),
+                                  );
+                                }
+                                return Wrap(
                                   children: [
-                                    BlocBuilder<CategoryBloc, CategoryState>(
-                                      builder: (context, state) {
-                                        if (state.categoryNames.isEmpty) {
-                                          Text(
-                                            'No category',
-                                            style: TextStyle(color: black),
-                                          );
-                                        }
-                                        return ListView.builder(
-                                          shrinkWrap: true,
-                                          itemCount: state.categoryNames.length,
-                                          itemBuilder: (context, index) {
-                                            final names = state
-                                                .categoryNames[index]
-                                                .categoryName;
+                                    ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: state.categoryNames.length,
+                                      itemBuilder: (context, index) {
+                                        final names = state
+                                            .categoryNames[index].categoryName;
 
-                                            return ListTile(
-                                              title: Text(
-                                                names,
-                                                style: TextStyle(fontSize: 15),
-                                              ),
-                                              trailing: Radio(
-                                                value: names,
-                                                activeColor: primaryColorBlue,
-                                                groupValue:
-                                                    _categoryController.text,
-                                                fillColor:
-                                                    WidgetStatePropertyAll(
-                                                        primaryColorBlue),
-                                                onChanged: (String? value) {
-                                                  setState(() {
-                                                    _categoryController.text =
-                                                        value!;
-                                                  });
-                                                },
-                                              ),
-                                            );
-                                          },
+                                        return ListTile(
+                                          title: Text(
+                                            names,
+                                            style: TextStyle(fontSize: 15),
+                                          ),
+                                          trailing: Radio(
+                                            value: names,
+                                            activeColor: primaryColorBlue,
+                                            groupValue:
+                                                _categoryController.text,
+                                            fillColor: WidgetStatePropertyAll(
+                                                primaryColorBlue),
+                                            onChanged: (String? value) {
+                                              setState(() {
+                                                _categoryController.text =
+                                                    value!;
+                                              });
+                                            },
+                                          ),
                                         );
                                       },
                                     ),
@@ -199,10 +202,10 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                                           ),
                                         ),
                                       ),
-                                    )
+                                    ),
                                   ],
-                                ),
-                              ],
+                                );
+                              },
                             );
                           },
                         );
