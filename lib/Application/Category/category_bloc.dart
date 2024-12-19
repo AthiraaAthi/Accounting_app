@@ -15,10 +15,35 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   final ICategoryRepository iCategoryRepository;
   CategoryBloc(this.iCategoryRepository) : super(CategoryState.initial()) {
     on<GetCategory>((event, emit) async {
+      if (state.categoryNames.isNotEmpty) {
+        return emit(state);
+      }
       emit(state.copyWith(isLoading: false, getFailureOrSuccessState: none()));
       final Either<MainFailures, List<CategoryModel>> getCategoryNames =
           await iCategoryRepository.categoryGet();
       emit(getCategoryNames.fold(
+          (failures) => state.copyWith(
+              isLoading: true, getFailureOrSuccessState: some(failures)),
+          (success) => state.copyWith(
+              isLoading: false,
+              getFailureOrSuccessState: some(success),
+              categoryNames: success)));
+    });
+    on<AddCategory>((event, emit) async {
+      emit(state.copyWith(isLoading: false, getFailureOrSuccessState: none()));
+      final result = await iCategoryRepository.categoryGet();
+      emit(result.fold(
+          (failures) => state.copyWith(
+              isLoading: true, getFailureOrSuccessState: some(failures)),
+          (success) => state.copyWith(
+              isLoading: false,
+              getFailureOrSuccessState: some(success),
+              categoryNames: success)));
+    });
+    on<DeleteCategory>((event, emit) async {
+      emit(state.copyWith(isLoading: false, getFailureOrSuccessState: none()));
+      final result = await iCategoryRepository.categoryGet();
+      emit(result.fold(
           (failures) => state.copyWith(
               isLoading: true, getFailureOrSuccessState: some(failures)),
           (success) => state.copyWith(
