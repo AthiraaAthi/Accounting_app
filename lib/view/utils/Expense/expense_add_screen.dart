@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:curved_nav/Application/Category/category_bloc.dart';
+import 'package:curved_nav/Application/Expense/expense_bloc.dart';
 import 'package:curved_nav/Infrastructure/Expense/expense_repository.dart';
 import 'package:curved_nav/domain/models/Expense%20model/expense_model.dart';
 import 'package:curved_nav/view/utils/Expense/Widgets/add_category.dart';
@@ -316,6 +317,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                             date: date);
                         if (amount.isNotEmpty && category.isNotEmpty) {
                           ExpenseFunctions().expenseAdd(expenseModel);
+                          context.read<ExpenseBloc>().add(AddExpense());
                           Navigator.pop(context);
                         } else {
                           log('enter Values');

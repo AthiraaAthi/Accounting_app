@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:curved_nav/domain/failures/main_failure.dart';
 import 'package:curved_nav/domain/models/Expense%20model/expense_model.dart';
 import 'package:curved_nav/domain/models/i_expense_repository.dart';
@@ -12,7 +14,8 @@ class ExpenseFunctions implements IExpenseRepository {
   @override
   Future<void> expenseAdd(ExpenseModel values) async {
     try {
-      final _expenseDatabase = await Hive.openBox(expense_db_name);
+      final _expenseDatabase =
+          await Hive.openBox<ExpenseModel>(expense_db_name);
       final _id = DateTime.now().millisecondsSinceEpoch.toString();
       values.id = _id;
       _expenseDatabase.put(values.id, values);
@@ -24,6 +27,19 @@ class ExpenseFunctions implements IExpenseRepository {
 
   @override
   Future<Either<MainFailures, List<ExpenseModel>>> expenseGet() async {
-    throw UnimplementedError();
+    try {
+      final _expenseDatabase =
+          await Hive.openBox<ExpenseModel>(expense_db_name);
+      final data = _expenseDatabase.values.toList();
+
+      if (data.isNotEmpty) {
+        return Right(data);
+      }
+      log('Empty');
+      return right([]);
+    } catch (e) {
+      log(e.toString());
+      return left(MainFailures.clientfailure());
+    }
   }
 }

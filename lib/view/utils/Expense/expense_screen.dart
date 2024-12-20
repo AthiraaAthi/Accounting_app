@@ -1,9 +1,11 @@
 import 'dart:developer';
 
+import 'package:curved_nav/Application/Expense/expense_bloc.dart';
 import 'package:curved_nav/view/utils/Expense/expense_add_screen.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -60,6 +62,9 @@ class _ListScreenState extends State<ListScreen>
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) => context.read<ExpenseBloc>().add(GetExpense()),
+    );
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -140,21 +145,35 @@ class _ListScreenState extends State<ListScreen>
           ),
           Expanded(
               flex: 8,
-              child: Container(
-                  child: ListView.builder(
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ListTile(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      tileColor: primaryColorBlue.withValues(alpha: 0.2),
-                      title: Text('Category Name - - - Date: $date'),
-                      subtitle: Text('Amount/- (${index + 1})'),
-                      trailing: Icon(Icons.keyboard_arrow_right_outlined),
-                    ),
+              child: Container(child: BlocBuilder<ExpenseBloc, ExpenseState>(
+                builder: (context, state) {
+                  if (state.isEmpty) {
+                    return Center(
+                      child: Text('No Expense Found'),
+                    );
+                  } else if (state.expense.isEmpty) {
+                    return Center(
+                      child: Text('No Expense Found'),
+                    );
+                  }
+                  return ListView.builder(
+                    itemCount: state.expense.length,
+                    itemBuilder: (context, index) {
+                      final data = state.expense[index];
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ListTile(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          tileColor: primaryColorBlue.withValues(alpha: 0.2),
+                          title:
+                              Text('${data.category} - - - Date: ${data.date}'),
+                          subtitle: Text('${data.amount}/- (${index + 1})'),
+                          trailing: Icon(Icons.keyboard_arrow_right_outlined),
+                        ),
+                      );
+                    },
                   );
                 },
               ))),
