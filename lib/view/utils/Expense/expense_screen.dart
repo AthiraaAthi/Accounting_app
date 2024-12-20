@@ -65,6 +65,7 @@ class _ListScreenState extends State<ListScreen>
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) => context.read<ExpenseBloc>().add(GetExpense()),
     );
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -147,19 +148,26 @@ class _ListScreenState extends State<ListScreen>
               flex: 8,
               child: Container(child: BlocBuilder<ExpenseBloc, ExpenseState>(
                 builder: (context, state) {
+                  final filteredExpenses = state.expense.where((element) {
+                    return element.date.day == focusdDate.day &&
+                        element.date.day == selectedDate.day;
+                  }).toList();
                   if (state.isEmpty) {
                     return Center(
-                      child: Text('No Expense Found'),
+                      child: CircularProgressIndicator(
+                        color: primaryColorBlue,
+                      ),
                     );
-                  } else if (state.expense.isEmpty) {
+                  } else if (filteredExpenses.isEmpty) {
                     return Center(
                       child: Text('No Expense Found'),
                     );
                   }
+
                   return ListView.builder(
-                    itemCount: state.expense.length,
+                    itemCount: filteredExpenses.length,
                     itemBuilder: (context, index) {
-                      final data = state.expense[index];
+                      final data = filteredExpenses[index];
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ListTile(
@@ -167,9 +175,11 @@ class _ListScreenState extends State<ListScreen>
                             borderRadius: BorderRadius.circular(15),
                           ),
                           tileColor: primaryColorBlue.withValues(alpha: 0.2),
-                          title:
-                              Text('${data.category} - - - Date: ${data.date}'),
-                          subtitle: Text('${data.amount}/- (${index + 1})'),
+                          title: Text(
+                            '${data.category}',
+                            style: TextStyle(color: black),
+                          ),
+                          subtitle: Text('${data.amount}/-'),
                           trailing: Icon(Icons.keyboard_arrow_right_outlined),
                         ),
                       );
@@ -179,9 +189,25 @@ class _ListScreenState extends State<ListScreen>
               ))),
           Expanded(
               flex: 1,
-              child: Container(
-                color: white,
-                child: Center(child: Text('Total Expense: 100/-')),
+              child: BlocBuilder<ExpenseBloc, ExpenseState>(
+                builder: (context, state) {
+                  final filteredExpenses = state.expense.where((element) {
+                    return element.date.day == focusdDate.day &&
+                        element.date.day == selectedDate.day;
+                  }).toList();
+                  final totalExpense = filteredExpenses.fold(0, (sum, element) {
+                    return sum + int.parse(element.amount);
+                  });
+                  if (filteredExpenses.isEmpty) {
+                    return SizedBox();
+                  } else {
+                    return Container(
+                      color: white,
+                      child: Center(
+                          child: Text('Total Expense: ${totalExpense}/-')),
+                    );
+                  }
+                },
               ))
         ],
       ),
