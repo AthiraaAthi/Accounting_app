@@ -1,5 +1,7 @@
 import 'package:curved_nav/Application/Category/category_bloc.dart';
+import 'package:curved_nav/Application/Expense/expense_bloc.dart';
 import 'package:curved_nav/domain/core/d_i/injectable.dart';
+import 'package:curved_nav/domain/models/Expense%20model/expense_model.dart';
 import 'package:curved_nav/domain/models/category%20model/category_model.dart';
 import 'package:curved_nav/view/utils/Navigation/nav_screen.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
@@ -14,6 +16,9 @@ void main() async {
   if (!Hive.isAdapterRegistered(CategoryModelAdapter().typeId)) {
     Hive.registerAdapter(CategoryModelAdapter());
   }
+  if (!Hive.isAdapterRegistered(ExpenseModelAdapter().typeId)) {
+    Hive.registerAdapter(ExpenseModelAdapter());
+  }
   runApp(const MyApp());
 }
 
@@ -22,8 +27,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getit<CategoryBloc>(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => getit<CategoryBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => getit<ExpenseBloc>(),
+        ),
+      ],
       child: MaterialApp(
         theme: ThemeData(scaffoldBackgroundColor: white),
         debugShowCheckedModeBanner: false,

@@ -5,5 +5,5 @@ import 'package:dartz/dartz.dart';
 abstract class ICategoryRepository {
   Future<Either<MainFailures, List<CategoryModel>>> categoryGet();
   Future<void> categoryAdd(CategoryModel values);
-  Future<void> categoryDelete(String id);
+  Future<void> categoryDelete(int id);
 }

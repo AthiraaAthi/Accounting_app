@@ -26,7 +26,11 @@ class CategoryFunctions implements ICategoryRepository {
   }
 
   @override
-  Future<void> categoryDelete(String id) async {}
+  Future<void> categoryDelete(int id) async {
+    final _categoryDatabase =
+        await Hive.openBox<CategoryModel>(category_db_name);
+    await _categoryDatabase.delete(id);
+  }
 
   @override
   Future<Either<MainFailures, List<CategoryModel>>> categoryGet() async {
@@ -39,7 +43,7 @@ class CategoryFunctions implements ICategoryRepository {
         return Right(data);
       }
       log('Empty');
-      return left(MainFailures.clientfailure());
+      return right([]);
     } catch (e) {
       log(e.toString());
       return left(MainFailures.clientfailure());

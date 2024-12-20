@@ -1,7 +1,12 @@
 import 'dart:developer';
 
 import 'package:curved_nav/Application/Category/category_bloc.dart';
+import 'package:curved_nav/Application/Expense/expense_bloc.dart';
+import 'package:curved_nav/Infrastructure/Expense/expense_repository.dart';
+import 'package:curved_nav/domain/models/Expense%20model/expense_model.dart';
 import 'package:curved_nav/view/utils/Expense/Widgets/add_category.dart';
+
+import 'package:curved_nav/view/utils/Navigation/nav_screen.dart';
 
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +20,12 @@ class ExpenseScreen extends StatefulWidget {
   State<ExpenseScreen> createState() => _ExpenseScreenState();
 }
 
-final date = DateFormat.yMd().format(DateTime(2024, 12, 31));
+final date = DateFormat.yMMMd().format(DateTime.now());
+DateTime _pickedDate = DateTime(
+  DateTime.now().year,
+  DateTime.now().month,
+  DateTime.now().day,
+);
 
 class _ExpenseScreenState extends State<ExpenseScreen> {
   TextEditingController _dateController = TextEditingController(text: date);
@@ -54,92 +64,39 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
 
       setState(() {
         _dateController.text = formattedDate;
+        _pickedDate = pickedDate;
       });
     }
   }
 
-  Future<dynamic> catogaryListBottomSheet(BuildContext context) {
-    return showModalBottomSheet(
-      context: context,
-      showDragHandle: true,
-      backgroundColor: white,
-      builder: (context) {
-        return Wrap(
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                BlocBuilder<CategoryBloc, CategoryState>(
-                  builder: (context, state) {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: state.categoryNames.length,
-                      itemBuilder: (context, index) {
-                        log(state.categoryNames[index].categoryName);
-                        final names = state.categoryNames[index].categoryName;
-                        return ListTile(
-                          title: Text(
-                            names,
-                            style: TextStyle(fontSize: 15),
-                          ),
-                          trailing: Radio(
-                            value: names,
-                            activeColor: primaryColorBlue,
-                            groupValue: '1',
-                            fillColor: WidgetStatePropertyAll(primaryColorBlue),
-                            onChanged: (String? value) {
-                              setState(() {
-                                _categoryController.text = value!;
-                              });
-                            },
-                          ),
-                        );
-                      },
-                    );
-                  },
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: TextButton(
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          barrierDismissible: false,
-                          builder: (context) => CategoryAddDialog(),
-                        );
-                      },
-                      child: Text(
-                        'Add Category',
-                        style: TextStyle(fontSize: 17),
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   void dispose() {
-    _dateController.dispose(); // Dispose the controller to avoid memory leaks
+    _dateController.dispose();
+    _amountController.dispose();
+    _categoryController.dispose();
+    _descriptionController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) {
+        context.read<CategoryBloc>().add(GetCategory());
+      },
+    );
+    log(_pickedDate.toString());
+
     return Scaffold(
       appBar: AppBar(
         leading: InkWell(
           onTap: () {
-            Navigator.pop(context);
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NavScreen(),
+                ),
+                (Route<dynamic> route) => false);
           },
           child: Icon(
             Icons.keyboard_arrow_left,
@@ -162,6 +119,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
           child: Column(
             children: [
               TextField(
+                controller: _amountController,
                 decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
@@ -192,8 +150,109 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                         color: ColorConstant.defBlue,
                       ),
                       onPressed: () {
-                        context.read<CategoryBloc>().add(GetCategory());
-                        catogaryListBottomSheet(context);
+                        showModalBottomSheet(
+                          context: context,
+                          showDragHandle: true,
+                          backgroundColor: white,
+                          builder: (context) {
+                            return BlocBuilder<CategoryBloc, CategoryState>(
+                              builder: (context, state) {
+                                log(state.categoryNames.toString());
+                                if (state.categoryNames.isEmpty) {
+                                  return Wrap(
+                                    children: [
+                                      Center(
+                                        child: Text(
+                                          'No category',
+                                          style: TextStyle(
+                                              color: black, fontSize: 14),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 10, horizontal: 15),
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: TextButton(
+                                            onPressed: () {
+                                              showDialog(
+                                                context: context,
+                                                barrierDismissible: false,
+                                                builder: (context) =>
+                                                    CategoryAddDialog(),
+                                              );
+                                            },
+                                            child: Text(
+                                              'Add Category',
+                                              style: TextStyle(
+                                                  fontSize: 17, color: black),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                }
+                                return Wrap(
+                                  children: [
+                                    ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: state.categoryNames.length,
+                                      itemBuilder: (context, index) {
+                                        final names = state
+                                            .categoryNames[index].categoryName;
+
+                                        return ListTile(
+                                          title: Text(
+                                            names,
+                                            style: TextStyle(fontSize: 15),
+                                          ),
+                                          trailing: Radio(
+                                            value: names,
+                                            activeColor: primaryColorBlue,
+                                            groupValue:
+                                                _categoryController.text,
+                                            fillColor: WidgetStatePropertyAll(
+                                                primaryColorBlue),
+                                            onChanged: (String? value) {
+                                              setState(() {
+                                                _categoryController.text =
+                                                    value!;
+                                              });
+                                              Navigator.pop(context);
+                                            },
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 10, horizontal: 15),
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: TextButton(
+                                          onPressed: () {
+                                            showDialog(
+                                              context: context,
+                                              barrierDismissible: false,
+                                              builder: (context) =>
+                                                  CategoryAddDialog(),
+                                            );
+                                          },
+                                          child: Text(
+                                            'Add Category',
+                                            style: TextStyle(
+                                                fontSize: 17, color: black),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                        );
                       },
                     ),
                     border: OutlineInputBorder(
@@ -203,6 +262,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                 height: 15,
               ),
               TextField(
+                controller: _descriptionController,
                 maxLines: 3,
                 decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
@@ -246,7 +306,22 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                           ),
                           backgroundColor: ColorConstant.defBlue),
                       onPressed: () {
-                        Navigator.pop(context);
+                        final amount = _amountController.text;
+                        final category = _categoryController.text;
+                        final description = _descriptionController.text;
+                        final date = _pickedDate;
+                        final expenseModel = ExpenseModel(
+                            amount: amount,
+                            category: category,
+                            description: description,
+                            date: date);
+                        if (amount.isNotEmpty && category.isNotEmpty) {
+                          ExpenseFunctions().expenseAdd(expenseModel);
+                          context.read<ExpenseBloc>().add(AddExpense());
+                          Navigator.pop(context);
+                        } else {
+                          log('enter Values');
+                        }
                       },
                       child: Text(
                         "Add",

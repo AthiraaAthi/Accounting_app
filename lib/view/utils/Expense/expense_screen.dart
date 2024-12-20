@@ -1,9 +1,11 @@
 import 'dart:developer';
 
+import 'package:curved_nav/Application/Expense/expense_bloc.dart';
 import 'package:curved_nav/view/utils/Expense/expense_add_screen.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -60,6 +62,10 @@ class _ListScreenState extends State<ListScreen>
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) => context.read<ExpenseBloc>().add(GetExpense()),
+    );
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -140,29 +146,68 @@ class _ListScreenState extends State<ListScreen>
           ),
           Expanded(
               flex: 8,
-              child: Container(
-                  child: ListView.builder(
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ListTile(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
+              child: Container(child: BlocBuilder<ExpenseBloc, ExpenseState>(
+                builder: (context, state) {
+                  final filteredExpenses = state.expense.where((element) {
+                    return element.date.day == focusdDate.day &&
+                        element.date.day == selectedDate.day;
+                  }).toList();
+                  if (state.isEmpty) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: primaryColorBlue,
                       ),
-                      tileColor: primaryColorBlue.withValues(alpha: 0.2),
-                      title: Text('Category Name - - - Date: $date'),
-                      subtitle: Text('Amount/- (${index + 1})'),
-                      trailing: Icon(Icons.keyboard_arrow_right_outlined),
-                    ),
+                    );
+                  } else if (filteredExpenses.isEmpty) {
+                    return Center(
+                      child: Text('No Expense Found'),
+                    );
+                  }
+
+                  return ListView.builder(
+                    itemCount: filteredExpenses.length,
+                    itemBuilder: (context, index) {
+                      final data = filteredExpenses[index];
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ListTile(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          tileColor: primaryColorBlue.withValues(alpha: 0.2),
+                          title: Text(
+                            '${data.category}',
+                            style: TextStyle(color: black),
+                          ),
+                          subtitle: Text('${data.amount}/-'),
+                          trailing: Icon(Icons.keyboard_arrow_right_outlined),
+                        ),
+                      );
+                    },
                   );
                 },
               ))),
           Expanded(
               flex: 1,
-              child: Container(
-                color: white,
-                child: Center(child: Text('Total Expense: 100/-')),
+              child: BlocBuilder<ExpenseBloc, ExpenseState>(
+                builder: (context, state) {
+                  final filteredExpenses = state.expense.where((element) {
+                    return element.date.day == focusdDate.day &&
+                        element.date.day == selectedDate.day;
+                  }).toList();
+                  final totalExpense = filteredExpenses.fold(0, (sum, element) {
+                    return sum + int.parse(element.amount);
+                  });
+                  if (filteredExpenses.isEmpty) {
+                    return SizedBox();
+                  } else {
+                    return Container(
+                      color: white,
+                      child: Center(
+                          child: Text('Total Expense: ${totalExpense}/-')),
+                    );
+                  }
+                },
               ))
         ],
       ),
