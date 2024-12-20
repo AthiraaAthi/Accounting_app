@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:curved_nav/Application/Category/category_bloc.dart';
+import 'package:curved_nav/Infrastructure/Expense/expense_repository.dart';
+import 'package:curved_nav/domain/models/Expense%20model/expense_model.dart';
 import 'package:curved_nav/view/utils/Expense/Widgets/add_category.dart';
 
 import 'package:curved_nav/view/utils/Navigation/nav_screen.dart';
@@ -17,13 +19,18 @@ class ExpenseScreen extends StatefulWidget {
   State<ExpenseScreen> createState() => _ExpenseScreenState();
 }
 
-final date = DateFormat.yMd().format(DateTime(2024, 12, 31));
+final date = DateFormat.yMMMd().format(DateTime.now());
+DateTime _pickedDate = DateTime(
+  DateTime.now().year,
+  DateTime.now().month,
+  DateTime.now().day,
+);
 
 class _ExpenseScreenState extends State<ExpenseScreen> {
   TextEditingController _dateController = TextEditingController(text: date);
-  //TextEditingController _amountController = TextEditingController();
+  TextEditingController _amountController = TextEditingController();
   TextEditingController _categoryController = TextEditingController();
-  //TextEditingController _descriptionController = TextEditingController();
+  TextEditingController _descriptionController = TextEditingController();
 
   Future<void> _selectDate(BuildContext context) async {
     DateTime? pickedDate = await showDatePicker(
@@ -56,13 +63,17 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
 
       setState(() {
         _dateController.text = formattedDate;
+        _pickedDate = pickedDate;
       });
     }
   }
 
   @override
   void dispose() {
-    _dateController.dispose(); // Dispose the controller to avoid memory leaks
+    _dateController.dispose();
+    _amountController.dispose();
+    _categoryController.dispose();
+    _descriptionController.dispose();
     super.dispose();
   }
 
@@ -73,6 +84,8 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
         context.read<CategoryBloc>().add(GetCategory());
       },
     );
+    log(_pickedDate.toString());
+
     return Scaffold(
       appBar: AppBar(
         leading: InkWell(
@@ -105,6 +118,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
           child: Column(
             children: [
               TextField(
+                controller: _amountController,
                 decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
@@ -204,6 +218,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                                                 _categoryController.text =
                                                     value!;
                                               });
+                                              Navigator.pop(context);
                                             },
                                           ),
                                         );
@@ -246,6 +261,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                 height: 15,
               ),
               TextField(
+                controller: _descriptionController,
                 maxLines: 3,
                 decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
@@ -289,7 +305,21 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                           ),
                           backgroundColor: ColorConstant.defBlue),
                       onPressed: () {
-                        Navigator.pop(context);
+                        final amount = _amountController.text;
+                        final category = _categoryController.text;
+                        final description = _descriptionController.text;
+                        final date = _pickedDate;
+                        final expenseModel = ExpenseModel(
+                            amount: amount,
+                            category: category,
+                            description: description,
+                            date: date);
+                        if (amount.isNotEmpty && category.isNotEmpty) {
+                          ExpenseFunctions().expenseAdd(expenseModel);
+                          Navigator.pop(context);
+                        } else {
+                          log('enter Values');
+                        }
                       },
                       child: Text(
                         "Add",

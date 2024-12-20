@@ -17,12 +17,11 @@ class ExpenseModelAdapter extends TypeAdapter<ExpenseModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return ExpenseModel(
-      id: fields[0] as String,
       amount: fields[1] as String,
       category: fields[2] as String,
       description: fields[3] as String,
-      date: fields[4] as String,
-    );
+      date: fields[4] as DateTime,
+    )..id = fields[0] as String?;
   }
 
   @override
