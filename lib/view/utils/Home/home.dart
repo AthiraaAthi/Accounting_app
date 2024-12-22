@@ -13,7 +13,36 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   bool isMoneyLendingSelected = false;
+  String? selectedWeekday;
+  List<DateTime> weekDays = [];
+
+  final List<String> weekdays = [
+    'Mon',
+    'Tue',
+    'Wed',
+    'Thu',
+    'Fri',
+    'Sat',
+    'Sun',
+  ];
   double? height;
+
+  void calculateWeekDays(String selectedDay) {
+    final DateTime today = DateTime.now();
+    // int selectedDayIndex =
+    weekdays.indexOf(selectedDay);
+    int currentDayIndex = today.weekday - 1;
+
+    // Calculate the start of the week (Monday)
+    DateTime startOfWeek = today.subtract(Duration(days: currentDayIndex));
+
+    // Add days to get the selected week's days
+    setState(() {
+      weekDays =
+          List.generate(7, (index) => startOfWeek.add(Duration(days: index)));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     late TabController _tabController = TabController(length: 2, vsync: this);
@@ -33,8 +62,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   barrierDismissible: false,
                   builder: (context) {
                     bool isSelected = true;
-                    return alertWidget(isSelected, context, _tabController,
-                        isMoneyLendingSelected, height);
+                    return alertWidget(
+                        isSelected,
+                        context,
+                        _tabController,
+                        isMoneyLendingSelected,
+                        height,
+                        weekdays,
+                        selectedWeekday,
+                        calculateWeekDays,
+                        weekDays);
                   },
                 );
               },

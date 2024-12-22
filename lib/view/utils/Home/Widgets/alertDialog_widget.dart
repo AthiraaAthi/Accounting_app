@@ -3,9 +3,18 @@ import 'dart:developer';
 import 'package:curved_nav/view/utils/Navigation/nav_screen.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
-AlertDialog alertWidget(bool isSelected, BuildContext context,
-    TabController controller, bool isMoneyLending, double? height) {
+AlertDialog alertWidget(
+    bool isSelected,
+    BuildContext context,
+    TabController controller,
+    bool isMoneyLending,
+    double? height,
+    List<String> weekdays,
+    String? selectedWeekday,
+    void Function(String) calculateWeekDays,
+    List<DateTime> weekDays) {
   return AlertDialog(
     backgroundColor: white,
     title: Center(
@@ -203,6 +212,7 @@ AlertDialog alertWidget(bool isSelected, BuildContext context,
                               isMoneyLending
                                   ? SizedBox()
                                   : DropdownButtonFormField<String>(
+                                      dropdownColor: white,
                                       decoration: InputDecoration(
                                         hintText: "Installment Type",
                                         hintStyle: TextStyle(fontSize: 15),
@@ -217,20 +227,62 @@ AlertDialog alertWidget(bool isSelected, BuildContext context,
                                       ),
                                       items: const [
                                         DropdownMenuItem(
-                                          value: "Daily",
+                                          value: "1",
                                           child: Text("Daily"),
                                         ),
                                         DropdownMenuItem(
-                                          value: "Weekly",
+                                          value: "2",
                                           child: Text("Weekly"),
                                         ),
                                         DropdownMenuItem(
-                                          value: "Monthly",
+                                          value: "3",
                                           child: Text("Monthly"),
                                         ),
                                       ],
                                       onChanged: (value) {},
                                     ),
+                              SizedBox(height: 15),
+                              DropdownButtonFormField<String>(
+                                dropdownColor: white,
+                                decoration: InputDecoration(
+                                  hintText: "Pick which week",
+                                  hintStyle: TextStyle(fontSize: 15),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: primaryColorBlue),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10)),
+                                ),
+                                items: weekdays
+                                    .map((day) => DropdownMenuItem(
+                                          value: day,
+                                          child: Text(day),
+                                        ))
+                                    .toList(),
+                                onChanged: (value) {
+                                  if (value != null) {
+                                    setState(() {
+                                      selectedWeekday = value;
+                                    });
+                                    calculateWeekDays(value);
+                                  }
+                                },
+                              ),
+                              SizedBox(height: 20),
+                              if (weekDays.isNotEmpty)
+                                Text(
+                                  'Dates of the selected week:',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              SizedBox(height: 10),
+                              for (var day in weekDays)
+                                ListTile(
+                                  title: Text(
+                                      DateFormat('EEEE, MMM dd').format(day)),
+                                ),
                             ]),
                           ),
                           Column(
