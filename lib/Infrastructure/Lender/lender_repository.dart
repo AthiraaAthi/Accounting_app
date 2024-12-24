@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_nav/domain/failures/main_failure.dart';
 import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
 import 'package:curved_nav/domain/models/i_lender_repository.dart';
@@ -7,9 +10,15 @@ import 'package:injectable/injectable.dart';
 @LazySingleton(as: ILenderRepository)
 class LenderFunctions implements ILenderRepository {
   @override
-  Future<void> addLender(LendingModel lenderDetails) {
-    // TODO: implement addLender
-    throw UnimplementedError();
+  Future<void> addLender(LendingModel lenderDetails) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('lender')
+          .add(lenderDetails.toJson());
+      log('Lender added successfully!');
+    } catch (e) {
+      log('Error adding Lender: $e');
+    }
   }
 
   @override

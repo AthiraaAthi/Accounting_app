@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:curved_nav/Infrastructure/Lender/lender_repository.dart';
+import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
 import 'package:curved_nav/view/utils/Navigation/nav_screen.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +49,10 @@ class _AddCardDaologState extends State<AddCardDaolog>
       matchingDates = dates;
     });
   }
+
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController amountController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -187,6 +193,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                             ],
                                           ),
                                           TextField(
+                                            controller: nameController,
                                             decoration: InputDecoration(
                                               hintText: "Name",
                                               floatingLabelStyle: TextStyle(
@@ -207,6 +214,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                           ),
                                           SizedBox(height: 15),
                                           TextField(
+                                            controller: phoneController,
                                             decoration: InputDecoration(
                                               hintText: "Phone (Optional)",
                                               floatingLabelStyle: TextStyle(
@@ -251,6 +259,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                           ),
                                           SizedBox(height: 15),
                                           TextField(
+                                            controller: amountController,
                                             decoration: InputDecoration(
                                               floatingLabelStyle: TextStyle(
                                                   color: primaryColorBlue),
@@ -512,6 +521,12 @@ class _AddCardDaologState extends State<AddCardDaolog>
                   ),
                   TextButton(
                     onPressed: () {
+                      final name = nameController.text;
+                      final phone = phoneController.text;
+                      final amount = amountController.text;
+                      final model = LendingModel(
+                          name: name, phone: phone, amount: amount);
+                      isSelected ? LenderFunctions().addLender(model) : null;
                       isSelected
                           ? Navigator.pushAndRemoveUntil(
                               context,
