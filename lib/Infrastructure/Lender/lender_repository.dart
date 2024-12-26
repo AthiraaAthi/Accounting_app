@@ -12,9 +12,16 @@ class LenderFunctions implements ILenderRepository {
   @override
   Future<void> addLender(LendingModel lenderDetails) async {
     try {
-      await FirebaseFirestore.instance
-          .collection('lender')
-          .add(lenderDetails.toJson());
+      final data = await FirebaseFirestore.instance.collection('lender');
+
+      String id = data.doc().id;
+      final model = LendingModel(
+          id: id,
+          name: lenderDetails.name,
+          amount: lenderDetails.amount,
+          phone: lenderDetails.phone,
+          description: lenderDetails.description);
+      data.add(model.toJson());
       log('Lender added successfully!');
     } catch (e) {
       log('Error adding Lender: $e');
@@ -28,9 +35,21 @@ class LenderFunctions implements ILenderRepository {
   }
 
   @override
-  Future<Either<MainFailures, List<LendingModel>>> getDetails() {
-    // TODO: implement getDetails
-    throw UnimplementedError();
+  Future<Either<MainFailures, List<LendingModel>>> getDetails() async {
+    final getData = await FirebaseFirestore.instance.collection('lender').get();
+
+    try {
+      final lenderDetails =
+          getData.docs.map((e) => LendingModel.fromJson(e.data())).toList();
+      if (lenderDetails.isEmpty) {
+        return left(MainFailures.clientfailure());
+      }
+      log(lenderDetails.toString());
+      return right(lenderDetails);
+    } catch (e) {
+      log('error found: $e');
+      return left(MainFailures.serverfailure());
+    }
   }
 
   @override

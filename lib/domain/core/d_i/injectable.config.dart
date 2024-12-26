@@ -10,6 +10,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:curved_nav/Application/Category/category_bloc.dart' as _i402;
 import 'package:curved_nav/Application/Expense/expense_bloc.dart' as _i1062;
+import 'package:curved_nav/Application/Lender/lender_bloc.dart' as _i203;
 import 'package:curved_nav/domain/models/i_category_repository.dart' as _i794;
 import 'package:curved_nav/domain/models/i_expense_repository.dart' as _i338;
 import 'package:curved_nav/domain/models/i_lender_repository.dart' as _i367;
@@ -41,6 +42,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i1062.ExpenseBloc(gh<_i338.IExpenseRepository>()));
     gh.factory<_i402.CategoryBloc>(
         () => _i402.CategoryBloc(gh<_i794.ICategoryRepository>()));
+    gh.factory<_i203.LenderBloc>(
+        () => _i203.LenderBloc(gh<_i367.ILenderRepository>()));
     return this;
   }
 }
