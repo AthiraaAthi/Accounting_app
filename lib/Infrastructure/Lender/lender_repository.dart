@@ -15,12 +15,8 @@ class LenderFunctions implements ILenderRepository {
       final data = await FirebaseFirestore.instance.collection('lender');
 
       String id = data.doc().id;
-      final model = LendingModel(
-          id: id,
-          name: lenderDetails.name,
-          amount: lenderDetails.amount,
-          phone: lenderDetails.phone,
-          description: lenderDetails.description);
+      LendingModel model = lenderDetails.copyWith(id: id);
+
       data.add(model.toJson());
       log('Lender added successfully!');
     } catch (e) {
@@ -30,7 +26,6 @@ class LenderFunctions implements ILenderRepository {
 
   @override
   Future<void> deleteLender(String id) {
-    // TODO: implement deleteLender
     throw UnimplementedError();
   }
 
@@ -44,7 +39,7 @@ class LenderFunctions implements ILenderRepository {
       if (lenderDetails.isEmpty) {
         return left(MainFailures.clientfailure());
       }
-      log(lenderDetails.toString());
+      // log(lenderDetails.toString());
       return right(lenderDetails);
     } catch (e) {
       log('error found: $e');
@@ -54,7 +49,6 @@ class LenderFunctions implements ILenderRepository {
 
   @override
   Future<void> updateLender(LendingModel lenderDetails) {
-    // TODO: implement updateLender
     throw UnimplementedError();
   }
 }

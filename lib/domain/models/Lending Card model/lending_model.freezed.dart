@@ -20,11 +20,17 @@ LendingModel _$LendingModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$LendingModel {
+  bool? get IsMoneyLent => throw _privateConstructorUsedError;
   String? get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get phone => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   String? get amount => throw _privateConstructorUsedError;
+  String? get installmentAmount => throw _privateConstructorUsedError;
+  String? get installmentType => throw _privateConstructorUsedError;
+  DateTime? get dailyInstallment => throw _privateConstructorUsedError;
+  String? get weeklyInstalmentDate => throw _privateConstructorUsedError;
+  DateTime? get monthlyInstalmentDate => throw _privateConstructorUsedError;
 
   /// Serializes this LendingModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -43,11 +49,17 @@ abstract class $LendingModelCopyWith<$Res> {
       _$LendingModelCopyWithImpl<$Res, LendingModel>;
   @useResult
   $Res call(
-      {String? id,
+      {bool? IsMoneyLent,
+      String? id,
       String? name,
       String? phone,
       String? description,
-      String? amount});
+      String? amount,
+      String? installmentAmount,
+      String? installmentType,
+      DateTime? dailyInstallment,
+      String? weeklyInstalmentDate,
+      DateTime? monthlyInstalmentDate});
 }
 
 /// @nodoc
@@ -65,13 +77,23 @@ class _$LendingModelCopyWithImpl<$Res, $Val extends LendingModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? IsMoneyLent = freezed,
     Object? id = freezed,
     Object? name = freezed,
     Object? phone = freezed,
     Object? description = freezed,
     Object? amount = freezed,
+    Object? installmentAmount = freezed,
+    Object? installmentType = freezed,
+    Object? dailyInstallment = freezed,
+    Object? weeklyInstalmentDate = freezed,
+    Object? monthlyInstalmentDate = freezed,
   }) {
     return _then(_value.copyWith(
+      IsMoneyLent: freezed == IsMoneyLent
+          ? _value.IsMoneyLent
+          : IsMoneyLent // ignore: cast_nullable_to_non_nullable
+              as bool?,
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -92,6 +114,26 @@ class _$LendingModelCopyWithImpl<$Res, $Val extends LendingModel>
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as String?,
+      installmentAmount: freezed == installmentAmount
+          ? _value.installmentAmount
+          : installmentAmount // ignore: cast_nullable_to_non_nullable
+              as String?,
+      installmentType: freezed == installmentType
+          ? _value.installmentType
+          : installmentType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dailyInstallment: freezed == dailyInstallment
+          ? _value.dailyInstallment
+          : dailyInstallment // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      weeklyInstalmentDate: freezed == weeklyInstalmentDate
+          ? _value.weeklyInstalmentDate
+          : weeklyInstalmentDate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      monthlyInstalmentDate: freezed == monthlyInstalmentDate
+          ? _value.monthlyInstalmentDate
+          : monthlyInstalmentDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -105,11 +147,17 @@ abstract class _$$LendingModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? id,
+      {bool? IsMoneyLent,
+      String? id,
       String? name,
       String? phone,
       String? description,
-      String? amount});
+      String? amount,
+      String? installmentAmount,
+      String? installmentType,
+      DateTime? dailyInstallment,
+      String? weeklyInstalmentDate,
+      DateTime? monthlyInstalmentDate});
 }
 
 /// @nodoc
@@ -125,13 +173,23 @@ class __$$LendingModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? IsMoneyLent = freezed,
     Object? id = freezed,
     Object? name = freezed,
     Object? phone = freezed,
     Object? description = freezed,
     Object? amount = freezed,
+    Object? installmentAmount = freezed,
+    Object? installmentType = freezed,
+    Object? dailyInstallment = freezed,
+    Object? weeklyInstalmentDate = freezed,
+    Object? monthlyInstalmentDate = freezed,
   }) {
     return _then(_$LendingModelImpl(
+      IsMoneyLent: freezed == IsMoneyLent
+          ? _value.IsMoneyLent
+          : IsMoneyLent // ignore: cast_nullable_to_non_nullable
+              as bool?,
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -152,6 +210,26 @@ class __$$LendingModelImplCopyWithImpl<$Res>
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as String?,
+      installmentAmount: freezed == installmentAmount
+          ? _value.installmentAmount
+          : installmentAmount // ignore: cast_nullable_to_non_nullable
+              as String?,
+      installmentType: freezed == installmentType
+          ? _value.installmentType
+          : installmentType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dailyInstallment: freezed == dailyInstallment
+          ? _value.dailyInstallment
+          : dailyInstallment // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      weeklyInstalmentDate: freezed == weeklyInstalmentDate
+          ? _value.weeklyInstalmentDate
+          : weeklyInstalmentDate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      monthlyInstalmentDate: freezed == monthlyInstalmentDate
+          ? _value.monthlyInstalmentDate
+          : monthlyInstalmentDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -160,11 +238,23 @@ class __$$LendingModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$LendingModelImpl implements _LendingModel {
   _$LendingModelImpl(
-      {this.id, this.name, this.phone, this.description, this.amount});
+      {this.IsMoneyLent,
+      this.id,
+      this.name,
+      this.phone,
+      this.description,
+      this.amount,
+      this.installmentAmount,
+      this.installmentType,
+      this.dailyInstallment,
+      this.weeklyInstalmentDate,
+      this.monthlyInstalmentDate});
 
   factory _$LendingModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$LendingModelImplFromJson(json);
 
+  @override
+  final bool? IsMoneyLent;
   @override
   final String? id;
   @override
@@ -175,10 +265,20 @@ class _$LendingModelImpl implements _LendingModel {
   final String? description;
   @override
   final String? amount;
+  @override
+  final String? installmentAmount;
+  @override
+  final String? installmentType;
+  @override
+  final DateTime? dailyInstallment;
+  @override
+  final String? weeklyInstalmentDate;
+  @override
+  final DateTime? monthlyInstalmentDate;
 
   @override
   String toString() {
-    return 'LendingModel(id: $id, name: $name, phone: $phone, description: $description, amount: $amount)';
+    return 'LendingModel(IsMoneyLent: $IsMoneyLent, id: $id, name: $name, phone: $phone, description: $description, amount: $amount, installmentAmount: $installmentAmount, installmentType: $installmentType, dailyInstallment: $dailyInstallment, weeklyInstalmentDate: $weeklyInstalmentDate, monthlyInstalmentDate: $monthlyInstalmentDate)';
   }
 
   @override
@@ -186,18 +286,41 @@ class _$LendingModelImpl implements _LendingModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LendingModelImpl &&
+            (identical(other.IsMoneyLent, IsMoneyLent) ||
+                other.IsMoneyLent == IsMoneyLent) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.phone, phone) || other.phone == phone) &&
             (identical(other.description, description) ||
                 other.description == description) &&
-            (identical(other.amount, amount) || other.amount == amount));
+            (identical(other.amount, amount) || other.amount == amount) &&
+            (identical(other.installmentAmount, installmentAmount) ||
+                other.installmentAmount == installmentAmount) &&
+            (identical(other.installmentType, installmentType) ||
+                other.installmentType == installmentType) &&
+            (identical(other.dailyInstallment, dailyInstallment) ||
+                other.dailyInstallment == dailyInstallment) &&
+            (identical(other.weeklyInstalmentDate, weeklyInstalmentDate) ||
+                other.weeklyInstalmentDate == weeklyInstalmentDate) &&
+            (identical(other.monthlyInstalmentDate, monthlyInstalmentDate) ||
+                other.monthlyInstalmentDate == monthlyInstalmentDate));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, name, phone, description, amount);
+  int get hashCode => Object.hash(
+      runtimeType,
+      IsMoneyLent,
+      id,
+      name,
+      phone,
+      description,
+      amount,
+      installmentAmount,
+      installmentType,
+      dailyInstallment,
+      weeklyInstalmentDate,
+      monthlyInstalmentDate);
 
   /// Create a copy of LendingModel
   /// with the given fields replaced by the non-null parameter values.
@@ -217,15 +340,23 @@ class _$LendingModelImpl implements _LendingModel {
 
 abstract class _LendingModel implements LendingModel {
   factory _LendingModel(
-      {final String? id,
+      {final bool? IsMoneyLent,
+      final String? id,
       final String? name,
       final String? phone,
       final String? description,
-      final String? amount}) = _$LendingModelImpl;
+      final String? amount,
+      final String? installmentAmount,
+      final String? installmentType,
+      final DateTime? dailyInstallment,
+      final String? weeklyInstalmentDate,
+      final DateTime? monthlyInstalmentDate}) = _$LendingModelImpl;
 
   factory _LendingModel.fromJson(Map<String, dynamic> json) =
       _$LendingModelImpl.fromJson;
 
+  @override
+  bool? get IsMoneyLent;
   @override
   String? get id;
   @override
@@ -236,6 +367,16 @@ abstract class _LendingModel implements LendingModel {
   String? get description;
   @override
   String? get amount;
+  @override
+  String? get installmentAmount;
+  @override
+  String? get installmentType;
+  @override
+  DateTime? get dailyInstallment;
+  @override
+  String? get weeklyInstalmentDate;
+  @override
+  DateTime? get monthlyInstalmentDate;
 
   /// Create a copy of LendingModel
   /// with the given fields replaced by the non-null parameter values.

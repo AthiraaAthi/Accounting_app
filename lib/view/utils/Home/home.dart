@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:curved_nav/Application/Lender/lender_bloc.dart';
 import 'package:curved_nav/view/utils/Home/Widgets/alertDialog_widget.dart';
 import 'package:curved_nav/view/utils/Home/selection_card/selection_card.dart';
@@ -63,7 +61,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 itemCount: state.data.length,
                 itemBuilder: (context, index) {
                   final data = state.data[index];
-                  log(data.toString());
+
+                  //log(data.toString());
                   return Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
@@ -80,7 +79,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('Name of the person'),
+                                    Text(data.name ?? ' '),
                                     Text('Balance amount/-'),
                                     Text('Last money given date'),
                                   ],

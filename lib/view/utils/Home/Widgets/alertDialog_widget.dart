@@ -5,6 +5,7 @@ import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.da
 import 'package:curved_nav/view/utils/Navigation/nav_screen.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class AddCardDaolog extends StatefulWidget {
   const AddCardDaolog({super.key});
@@ -18,6 +19,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
   bool isMoneyLendingSelected = false;
   bool isWeeklySelected = false;
   bool isMonthSelected = false;
+  String? instalmentType;
   String? selectedWeekday;
   List<DateTime> matchingDates = [];
 
@@ -50,13 +52,23 @@ class _AddCardDaologState extends State<AddCardDaolog>
     });
   }
 
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
-  final TextEditingController amountController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     late TabController _tabController = TabController(length: 2, vsync: this);
+
+    final pickedDate = DateTime.now();
+    final formattedDate = DateFormat.yMMMd().format(pickedDate);
+
+    final TextEditingController nameController = TextEditingController();
+    final TextEditingController phoneController = TextEditingController();
+    final TextEditingController amountController = TextEditingController();
+    final TextEditingController descriptionController = TextEditingController();
+    final TextEditingController installmentAmountController =
+        TextEditingController();
+
+    final TextEditingController monthlyInstallmentAmountController =
+        TextEditingController(text: formattedDate);
+
     return IconButton(
         onPressed: () {
           showDialog(
@@ -90,6 +102,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
                         child: Column(
                           children: [
                             TabBar(
+                              physics: NeverScrollableScrollPhysics(),
                               controller: _tabController,
                               indicatorSize: TabBarIndicatorSize.tab,
                               indicatorPadding:
@@ -152,6 +165,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                   //  isSelected ? 550 : 120,
                                   width: 600,
                                   child: TabBarView(
+                                    physics: NeverScrollableScrollPhysics(),
                                     controller: _tabController,
                                     children: [
                                       SingleChildScrollView(
@@ -235,6 +249,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                           ),
                                           SizedBox(height: 15),
                                           TextField(
+                                            controller: descriptionController,
                                             maxLines: 4,
                                             decoration: InputDecoration(
                                               contentPadding: EdgeInsets.only(
@@ -284,6 +299,8 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                           isMoneyLendingSelected
                                               ? SizedBox()
                                               : TextField(
+                                                  controller:
+                                                      installmentAmountController,
                                                   decoration: InputDecoration(
                                                     hintText:
                                                         "Installment Amount",
@@ -357,6 +374,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                             false;
                                                         isMonthSelected = false;
                                                       }
+                                                      instalmentType = value;
                                                     });
                                                   },
                                                 ),
@@ -395,13 +413,18 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                       calculateMatchingDates(
                                                           value);
                                                     }
+                                                    log(value!);
                                                   },
                                                 )
                                               : SizedBox(),
                                           isMonthSelected
                                               ? TextField(
+                                                  controller:
+                                                      monthlyInstallmentAmountController,
                                                   readOnly: true,
                                                   decoration: InputDecoration(
+                                                    suffixIcon: Icon(Icons
+                                                        .calendar_today_outlined),
                                                     hintText:
                                                         "Pick date of the month",
                                                     floatingLabelStyle: TextStyle(
@@ -421,42 +444,52 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                             BorderRadius
                                                                 .circular(10)),
                                                   ),
-                                                  onTap: () {
-                                                    showDatePicker(
-                                                        builder: (context, _) {
-                                                          return Theme(
-                                                            data: Theme.of(
-                                                                    context)
-                                                                .copyWith(
-                                                              colorScheme: ColorScheme
-                                                                  .light(
-                                                                      primary:
-                                                                          ColorConstant
+                                                  onTap: () async {
+                                                    final _pickedDate =
+                                                        await showDatePicker(
+                                                            builder:
+                                                                (context, _) {
+                                                              return Theme(
+                                                                data: Theme.of(
+                                                                        context)
+                                                                    .copyWith(
+                                                                  colorScheme: ColorScheme
+                                                                      .light(
+                                                                          primary: ColorConstant
                                                                               .defBlue,
-                                                                      onPrimary:
-                                                                          Colors
+                                                                          onPrimary: Colors
                                                                               .white, // header text color
-                                                                      onSurface:
-                                                                          Colors
-                                                                              .black),
-                                                              textButtonTheme:
-                                                                  TextButtonThemeData(
-                                                                style: TextButton
-                                                                    .styleFrom(
-                                                                  foregroundColor:
-                                                                      ColorConstant
-                                                                          .defBlue, // button text color
+                                                                          onSurface:
+                                                                              Colors.black),
+                                                                  textButtonTheme:
+                                                                      TextButtonThemeData(
+                                                                    style: TextButton
+                                                                        .styleFrom(
+                                                                      foregroundColor:
+                                                                          ColorConstant
+                                                                              .defBlue, // button text color
+                                                                    ),
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                            ),
-                                                            child: _!,
-                                                          );
-                                                        },
-                                                        context: context,
-                                                        firstDate: DateTime(
-                                                            2000, 1, 1),
-                                                        lastDate: DateTime(
-                                                            2100, 31, 12));
+                                                                child: _!,
+                                                              );
+                                                            },
+                                                            context: context,
+                                                            initialDate:
+                                                                DateTime.now(),
+                                                            firstDate: DateTime(
+                                                                2000, 1, 1),
+                                                            lastDate: DateTime(
+                                                                2100, 31, 12));
+                                                    if (_pickedDate != null) {
+                                                      setState(() {
+                                                        monthlyInstallmentAmountController
+                                                            .text = DateFormat
+                                                                .yMMMd()
+                                                            .format(
+                                                                _pickedDate);
+                                                      });
+                                                    }
                                                   },
                                                 )
                                               : SizedBox(),
@@ -505,14 +538,12 @@ class _AddCardDaologState extends State<AddCardDaolog>
                       if (matchingDates.isNotEmpty) {
                         log(matchingDates.toString());
                       }
-                      isSelected
-                          ? Navigator.pop(context)
-                          : Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => NavScreen(),
-                              ),
-                              (Route<dynamic> route) => false);
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => NavScreen(),
+                          ),
+                          (Route<dynamic> route) => false);
                     },
                     child: const Text(
                       "Cancel",
@@ -524,8 +555,22 @@ class _AddCardDaologState extends State<AddCardDaolog>
                       final name = nameController.text;
                       final phone = phoneController.text;
                       final amount = amountController.text;
+                      final descriptionamount = descriptionController.text;
+                      final installmentAmount =
+                          installmentAmountController.text;
+                      final isMoneyLent = isMoneyLendingSelected;
+                      final installmentType = instalmentType;
+                      final weekSelected = selectedWeekday;
+
                       final model = LendingModel(
-                          name: name, phone: phone, amount: amount);
+                          name: name,
+                          phone: phone,
+                          amount: amount,
+                          description: descriptionamount,
+                          installmentAmount: installmentAmount,
+                          IsMoneyLent: isMoneyLent,
+                          installmentType: installmentType,
+                          weeklyInstalmentDate: weekSelected);
                       isSelected ? LenderFunctions().addLender(model) : null;
                       isSelected
                           ? Navigator.pushAndRemoveUntil(
