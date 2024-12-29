@@ -16,13 +16,7 @@ _$LendingModelImpl _$$LendingModelImplFromJson(Map<String, dynamic> json) =>
       amount: json['amount'] as String?,
       installmentAmount: json['installmentAmount'] as String?,
       installmentType: json['installmentType'] as String?,
-      dailyInstallment: json['dailyInstallment'] == null
-          ? null
-          : DateTime.parse(json['dailyInstallment'] as String),
-      weeklyInstalmentDate: json['weeklyInstalmentDate'] as String?,
-      monthlyInstalmentDate: json['monthlyInstalmentDate'] == null
-          ? null
-          : DateTime.parse(json['monthlyInstalmentDate'] as String),
+      listOfTImestamp: _timestampListFromJson(json['listOfTImestamp'] as List?),
     );
 
 Map<String, dynamic> _$$LendingModelImplToJson(_$LendingModelImpl instance) =>
@@ -35,8 +29,5 @@ Map<String, dynamic> _$$LendingModelImplToJson(_$LendingModelImpl instance) =>
       'amount': instance.amount,
       'installmentAmount': instance.installmentAmount,
       'installmentType': instance.installmentType,
-      'dailyInstallment': instance.dailyInstallment?.toIso8601String(),
-      'weeklyInstalmentDate': instance.weeklyInstalmentDate,
-      'monthlyInstalmentDate':
-          instance.monthlyInstalmentDate?.toIso8601String(),
+      'listOfTImestamp': _timestampListToJson(instance.listOfTImestamp),
     };

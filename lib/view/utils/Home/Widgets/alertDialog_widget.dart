@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_nav/Infrastructure/Lender/lender_repository.dart';
 import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
 import 'package:curved_nav/view/utils/Navigation/nav_screen.dart';
@@ -21,7 +22,11 @@ class _AddCardDaologState extends State<AddCardDaolog>
   bool isMonthSelected = false;
   String? instalmentType;
   String? selectedWeekday;
-  List<DateTime> matchingDates = [];
+  List<DateTime> listOfDailyDates = [];
+  List<DateTime> listOfWeeklyDates = [];
+  List<DateTime> listOfMonthlyDates = [];
+  List<DateTime> listOfDates = [];
+  List<Timestamp> timestampList = [];
 
   final List<String> weekdays = [
     'Mon',
@@ -34,30 +39,111 @@ class _AddCardDaologState extends State<AddCardDaolog>
   ];
   double? height;
 
-  void calculateMatchingDates(String weekday) {
-    int selectedWeekdayIndex = weekdays.indexOf(weekday) + 1;
-    DateTime today = DateTime.now();
-    List<DateTime> dates = [];
+  @override
+  void initState() {
+    super.initState();
+    listOfDailyDates = [];
+    listOfWeeklyDates = [];
+    listOfMonthlyDates = [];
+    listOfDates = [];
+    timestampList = [];
+  }
 
-    DateTime current = today;
-    while (dates.length < 20) {
-      if (current.weekday == selectedWeekdayIndex) {
-        dates.add(current);
-      }
-      current = current.add(Duration(days: 1));
+  DateTime normalizeDate(DateTime date) {
+    return DateTime(date.year, date.month, date.day);
+  }
+
+  void dailySelection(String? value) {
+    if (value == "1") {
+      // Generate all dates from today onwards
+      DateTime today = normalizeDate(DateTime.now());
+      List<DateTime> dailyDates = List.generate(50, (index) {
+        return normalizeDate(today.add(Duration(days: index)));
+      });
+
+      setState(() {
+        instalmentType = value;
+        listOfDailyDates = dailyDates;
+        listOfWeeklyDates = [];
+        listOfMonthlyDates = [];
+        listOfDates = [];
+        timestampList = [];
+        selectedWeekday = null;
+      });
+    } else if (value == "2") {
+      setState(() {
+        instalmentType = value;
+        listOfWeeklyDates = [];
+        listOfMonthlyDates = [];
+        listOfDailyDates = [];
+        listOfDates = [];
+        timestampList = [];
+      });
+    } else {
+      setState(() {
+        instalmentType = value;
+        listOfDailyDates = [];
+        listOfWeeklyDates = [];
+        listOfMonthlyDates = [];
+        listOfDates = [];
+        timestampList = [];
+        selectedWeekday = null;
+      });
     }
+  }
 
-    setState(() {
-      matchingDates = dates;
-    });
+  void whenWeekSelected(String? weekday) {
+    if (weekday != null) {
+      DateTime today = normalizeDate(DateTime.now());
+      int todayWeekday = today.weekday;
+      int targetWeekday = weekdays.indexOf(weekday) + 1;
+
+      int daysToAdd = (targetWeekday - todayWeekday) >= 0
+          ? (targetWeekday - todayWeekday)
+          : (7 - todayWeekday + targetWeekday);
+
+      DateTime firstTargetDay = today.add(Duration(days: daysToAdd));
+
+      List<DateTime> weeklyDates = List.generate(50, (index) {
+        return normalizeDate(firstTargetDay.add(Duration(days: 7 * index)));
+      });
+
+      setState(() {
+        selectedWeekday = weekday;
+        listOfWeeklyDates = weeklyDates;
+        listOfDailyDates = [];
+        listOfMonthlyDates = [];
+        listOfDates = [];
+        timestampList = [];
+      });
+    }
+  }
+
+  void pickMonthlyDate(DateTime? pickedDate) {
+    if (pickedDate != null) {
+      int day = pickedDate.day;
+      DateTime today = normalizeDate(DateTime.now());
+
+      final monthlyDates = List.generate(15, (index) {
+        DateTime monthStart = DateTime(today.year, today.month + index, 1);
+        int daysInMonth =
+            DateTime(monthStart.year, monthStart.month + 1, 0).day;
+        DateTime? nextDate = day <= daysInMonth
+            ? DateTime(monthStart.year, monthStart.month, day)
+            : null;
+
+        return nextDate != null && nextDate.isAfter(today) ? nextDate : null;
+      }).where((date) => date != null).toList();
+
+      setState(() {
+        listOfMonthlyDates = monthlyDates.cast<DateTime>();
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     late TabController _tabController = TabController(length: 2, vsync: this);
-
-    final pickedDate = DateTime.now();
-    final formattedDate = DateFormat.yMMMd().format(pickedDate);
 
     final TextEditingController nameController = TextEditingController();
     final TextEditingController phoneController = TextEditingController();
@@ -67,7 +153,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
         TextEditingController();
 
     final TextEditingController monthlyInstallmentAmountController =
-        TextEditingController(text: formattedDate);
+        TextEditingController(text: 'Select date');
 
     return IconButton(
         onPressed: () {
@@ -361,6 +447,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                     ),
                                                   ],
                                                   onChanged: (value) {
+                                                    dailySelection(value);
                                                     setState(() {
                                                       if (value == '2') {
                                                         isWeeklySelected = true;
@@ -406,14 +493,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                           ))
                                                       .toList(),
                                                   onChanged: (value) {
-                                                    if (value != null) {
-                                                      setState(() {
-                                                        selectedWeekday = value;
-                                                      });
-                                                      calculateMatchingDates(
-                                                          value);
-                                                    }
-                                                    log(value!);
+                                                    whenWeekSelected(value);
                                                   },
                                                 )
                                               : SizedBox(),
@@ -477,11 +557,13 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                             context: context,
                                                             initialDate:
                                                                 DateTime.now(),
-                                                            firstDate: DateTime(
-                                                                2000, 1, 1),
+                                                            firstDate:
+                                                                DateTime.now(),
                                                             lastDate: DateTime(
                                                                 2100, 31, 12));
                                                     if (_pickedDate != null) {
+                                                      pickMonthlyDate(
+                                                          _pickedDate);
                                                       setState(() {
                                                         monthlyInstallmentAmountController
                                                             .text = DateFormat
@@ -490,6 +572,8 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                                 _pickedDate);
                                                       });
                                                     }
+                                                    pickMonthlyDate(
+                                                        DateTime.now());
                                                   },
                                                 )
                                               : SizedBox(),
@@ -535,8 +619,8 @@ class _AddCardDaologState extends State<AddCardDaolog>
                 actions: [
                   TextButton(
                     onPressed: () {
-                      if (matchingDates.isNotEmpty) {
-                        log(matchingDates.toString());
+                      if (listOfDailyDates.isNotEmpty) {
+                        log(listOfDailyDates.toString());
                       }
                       Navigator.pushAndRemoveUntil(
                           context,
@@ -560,7 +644,24 @@ class _AddCardDaologState extends State<AddCardDaolog>
                           installmentAmountController.text;
                       final isMoneyLent = isMoneyLendingSelected;
                       final installmentType = instalmentType;
-                      final weekSelected = selectedWeekday;
+                      if (listOfDailyDates.isNotEmpty) {
+                        setState(() {
+                          listOfDates = listOfDailyDates;
+                        });
+                      } else if (listOfWeeklyDates.isNotEmpty) {
+                        setState(() {
+                          listOfDates = listOfWeeklyDates;
+                        });
+                      } else if (listOfMonthlyDates.isNotEmpty) {
+                        setState(() {
+                          listOfDates = listOfMonthlyDates;
+                        });
+                      }
+                      setState(() {
+                        timestampList = listOfDates
+                            .map((date) => Timestamp.fromDate(date))
+                            .toList();
+                      });
 
                       final model = LendingModel(
                           name: name,
@@ -570,7 +671,8 @@ class _AddCardDaologState extends State<AddCardDaolog>
                           installmentAmount: installmentAmount,
                           IsMoneyLent: isMoneyLent,
                           installmentType: installmentType,
-                          weeklyInstalmentDate: weekSelected);
+                          listOfTImestamp: timestampList);
+
                       isSelected ? LenderFunctions().addLender(model) : null;
                       isSelected
                           ? Navigator.pushAndRemoveUntil(

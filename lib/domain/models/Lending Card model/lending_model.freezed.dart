@@ -27,10 +27,10 @@ mixin _$LendingModel {
   String? get description => throw _privateConstructorUsedError;
   String? get amount => throw _privateConstructorUsedError;
   String? get installmentAmount => throw _privateConstructorUsedError;
-  String? get installmentType => throw _privateConstructorUsedError;
-  DateTime? get dailyInstallment => throw _privateConstructorUsedError;
-  String? get weeklyInstalmentDate => throw _privateConstructorUsedError;
-  DateTime? get monthlyInstalmentDate => throw _privateConstructorUsedError;
+  String? get installmentType =>
+      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
+  @JsonKey(fromJson: _timestampListFromJson, toJson: _timestampListToJson)
+  List<Timestamp>? get listOfTImestamp => throw _privateConstructorUsedError;
 
   /// Serializes this LendingModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -57,9 +57,8 @@ abstract class $LendingModelCopyWith<$Res> {
       String? amount,
       String? installmentAmount,
       String? installmentType,
-      DateTime? dailyInstallment,
-      String? weeklyInstalmentDate,
-      DateTime? monthlyInstalmentDate});
+      @JsonKey(fromJson: _timestampListFromJson, toJson: _timestampListToJson)
+      List<Timestamp>? listOfTImestamp});
 }
 
 /// @nodoc
@@ -85,9 +84,7 @@ class _$LendingModelCopyWithImpl<$Res, $Val extends LendingModel>
     Object? amount = freezed,
     Object? installmentAmount = freezed,
     Object? installmentType = freezed,
-    Object? dailyInstallment = freezed,
-    Object? weeklyInstalmentDate = freezed,
-    Object? monthlyInstalmentDate = freezed,
+    Object? listOfTImestamp = freezed,
   }) {
     return _then(_value.copyWith(
       IsMoneyLent: freezed == IsMoneyLent
@@ -122,18 +119,10 @@ class _$LendingModelCopyWithImpl<$Res, $Val extends LendingModel>
           ? _value.installmentType
           : installmentType // ignore: cast_nullable_to_non_nullable
               as String?,
-      dailyInstallment: freezed == dailyInstallment
-          ? _value.dailyInstallment
-          : dailyInstallment // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      weeklyInstalmentDate: freezed == weeklyInstalmentDate
-          ? _value.weeklyInstalmentDate
-          : weeklyInstalmentDate // ignore: cast_nullable_to_non_nullable
-              as String?,
-      monthlyInstalmentDate: freezed == monthlyInstalmentDate
-          ? _value.monthlyInstalmentDate
-          : monthlyInstalmentDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+      listOfTImestamp: freezed == listOfTImestamp
+          ? _value.listOfTImestamp
+          : listOfTImestamp // ignore: cast_nullable_to_non_nullable
+              as List<Timestamp>?,
     ) as $Val);
   }
 }
@@ -155,9 +144,8 @@ abstract class _$$LendingModelImplCopyWith<$Res>
       String? amount,
       String? installmentAmount,
       String? installmentType,
-      DateTime? dailyInstallment,
-      String? weeklyInstalmentDate,
-      DateTime? monthlyInstalmentDate});
+      @JsonKey(fromJson: _timestampListFromJson, toJson: _timestampListToJson)
+      List<Timestamp>? listOfTImestamp});
 }
 
 /// @nodoc
@@ -181,9 +169,7 @@ class __$$LendingModelImplCopyWithImpl<$Res>
     Object? amount = freezed,
     Object? installmentAmount = freezed,
     Object? installmentType = freezed,
-    Object? dailyInstallment = freezed,
-    Object? weeklyInstalmentDate = freezed,
-    Object? monthlyInstalmentDate = freezed,
+    Object? listOfTImestamp = freezed,
   }) {
     return _then(_$LendingModelImpl(
       IsMoneyLent: freezed == IsMoneyLent
@@ -218,18 +204,10 @@ class __$$LendingModelImplCopyWithImpl<$Res>
           ? _value.installmentType
           : installmentType // ignore: cast_nullable_to_non_nullable
               as String?,
-      dailyInstallment: freezed == dailyInstallment
-          ? _value.dailyInstallment
-          : dailyInstallment // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      weeklyInstalmentDate: freezed == weeklyInstalmentDate
-          ? _value.weeklyInstalmentDate
-          : weeklyInstalmentDate // ignore: cast_nullable_to_non_nullable
-              as String?,
-      monthlyInstalmentDate: freezed == monthlyInstalmentDate
-          ? _value.monthlyInstalmentDate
-          : monthlyInstalmentDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+      listOfTImestamp: freezed == listOfTImestamp
+          ? _value._listOfTImestamp
+          : listOfTImestamp // ignore: cast_nullable_to_non_nullable
+              as List<Timestamp>?,
     ));
   }
 }
@@ -246,9 +224,9 @@ class _$LendingModelImpl implements _LendingModel {
       this.amount,
       this.installmentAmount,
       this.installmentType,
-      this.dailyInstallment,
-      this.weeklyInstalmentDate,
-      this.monthlyInstalmentDate});
+      @JsonKey(fromJson: _timestampListFromJson, toJson: _timestampListToJson)
+      final List<Timestamp>? listOfTImestamp})
+      : _listOfTImestamp = listOfTImestamp;
 
   factory _$LendingModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$LendingModelImplFromJson(json);
@@ -269,16 +247,22 @@ class _$LendingModelImpl implements _LendingModel {
   final String? installmentAmount;
   @override
   final String? installmentType;
+// ignore: invalid_annotation_target
+  final List<Timestamp>? _listOfTImestamp;
+// ignore: invalid_annotation_target
   @override
-  final DateTime? dailyInstallment;
-  @override
-  final String? weeklyInstalmentDate;
-  @override
-  final DateTime? monthlyInstalmentDate;
+  @JsonKey(fromJson: _timestampListFromJson, toJson: _timestampListToJson)
+  List<Timestamp>? get listOfTImestamp {
+    final value = _listOfTImestamp;
+    if (value == null) return null;
+    if (_listOfTImestamp is EqualUnmodifiableListView) return _listOfTImestamp;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'LendingModel(IsMoneyLent: $IsMoneyLent, id: $id, name: $name, phone: $phone, description: $description, amount: $amount, installmentAmount: $installmentAmount, installmentType: $installmentType, dailyInstallment: $dailyInstallment, weeklyInstalmentDate: $weeklyInstalmentDate, monthlyInstalmentDate: $monthlyInstalmentDate)';
+    return 'LendingModel(IsMoneyLent: $IsMoneyLent, id: $id, name: $name, phone: $phone, description: $description, amount: $amount, installmentAmount: $installmentAmount, installmentType: $installmentType, listOfTImestamp: $listOfTImestamp)';
   }
 
   @override
@@ -298,12 +282,8 @@ class _$LendingModelImpl implements _LendingModel {
                 other.installmentAmount == installmentAmount) &&
             (identical(other.installmentType, installmentType) ||
                 other.installmentType == installmentType) &&
-            (identical(other.dailyInstallment, dailyInstallment) ||
-                other.dailyInstallment == dailyInstallment) &&
-            (identical(other.weeklyInstalmentDate, weeklyInstalmentDate) ||
-                other.weeklyInstalmentDate == weeklyInstalmentDate) &&
-            (identical(other.monthlyInstalmentDate, monthlyInstalmentDate) ||
-                other.monthlyInstalmentDate == monthlyInstalmentDate));
+            const DeepCollectionEquality()
+                .equals(other._listOfTImestamp, _listOfTImestamp));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -318,9 +298,7 @@ class _$LendingModelImpl implements _LendingModel {
       amount,
       installmentAmount,
       installmentType,
-      dailyInstallment,
-      weeklyInstalmentDate,
-      monthlyInstalmentDate);
+      const DeepCollectionEquality().hash(_listOfTImestamp));
 
   /// Create a copy of LendingModel
   /// with the given fields replaced by the non-null parameter values.
@@ -348,9 +326,8 @@ abstract class _LendingModel implements LendingModel {
       final String? amount,
       final String? installmentAmount,
       final String? installmentType,
-      final DateTime? dailyInstallment,
-      final String? weeklyInstalmentDate,
-      final DateTime? monthlyInstalmentDate}) = _$LendingModelImpl;
+      @JsonKey(fromJson: _timestampListFromJson, toJson: _timestampListToJson)
+      final List<Timestamp>? listOfTImestamp}) = _$LendingModelImpl;
 
   factory _LendingModel.fromJson(Map<String, dynamic> json) =
       _$LendingModelImpl.fromJson;
@@ -370,13 +347,10 @@ abstract class _LendingModel implements LendingModel {
   @override
   String? get installmentAmount;
   @override
-  String? get installmentType;
+  String? get installmentType; // ignore: invalid_annotation_target
   @override
-  DateTime? get dailyInstallment;
-  @override
-  String? get weeklyInstalmentDate;
-  @override
-  DateTime? get monthlyInstalmentDate;
+  @JsonKey(fromJson: _timestampListFromJson, toJson: _timestampListToJson)
+  List<Timestamp>? get listOfTImestamp;
 
   /// Create a copy of LendingModel
   /// with the given fields replaced by the non-null parameter values.

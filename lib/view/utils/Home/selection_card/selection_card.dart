@@ -1,3 +1,4 @@
+import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
 import 'package:curved_nav/view/utils/Home/Widgets/calender.dart';
 import 'package:curved_nav/view/utils/Home/Widgets/infoAlert.dart';
 import 'package:curved_nav/view/utils/Home/Widgets/popUpMenu.dart';
@@ -8,8 +9,9 @@ import 'package:flutter/material.dart';
 import '../Widgets/addAmount_dialog.dart';
 
 class SelectionCard extends StatelessWidget {
+  final LendingModel state;
   final bool isCreator;
-  const SelectionCard({super.key, required this.isCreator});
+  SelectionCard({super.key, required this.isCreator, required this.state});
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +55,9 @@ class SelectionCard extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            CalenderWidget(),
+            CalenderWidget(
+              state: state,
+            ),
             Container(
               height: 20,
               color: white,
