@@ -5,16 +5,18 @@ import 'package:curved_nav/domain/failures/main_failure.dart';
 import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
 import 'package:curved_nav/domain/models/i_lender_repository.dart';
 import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: ILenderRepository)
 class LenderFunctions implements ILenderRepository {
+  final userId = FirebaseAuth.instance.currentUser!.uid;
   @override
   Future<void> addLender(LendingModel lenderDetails) async {
     try {
       final data = await FirebaseFirestore.instance
           .collection('users')
-          .doc()
+          .doc(userId)
           .collection('lender');
 
       String id = data.doc().id;
@@ -34,7 +36,13 @@ class LenderFunctions implements ILenderRepository {
 
   @override
   Future<Either<MainFailures, List<LendingModel>>> getDetails() async {
-    final getData = await FirebaseFirestore.instance.collection('lender').get();
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+    log(userId);
+    final getData = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .collection('lender')
+        .get();
 
     try {
       final lenderDetails =
