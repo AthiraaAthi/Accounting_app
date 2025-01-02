@@ -12,7 +12,10 @@ class LenderFunctions implements ILenderRepository {
   @override
   Future<void> addLender(LendingModel lenderDetails) async {
     try {
-      final data = await FirebaseFirestore.instance.collection('lender');
+      final data = await FirebaseFirestore.instance
+          .collection('users')
+          .doc()
+          .collection('lender');
 
       String id = data.doc().id;
       LendingModel model = lenderDetails.copyWith(id: id);
