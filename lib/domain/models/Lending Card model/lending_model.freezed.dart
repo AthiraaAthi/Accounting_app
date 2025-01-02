@@ -27,8 +27,7 @@ mixin _$LendingModel {
   String? get description => throw _privateConstructorUsedError;
   String? get amount => throw _privateConstructorUsedError;
   String? get installmentAmount => throw _privateConstructorUsedError;
-  String? get installmentType =>
-      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
+  String? get installmentType => throw _privateConstructorUsedError;
   @JsonKey(fromJson: _timestampListFromJson, toJson: _timestampListToJson)
   List<Timestamp>? get listOfTImestamp => throw _privateConstructorUsedError;
 
@@ -247,9 +246,9 @@ class _$LendingModelImpl implements _LendingModel {
   final String? installmentAmount;
   @override
   final String? installmentType;
-// ignore: invalid_annotation_target
+
   final List<Timestamp>? _listOfTImestamp;
-// ignore: invalid_annotation_target
+
   @override
   @JsonKey(fromJson: _timestampListFromJson, toJson: _timestampListToJson)
   List<Timestamp>? get listOfTImestamp {
@@ -347,7 +346,7 @@ abstract class _LendingModel implements LendingModel {
   @override
   String? get installmentAmount;
   @override
-  String? get installmentType; // ignore: invalid_annotation_target
+  String? get installmentType;
   @override
   @JsonKey(fromJson: _timestampListFromJson, toJson: _timestampListToJson)
   List<Timestamp>? get listOfTImestamp;
