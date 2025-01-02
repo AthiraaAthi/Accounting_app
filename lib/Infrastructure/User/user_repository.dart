@@ -39,7 +39,7 @@ Future<void> registerUser(String userId) async {
     'userId': userId,
 
     'registeredAt': FieldValue.serverTimestamp(),
-    'expiresAt': DateTime.now().add(Duration(days: 40)), // Example TTL: 7 days
+    'expiresAt': DateTime.now().add(Duration(days: 1)), // Example TTL: 7 days
   });
 }
 
