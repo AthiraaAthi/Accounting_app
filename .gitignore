@@ -11,7 +11,7 @@
 migrate_working_dir/
 
 # Ignore files -firebase api
-lib/firebase_options.dart
+# lib/firebase_options.dart
 
 # IntelliJ related
 *.iml
