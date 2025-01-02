@@ -10,6 +10,9 @@
 .svn/
 migrate_working_dir/
 
+# Ignore files -firebase api
+lib/firebase_options.dart
+
 # IntelliJ related
 *.iml
 *.ipr

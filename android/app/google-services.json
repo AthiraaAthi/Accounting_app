@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "180958546681",
+    "project_id": "accountin-app",
+    "storage_bucket": "accountin-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:180958546681:android:b7d27c68c9a4d54db7b028",
+        "android_client_info": {
+          "package_name": "com.lookthrough.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGaxX6rN2js9DyAiGbpQ1gkGefoN-nX1w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

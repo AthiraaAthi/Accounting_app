@@ -1,13 +1,18 @@
 import 'dart:developer';
 
+import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
+
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
+
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalenderWidget extends StatefulWidget {
+  final LendingModel state;
   const CalenderWidget({
     super.key,
+    required this.state,
   });
 
   @override
@@ -17,7 +22,6 @@ class CalenderWidget extends StatefulWidget {
 class _CalenderWidgetState extends State<CalenderWidget> {
   var selectedDate = DateTime.now();
   var focusdDate = DateTime.now();
-  late Map<DateTime, List<String>> _events;
 
   Future<void> selectDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
@@ -56,36 +60,38 @@ class _CalenderWidgetState extends State<CalenderWidget> {
   void initState() {
     super.initState();
     date = DateFormat.yMd().format(DateTime.now());
-    _events = {
-      DateTime(2024, 12, 2): ['Paid'], // Correct format
-      DateTime(2024, 12, 9): ['Not Paid'], // Correct format
-      DateTime(2024, 12, 16): ['Pending'], // Correct format
-      DateTime(2024, 12, 23): ['Pending'], // Correct format
-    };
   }
 
-  Color _getEventColor(String event) {
-    switch (event) {
-      case 'Paid':
-        return lightGreen;
-      case 'Not Paid':
-        return lightRed;
-      case 'Pending':
-        return orenge;
-      default:
-        return Colors.grey;
-    }
+  // Color _getEventColor(String event) {
+  //   switch (event) {
+  //     case 'Paid':
+  //       return lightGreen;
+  //     case 'Not Paid':
+  //       return lightRed;
+  //     case 'Pending':
+  //       return orenge;
+  //     default:
+  //       return Colors.grey;
+  //   }
+  // }
+
+  DateTime normalizeDate(DateTime date) {
+    return DateTime(date.year, date.month, date.day);
   }
 
   @override
   Widget build(BuildContext context) {
+    final dateTimeList =
+        widget.state.listOfTImestamp!.map((e) => e.toDate()).toList();
+
+    log(dateTimeList.toString());
     return TableCalendar(
       calendarStyle: CalendarStyle(
           cellMargin: EdgeInsets.all(2),
           todayDecoration: BoxDecoration(
             shape: BoxShape.circle,
             color: focusdDate != DateTime.now()
-                ? primaryColorBlue.withOpacity(0.5)
+                ? primaryColorBlue.withValues(alpha: 0.5)
                 : primaryColorBlue,
           ),
           selectedDecoration: BoxDecoration(
@@ -97,8 +103,8 @@ class _CalenderWidgetState extends State<CalenderWidget> {
       availableCalendarFormats: {CalendarFormat.month: "Month"},
       calendarFormat: CalendarFormat.month,
       focusedDay: focusdDate,
-      firstDay: DateTime.utc(2020, 1, 1),
-      lastDay: DateTime.utc(2030, 12, 31),
+      firstDay: DateTime.now(),
+      lastDay: DateTime.utc(2100, 12, 31),
       selectedDayPredicate: (day) {
         return isSameDay(selectedDate, day);
       },
@@ -107,50 +113,46 @@ class _CalenderWidgetState extends State<CalenderWidget> {
           focusdDate = focusedDay;
         });
       },
-      onDaySelected: (selectedDay, focusedDay) {
-        final events = _events[
-            DateTime(selectedDay.year, selectedDay.month, selectedDay.day)];
+      // onDaySelected: (selectedDay, focusedDay) {
+      //   final events = _events[
+      //       DateTime(selectedDay.year, selectedDay.month, selectedDay.day)];
 
-        selectedDate = selectedDay;
-        final moDate = DateFormat.yMd().format(selectedDate);
-        if (selectedDay.isBefore(DateTime.now()) ||
-            isSameDay(selectedDay, DateTime.now())) {
-          setState(() {
-            focusdDate = focusedDay;
-            final day = moDate;
-            date = day;
-            final modifiedDate = DateFormat.yMd().format(selectedDay);
-            date = modifiedDate;
-            log(date);
-          });
-        } else if (events != null && events.contains('Pending')) {
-          // Prevent any action for pending days
-          return;
-        }
-      },
-      enabledDayPredicate: (day) {
-        final events = _events[DateTime(day.year, day.month, day.day)];
-        if (events != null && events.contains('Pending')) {
-          return true;
-        }
-        return day.isBefore(DateTime.now()) || isSameDay(day, DateTime.now());
-      },
+      //   selectedDate = selectedDay;
+      //   final moDate = DateFormat.yMd().format(selectedDate);
+      //   if (selectedDay.isBefore(DateTime.now()) ||
+      //       isSameDay(selectedDay, DateTime.now())) {
+      //     setState(() {
+      //       focusdDate = focusedDay;
+      //       final day = moDate;
+      //       date = day;
+      //       final modifiedDate = DateFormat.yMd().format(selectedDay);
+      //       date = modifiedDate;
+      //       log(date);
+      //     });
+      //   } else if (events != null && events.contains('Pending')) {
+      //     // Prevent any action for pending days
+      //     return;
+      //   }
+      // },
+      // enabledDayPredicate: (day) {
+
+      // },
       onHeaderTapped: (focusedDay) {
         selectDate(context);
       },
       eventLoader: (day) {
-        return _events[DateTime(day.year, day.month, day.day)] ?? [];
+        // Check if the normalized day has any events
+        return dateTimeList.where((event) => isSameDay(event, day)).toList();
       },
       calendarBuilders: CalendarBuilders(
         defaultBuilder: (context, day, focusedDay) {
-          final events = _events[DateTime(day.year, day.month, day.day)];
-          if (events != null && events.isNotEmpty) {
-            final eventType = events.first; // Get the first event
+          // Highlight days with events
+          if (dateTimeList.map(normalizeDate).contains(normalizeDate(day))) {
             return Container(
-              margin: const EdgeInsets.all(4), // Cell margin
+              margin: const EdgeInsets.all(4),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: _getEventColor(eventType), // Event-specific color
+                color: Colors.orange, // Event-specific color
               ),
               child: Center(
                 child: Text(
@@ -160,7 +162,7 @@ class _CalenderWidgetState extends State<CalenderWidget> {
               ),
             );
           }
-          return null;
+          return null; // Use default rendering for other dates
         },
       ),
     );

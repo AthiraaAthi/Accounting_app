@@ -1,4 +1,4 @@
-package com.example.curved_nav
+package com.lookthrough.app
 
 import io.flutter.embedding.android.FlutterActivity
 
