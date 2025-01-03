@@ -15,9 +15,11 @@ class LendingModel with _$LendingModel {
     String? amount,
     String? installmentAmount,
     String? installmentType,
+
     // ignore: invalid_annotation_target
     @JsonKey(fromJson: _timestampListFromJson, toJson: _timestampListToJson)
     List<Timestamp>? listOfTImestamp,
+    String? shareCode,
   }) = _LendingModel;
 
   factory LendingModel.fromJson(Map<String, dynamic> json) =>
