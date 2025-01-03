@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:curved_nav/Infrastructure/Code%20Generation/code_generator.dart';
 import 'package:curved_nav/Infrastructure/Lender/lender_repository.dart';
 import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
 import 'package:curved_nav/view/utils/Navigation/nav_screen.dart';
@@ -27,6 +28,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
   List<DateTime> listOfMonthlyDates = [];
   List<DateTime> listOfDates = [];
   List<Timestamp> timestampList = [];
+  String? shareCode;
 
   final List<String> weekdays = [
     'Mon',
@@ -662,6 +664,10 @@ class _AddCardDaologState extends State<AddCardDaolog>
                             .map((date) => Timestamp.fromDate(date))
                             .toList();
                       });
+                      setState(() {
+                        shareCode = generateRandomCode(10);
+                      });
+                      log(shareCode!);
 
                       final model = LendingModel(
                           name: name,
@@ -671,7 +677,8 @@ class _AddCardDaologState extends State<AddCardDaolog>
                           installmentAmount: installmentAmount,
                           IsMoneyLent: isMoneyLent,
                           installmentType: installmentType,
-                          listOfTImestamp: timestampList);
+                          listOfTImestamp: timestampList,
+                          shareCode: shareCode);
 
                       isSelected ? LenderFunctions().addLender(model) : null;
                       isSelected
