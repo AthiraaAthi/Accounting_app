@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_nav/Infrastructure/Code%20Generation/code_generator.dart';
+import 'package:curved_nav/Infrastructure/Lender/join_rep.dart';
 import 'package:curved_nav/Infrastructure/Lender/lender_repository.dart';
 import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
 import 'package:curved_nav/view/utils/Navigation/nav_screen.dart';
@@ -156,6 +157,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
 
     final TextEditingController monthlyInstallmentAmountController =
         TextEditingController(text: 'Select date');
+    final TextEditingController codeTextController = TextEditingController();
 
     return IconButton(
         onPressed: () {
@@ -587,6 +589,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                             height: 30,
                                           ),
                                           TextField(
+                                            controller: codeTextController,
                                             decoration: InputDecoration(
                                               hintText: "Enter code",
                                               floatingLabelStyle: TextStyle(
@@ -715,6 +718,8 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                     ),
                                     TextButton(
                                         onPressed: () {
+                                          searchByShareCode(
+                                              codeTextController.text);
                                           Navigator.pop(context);
                                         },
                                         style: ButtonStyle(
