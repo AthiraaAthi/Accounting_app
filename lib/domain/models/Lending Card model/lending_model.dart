@@ -20,6 +20,7 @@ class LendingModel with _$LendingModel {
     @JsonKey(fromJson: _timestampListFromJson, toJson: _timestampListToJson)
     List<Timestamp>? listOfTImestamp,
     String? shareCode,
+    bool? asJoiner,
   }) = _LendingModel;
 
   factory LendingModel.fromJson(Map<String, dynamic> json) =>
