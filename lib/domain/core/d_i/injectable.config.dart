@@ -16,6 +16,7 @@ import 'package:curved_nav/domain/functions/app_uninstall_clear_data.dart'
 import 'package:curved_nav/domain/functions/user_detection.dart' as _i155;
 import 'package:curved_nav/domain/models/i_category_repository.dart' as _i794;
 import 'package:curved_nav/domain/models/i_expense_repository.dart' as _i338;
+import 'package:curved_nav/domain/models/i_join_repository.dart' as _i988;
 import 'package:curved_nav/domain/models/i_lender_repository.dart' as _i367;
 import 'package:curved_nav/Infrastructure/App%20Install%20and%20Uninstall/app_clear.dart'
     as _i1013;
@@ -23,6 +24,7 @@ import 'package:curved_nav/Infrastructure/Category/category_repository.dart'
     as _i660;
 import 'package:curved_nav/Infrastructure/Expense/expense_repository.dart'
     as _i360;
+import 'package:curved_nav/Infrastructure/Lender/join_repository.dart' as _i241;
 import 'package:curved_nav/Infrastructure/Lender/lender_repository.dart'
     as _i783;
 import 'package:curved_nav/Infrastructure/User/user_repository.dart' as _i572;
@@ -40,6 +42,7 @@ extension GetItInjectableX on _i174.GetIt {
       environment,
       environmentFilter,
     );
+    gh.lazySingleton<_i988.IJoinRepository>(() => _i241.JoinFunctions());
     gh.lazySingleton<_i794.ICategoryRepository>(
         () => _i660.CategoryFunctions());
     gh.lazySingleton<_i155.IUserDetection>(() => _i572.UserRepository());
@@ -50,8 +53,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i1062.ExpenseBloc(gh<_i338.IExpenseRepository>()));
     gh.factory<_i402.CategoryBloc>(
         () => _i402.CategoryBloc(gh<_i794.ICategoryRepository>()));
-    gh.factory<_i203.LenderBloc>(
-        () => _i203.LenderBloc(gh<_i367.ILenderRepository>()));
+    gh.factory<_i203.LenderBloc>(() => _i203.LenderBloc(
+          gh<_i367.ILenderRepository>(),
+          gh<_i988.IJoinRepository>(),
+        ));
     return this;
   }
 }

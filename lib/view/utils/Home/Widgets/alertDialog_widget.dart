@@ -1,13 +1,16 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'package:curved_nav/Application/Lender/lender_bloc.dart';
 import 'package:curved_nav/Infrastructure/Code%20Generation/code_generator.dart';
-import 'package:curved_nav/Infrastructure/Lender/join_rep.dart';
+
 import 'package:curved_nav/Infrastructure/Lender/lender_repository.dart';
 import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
 import 'package:curved_nav/view/utils/Navigation/nav_screen.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class AddCardDaolog extends StatefulWidget {
@@ -691,45 +694,78 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                 builder: (context) => NavScreen(),
                               ),
                               (Route<dynamic> route) => false)
-                          : showDialog(
-                              barrierDismissible: false,
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  title: Center(child: Text('Code details')),
-                                  content: Column(
+                          : context
+                              .read<LenderBloc>()
+                              .add(JoinGetData(code: codeTextController.text));
+
+                      showDialog(
+                          barrierDismissible: false,
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              backgroundColor: white,
+                              title: Center(child: Text('Code details')),
+                              content: BlocBuilder<LenderBloc, LenderState>(
+                                builder: (context, state) {
+                                  if (state.isLoading) {
+                                    return Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Center(
+                                          child: CircularProgressIndicator(
+                                            color: primaryColorBlue,
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  }
+                                  final data = state.joinData[0];
+                                  log(data.toString());
+                                  return Column(
                                     mainAxisSize: MainAxisSize.min,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text('Name: Name'),
-                                      Text('Amount: 30000/-')
+                                      Text('Name: ${data.name}'),
+                                      Text('Amount: ${data.amount}/-')
                                     ],
-                                  ),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      style: ButtonStyle(
-                                          foregroundColor:
-                                              WidgetStatePropertyAll(black)),
-                                      child: Text('Cancel'),
-                                    ),
-                                    TextButton(
+                                  );
+                                },
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  style: ButtonStyle(
+                                      foregroundColor:
+                                          WidgetStatePropertyAll(black)),
+                                  child: Text('Cancel'),
+                                ),
+                                BlocBuilder<LenderBloc, LenderState>(
+                                  builder: (context, state) {
+                                    return TextButton(
                                         onPressed: () {
-                                          searchByShareCode(
-                                              codeTextController.text);
-                                          Navigator.pop(context);
+                                          LenderFunctions()
+                                              .addLender(state.joinData[0]);
+                                          Navigator.pushAndRemoveUntil(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    NavScreen(),
+                                              ),
+                                              (Route<dynamic> route) => false);
                                         },
                                         style: ButtonStyle(
                                             foregroundColor:
                                                 WidgetStatePropertyAll(
                                                     primaryColorBlue)),
-                                        child: Text('Add'))
-                                  ],
-                                );
-                              });
+                                        child: Text('Add'));
+                                  },
+                                )
+                              ],
+                            );
+                          });
                     },
                     child: Text(
                       isSelected ? 'Create' : 'Add',
