@@ -746,8 +746,22 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                   builder: (context, state) {
                                     return TextButton(
                                         onPressed: () {
-                                          LenderFunctions()
-                                              .addLender(state.joinData[0]);
+                                          final joinerData = state.joinData[0];
+                                          final bool asJoiner = true;
+                                          final model = LendingModel(
+                                            name: joinerData.name,
+                                            asJoiner: asJoiner,
+                                            phone: joinerData.phone,
+                                            description: joinerData.description,
+                                            amount: joinerData.amount,
+                                            installmentAmount:
+                                                joinerData.installmentAmount,
+                                            installmentType:
+                                                joinerData.installmentType,
+                                            listOfTImestamp:
+                                                joinerData.listOfTImestamp,
+                                          );
+                                          LenderFunctions().addLender(model);
                                           Navigator.pushAndRemoveUntil(
                                               context,
                                               MaterialPageRoute(
