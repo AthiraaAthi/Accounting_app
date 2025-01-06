@@ -37,7 +37,6 @@ Future<void> registerUser(String userId) async {
   // Create the user document
   await userRef.set({
     'userId': userId,
-
     'registeredAt': FieldValue.serverTimestamp(),
     'expiresAt': DateTime.now().add(Duration(days: 1)), // Example TTL: 7 days
   });
