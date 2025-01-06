@@ -1,11 +1,16 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'package:curved_nav/Application/Lender/lender_bloc.dart';
+import 'package:curved_nav/Infrastructure/Code%20Generation/code_generator.dart';
+
 import 'package:curved_nav/Infrastructure/Lender/lender_repository.dart';
 import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
 import 'package:curved_nav/view/utils/Navigation/nav_screen.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class AddCardDaolog extends StatefulWidget {
@@ -27,6 +32,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
   List<DateTime> listOfMonthlyDates = [];
   List<DateTime> listOfDates = [];
   List<Timestamp> timestampList = [];
+  String? shareCode;
 
   final List<String> weekdays = [
     'Mon',
@@ -154,6 +160,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
 
     final TextEditingController monthlyInstallmentAmountController =
         TextEditingController(text: 'Select date');
+    final TextEditingController codeTextController = TextEditingController();
 
     return IconButton(
         onPressed: () {
@@ -585,6 +592,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                             height: 30,
                                           ),
                                           TextField(
+                                            controller: codeTextController,
                                             decoration: InputDecoration(
                                               hintText: "Enter code",
                                               floatingLabelStyle: TextStyle(
@@ -662,6 +670,10 @@ class _AddCardDaologState extends State<AddCardDaolog>
                             .map((date) => Timestamp.fromDate(date))
                             .toList();
                       });
+                      setState(() {
+                        shareCode = generateRandomCode(10);
+                      });
+                      log(shareCode!);
 
                       final model = LendingModel(
                           name: name,
@@ -671,9 +683,21 @@ class _AddCardDaologState extends State<AddCardDaolog>
                           installmentAmount: installmentAmount,
                           IsMoneyLent: isMoneyLent,
                           installmentType: installmentType,
-                          listOfTImestamp: timestampList);
+                          listOfTImestamp: timestampList,
+                          shareCode: shareCode);
 
                       isSelected ? LenderFunctions().addLender(model) : null;
+                      isSelected
+                          ? Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => NavScreen(),
+                              ),
+                              (Route<dynamic> route) => false)
+                          : context
+                              .read<LenderBloc>()
+                              .add(JoinGetData(code: codeTextController.text));
+
                       isSelected
                           ? Navigator.pushAndRemoveUntil(
                               context,
@@ -686,15 +710,34 @@ class _AddCardDaologState extends State<AddCardDaolog>
                               context: context,
                               builder: (context) {
                                 return AlertDialog(
+                                  backgroundColor: white,
                                   title: Center(child: Text('Code details')),
-                                  content: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text('Name: Name'),
-                                      Text('Amount: 30000/-')
-                                    ],
+                                  content: BlocBuilder<LenderBloc, LenderState>(
+                                    builder: (context, state) {
+                                      if (state.isLoading) {
+                                        return Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Center(
+                                              child: CircularProgressIndicator(
+                                                color: primaryColorBlue,
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      }
+                                      final data = state.joinData[0];
+                                      log(data.toString());
+                                      return Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text('Name: ${data.name}'),
+                                          Text('Amount: ${data.amount}/-')
+                                        ],
+                                      );
+                                    },
                                   ),
                                   actions: [
                                     TextButton(
@@ -706,15 +749,45 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                               WidgetStatePropertyAll(black)),
                                       child: Text('Cancel'),
                                     ),
-                                    TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        style: ButtonStyle(
-                                            foregroundColor:
-                                                WidgetStatePropertyAll(
-                                                    primaryColorBlue)),
-                                        child: Text('Add'))
+                                    BlocBuilder<LenderBloc, LenderState>(
+                                      builder: (context, state) {
+                                        return TextButton(
+                                            onPressed: () {
+                                              final joinerData =
+                                                  state.joinData[0];
+                                              final bool asJoiner = true;
+                                              final model = LendingModel(
+                                                name: joinerData.name,
+                                                asJoiner: asJoiner,
+                                                phone: joinerData.phone,
+                                                description:
+                                                    joinerData.description,
+                                                amount: joinerData.amount,
+                                                installmentAmount: joinerData
+                                                    .installmentAmount,
+                                                installmentType:
+                                                    joinerData.installmentType,
+                                                listOfTImestamp:
+                                                    joinerData.listOfTImestamp,
+                                              );
+                                              LenderFunctions()
+                                                  .addLender(model);
+                                              Navigator.pushAndRemoveUntil(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        NavScreen(),
+                                                  ),
+                                                  (Route<dynamic> route) =>
+                                                      false);
+                                            },
+                                            style: ButtonStyle(
+                                                foregroundColor:
+                                                    WidgetStatePropertyAll(
+                                                        primaryColorBlue)),
+                                            child: Text('Add'));
+                                      },
+                                    )
                                   ],
                                 );
                               });
