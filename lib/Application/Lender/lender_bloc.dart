@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:curved_nav/domain/failures/main_failure.dart';
 import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
+import 'package:curved_nav/domain/models/i_join_repository.dart';
 import 'package:curved_nav/domain/models/i_lender_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -13,7 +14,9 @@ part 'lender_bloc.freezed.dart';
 @injectable
 class LenderBloc extends Bloc<LenderEvent, LenderState> {
   final ILenderRepository iLenderRepository;
-  LenderBloc(this.iLenderRepository) : super(LenderState.initial()) {
+  final IJoinRepository iJoinRepository;
+  LenderBloc(this.iLenderRepository, this.iJoinRepository)
+      : super(LenderState.initial()) {
     on<GetData>((event, emit) async {
       emit(state.copyWith(isLoading: true, getFailureOrSuccess: none()));
       final Either<MainFailures, List<LendingModel>> getLenderDetails =
@@ -27,6 +30,22 @@ class LenderBloc extends Bloc<LenderEvent, LenderState> {
             isLoading: false,
             getFailureOrSuccess: some(success),
             data: success);
+      }));
+    });
+    on<JoinGetData>((event, emit) async {
+      emit(state.copyWith(isLoading: true, getFailureOrSuccess: none()));
+      final Either<MainFailures, List<LendingModel>> getLenderDetails =
+          await iJoinRepository.getJoinCardInformation(event.code);
+      emit(getLenderDetails.fold(
+          (failures) => state.copyWith(
+              isLoading: false,
+              getFailureOrSuccess: some(failures)), (success) {
+        // success.sort((first, second) => second.id!.compareTo(first.id!));
+        return state.copyWith(
+            isLoading: false,
+            getFailureOrSuccess: some(success),
+            data: state.data,
+            joinData: success);
       }));
     });
   }
