@@ -1,6 +1,5 @@
 import 'package:curved_nav/Application/Category/category_bloc.dart';
 import 'package:curved_nav/Application/Expense/expense_bloc.dart';
-
 import 'package:curved_nav/Application/Lender/lender_bloc.dart';
 import 'package:curved_nav/Infrastructure/App%20Install%20and%20Uninstall/app_clear.dart';
 import 'package:curved_nav/Infrastructure/User/user_repository.dart';
