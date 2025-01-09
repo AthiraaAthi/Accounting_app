@@ -74,7 +74,9 @@ class SelectionCard extends StatelessWidget {
                       showDialog(
                         barrierDismissible: false,
                         context: context,
-                        builder: (context) => AddPaymentDialog(),
+                        builder: (context) => AddPaymentDialog(
+                          state: state,
+                        ),
                       );
                     },
                     child: Text("Add Payment"))

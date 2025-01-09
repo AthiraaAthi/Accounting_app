@@ -1,13 +1,22 @@
+import 'dart:developer';
+
+import 'package:curved_nav/Infrastructure/Lender/details.repository.dart';
+import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
+import 'package:curved_nav/domain/models/history%20and%20others%20model/detail_model.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
 
 class AddPaymentDialog extends StatelessWidget {
+  final LendingModel state;
   const AddPaymentDialog({
     super.key,
+    required this.state,
   });
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController addAmountController = TextEditingController();
+    final id = state.id;
     return AlertDialog(
       backgroundColor: white,
       title: Center(child: Text("Enter Amount")),
@@ -27,6 +36,7 @@ class AddPaymentDialog extends StatelessWidget {
           Expanded(
               flex: 6,
               child: TextField(
+                controller: addAmountController,
                 textAlign: TextAlign.center,
                 cursorColor: primaryColorBlue,
                 maxLength: 6,
@@ -56,11 +66,16 @@ class AddPaymentDialog extends StatelessWidget {
       actions: [
         TextButton(
             onPressed: () {
+              log(id.toString());
+
               Navigator.pop(context);
             },
             child: Text('Cancel')),
         TextButton(
             onPressed: () {
+              final amount = addAmountController.text;
+              final model = DetailModel(amount: amount);
+              DetailsFunctions().addDetails(model, id!);
               Navigator.pop(context);
             },
             child: Text(
