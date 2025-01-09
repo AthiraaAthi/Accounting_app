@@ -19,11 +19,15 @@ class LenderFunctions implements ILenderRepository {
           .doc(userId)
           .collection('lender');
 
-      String id = data.doc().id;
+      final docRef = data.doc();
+
+      String id = docRef.id;
       LendingModel model = lenderDetails.copyWith(id: id);
 
-      data.add(model.toJson());
+      docRef.set(model.toJson());
+
       log('Lender added successfully!');
+      log('docId:${docRef.id}');
     } catch (e) {
       log('Error adding Lender: $e');
     }
