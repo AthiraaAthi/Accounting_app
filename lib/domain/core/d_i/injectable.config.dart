@@ -15,6 +15,7 @@ import 'package:curved_nav/domain/functions/app_uninstall_clear_data.dart'
     as _i878;
 import 'package:curved_nav/domain/functions/user_detection.dart' as _i155;
 import 'package:curved_nav/domain/models/i_category_repository.dart' as _i794;
+import 'package:curved_nav/domain/models/i_details_repository.dart' as _i243;
 import 'package:curved_nav/domain/models/i_expense_repository.dart' as _i338;
 import 'package:curved_nav/domain/models/i_join_repository.dart' as _i988;
 import 'package:curved_nav/domain/models/i_lender_repository.dart' as _i367;
@@ -24,6 +25,8 @@ import 'package:curved_nav/Infrastructure/Category/category_repository.dart'
     as _i660;
 import 'package:curved_nav/Infrastructure/Expense/expense_repository.dart'
     as _i360;
+import 'package:curved_nav/Infrastructure/Lender/details.repository.dart'
+    as _i559;
 import 'package:curved_nav/Infrastructure/Lender/join_repository.dart' as _i241;
 import 'package:curved_nav/Infrastructure/Lender/lender_repository.dart'
     as _i783;
@@ -46,6 +49,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i794.ICategoryRepository>(
         () => _i660.CategoryFunctions());
     gh.lazySingleton<_i155.IUserDetection>(() => _i572.UserRepository());
+    gh.lazySingleton<_i243.IDetailsRepository>(() => _i559.DetailsFunctions());
     gh.lazySingleton<_i338.IExpenseRepository>(() => _i360.ExpenseFunctions());
     gh.lazySingleton<_i878.IAppUninstallClearData>(() => _i1013.AppClear());
     gh.lazySingleton<_i367.ILenderRepository>(() => _i783.LenderFunctions());
