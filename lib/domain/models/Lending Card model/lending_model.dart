@@ -21,6 +21,7 @@ class LendingModel with _$LendingModel {
     List<Timestamp>? listOfTImestamp,
     String? shareCode,
     bool? asJoiner,
+    String? balanceAmount,
   }) = _LendingModel;
 
   factory LendingModel.fromJson(Map<String, dynamic> json) =>

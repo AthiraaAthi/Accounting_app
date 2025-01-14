@@ -33,6 +33,7 @@ mixin _$LendingModel {
   List<Timestamp>? get listOfTImestamp => throw _privateConstructorUsedError;
   String? get shareCode => throw _privateConstructorUsedError;
   bool? get asJoiner => throw _privateConstructorUsedError;
+  String? get balanceAmount => throw _privateConstructorUsedError;
 
   /// Serializes this LendingModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -62,7 +63,8 @@ abstract class $LendingModelCopyWith<$Res> {
       @JsonKey(fromJson: _timestampListFromJson, toJson: _timestampListToJson)
       List<Timestamp>? listOfTImestamp,
       String? shareCode,
-      bool? asJoiner});
+      bool? asJoiner,
+      String? balanceAmount});
 }
 
 /// @nodoc
@@ -91,6 +93,7 @@ class _$LendingModelCopyWithImpl<$Res, $Val extends LendingModel>
     Object? listOfTImestamp = freezed,
     Object? shareCode = freezed,
     Object? asJoiner = freezed,
+    Object? balanceAmount = freezed,
   }) {
     return _then(_value.copyWith(
       IsMoneyLent: freezed == IsMoneyLent
@@ -137,6 +140,10 @@ class _$LendingModelCopyWithImpl<$Res, $Val extends LendingModel>
           ? _value.asJoiner
           : asJoiner // ignore: cast_nullable_to_non_nullable
               as bool?,
+      balanceAmount: freezed == balanceAmount
+          ? _value.balanceAmount
+          : balanceAmount // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -161,7 +168,8 @@ abstract class _$$LendingModelImplCopyWith<$Res>
       @JsonKey(fromJson: _timestampListFromJson, toJson: _timestampListToJson)
       List<Timestamp>? listOfTImestamp,
       String? shareCode,
-      bool? asJoiner});
+      bool? asJoiner,
+      String? balanceAmount});
 }
 
 /// @nodoc
@@ -188,6 +196,7 @@ class __$$LendingModelImplCopyWithImpl<$Res>
     Object? listOfTImestamp = freezed,
     Object? shareCode = freezed,
     Object? asJoiner = freezed,
+    Object? balanceAmount = freezed,
   }) {
     return _then(_$LendingModelImpl(
       IsMoneyLent: freezed == IsMoneyLent
@@ -234,6 +243,10 @@ class __$$LendingModelImplCopyWithImpl<$Res>
           ? _value.asJoiner
           : asJoiner // ignore: cast_nullable_to_non_nullable
               as bool?,
+      balanceAmount: freezed == balanceAmount
+          ? _value.balanceAmount
+          : balanceAmount // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -253,7 +266,8 @@ class _$LendingModelImpl implements _LendingModel {
       @JsonKey(fromJson: _timestampListFromJson, toJson: _timestampListToJson)
       final List<Timestamp>? listOfTImestamp,
       this.shareCode,
-      this.asJoiner})
+      this.asJoiner,
+      this.balanceAmount})
       : _listOfTImestamp = listOfTImestamp;
 
   factory _$LendingModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -292,10 +306,12 @@ class _$LendingModelImpl implements _LendingModel {
   final String? shareCode;
   @override
   final bool? asJoiner;
+  @override
+  final String? balanceAmount;
 
   @override
   String toString() {
-    return 'LendingModel(IsMoneyLent: $IsMoneyLent, id: $id, name: $name, phone: $phone, description: $description, amount: $amount, installmentAmount: $installmentAmount, installmentType: $installmentType, listOfTImestamp: $listOfTImestamp, shareCode: $shareCode, asJoiner: $asJoiner)';
+    return 'LendingModel(IsMoneyLent: $IsMoneyLent, id: $id, name: $name, phone: $phone, description: $description, amount: $amount, installmentAmount: $installmentAmount, installmentType: $installmentType, listOfTImestamp: $listOfTImestamp, shareCode: $shareCode, asJoiner: $asJoiner, balanceAmount: $balanceAmount)';
   }
 
   @override
@@ -320,7 +336,9 @@ class _$LendingModelImpl implements _LendingModel {
             (identical(other.shareCode, shareCode) ||
                 other.shareCode == shareCode) &&
             (identical(other.asJoiner, asJoiner) ||
-                other.asJoiner == asJoiner));
+                other.asJoiner == asJoiner) &&
+            (identical(other.balanceAmount, balanceAmount) ||
+                other.balanceAmount == balanceAmount));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -337,7 +355,8 @@ class _$LendingModelImpl implements _LendingModel {
       installmentType,
       const DeepCollectionEquality().hash(_listOfTImestamp),
       shareCode,
-      asJoiner);
+      asJoiner,
+      balanceAmount);
 
   /// Create a copy of LendingModel
   /// with the given fields replaced by the non-null parameter values.
@@ -368,7 +387,8 @@ abstract class _LendingModel implements LendingModel {
       @JsonKey(fromJson: _timestampListFromJson, toJson: _timestampListToJson)
       final List<Timestamp>? listOfTImestamp,
       final String? shareCode,
-      final bool? asJoiner}) = _$LendingModelImpl;
+      final bool? asJoiner,
+      final String? balanceAmount}) = _$LendingModelImpl;
 
   factory _LendingModel.fromJson(Map<String, dynamic> json) =
       _$LendingModelImpl.fromJson;
@@ -396,6 +416,8 @@ abstract class _LendingModel implements LendingModel {
   String? get shareCode;
   @override
   bool? get asJoiner;
+  @override
+  String? get balanceAmount;
 
   /// Create a copy of LendingModel
   /// with the given fields replaced by the non-null parameter values.
