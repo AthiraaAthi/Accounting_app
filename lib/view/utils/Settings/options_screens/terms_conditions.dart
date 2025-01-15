@@ -1,9 +1,14 @@
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
 
-class TermsConditions extends StatelessWidget {
+class TermsConditions extends StatefulWidget {
   const TermsConditions({super.key});
 
+  @override
+  State<TermsConditions> createState() => _TermsConditionsState();
+}
+
+class _TermsConditionsState extends State<TermsConditions> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,6 +32,8 @@ class TermsConditions extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               "Terms & Conditions",
@@ -35,7 +42,9 @@ class TermsConditions extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Text("1. Introduction"),
+            SizedBox(height: 10),
+            Text("1. Introduction",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           ],
         ),
       ),
