@@ -5,5 +5,5 @@ import 'package:dartz/dartz.dart';
 
 abstract class IHistoryRepository {
   Future<void> addDetails(HistoryModel historyModel, String lenderId);
-  Future<Either<MainFailures, List<HistoryModel>>> getDetails();
+  Future<Either<MainFailures, List<HistoryModel>>> getDetails(String lenderId);
 }

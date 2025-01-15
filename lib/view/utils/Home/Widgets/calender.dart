@@ -91,7 +91,7 @@ class _CalenderWidgetState extends State<CalenderWidget> {
           todayDecoration: BoxDecoration(
             shape: BoxShape.circle,
             color: focusdDate != DateTime.now()
-                ? primaryColorBlue.withValues(alpha: 0.5)
+                ? primaryColorBlue.withOpacity(0.5)
                 : primaryColorBlue,
           ),
           selectedDecoration: BoxDecoration(

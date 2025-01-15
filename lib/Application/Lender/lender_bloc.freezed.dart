@@ -20,18 +20,21 @@ mixin _$LenderEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() getData,
     required TResult Function(String code) joinGetData,
+    required TResult Function(String id) history,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getData,
     TResult? Function(String code)? joinGetData,
+    TResult? Function(String id)? history,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getData,
     TResult Function(String code)? joinGetData,
+    TResult Function(String id)? history,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -39,18 +42,21 @@ mixin _$LenderEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(GetData value) getData,
     required TResult Function(JoinGetData value) joinGetData,
+    required TResult Function(History value) history,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(GetData value)? getData,
     TResult? Function(JoinGetData value)? joinGetData,
+    TResult? Function(History value)? history,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(GetData value)? getData,
     TResult Function(JoinGetData value)? joinGetData,
+    TResult Function(History value)? history,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -120,6 +126,7 @@ class _$GetDataImpl implements GetData {
   TResult when<TResult extends Object?>({
     required TResult Function() getData,
     required TResult Function(String code) joinGetData,
+    required TResult Function(String id) history,
   }) {
     return getData();
   }
@@ -129,6 +136,7 @@ class _$GetDataImpl implements GetData {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getData,
     TResult? Function(String code)? joinGetData,
+    TResult? Function(String id)? history,
   }) {
     return getData?.call();
   }
@@ -138,6 +146,7 @@ class _$GetDataImpl implements GetData {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getData,
     TResult Function(String code)? joinGetData,
+    TResult Function(String id)? history,
     required TResult orElse(),
   }) {
     if (getData != null) {
@@ -151,6 +160,7 @@ class _$GetDataImpl implements GetData {
   TResult map<TResult extends Object?>({
     required TResult Function(GetData value) getData,
     required TResult Function(JoinGetData value) joinGetData,
+    required TResult Function(History value) history,
   }) {
     return getData(this);
   }
@@ -160,6 +170,7 @@ class _$GetDataImpl implements GetData {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(GetData value)? getData,
     TResult? Function(JoinGetData value)? joinGetData,
+    TResult? Function(History value)? history,
   }) {
     return getData?.call(this);
   }
@@ -169,6 +180,7 @@ class _$GetDataImpl implements GetData {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(GetData value)? getData,
     TResult Function(JoinGetData value)? joinGetData,
+    TResult Function(History value)? history,
     required TResult orElse(),
   }) {
     if (getData != null) {
@@ -252,6 +264,7 @@ class _$JoinGetDataImpl implements JoinGetData {
   TResult when<TResult extends Object?>({
     required TResult Function() getData,
     required TResult Function(String code) joinGetData,
+    required TResult Function(String id) history,
   }) {
     return joinGetData(code);
   }
@@ -261,6 +274,7 @@ class _$JoinGetDataImpl implements JoinGetData {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getData,
     TResult? Function(String code)? joinGetData,
+    TResult? Function(String id)? history,
   }) {
     return joinGetData?.call(code);
   }
@@ -270,6 +284,7 @@ class _$JoinGetDataImpl implements JoinGetData {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getData,
     TResult Function(String code)? joinGetData,
+    TResult Function(String id)? history,
     required TResult orElse(),
   }) {
     if (joinGetData != null) {
@@ -283,6 +298,7 @@ class _$JoinGetDataImpl implements JoinGetData {
   TResult map<TResult extends Object?>({
     required TResult Function(GetData value) getData,
     required TResult Function(JoinGetData value) joinGetData,
+    required TResult Function(History value) history,
   }) {
     return joinGetData(this);
   }
@@ -292,6 +308,7 @@ class _$JoinGetDataImpl implements JoinGetData {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(GetData value)? getData,
     TResult? Function(JoinGetData value)? joinGetData,
+    TResult? Function(History value)? history,
   }) {
     return joinGetData?.call(this);
   }
@@ -301,6 +318,7 @@ class _$JoinGetDataImpl implements JoinGetData {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(GetData value)? getData,
     TResult Function(JoinGetData value)? joinGetData,
+    TResult Function(History value)? history,
     required TResult orElse(),
   }) {
     if (joinGetData != null) {
@@ -323,9 +341,156 @@ abstract class JoinGetData implements LenderEvent {
 }
 
 /// @nodoc
+abstract class _$$HistoryImplCopyWith<$Res> {
+  factory _$$HistoryImplCopyWith(
+          _$HistoryImpl value, $Res Function(_$HistoryImpl) then) =
+      __$$HistoryImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String id});
+}
+
+/// @nodoc
+class __$$HistoryImplCopyWithImpl<$Res>
+    extends _$LenderEventCopyWithImpl<$Res, _$HistoryImpl>
+    implements _$$HistoryImplCopyWith<$Res> {
+  __$$HistoryImplCopyWithImpl(
+      _$HistoryImpl _value, $Res Function(_$HistoryImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of LenderEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+  }) {
+    return _then(_$HistoryImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$HistoryImpl implements History {
+  const _$HistoryImpl({required this.id});
+
+  @override
+  final String id;
+
+  @override
+  String toString() {
+    return 'LenderEvent.history(id: $id)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$HistoryImpl &&
+            (identical(other.id, id) || other.id == id));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, id);
+
+  /// Create a copy of LenderEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$HistoryImplCopyWith<_$HistoryImpl> get copyWith =>
+      __$$HistoryImplCopyWithImpl<_$HistoryImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() getData,
+    required TResult Function(String code) joinGetData,
+    required TResult Function(String id) history,
+  }) {
+    return history(id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? getData,
+    TResult? Function(String code)? joinGetData,
+    TResult? Function(String id)? history,
+  }) {
+    return history?.call(id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? getData,
+    TResult Function(String code)? joinGetData,
+    TResult Function(String id)? history,
+    required TResult orElse(),
+  }) {
+    if (history != null) {
+      return history(id);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(GetData value) getData,
+    required TResult Function(JoinGetData value) joinGetData,
+    required TResult Function(History value) history,
+  }) {
+    return history(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(GetData value)? getData,
+    TResult? Function(JoinGetData value)? joinGetData,
+    TResult? Function(History value)? history,
+  }) {
+    return history?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(GetData value)? getData,
+    TResult Function(JoinGetData value)? joinGetData,
+    TResult Function(History value)? history,
+    required TResult orElse(),
+  }) {
+    if (history != null) {
+      return history(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class History implements LenderEvent {
+  const factory History({required final String id}) = _$HistoryImpl;
+
+  String get id;
+
+  /// Create a copy of LenderEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$HistoryImplCopyWith<_$HistoryImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$LenderState {
   List<LendingModel> get data => throw _privateConstructorUsedError;
   List<LendingModel> get joinData => throw _privateConstructorUsedError;
+  List<HistoryModel> get historyData => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   Option<dynamic> get getFailureOrSuccess => throw _privateConstructorUsedError;
 
@@ -345,6 +510,7 @@ abstract class $LenderStateCopyWith<$Res> {
   $Res call(
       {List<LendingModel> data,
       List<LendingModel> joinData,
+      List<HistoryModel> historyData,
       bool isLoading,
       Option<dynamic> getFailureOrSuccess});
 }
@@ -366,6 +532,7 @@ class _$LenderStateCopyWithImpl<$Res, $Val extends LenderState>
   $Res call({
     Object? data = null,
     Object? joinData = null,
+    Object? historyData = null,
     Object? isLoading = null,
     Object? getFailureOrSuccess = null,
   }) {
@@ -378,6 +545,10 @@ class _$LenderStateCopyWithImpl<$Res, $Val extends LenderState>
           ? _value.joinData
           : joinData // ignore: cast_nullable_to_non_nullable
               as List<LendingModel>,
+      historyData: null == historyData
+          ? _value.historyData
+          : historyData // ignore: cast_nullable_to_non_nullable
+              as List<HistoryModel>,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -401,6 +572,7 @@ abstract class _$$LenderStateImplCopyWith<$Res>
   $Res call(
       {List<LendingModel> data,
       List<LendingModel> joinData,
+      List<HistoryModel> historyData,
       bool isLoading,
       Option<dynamic> getFailureOrSuccess});
 }
@@ -420,6 +592,7 @@ class __$$LenderStateImplCopyWithImpl<$Res>
   $Res call({
     Object? data = null,
     Object? joinData = null,
+    Object? historyData = null,
     Object? isLoading = null,
     Object? getFailureOrSuccess = null,
   }) {
@@ -432,6 +605,10 @@ class __$$LenderStateImplCopyWithImpl<$Res>
           ? _value._joinData
           : joinData // ignore: cast_nullable_to_non_nullable
               as List<LendingModel>,
+      historyData: null == historyData
+          ? _value._historyData
+          : historyData // ignore: cast_nullable_to_non_nullable
+              as List<HistoryModel>,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -450,10 +627,12 @@ class _$LenderStateImpl implements _LenderState {
   const _$LenderStateImpl(
       {required final List<LendingModel> data,
       required final List<LendingModel> joinData,
+      required final List<HistoryModel> historyData,
       required this.isLoading,
       required this.getFailureOrSuccess})
       : _data = data,
-        _joinData = joinData;
+        _joinData = joinData,
+        _historyData = historyData;
 
   final List<LendingModel> _data;
   @override
@@ -471,6 +650,14 @@ class _$LenderStateImpl implements _LenderState {
     return EqualUnmodifiableListView(_joinData);
   }
 
+  final List<HistoryModel> _historyData;
+  @override
+  List<HistoryModel> get historyData {
+    if (_historyData is EqualUnmodifiableListView) return _historyData;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_historyData);
+  }
+
   @override
   final bool isLoading;
   @override
@@ -478,7 +665,7 @@ class _$LenderStateImpl implements _LenderState {
 
   @override
   String toString() {
-    return 'LenderState(data: $data, joinData: $joinData, isLoading: $isLoading, getFailureOrSuccess: $getFailureOrSuccess)';
+    return 'LenderState(data: $data, joinData: $joinData, historyData: $historyData, isLoading: $isLoading, getFailureOrSuccess: $getFailureOrSuccess)';
   }
 
   @override
@@ -488,6 +675,8 @@ class _$LenderStateImpl implements _LenderState {
             other is _$LenderStateImpl &&
             const DeepCollectionEquality().equals(other._data, _data) &&
             const DeepCollectionEquality().equals(other._joinData, _joinData) &&
+            const DeepCollectionEquality()
+                .equals(other._historyData, _historyData) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.getFailureOrSuccess, getFailureOrSuccess) ||
@@ -499,6 +688,7 @@ class _$LenderStateImpl implements _LenderState {
       runtimeType,
       const DeepCollectionEquality().hash(_data),
       const DeepCollectionEquality().hash(_joinData),
+      const DeepCollectionEquality().hash(_historyData),
       isLoading,
       getFailureOrSuccess);
 
@@ -515,6 +705,7 @@ abstract class _LenderState implements LenderState {
   const factory _LenderState(
       {required final List<LendingModel> data,
       required final List<LendingModel> joinData,
+      required final List<HistoryModel> historyData,
       required final bool isLoading,
       required final Option<dynamic> getFailureOrSuccess}) = _$LenderStateImpl;
 
@@ -522,6 +713,8 @@ abstract class _LenderState implements LenderState {
   List<LendingModel> get data;
   @override
   List<LendingModel> get joinData;
+  @override
+  List<HistoryModel> get historyData;
   @override
   bool get isLoading;
   @override

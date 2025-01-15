@@ -1,3 +1,4 @@
+import 'package:curved_nav/Application/Lender/lender_bloc.dart';
 import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
 import 'package:curved_nav/view/utils/Home/Widgets/calender.dart';
 import 'package:curved_nav/view/utils/Home/Widgets/infoAlert.dart';
@@ -5,6 +6,7 @@ import 'package:curved_nav/view/utils/Home/Widgets/popUpMenu.dart';
 import 'package:curved_nav/view/utils/Home/selection_card/history_screen.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../Widgets/addAmount_dialog.dart';
 
@@ -15,6 +17,11 @@ class SelectionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) {
+        context.read<LenderBloc>().add(History(id: state.id!));
+      },
+    );
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -140,12 +147,18 @@ class SelectionCard extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: ListTile(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
-                tileColor: lightGreen,
-                leading: Text('01/01/2000'),
-                trailing: Text('-2000/-'),
+              child: BlocBuilder<LenderBloc, LenderState>(
+                builder: (context, state) {
+                  final data = state.historyData;
+                  final firstData = data[0];
+                  return ListTile(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    tileColor: lightGreen,
+                    leading: Text('01/01/2000'),
+                    trailing: Text('-${firstData.amount}/-'),
+                  );
+                },
               ),
             ),
             SizedBox(

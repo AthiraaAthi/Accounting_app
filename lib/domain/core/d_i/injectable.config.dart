@@ -60,6 +60,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i203.LenderBloc>(() => _i203.LenderBloc(
           gh<_i367.ILenderRepository>(),
           gh<_i988.IJoinRepository>(),
+          gh<_i2.IHistoryRepository>(),
         ));
     return this;
   }

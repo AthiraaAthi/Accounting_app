@@ -32,8 +32,26 @@ class HistoryFunctions implements IHistoryRepository {
   }
 
   @override
-  Future<Either<MainFailures, List<HistoryModel>>> getDetails() {
-    // TODO: implement getDetails
-    throw UnimplementedError();
+  Future<Either<MainFailures, List<HistoryModel>>> getDetails(
+      String lenderId) async {
+    final data = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .collection('lender')
+        .doc(lenderId)
+        .collection('details')
+        .get();
+    try {
+      final historyDetails =
+          data.docs.map((e) => HistoryModel.fromJson(e.data())).toList();
+      if (historyDetails.isNotEmpty) {
+        return right(historyDetails);
+      }
+      log('Empty list');
+      return left(MainFailures.clientfailure());
+    } catch (e) {
+      log('error found:$e');
+      return left(MainFailures.serverfailure());
+    }
   }
 }
