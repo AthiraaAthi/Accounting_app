@@ -35,6 +35,7 @@ class TermsConditions extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            Text("1. Introduction"),
           ],
         ),
       ),
