@@ -9,6 +9,7 @@ class TermsConditions extends StatefulWidget {
 }
 
 class _TermsConditionsState extends State<TermsConditions> {
+  TextStyle pointsStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,8 +44,7 @@ class _TermsConditionsState extends State<TermsConditions> {
               ),
             ),
             SizedBox(height: 10),
-            Text("1. Introduction",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            Text("1. Introduction", style: pointsStyle),
           ],
         ),
       ),
