@@ -94,6 +94,11 @@ class _TermsConditionsState extends State<TermsConditions> {
                 ''' Our app displays third-party advertisements in compliance with Google Play Ads Policies. Users may opt for an ad-free experience through an in-app purchase.''',
                 textAlign: TextAlign.justify,
                 style: explainationStyle,
+              ),
+              nextSpace,
+              Text(
+                "5. Restrictions and Prohibited Uses",
+                style: pointsStyle,
               )
             ],
           ),
