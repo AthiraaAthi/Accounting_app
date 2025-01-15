@@ -24,6 +24,9 @@ class TermsConditions extends StatelessWidget {
           style: TextStyle(color: Colors.white),
         ),
       ),
+      body: Column(
+        children: [],
+      ),
     );
   }
 }
