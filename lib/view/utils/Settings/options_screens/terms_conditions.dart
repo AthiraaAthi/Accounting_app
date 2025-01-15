@@ -16,7 +16,7 @@ class _TermsConditionsState extends State<TermsConditions> {
   static TextStyle explainationStyle = TextStyle(
     fontSize: 18,
   );
-  final SizedBox titleSpace = SizedBox(height: 15);
+  final SizedBox titleSpace = SizedBox(height: 12);
   final SizedBox nextSpace = SizedBox(height: 20);
   @override
   Widget build(BuildContext context) {
@@ -62,7 +62,10 @@ class _TermsConditionsState extends State<TermsConditions> {
             Text(
               "2. Description of Service",
               style: pointsStyle,
-            )
+            ),
+            titleSpace,
+            Text(
+                '''[Your App Name] is an accounting application designed for money lenders and borrowers to track payments, pending dues, and financial transactions. It includes advertisements and in-app purchases for premium features.''')
           ],
         ),
       ),
