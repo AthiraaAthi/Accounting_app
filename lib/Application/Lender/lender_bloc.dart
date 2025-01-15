@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:curved_nav/domain/failures/main_failure.dart';
 import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
+import 'package:curved_nav/domain/models/history%20and%20others%20model/history_model.dart';
+import 'package:curved_nav/domain/models/i_history_repository.dart';
 import 'package:curved_nav/domain/models/i_join_repository.dart';
 import 'package:curved_nav/domain/models/i_lender_repository.dart';
 import 'package:dartz/dartz.dart';
@@ -15,7 +17,9 @@ part 'lender_bloc.freezed.dart';
 class LenderBloc extends Bloc<LenderEvent, LenderState> {
   final ILenderRepository iLenderRepository;
   final IJoinRepository iJoinRepository;
-  LenderBloc(this.iLenderRepository, this.iJoinRepository)
+  final IHistoryRepository iHistoryRepository;
+  LenderBloc(
+      this.iLenderRepository, this.iJoinRepository, this.iHistoryRepository)
       : super(LenderState.initial()) {
     on<GetData>((event, emit) async {
       emit(state.copyWith(isLoading: true, getFailureOrSuccess: none()));
@@ -47,6 +51,20 @@ class LenderBloc extends Bloc<LenderEvent, LenderState> {
             data: state.data,
             joinData: success);
       }));
+    });
+    on<History>((event, emit) async {
+      emit(state.copyWith(isLoading: true, getFailureOrSuccess: none()));
+      final Either<MainFailures, List<HistoryModel>> getHistory =
+          await iHistoryRepository.getDetails(event.id);
+      emit(getHistory.fold(
+          (failure) => state.copyWith(
+              isLoading: false, getFailureOrSuccess: some(failure)),
+          (success) => state.copyWith(
+              isLoading: false,
+              getFailureOrSuccess: some(success),
+              data: state.data,
+              joinData: state.data,
+              historyData: success)));
     });
   }
 }
