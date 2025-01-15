@@ -99,6 +99,15 @@ class _TermsConditionsState extends State<TermsConditions> {
               Text(
                 "5. Restrictions and Prohibited Uses",
                 style: pointsStyle,
+              ),
+              titleSpace,
+              Text(
+                ''' Users agree NOT to:
+• Use the app for illegal financial activities or unauthorized lending.
+• Misuse any features to commit fraud or manipulate transactions.
+• Modify, distribute, or exploit app services beyond their intended use.''',
+                style: explainationStyle,
+                textAlign: TextAlign.justify,
               )
             ],
           ),
