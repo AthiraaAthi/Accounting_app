@@ -59,7 +59,10 @@ class _TermsConditionsState extends State<TermsConditions> {
               style: explainationStyle,
             ),
             nextSpace,
-            Text("2. Description of Service")
+            Text(
+              "2. Description of Service",
+              style: pointsStyle,
+            )
           ],
         ),
       ),
