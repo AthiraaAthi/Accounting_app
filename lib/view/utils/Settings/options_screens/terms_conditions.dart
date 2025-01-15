@@ -108,6 +108,25 @@ class _TermsConditionsState extends State<TermsConditions> {
 • Modify, distribute, or exploit app services beyond their intended use.''',
                 style: explainationStyle,
                 textAlign: TextAlign.justify,
+              ),
+              nextSpace,
+              Text(
+                "6. Changes to These Terms",
+                style: pointsStyle,
+              ),
+              titleSpace,
+              Text(
+                ''' We may update these terms at any time. Continued use of the app after modifications implies acceptance.''',
+                style: explainationStyle,
+                textAlign: TextAlign.justify,
+              ),
+              nextSpace,
+              Text("7. Contact Us", style: pointsStyle),
+              titleSpace,
+              Text(
+                '''For any questions regarding these Terms and Conditions, contact us at [Your Email or Support Contact]. ''',
+                style: explainationStyle,
+                textAlign: TextAlign.justify,
               )
             ],
           ),
