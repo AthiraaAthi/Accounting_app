@@ -38,46 +38,54 @@ class _TermsConditionsState extends State<TermsConditions> {
           style: TextStyle(color: Colors.white),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Terms & Conditions",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Terms & Conditions",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            titleSpace,
-            Text("1. Introduction", style: pointsStyle),
-            titleSpace,
-            Text(
-              '''Welcome to LENDO ("we", "our", "us"). These Terms and Conditions govern your use of our mobile application available on the Google Play Store. By downloading and using our app, you agree to comply with these terms.''',
-              style: explainationStyle,
-            ),
-            nextSpace,
-            Text(
-              "2. Description of Service",
-              style: pointsStyle,
-            ),
-            titleSpace,
-            Text(
-              '''LENDO is an accounting application designed for money lenders and borrowers to track payments, pending dues, and financial transactions. It includes advertisements and in-app purchases for premium features.''',
-              style: explainationStyle,
-            ),
-            nextSpace,
-            Text(
-              "3. User Eligibility",
-              style: pointsStyle,
-            ),
-            titleSpace,
-            Text('''By using this app, you confirm that you are:
-• At least 18 years old or have the consent of a legal guardian.
-• Complying with all applicable financial laws in your jurisdiction.''')
-          ],
+              titleSpace,
+              Text("1. Introduction", style: pointsStyle),
+              titleSpace,
+              Text(
+                '''Welcome to LENDO ("we", "our", "us"). These Terms and Conditions govern your use of our mobile application available on the Google Play Store. By downloading and using our app, you agree to comply with these terms.''',
+                style: explainationStyle,
+                textAlign: TextAlign.justify,
+              ),
+              nextSpace,
+              Text(
+                "2. Description of Service",
+                style: pointsStyle,
+              ),
+              titleSpace,
+              Text(
+                '''LENDO is an accounting application designed for money lenders and borrowers to track payments, pending dues, and financial transactions. It includes advertisements and in-app purchases for premium features.''',
+                style: explainationStyle,
+                textAlign: TextAlign.justify,
+              ),
+              nextSpace,
+              Text(
+                "3. User Eligibility",
+                style: pointsStyle,
+              ),
+              titleSpace,
+              Text(
+                '''By using this app, you confirm that you are:
+        • At least 18 years old or have the consent of a legal guardian.
+        • Complying with all applicable financial laws in your jurisdiction.''',
+                textAlign: TextAlign.justify,
+                style: explainationStyle,
+              )
+            ],
+          ),
         ),
       ),
     );
