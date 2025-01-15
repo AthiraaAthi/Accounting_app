@@ -72,7 +72,11 @@ class _TermsConditionsState extends State<TermsConditions> {
             Text(
               "3. User Eligibility",
               style: pointsStyle,
-            )
+            ),
+            titleSpace,
+            Text('''By using this app, you confirm that you are:
+• At least 18 years old or have the consent of a legal guardian.
+• Complying with all applicable financial laws in your jurisdiction.''')
           ],
         ),
       ),
