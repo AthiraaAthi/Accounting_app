@@ -83,7 +83,13 @@ class _TermsConditionsState extends State<TermsConditions> {
         • Complying with all applicable financial laws in your jurisdiction.''',
                 textAlign: TextAlign.justify,
                 style: explainationStyle,
-              )
+              ),
+              nextSpace,
+              Text(
+                "6. Advertisements",
+                style: pointsStyle,
+              ),
+              titleSpace,
             ],
           ),
         ),
