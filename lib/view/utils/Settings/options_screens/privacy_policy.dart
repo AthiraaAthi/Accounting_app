@@ -138,18 +138,14 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
               titleSpace,
               RichText(
                   text: TextSpan(text: "", children: [
-                //  Text(
-                //   ''' If you have any questions or concerns about this Privacy Policy, please contact us at [email address].''',
-                //   style: explainationStyle,
-                // ),
                 TextSpan(
                   text:
-                      ''' If you have any questions or concerns about this Privacy Policy, please contact us at ''',
-                  style: TextStyle(color: Colors.black, fontSize: 20),
+                      ''' If you have any questions or concerns about this Privacy Policy, please ''',
+                  style: TextStyle(color: Colors.black, fontSize: 18),
                 ),
                 TextSpan(
                     text: "Contact Us",
-                    style: TextStyle(color: Colors.blue, fontSize: 20),
+                    style: TextStyle(color: Colors.blue, fontSize: 18),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
                         Navigator.push(
