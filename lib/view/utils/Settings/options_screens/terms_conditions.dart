@@ -1,4 +1,6 @@
+import 'package:curved_nav/view/utils/Settings/options_screens/help_screen.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class TermsConditions extends StatefulWidget {
@@ -14,6 +16,7 @@ class _TermsConditionsState extends State<TermsConditions> {
     fontWeight: FontWeight.bold,
   );
   static TextStyle explainationStyle = TextStyle(
+    color: black,
     fontSize: 18,
   );
   final SizedBox titleSpace = SizedBox(height: 12);
@@ -115,11 +118,30 @@ class _TermsConditionsState extends State<TermsConditions> {
               nextSpace,
               Text("7. Contact Us", style: pointsStyle),
               titleSpace,
-              Text(
-                '''For any questions regarding these Terms and Conditions, contact us at [Your Email or Support Contact]. ''',
-                style: explainationStyle,
-                textAlign: TextAlign.justify,
-              )
+              RichText(
+                  textAlign: TextAlign.justify,
+                  text: TextSpan(text: "", children: [
+                    TextSpan(
+                      text:
+                          '''For any questions regarding these Terms and Conditions, ''',
+                      style: TextStyle(color: Colors.black, fontSize: 20),
+                    ),
+                    TextSpan(
+                      text: 'contact us',
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HelpScreen()));
+                        },
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 20,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ]))
             ],
           ),
         ),
