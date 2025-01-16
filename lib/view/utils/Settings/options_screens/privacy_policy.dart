@@ -68,7 +68,23 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
         •Advertising Data: We may collect ad interaction data for personalized advertising experiences. ''',
                 textAlign: TextAlign.justify,
                 style: explainationStyle,
-              )
+              ),
+              Text("3. How We Use Your Information", style: pointsStyle),
+              titleSpace,
+              Text(
+                '''•Facilitate transactions between lenders and borrowers.
+•Improve user experience and app performance.
+•Comply with legal obligations.''',
+                style: explainationStyle,
+                textAlign: TextAlign.justify,
+              ),
+              nextSpace,
+              Text(
+                "5. Ads and Analytics",
+                style: pointsStyle,
+              ),
+              titleSpace,
+              Text(''' ''')
             ],
           ),
         ),
