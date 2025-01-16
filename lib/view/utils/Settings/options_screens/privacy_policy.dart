@@ -108,6 +108,21 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
                 ''' •Access, update, or delete their personal information.''',
                 style: explainationStyle,
               ),
+              nextSpace,
+              Text(
+                "7.Children's Privacy",
+                style: pointsStyle,
+              ),
+              titleSpace,
+              Text(
+                ''' Our app is not intended for users under the age of 18. We do not knowingly collect personal data from minors. If we become aware of such data, we will take steps to remove it.''',
+                style: explainationStyle,
+              ),
+              nextSpace,
+              Text(
+                "8. Changes to This Privacy Policy",
+                style: pointsStyle,
+              ),
             ],
           ),
         ),
