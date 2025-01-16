@@ -12,6 +12,7 @@ _$HistoryModelImpl _$$HistoryModelImplFromJson(Map<String, dynamic> json) =>
       amount: json['amount'] as String?,
       date: json['date'] as String?,
       asPayment: json['asPayment'] as bool?,
+      timestamp: json['timestamp'] as String?,
     );
 
 Map<String, dynamic> _$$HistoryModelImplToJson(_$HistoryModelImpl instance) =>
@@ -20,4 +21,5 @@ Map<String, dynamic> _$$HistoryModelImplToJson(_$HistoryModelImpl instance) =>
       'amount': instance.amount,
       'date': instance.date,
       'asPayment': instance.asPayment,
+      'timestamp': instance.timestamp,
     };

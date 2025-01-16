@@ -24,6 +24,7 @@ mixin _$HistoryModel {
   String? get amount => throw _privateConstructorUsedError;
   String? get date => throw _privateConstructorUsedError;
   bool? get asPayment => throw _privateConstructorUsedError;
+  String? get timestamp => throw _privateConstructorUsedError;
 
   /// Serializes this HistoryModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,7 +42,12 @@ abstract class $HistoryModelCopyWith<$Res> {
           HistoryModel value, $Res Function(HistoryModel) then) =
       _$HistoryModelCopyWithImpl<$Res, HistoryModel>;
   @useResult
-  $Res call({String? id, String? amount, String? date, bool? asPayment});
+  $Res call(
+      {String? id,
+      String? amount,
+      String? date,
+      bool? asPayment,
+      String? timestamp});
 }
 
 /// @nodoc
@@ -63,6 +69,7 @@ class _$HistoryModelCopyWithImpl<$Res, $Val extends HistoryModel>
     Object? amount = freezed,
     Object? date = freezed,
     Object? asPayment = freezed,
+    Object? timestamp = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -81,6 +88,10 @@ class _$HistoryModelCopyWithImpl<$Res, $Val extends HistoryModel>
           ? _value.asPayment
           : asPayment // ignore: cast_nullable_to_non_nullable
               as bool?,
+      timestamp: freezed == timestamp
+          ? _value.timestamp
+          : timestamp // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -93,7 +104,12 @@ abstract class _$$HistoryModelImplCopyWith<$Res>
       __$$HistoryModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? id, String? amount, String? date, bool? asPayment});
+  $Res call(
+      {String? id,
+      String? amount,
+      String? date,
+      bool? asPayment,
+      String? timestamp});
 }
 
 /// @nodoc
@@ -113,6 +129,7 @@ class __$$HistoryModelImplCopyWithImpl<$Res>
     Object? amount = freezed,
     Object? date = freezed,
     Object? asPayment = freezed,
+    Object? timestamp = freezed,
   }) {
     return _then(_$HistoryModelImpl(
       id: freezed == id
@@ -131,6 +148,10 @@ class __$$HistoryModelImplCopyWithImpl<$Res>
           ? _value.asPayment
           : asPayment // ignore: cast_nullable_to_non_nullable
               as bool?,
+      timestamp: freezed == timestamp
+          ? _value.timestamp
+          : timestamp // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -138,7 +159,8 @@ class __$$HistoryModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$HistoryModelImpl implements _HistoryModel {
-  const _$HistoryModelImpl({this.id, this.amount, this.date, this.asPayment});
+  const _$HistoryModelImpl(
+      {this.id, this.amount, this.date, this.asPayment, this.timestamp});
 
   factory _$HistoryModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$HistoryModelImplFromJson(json);
@@ -151,10 +173,12 @@ class _$HistoryModelImpl implements _HistoryModel {
   final String? date;
   @override
   final bool? asPayment;
+  @override
+  final String? timestamp;
 
   @override
   String toString() {
-    return 'HistoryModel(id: $id, amount: $amount, date: $date, asPayment: $asPayment)';
+    return 'HistoryModel(id: $id, amount: $amount, date: $date, asPayment: $asPayment, timestamp: $timestamp)';
   }
 
   @override
@@ -166,12 +190,15 @@ class _$HistoryModelImpl implements _HistoryModel {
             (identical(other.amount, amount) || other.amount == amount) &&
             (identical(other.date, date) || other.date == date) &&
             (identical(other.asPayment, asPayment) ||
-                other.asPayment == asPayment));
+                other.asPayment == asPayment) &&
+            (identical(other.timestamp, timestamp) ||
+                other.timestamp == timestamp));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, amount, date, asPayment);
+  int get hashCode =>
+      Object.hash(runtimeType, id, amount, date, asPayment, timestamp);
 
   /// Create a copy of HistoryModel
   /// with the given fields replaced by the non-null parameter values.
@@ -194,7 +221,8 @@ abstract class _HistoryModel implements HistoryModel {
       {final String? id,
       final String? amount,
       final String? date,
-      final bool? asPayment}) = _$HistoryModelImpl;
+      final bool? asPayment,
+      final String? timestamp}) = _$HistoryModelImpl;
 
   factory _HistoryModel.fromJson(Map<String, dynamic> json) =
       _$HistoryModelImpl.fromJson;
@@ -207,6 +235,8 @@ abstract class _HistoryModel implements HistoryModel {
   String? get date;
   @override
   bool? get asPayment;
+  @override
+  String? get timestamp;
 
   /// Create a copy of HistoryModel
   /// with the given fields replaced by the non-null parameter values.
