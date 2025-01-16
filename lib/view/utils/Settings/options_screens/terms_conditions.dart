@@ -45,13 +45,6 @@ class _TermsConditionsState extends State<TermsConditions> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "Terms & Conditions",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
               titleSpace,
               Text("1. Introduction", style: pointsStyle),
               titleSpace,
