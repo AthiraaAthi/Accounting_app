@@ -78,7 +78,6 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
 •Improve user experience and app performance.
 •Comply with legal obligations.''',
                 style: explainationStyle,
-                //textAlign: TextAlign.justify,
               ),
               nextSpace,
               Text(
