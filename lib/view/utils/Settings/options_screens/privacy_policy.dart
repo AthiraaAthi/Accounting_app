@@ -143,15 +143,16 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
                   style: TextStyle(color: Colors.black, fontSize: 18),
                 ),
                 TextSpan(
-                    text: "Contact Us",
-                    style: TextStyle(color: Colors.blue, fontSize: 18),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HelpScreen()));
-                      }),
+                  text: "Contact Us",
+                  style: TextStyle(color: Colors.blue, fontSize: 18),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HelpScreen()));
+                    },
+                ),
               ]))
             ],
           ),
