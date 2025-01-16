@@ -22,7 +22,8 @@ class HistoryFunctions implements IHistoryRepository {
       final detailsData = data.doc(lenderId).collection('details');
 
       String id = detailsData.doc().id;
-      HistoryModel model = detailsModel.copyWith(id: id);
+      HistoryModel model =
+          detailsModel.copyWith(id: id, timestamp: Timestamp.now().toString());
 
       detailsData.add(model.toJson());
       log('detail added successfully!');
