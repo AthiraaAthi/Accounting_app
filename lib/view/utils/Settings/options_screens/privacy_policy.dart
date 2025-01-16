@@ -136,27 +136,31 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
               ),
               titleSpace,
               RichText(
-                  text: TextSpan(
-                text: "",
-                children: [
-                  TextSpan(
-                    text:
-                        ''' If you have any questions or concerns about this Privacy Policy, please ''',
-                    style: TextStyle(color: Colors.black, fontSize: 18),
-                  ),
-                  TextSpan(
-                    text: "Contact Us",
-                    style: TextStyle(color: Colors.blue, fontSize: 18),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HelpScreen()));
-                      },
-                  ),
-                ],
-              ))
+                text: TextSpan(
+                  text: "",
+                  children: [
+                    TextSpan(
+                      text:
+                          ''' If you have any questions or concerns about this Privacy Policy, please ''',
+                      style: TextStyle(color: Colors.black, fontSize: 18),
+                    ),
+                    TextSpan(
+                      text: "Contact Us",
+                      style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 18,
+                          decoration: TextDecoration.underline),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HelpScreen()));
+                        },
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
         ),
