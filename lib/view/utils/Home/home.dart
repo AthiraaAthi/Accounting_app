@@ -23,7 +23,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       appBar: AppBar(
         backgroundColor: ColorConstant.defBlue,
         title: Text(
-          "Shukkudu :)",
+          "LENDO",
           style: TextStyle(
               color: Colors.white, fontSize: 19, fontWeight: FontWeight.w600),
         ),
