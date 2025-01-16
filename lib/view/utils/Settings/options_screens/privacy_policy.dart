@@ -1,4 +1,6 @@
+import 'package:curved_nav/view/utils/Settings/options_screens/help_screen.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class PrivacyPolicy extends StatefulWidget {
@@ -134,10 +136,28 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
                 style: pointsStyle,
               ),
               titleSpace,
-              Text(
-                ''' If you have any questions or concerns about this Privacy Policy, please contact us at [email address].''',
-                style: explainationStyle,
-              ),
+              RichText(
+                  text: TextSpan(text: "", children: [
+                //  Text(
+                //   ''' If you have any questions or concerns about this Privacy Policy, please contact us at [email address].''',
+                //   style: explainationStyle,
+                // ),
+                TextSpan(
+                  text:
+                      ''' If you have any questions or concerns about this Privacy Policy, please contact us at ''',
+                  style: TextStyle(color: Colors.black, fontSize: 20),
+                ),
+                TextSpan(
+                    text: "Contact Us",
+                    style: TextStyle(color: Colors.blue, fontSize: 20),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HelpScreen()));
+                      }),
+              ]))
             ],
           ),
         ),
