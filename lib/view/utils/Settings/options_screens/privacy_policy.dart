@@ -123,6 +123,21 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
                 "8. Changes to This Privacy Policy",
                 style: pointsStyle,
               ),
+              titleSpace,
+              Text(
+                ''' We may update this policy at any time. We will notify you of any changes by posting the new policy on this page.''',
+                style: explainationStyle,
+              ),
+              nextSpace,
+              Text(
+                "9. Contact Us",
+                style: pointsStyle,
+              ),
+              titleSpace,
+              Text(
+                ''' If you have any questions or concerns about this Privacy Policy, please contact us at [email address].''',
+                style: explainationStyle,
+              ),
             ],
           ),
         ),
