@@ -76,15 +76,33 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
 •Improve user experience and app performance.
 •Comply with legal obligations.''',
                 style: explainationStyle,
-                textAlign: TextAlign.justify,
+                //textAlign: TextAlign.justify,
               ),
               nextSpace,
               Text(
-                "5. Ads and Analytics",
+                "4. Ads and Analytics",
                 style: pointsStyle,
               ),
               titleSpace,
-              Text(''' ''')
+              Text(
+                '''Our app includes third-party ads that may collect and use data for personalized advertising. These ads are provided by services such as Google AdMob.''',
+                style: explainationStyle,
+              ),
+              nextSpace,
+              Text(
+                "5. Data Security",
+                style: pointsStyle,
+              ),
+              titleSpace,
+              Text(
+                ''' We take reasonable measures to protect your information from unauthorized access, loss, or misuse. However, no method of transmission over the internet is 100% secure, and we cannot guarantee absolute security.''',
+                style: explainationStyle,
+              ),
+              nextSpace,
+              Text(
+                "6.User Rights and Choices",
+                style: pointsStyle,
+              )
             ],
           ),
         ),
