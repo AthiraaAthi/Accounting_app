@@ -60,7 +60,7 @@ class _TermsConditionsState extends State<TermsConditions> {
               ),
               titleSpace,
               Text(
-                '''LENDO is an accounting application designed for money lenders and borrowers to track payments, pending dues, and financial transactions. It includes advertisements and in-app purchases for premium features.''',
+                '''LENDO is an accounting application designed for money lenders and borrowers to track payments, pending dues, and financial transactions. It includes advertisements feature too.''',
                 style: explainationStyle,
                 textAlign: TextAlign.justify,
               ),
@@ -72,8 +72,7 @@ class _TermsConditionsState extends State<TermsConditions> {
               titleSpace,
               Text(
                 '''By using this app, you confirm that you are:
-        • At least 18 years old or have the consent of a legal guardian.
-        • Complying with all applicable financial laws in your jurisdiction.''',
+        • At least 18 years old or have the consent of a legal guardian.''',
                 textAlign: TextAlign.justify,
                 style: explainationStyle,
               ),
@@ -84,7 +83,7 @@ class _TermsConditionsState extends State<TermsConditions> {
               ),
               titleSpace,
               Text(
-                ''' Our app displays third-party advertisements in compliance with Google Play Ads Policies. Users may opt for an ad-free experience through an in-app purchase.''',
+                ''' Our app displays third-party advertisements in compliance with Google Play Ads Policies.''',
                 textAlign: TextAlign.justify,
                 style: explainationStyle,
               ),
