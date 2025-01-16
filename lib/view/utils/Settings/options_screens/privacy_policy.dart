@@ -102,7 +102,12 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
               Text(
                 "6.User Rights and Choices",
                 style: pointsStyle,
-              )
+              ),
+              titleSpace,
+              Text(
+                ''' •Access, update, or delete their personal information.''',
+                style: explainationStyle,
+              ),
             ],
           ),
         ),
