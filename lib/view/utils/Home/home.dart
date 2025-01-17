@@ -91,7 +91,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                           MaterialPageRoute(
                                             builder: (context) => SelectionCard(
                                               isCreator: true,
-                                              state: data,
+                                              model: data,
                                             ),
                                           ));
                                     },
