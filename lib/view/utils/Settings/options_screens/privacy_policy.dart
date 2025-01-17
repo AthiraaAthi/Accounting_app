@@ -65,7 +65,6 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
               Text(
                 '''We collect the following types of information:
         •Personal Information: Name, phone number, email, and other necessary details to verify identity and facilitate transactions. 
-        •Financial Information: Loan amount, repayment history, and other relevant financial details.
         •Advertising Data: We may collect ad interaction data for personalized advertising experiences. ''',
                 textAlign: TextAlign.justify,
                 style: explainationStyle,
