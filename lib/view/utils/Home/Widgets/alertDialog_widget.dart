@@ -674,6 +674,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
                         shareCode = generateRandomCode(10);
                       });
                       log(shareCode!);
+                      final timeStamp = Timestamp.fromDate(DateTime.now());
 
                       final model = LendingModel(
                           name: name,
@@ -684,7 +685,9 @@ class _AddCardDaologState extends State<AddCardDaolog>
                           IsMoneyLent: isMoneyLent,
                           installmentType: installmentType,
                           listOfTImestamp: timestampList,
-                          shareCode: shareCode);
+                          datetime: timeStamp,
+                          shareCode: shareCode,
+                          balanceAmount: amount);
 
                       isSelected ? LenderFunctions().addLender(model) : null;
                       isSelected

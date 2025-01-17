@@ -83,8 +83,9 @@ class _CalenderWidgetState extends State<CalenderWidget> {
   Widget build(BuildContext context) {
     final dateTimeList =
         widget.state.listOfTImestamp!.map((e) => e.toDate()).toList();
+    final date = widget.state.datetime!.toDate();
 
-    log(dateTimeList.toString());
+    log(date.toString());
     return TableCalendar(
       calendarStyle: CalendarStyle(
           cellMargin: EdgeInsets.all(2),
@@ -103,7 +104,7 @@ class _CalenderWidgetState extends State<CalenderWidget> {
       availableCalendarFormats: {CalendarFormat.month: "Month"},
       calendarFormat: CalendarFormat.month,
       focusedDay: focusdDate,
-      firstDay: DateTime.now(),
+      firstDay: date,
       lastDay: DateTime.utc(2100, 12, 31),
       selectedDayPredicate: (day) {
         return isSameDay(selectedDate, day);

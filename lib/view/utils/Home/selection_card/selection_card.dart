@@ -14,15 +14,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../Widgets/addAmount_dialog.dart';
 
 class SelectionCard extends StatelessWidget {
-  final LendingModel state;
+  final LendingModel model;
   final bool isCreator;
-  SelectionCard({super.key, required this.isCreator, required this.state});
+  SelectionCard({super.key, required this.isCreator, required this.model});
 
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
-        context.read<LenderBloc>().add(History(id: state.id!));
+        context.read<LenderBloc>().add(History(id: model.id!));
       },
     );
     final usedId = FirebaseAuth.instance.currentUser!.uid;
@@ -30,7 +30,7 @@ class SelectionCard extends StatelessWidget {
         .collection('users')
         .doc(usedId)
         .collection('lender')
-        .doc(state.id)
+        .doc(model.id)
         .collection('details')
         .orderBy('timestamp', descending: true)
         .snapshots();
@@ -75,7 +75,7 @@ class SelectionCard extends StatelessWidget {
         child: Column(
           children: [
             CalenderWidget(
-              state: state,
+              state: model,
             ),
             Container(
               height: 20,
@@ -94,7 +94,7 @@ class SelectionCard extends StatelessWidget {
                         barrierDismissible: false,
                         context: context,
                         builder: (context) => AddPaymentDialog(
-                          state: state,
+                          state: model,
                         ),
                       );
                     },
@@ -127,29 +127,39 @@ class SelectionCard extends StatelessWidget {
                     "History",
                     style: TextStyle(color: black),
                   ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(PageRouteBuilder(
-                        pageBuilder: (context, animation, secondaryAnimation) =>
-                            const HistoryScreen(),
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) {
-                          var tween = Tween(
-                            begin: const Offset(1.0, 0.0),
-                            end: Offset.zero,
-                          ).chain(CurveTween(curve: Curves.easeIn));
-                          return SlideTransition(
-                            position: animation.drive(tween),
-                            child: child,
-                          );
+                  BlocBuilder<LenderBloc, LenderState>(
+                    builder: (context, state) {
+                      return InkWell(
+                        onTap: () {
+                          state.historyData.isNotEmpty
+                              ? Navigator.of(context).push(PageRouteBuilder(
+                                  pageBuilder: (context, animation,
+                                          secondaryAnimation) =>
+                                      HistoryScreen(
+                                    state: model,
+                                  ),
+                                  transitionsBuilder: (context, animation,
+                                      secondaryAnimation, child) {
+                                    var tween = Tween(
+                                      begin: const Offset(1.0, 0.0),
+                                      end: Offset.zero,
+                                    ).chain(CurveTween(curve: Curves.easeIn));
+                                    return SlideTransition(
+                                      position: animation.drive(tween),
+                                      child: child,
+                                    );
+                                  },
+                                ))
+                              : null;
                         },
-                      ));
+                        child: Text(
+                          "Show more >",
+                          style: TextStyle(
+                              color: primaryColorBlue,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      );
                     },
-                    child: Text(
-                      "Show more >",
-                      style: TextStyle(
-                          color: primaryColorBlue, fontWeight: FontWeight.bold),
-                    ),
                   ),
                 ],
               ),
@@ -165,7 +175,7 @@ class SelectionCard extends StatelessWidget {
                   }
 
                   if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                    return Center(child: Text('No data available.'));
+                    return Center(child: Text('No history available.'));
                   }
                   final docs = snapshot.data!.docs;
                   final data = docs
