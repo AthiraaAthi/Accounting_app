@@ -80,7 +80,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(data.name ?? ' '),
-                                    Text('Balance amount/-'),
+                                    Text('${data.balanceAmount}/-'),
                                     Text('Last money given date'),
                                   ],
                                 ),
