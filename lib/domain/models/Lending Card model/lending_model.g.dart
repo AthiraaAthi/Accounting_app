@@ -20,6 +20,7 @@ _$LendingModelImpl _$$LendingModelImplFromJson(Map<String, dynamic> json) =>
       shareCode: json['shareCode'] as String?,
       asJoiner: json['asJoiner'] as bool?,
       balanceAmount: json['balanceAmount'] as String?,
+      datetime: timestampFromJson(json['datetime']),
     );
 
 Map<String, dynamic> _$$LendingModelImplToJson(_$LendingModelImpl instance) =>
@@ -36,4 +37,5 @@ Map<String, dynamic> _$$LendingModelImplToJson(_$LendingModelImpl instance) =>
       'shareCode': instance.shareCode,
       'asJoiner': instance.asJoiner,
       'balanceAmount': instance.balanceAmount,
+      'datetime': timestampToJson(instance.datetime),
     };
