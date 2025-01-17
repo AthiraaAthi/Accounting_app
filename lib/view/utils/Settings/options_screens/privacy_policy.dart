@@ -47,10 +47,6 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "Effective Date: [ Date]",
-                style: TextStyle(fontSize: 20),
-              ),
               titleSpace,
               Text("1. Introduction", style: pointsStyle),
               titleSpace,
