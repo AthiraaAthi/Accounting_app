@@ -686,7 +686,8 @@ class _AddCardDaologState extends State<AddCardDaolog>
                           installmentType: installmentType,
                           listOfTImestamp: timestampList,
                           datetime: timeStamp,
-                          shareCode: shareCode);
+                          shareCode: shareCode,
+                          balanceAmount: amount);
 
                       isSelected ? LenderFunctions().addLender(model) : null;
                       isSelected
