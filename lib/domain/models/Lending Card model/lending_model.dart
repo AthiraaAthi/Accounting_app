@@ -22,6 +22,9 @@ class LendingModel with _$LendingModel {
     String? shareCode,
     bool? asJoiner,
     String? balanceAmount,
+    // ignore: invalid_annotation_target
+    @JsonKey(fromJson: timestampFromJson, toJson: timestampToJson)
+    Timestamp? datetime,
   }) = _LendingModel;
 
   factory LendingModel.fromJson(Map<String, dynamic> json) =>
@@ -44,4 +47,16 @@ List<dynamic>? _timestampListToJson(List<Timestamp>? list) {
   return list
       ?.map((timestamp) => timestamp.toDate().toIso8601String())
       .toList();
+}
+
+Timestamp? timestampFromJson(dynamic json) {
+  if (json == null) {
+    return null;
+  }
+  return json is Timestamp ? json : Timestamp.fromMillisecondsSinceEpoch(json);
+}
+
+// toJson function to convert a Dart object to JSON
+dynamic timestampToJson(Timestamp? timestamp) {
+  return timestamp?.millisecondsSinceEpoch;
 }

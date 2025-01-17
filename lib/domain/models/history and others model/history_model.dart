@@ -9,6 +9,7 @@ class HistoryModel with _$HistoryModel {
     String? amount,
     String? date,
     bool? asPayment,
+    String? timestamp,
   }) = _HistoryModel;
 
   factory HistoryModel.fromJson(Map<String, dynamic> json) =>
