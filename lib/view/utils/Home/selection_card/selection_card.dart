@@ -131,7 +131,9 @@ class SelectionCard extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).push(PageRouteBuilder(
                         pageBuilder: (context, animation, secondaryAnimation) =>
-                            const HistoryScreen(),
+                            HistoryScreen(
+                          state: state,
+                        ),
                         transitionsBuilder:
                             (context, animation, secondaryAnimation, child) {
                           var tween = Tween(
