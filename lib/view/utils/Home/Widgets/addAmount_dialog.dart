@@ -8,11 +8,15 @@ import 'package:curved_nav/domain/models/history%20and%20others%20model/history_
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
 
+enum TypeOfAdding { addPayment, addAmount }
+
 class AddPaymentDialog extends StatelessWidget {
   final LendingModel state;
+  final TypeOfAdding type;
   const AddPaymentDialog({
     super.key,
     required this.state,
+    required this.type,
   });
 
   @override
@@ -75,10 +79,12 @@ class AddPaymentDialog extends StatelessWidget {
             child: Text('Cancel')),
         TextButton(
             onPressed: () {
-              final amount = addAmountController.text;
-              final model = HistoryModel(
-                amount: amount,
-              );
+              final amount = type == TypeOfAdding.addPayment
+                  ? '-${addAmountController.text}\\-'
+                  : '+${addAmountController.text}\\-';
+              final asPayment = type == TypeOfAdding.addPayment ? true : false;
+              log(asPayment.toString());
+              final model = HistoryModel(amount: amount, asPayment: asPayment);
               HistoryFunctions().addDetails(model, id!);
 
               Navigator.pop(context);

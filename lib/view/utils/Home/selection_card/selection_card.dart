@@ -34,6 +34,11 @@ class SelectionCard extends StatelessWidget {
         .collection('details')
         .orderBy('timestamp', descending: true)
         .snapshots();
+    final payType = model.installmentType == '1'
+        ? 'Daily Pay'
+        : model.installmentType == '2'
+            ? 'Weekly Pay'
+            : 'Monthly Pay';
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -45,11 +50,16 @@ class SelectionCard extends StatelessWidget {
                 );
               },
               icon: Icon(Icons.info_outline)),
-          isCreator ? MenuButtonWidget() : SizedBox(),
+          isCreator
+              ? MenuButtonWidget(
+                  model: model,
+                  type: TypeOfAdding.addAmount,
+                )
+              : SizedBox(),
         ],
         surfaceTintColor: primaryColorBlue,
         foregroundColor: white,
-        title: Text("Person Name"),
+        title: Text("${model.name}"),
         backgroundColor: ColorConstant.defBlue,
         bottom: PreferredSize(
           preferredSize: Size(double.infinity, 50),
@@ -62,10 +72,10 @@ class SelectionCard extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [Text("Amount"), Text("10000/-")],
+                    children: [Text("Amount"), Text("${model.amount}/-")],
                   ),
                 ),
-                Text("Weekly Pay")
+                Text(payType)
               ],
             ),
           ),
@@ -94,6 +104,7 @@ class SelectionCard extends StatelessWidget {
                         barrierDismissible: false,
                         context: context,
                         builder: (context) => AddPaymentDialog(
+                          type: TypeOfAdding.addPayment,
                           state: model,
                         ),
                       );
@@ -193,9 +204,14 @@ class SelectionCard extends StatelessWidget {
                           child: ListTile(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10)),
-                            tileColor: lightGreen,
-                            leading: Text('01/01/2000'),
-                            trailing: Text('-${items.amount}/-'),
+                            tileColor:
+                                items.asPayment == true ? lightGreen : lightRed,
+                            leading: Text('01/01/2000',
+                                style: TextStyle(color: black)),
+                            trailing: Text(
+                              '${items.amount}',
+                              style: TextStyle(color: black),
+                            ),
                           ));
                     },
                     separatorBuilder: (context, index) => SizedBox(
@@ -226,7 +242,7 @@ class SelectionCard extends StatelessWidget {
                 style: TextStyle(color: white),
               ),
               Text(
-                "4000\\-",
+                "${model.balanceAmount}\\-",
                 style: TextStyle(color: white),
               ),
             ],
