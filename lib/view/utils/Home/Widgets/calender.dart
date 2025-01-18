@@ -62,19 +62,6 @@ class _CalenderWidgetState extends State<CalenderWidget> {
     date = DateFormat.yMd().format(DateTime.now());
   }
 
-  // Color _getEventColor(String event) {
-  //   switch (event) {
-  //     case 'Paid':
-  //       return lightGreen;
-  //     case 'Not Paid':
-  //       return lightRed;
-  //     case 'Pending':
-  //       return orenge;
-  //     default:
-  //       return Colors.grey;
-  //   }
-  // }
-
   DateTime normalizeDate(DateTime date) {
     return DateTime(date.year, date.month, date.day);
   }
@@ -114,27 +101,13 @@ class _CalenderWidgetState extends State<CalenderWidget> {
           focusdDate = focusedDay;
         });
       },
-      // onDaySelected: (selectedDay, focusedDay) {
-      //   final events = _events[
-      //       DateTime(selectedDay.year, selectedDay.month, selectedDay.day)];
+      onDaySelected: (selectedDay, focusedDay) {
+        selectedDate = selectedDay;
 
-      //   selectedDate = selectedDay;
-      //   final moDate = DateFormat.yMd().format(selectedDate);
-      //   if (selectedDay.isBefore(DateTime.now()) ||
-      //       isSameDay(selectedDay, DateTime.now())) {
-      //     setState(() {
-      //       focusdDate = focusedDay;
-      //       final day = moDate;
-      //       date = day;
-      //       final modifiedDate = DateFormat.yMd().format(selectedDay);
-      //       date = modifiedDate;
-      //       log(date);
-      //     });
-      //   } else if (events != null && events.contains('Pending')) {
-      //     // Prevent any action for pending days
-      //     return;
-      //   }
-      // },
+        setState(() {
+          focusdDate = focusedDay;
+        });
+      },
       // enabledDayPredicate: (day) {
 
       // },
@@ -142,18 +115,16 @@ class _CalenderWidgetState extends State<CalenderWidget> {
         selectDate(context);
       },
       eventLoader: (day) {
-        // Check if the normalized day has any events
         return dateTimeList.where((event) => isSameDay(event, day)).toList();
       },
       calendarBuilders: CalendarBuilders(
         defaultBuilder: (context, day, focusedDay) {
-          // Highlight days with events
           if (dateTimeList.map(normalizeDate).contains(normalizeDate(day))) {
             return Container(
               margin: const EdgeInsets.all(4),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.orange, // Event-specific color
+                color: Colors.orange,
               ),
               child: Center(
                 child: Text(
@@ -163,7 +134,7 @@ class _CalenderWidgetState extends State<CalenderWidget> {
               ),
             );
           }
-          return null; // Use default rendering for other dates
+          return null;
         },
       ),
     );
