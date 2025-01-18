@@ -50,7 +50,12 @@ class SelectionCard extends StatelessWidget {
                 );
               },
               icon: Icon(Icons.info_outline)),
-          isCreator ? MenuButtonWidget() : SizedBox(),
+          isCreator
+              ? MenuButtonWidget(
+                  model: model,
+                  type: TypeOfAdding.addAmount,
+                )
+              : SizedBox(),
         ],
         surfaceTintColor: primaryColorBlue,
         foregroundColor: white,
@@ -99,6 +104,7 @@ class SelectionCard extends StatelessWidget {
                         barrierDismissible: false,
                         context: context,
                         builder: (context) => AddPaymentDialog(
+                          type: TypeOfAdding.addPayment,
                           state: model,
                         ),
                       );
