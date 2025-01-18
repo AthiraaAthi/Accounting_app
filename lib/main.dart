@@ -1,3 +1,4 @@
+import 'package:curved_nav/Application/Calender/calender_bloc.dart';
 import 'package:curved_nav/Application/Category/category_bloc.dart';
 import 'package:curved_nav/Application/Expense/expense_bloc.dart';
 import 'package:curved_nav/Application/Lender/lender_bloc.dart';
@@ -47,6 +48,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => getit<LenderBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => CalenderBloc(),
         ),
       ],
       child: MaterialApp(

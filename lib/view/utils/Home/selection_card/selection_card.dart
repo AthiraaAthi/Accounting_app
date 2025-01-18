@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:curved_nav/Application/Calender/calender_bloc.dart';
 import 'package:curved_nav/Application/Lender/lender_bloc.dart';
 import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
 import 'package:curved_nav/domain/models/history%20and%20others%20model/history_model.dart';
@@ -13,16 +16,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../Widgets/addAmount_dialog.dart';
 
-class SelectionCard extends StatelessWidget {
+class SelectionCard extends StatefulWidget {
   final LendingModel model;
   final bool isCreator;
   SelectionCard({super.key, required this.isCreator, required this.model});
 
   @override
+  State<SelectionCard> createState() => _SelectionCardState();
+}
+
+class _SelectionCardState extends State<SelectionCard> {
+  DateTime? dateTime;
+  @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
-        context.read<LenderBloc>().add(History(id: model.id!));
+        context.read<LenderBloc>().add(History(id: widget.model.id!));
       },
     );
     final usedId = FirebaseAuth.instance.currentUser!.uid;
@@ -30,13 +39,13 @@ class SelectionCard extends StatelessWidget {
         .collection('users')
         .doc(usedId)
         .collection('lender')
-        .doc(model.id)
+        .doc(widget.model.id)
         .collection('details')
         .orderBy('timestamp', descending: true)
         .snapshots();
-    final payType = model.installmentType == '1'
+    final payType = widget.model.installmentType == '1'
         ? 'Daily Pay'
-        : model.installmentType == '2'
+        : widget.model.installmentType == '2'
             ? 'Weekly Pay'
             : 'Monthly Pay';
     return Scaffold(
@@ -50,16 +59,16 @@ class SelectionCard extends StatelessWidget {
                 );
               },
               icon: Icon(Icons.info_outline)),
-          isCreator
+          widget.isCreator
               ? MenuButtonWidget(
-                  model: model,
+                  model: widget.model,
                   type: TypeOfAdding.addAmount,
                 )
               : SizedBox(),
         ],
         surfaceTintColor: primaryColorBlue,
         foregroundColor: white,
-        title: Text("${model.name}"),
+        title: Text("${widget.model.name}"),
         backgroundColor: ColorConstant.defBlue,
         bottom: PreferredSize(
           preferredSize: Size(double.infinity, 50),
@@ -72,7 +81,10 @@ class SelectionCard extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [Text("Amount"), Text("${model.amount}/-")],
+                    children: [
+                      Text("Amount"),
+                      Text("${widget.model.amount}/-")
+                    ],
                   ),
                 ),
                 Text(payType)
@@ -84,14 +96,20 @@ class SelectionCard extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            CalenderWidget(
-              state: model,
+            BlocBuilder<CalenderBloc, CalenderState>(
+              builder: (context, state) {
+                dateTime = state.dateTime;
+                log('date is ${dateTime}');
+                return CalenderWidget(
+                  state: widget.model,
+                );
+              },
             ),
             Container(
               height: 20,
               color: white,
             ),
-            isCreator
+            widget.isCreator
                 ? ElevatedButton(
                     style: ButtonStyle(
                         shape: WidgetStatePropertyAll(RoundedRectangleBorder(
@@ -105,7 +123,7 @@ class SelectionCard extends StatelessWidget {
                         context: context,
                         builder: (context) => AddPaymentDialog(
                           type: TypeOfAdding.addPayment,
-                          state: model,
+                          state: widget.model,
                         ),
                       );
                     },
@@ -147,7 +165,7 @@ class SelectionCard extends StatelessWidget {
                                   pageBuilder: (context, animation,
                                           secondaryAnimation) =>
                                       HistoryScreen(
-                                    state: model,
+                                    state: widget.model,
                                   ),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
@@ -242,7 +260,7 @@ class SelectionCard extends StatelessWidget {
                 style: TextStyle(color: white),
               ),
               Text(
-                "${model.balanceAmount}\\-",
+                "${widget.model.balanceAmount}\\-",
                 style: TextStyle(color: white),
               ),
             ],
