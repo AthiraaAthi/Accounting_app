@@ -63,7 +63,7 @@ class _TermsConditionsState extends State<TermsConditions> {
               ),
               titleSpace,
               Text(
-                '''LENDO is an accounting application designed for money lenders and borrowers to track payments, pending dues, and financial transactions. It includes advertisements feature too.''',
+                '''LENDO is an accounting application designed for money lenders and borrowers to track payments, pending dues, and financial transactions.''',
                 style: explainationStyle,
                 textAlign: TextAlign.justify,
               ),
