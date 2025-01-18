@@ -79,7 +79,9 @@ class AddPaymentDialog extends StatelessWidget {
             child: Text('Cancel')),
         TextButton(
             onPressed: () {
-              final amount = addAmountController.text;
+              final amount = type == TypeOfAdding.addPayment
+                  ? '-${addAmountController.text}\\-'
+                  : '+${addAmountController.text}\\-';
               final asPayment = type == TypeOfAdding.addPayment ? true : false;
               log(asPayment.toString());
               final model = HistoryModel(amount: amount, asPayment: asPayment);

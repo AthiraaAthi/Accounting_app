@@ -204,9 +204,14 @@ class SelectionCard extends StatelessWidget {
                           child: ListTile(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10)),
-                            tileColor: lightGreen,
-                            leading: Text('01/01/2000'),
-                            trailing: Text('-${items.amount}/-'),
+                            tileColor:
+                                items.asPayment == true ? lightGreen : lightRed,
+                            leading: Text('01/01/2000',
+                                style: TextStyle(color: black)),
+                            trailing: Text(
+                              '${items.amount}',
+                              style: TextStyle(color: black),
+                            ),
                           ));
                     },
                     separatorBuilder: (context, index) => SizedBox(
