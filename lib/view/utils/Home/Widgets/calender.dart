@@ -1,15 +1,18 @@
 import 'dart:developer';
 
+import 'package:curved_nav/Application/Calender/calender_bloc.dart';
 import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
 
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalenderWidget extends StatefulWidget {
   final LendingModel state;
+
   const CalenderWidget({
     super.key,
     required this.state,
@@ -102,11 +105,11 @@ class _CalenderWidgetState extends State<CalenderWidget> {
         });
       },
       onDaySelected: (selectedDay, focusedDay) {
-        selectedDate = selectedDay;
-
         setState(() {
+          selectedDate = selectedDay;
           focusdDate = focusedDay;
         });
+        context.read<CalenderBloc>().add(GetDate(datetime: selectedDate));
       },
       // enabledDayPredicate: (day) {
 
