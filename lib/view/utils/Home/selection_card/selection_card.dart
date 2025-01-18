@@ -34,6 +34,11 @@ class SelectionCard extends StatelessWidget {
         .collection('details')
         .orderBy('timestamp', descending: true)
         .snapshots();
+    final payType = model.installmentType == '1'
+        ? 'Daily Pay'
+        : model.installmentType == '2'
+            ? 'Weekly Pay'
+            : 'Monthly Pay';
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -49,7 +54,7 @@ class SelectionCard extends StatelessWidget {
         ],
         surfaceTintColor: primaryColorBlue,
         foregroundColor: white,
-        title: Text("Person Name"),
+        title: Text("${model.name}"),
         backgroundColor: ColorConstant.defBlue,
         bottom: PreferredSize(
           preferredSize: Size(double.infinity, 50),
@@ -62,10 +67,10 @@ class SelectionCard extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [Text("Amount"), Text("10000/-")],
+                    children: [Text("Amount"), Text("${model.amount}/-")],
                   ),
                 ),
-                Text("Weekly Pay")
+                Text(payType)
               ],
             ),
           ),
@@ -226,7 +231,7 @@ class SelectionCard extends StatelessWidget {
                 style: TextStyle(color: white),
               ),
               Text(
-                "4000\\-",
+                "${model.balanceAmount}\\-",
                 style: TextStyle(color: white),
               ),
             ],
