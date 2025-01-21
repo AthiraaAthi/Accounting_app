@@ -98,7 +98,7 @@ class _SelectionCardState extends State<SelectionCard> {
           children: [
             BlocBuilder<CalenderBloc, CalenderState>(
               builder: (context, state) {
-                dateTime = state.dateTime;
+                dateTime = state.dateTime ?? DateTime.now();
                 log('date is ${dateTime}');
                 return CalenderWidget(
                   state: widget.model,
@@ -124,6 +124,7 @@ class _SelectionCardState extends State<SelectionCard> {
                         builder: (context) => AddPaymentDialog(
                           type: TypeOfAdding.addPayment,
                           state: widget.model,
+                          dateTime: dateTime!,
                         ),
                       );
                     },
@@ -216,7 +217,10 @@ class _SelectionCardState extends State<SelectionCard> {
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       final items = data[index];
-
+                      final date = items.date!.toDate();
+                      final formatedDate =
+                          '${date.day}/${date.month}/${date.year}';
+                      log(formatedDate);
                       return Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: ListTile(
@@ -224,7 +228,7 @@ class _SelectionCardState extends State<SelectionCard> {
                                 borderRadius: BorderRadius.circular(10)),
                             tileColor:
                                 items.asPayment == true ? lightGreen : lightRed,
-                            leading: Text('01/01/2000',
+                            leading: Text(formatedDate,
                                 style: TextStyle(color: black)),
                             trailing: Text(
                               '${items.amount}',
