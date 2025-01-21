@@ -21,8 +21,10 @@ HistoryModel _$HistoryModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$HistoryModel {
   String? get id => throw _privateConstructorUsedError;
-  String? get amount => throw _privateConstructorUsedError;
-  String? get date => throw _privateConstructorUsedError;
+  String? get amount =>
+      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
+  @JsonKey(fromJson: timestampFromJson, toJson: timestampToJson)
+  Timestamp? get date => throw _privateConstructorUsedError;
   bool? get asPayment => throw _privateConstructorUsedError;
   String? get timestamp => throw _privateConstructorUsedError;
 
@@ -45,7 +47,8 @@ abstract class $HistoryModelCopyWith<$Res> {
   $Res call(
       {String? id,
       String? amount,
-      String? date,
+      @JsonKey(fromJson: timestampFromJson, toJson: timestampToJson)
+      Timestamp? date,
       bool? asPayment,
       String? timestamp});
 }
@@ -83,7 +86,7 @@ class _$HistoryModelCopyWithImpl<$Res, $Val extends HistoryModel>
       date: freezed == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as Timestamp?,
       asPayment: freezed == asPayment
           ? _value.asPayment
           : asPayment // ignore: cast_nullable_to_non_nullable
@@ -107,7 +110,8 @@ abstract class _$$HistoryModelImplCopyWith<$Res>
   $Res call(
       {String? id,
       String? amount,
-      String? date,
+      @JsonKey(fromJson: timestampFromJson, toJson: timestampToJson)
+      Timestamp? date,
       bool? asPayment,
       String? timestamp});
 }
@@ -143,7 +147,7 @@ class __$$HistoryModelImplCopyWithImpl<$Res>
       date: freezed == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as Timestamp?,
       asPayment: freezed == asPayment
           ? _value.asPayment
           : asPayment // ignore: cast_nullable_to_non_nullable
@@ -160,7 +164,11 @@ class __$$HistoryModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$HistoryModelImpl implements _HistoryModel {
   const _$HistoryModelImpl(
-      {this.id, this.amount, this.date, this.asPayment, this.timestamp});
+      {this.id,
+      this.amount,
+      @JsonKey(fromJson: timestampFromJson, toJson: timestampToJson) this.date,
+      this.asPayment,
+      this.timestamp});
 
   factory _$HistoryModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$HistoryModelImplFromJson(json);
@@ -169,8 +177,10 @@ class _$HistoryModelImpl implements _HistoryModel {
   final String? id;
   @override
   final String? amount;
+// ignore: invalid_annotation_target
   @override
-  final String? date;
+  @JsonKey(fromJson: timestampFromJson, toJson: timestampToJson)
+  final Timestamp? date;
   @override
   final bool? asPayment;
   @override
@@ -220,7 +230,8 @@ abstract class _HistoryModel implements HistoryModel {
   const factory _HistoryModel(
       {final String? id,
       final String? amount,
-      final String? date,
+      @JsonKey(fromJson: timestampFromJson, toJson: timestampToJson)
+      final Timestamp? date,
       final bool? asPayment,
       final String? timestamp}) = _$HistoryModelImpl;
 
@@ -230,9 +241,10 @@ abstract class _HistoryModel implements HistoryModel {
   @override
   String? get id;
   @override
-  String? get amount;
+  String? get amount; // ignore: invalid_annotation_target
   @override
-  String? get date;
+  @JsonKey(fromJson: timestampFromJson, toJson: timestampToJson)
+  Timestamp? get date;
   @override
   bool? get asPayment;
   @override
