@@ -1,10 +1,12 @@
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_nav/Infrastructure/Lender/details.repository.dart';
 
 import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
 
 import 'package:curved_nav/domain/models/history%20and%20others%20model/history_model.dart';
+
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
 
@@ -13,10 +15,12 @@ enum TypeOfAdding { addPayment, addAmount }
 class AddPaymentDialog extends StatelessWidget {
   final LendingModel state;
   final TypeOfAdding type;
+  final DateTime dateTime;
   const AddPaymentDialog({
     super.key,
     required this.state,
     required this.type,
+    required this.dateTime,
   });
 
   @override
@@ -84,7 +88,9 @@ class AddPaymentDialog extends StatelessWidget {
                   : '+${addAmountController.text}\\-';
               final asPayment = type == TypeOfAdding.addPayment ? true : false;
               log(asPayment.toString());
-              final model = HistoryModel(amount: amount, asPayment: asPayment);
+              final date = Timestamp.fromDate(dateTime);
+              final model = HistoryModel(
+                  amount: amount, asPayment: asPayment, date: date);
               HistoryFunctions().addDetails(model, id!);
 
               Navigator.pop(context);

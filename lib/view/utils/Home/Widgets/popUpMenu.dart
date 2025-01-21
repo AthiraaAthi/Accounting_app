@@ -1,7 +1,9 @@
+import 'package:curved_nav/Application/Calender/calender_bloc.dart';
 import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
 import 'package:curved_nav/view/utils/Home/Widgets/addAmount_dialog.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MenuButtonWidget extends StatelessWidget {
   final LendingModel model;
@@ -23,7 +25,15 @@ class MenuButtonWidget extends StatelessWidget {
             context: context,
             barrierDismissible: false,
             builder: (context) {
-              return AddPaymentDialog(state: model, type: type);
+              return BlocBuilder<CalenderBloc, CalenderState>(
+                builder: (context, state) {
+                  return AddPaymentDialog(
+                    state: model,
+                    type: type,
+                    dateTime: state.dateTime!,
+                  );
+                },
+              );
             },
           );
         } else if (value == '2') {
