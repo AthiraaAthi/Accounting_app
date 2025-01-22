@@ -51,7 +51,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
               Text("1. Introduction", style: pointsStyle),
               titleSpace,
               Text(
-                '''Welcome to LENDO. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile application (the "LENDO"). By using the App, you agree to the collection and use of information in accordance with this policy. ''',
+                '''Welcome to LENDO. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile application (the "LENDO"). By using the App, you agree to the collection and use of information in accordance with this policy.aaaaa''',
                 style: explainationStyle,
                 textAlign: TextAlign.justify,
               ),
@@ -60,6 +60,9 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
               titleSpace,
               Text(
                 '''We collect the following types of information:
+
+        •Personal Information: Name, phone number, and other necessary details to verify identity and facilitate transactions. 
+        •Financial Information: Loan amount, repayment history, and other relevant financial details.
         •Personal Information: Name, phone number, email, and other necessary details to verify identity and facilitate transactions. 
         •Advertising Data: We may collect ad interaction data for personalized advertising experiences. ''',
                 textAlign: TextAlign.justify,
