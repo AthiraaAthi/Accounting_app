@@ -50,7 +50,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
               Text("1. Introduction", style: pointsStyle),
               titleSpace,
               Text(
-                '''Welcome to LENDO. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile application (the "LENDO"). By using the App, you agree to the collection and use of information in accordance with this policy. ''',
+                '''Welcome to LENDO. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile application (the "LENDO"). By using the App, you agree to the collection and use of information in accordance with this policy.aaaaa''',
                 style: explainationStyle,
                 textAlign: TextAlign.justify,
               ),
