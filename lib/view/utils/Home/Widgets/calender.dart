@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:curved_nav/Application/Calender/calender_bloc.dart';
+import 'package:curved_nav/Application/Lender/lender_bloc.dart';
 import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
 
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
@@ -69,6 +70,8 @@ class _CalenderWidgetState extends State<CalenderWidget> {
     return DateTime(date.year, date.month, date.day);
   }
 
+  Color? clr;
+  Color? txtclr;
   @override
   Widget build(BuildContext context) {
     final dateTimeList =
@@ -76,70 +79,131 @@ class _CalenderWidgetState extends State<CalenderWidget> {
     final date = widget.state.datetime!.toDate();
 
     log(date.toString());
-    return TableCalendar(
-      calendarStyle: CalendarStyle(
-          cellMargin: EdgeInsets.all(2),
-          todayDecoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: focusdDate != DateTime.now()
-                ? primaryColorBlue.withOpacity(0.5)
-                : primaryColorBlue,
-          ),
-          selectedDecoration: BoxDecoration(
-            color: primaryColorBlue,
-            shape: BoxShape.circle,
-          ),
-          markerSize: 0),
-      rowHeight: 40,
-      availableCalendarFormats: {CalendarFormat.month: "Month"},
-      calendarFormat: CalendarFormat.month,
-      focusedDay: focusdDate,
-      firstDay: date,
-      lastDay: DateTime.utc(2100, 12, 31),
-      selectedDayPredicate: (day) {
-        return isSameDay(selectedDate, day);
-      },
-      onPageChanged: (focusedDay) {
-        setState(() {
-          focusdDate = focusedDay;
-        });
-      },
-      onDaySelected: (selectedDay, focusedDay) {
-        setState(() {
-          selectedDate = selectedDay;
-          focusdDate = focusedDay;
-        });
-        context.read<CalenderBloc>().add(GetDate(datetime: selectedDate));
-      },
-      // enabledDayPredicate: (day) {
+    return BlocBuilder<LenderBloc, LenderState>(
+      builder: (context, state) {
+        final model = state.historyData;
+        final listEvent = model
+            .map(
+              (e) => e.date!.toDate(),
+            )
+            .toList();
 
-      // },
-      onHeaderTapped: (focusedDay) {
-        selectDate(context);
-      },
-      eventLoader: (day) {
-        return dateTimeList.where((event) => isSameDay(event, day)).toList();
-      },
-      calendarBuilders: CalendarBuilders(
-        defaultBuilder: (context, day, focusedDay) {
-          if (dateTimeList.map(normalizeDate).contains(normalizeDate(day))) {
-            return Container(
-              margin: const EdgeInsets.all(4),
-              decoration: BoxDecoration(
+        log(listEvent.toString());
+        if (state.isLoading) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        if (listEvent
+            .map(normalizeDate)
+            .contains(normalizeDate(DateTime.now()))) {
+          final eventsForDay = state.historyData
+              .where((e) =>
+                  normalizeDate(e.date!.toDate()) ==
+                  normalizeDate(DateTime.now()))
+              .toList();
+
+          eventsForDay.sort((a, b) => b.date!.compareTo(a.date!));
+
+          final latestEvent = eventsForDay.first;
+
+          clr = latestEvent.asPayment! ? lightGreen : lightRed;
+          txtclr = latestEvent.asPayment! ? black : white;
+        }
+
+        return TableCalendar(
+          calendarStyle: CalendarStyle(
+              cellMargin: EdgeInsets.all(2),
+              todayDecoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.orange,
+                color: focusdDate != DateTime.now()
+                    ? (clr == null ? primaryColorBlue.withOpacity(0.5) : clr)
+                    : primaryColorBlue,
               ),
-              child: Center(
-                child: Text(
-                  '${day.day}',
-                  style: const TextStyle(color: Colors.white),
-                ),
+              todayTextStyle: TextStyle(color: clr == null ? white : txtclr),
+              selectedDecoration: BoxDecoration(
+                color: primaryColorBlue,
+                shape: BoxShape.circle,
               ),
-            );
-          }
-          return null;
-        },
-      ),
+              markerSize: 0),
+          rowHeight: 40,
+          availableCalendarFormats: {CalendarFormat.month: "Month"},
+          calendarFormat: CalendarFormat.month,
+          focusedDay: focusdDate,
+          firstDay: date,
+          lastDay: DateTime.utc(2100, 12, 31),
+          selectedDayPredicate: (day) {
+            return isSameDay(selectedDate, day);
+          },
+          onPageChanged: (focusedDay) {
+            setState(() {
+              focusdDate = focusedDay;
+            });
+          },
+          onDaySelected: (selectedDay, focusedDay) {
+            setState(() {
+              selectedDate = selectedDay;
+              focusdDate = focusedDay;
+            });
+            context.read<CalenderBloc>().add(GetDate(datetime: selectedDate));
+          },
+          onHeaderTapped: (focusedDay) {
+            selectDate(context);
+          },
+          eventLoader: (day) {
+            return dateTimeList
+                .where((event) => isSameDay(event, day))
+                .toList();
+          },
+          calendarBuilders: CalendarBuilders(
+            defaultBuilder: (context, day, focusedDay) {
+              if (listEvent.map(normalizeDate).contains(normalizeDate(day))) {
+                final eventsForDay = state.historyData
+                    .where((e) =>
+                        normalizeDate(e.date!.toDate()) == normalizeDate(day))
+                    .toList();
+
+                eventsForDay.sort((a, b) => b.date!.compareTo(a.date!));
+
+                final latestEvent = eventsForDay.first;
+                return Container(
+                  margin: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: latestEvent.asPayment! ? lightGreen : lightRed,
+                  ),
+                  child: Center(
+                    child: Text(
+                      '${day.day}',
+                      style: TextStyle(
+                          color: latestEvent.asPayment! ? black : white),
+                    ),
+                  ),
+                );
+              }
+              if (dateTimeList
+                  .map(normalizeDate)
+                  .contains(normalizeDate(day))) {
+                return Container(
+                  margin: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.orange,
+                  ),
+                  child: Center(
+                    child: Text(
+                      '${day.day}',
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  ),
+                );
+              }
+              return null;
+            },
+          ),
+        );
+      },
     );
   }
 }
