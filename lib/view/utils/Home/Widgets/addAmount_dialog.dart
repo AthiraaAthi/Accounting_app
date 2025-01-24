@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:curved_nav/Application/Lender/lender_bloc.dart';
+
 import 'package:curved_nav/Infrastructure/Lender/details.repository.dart';
 
 import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
@@ -9,6 +11,7 @@ import 'package:curved_nav/domain/models/history%20and%20others%20model/history_
 
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 enum TypeOfAdding { addPayment, addAmount }
 
@@ -92,7 +95,7 @@ class AddPaymentDialog extends StatelessWidget {
               final model = HistoryModel(
                   amount: amount, asPayment: asPayment, date: date);
               HistoryFunctions().addDetails(model, id!);
-
+              context.read<LenderBloc>().add(History(id: id));
               Navigator.pop(context);
             },
             child: Text(
