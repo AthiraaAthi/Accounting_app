@@ -37,6 +37,7 @@ mixin _$LendingModel {
       throw _privateConstructorUsedError; // ignore: invalid_annotation_target
   @JsonKey(fromJson: timestampFromJson, toJson: timestampToJson)
   Timestamp? get datetime => throw _privateConstructorUsedError;
+  String? get lastMoneyGivenDate => throw _privateConstructorUsedError;
 
   /// Serializes this LendingModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -69,7 +70,8 @@ abstract class $LendingModelCopyWith<$Res> {
       bool? asJoiner,
       String? balanceAmount,
       @JsonKey(fromJson: timestampFromJson, toJson: timestampToJson)
-      Timestamp? datetime});
+      Timestamp? datetime,
+      String? lastMoneyGivenDate});
 }
 
 /// @nodoc
@@ -100,6 +102,7 @@ class _$LendingModelCopyWithImpl<$Res, $Val extends LendingModel>
     Object? asJoiner = freezed,
     Object? balanceAmount = freezed,
     Object? datetime = freezed,
+    Object? lastMoneyGivenDate = freezed,
   }) {
     return _then(_value.copyWith(
       IsMoneyLent: freezed == IsMoneyLent
@@ -154,6 +157,10 @@ class _$LendingModelCopyWithImpl<$Res, $Val extends LendingModel>
           ? _value.datetime
           : datetime // ignore: cast_nullable_to_non_nullable
               as Timestamp?,
+      lastMoneyGivenDate: freezed == lastMoneyGivenDate
+          ? _value.lastMoneyGivenDate
+          : lastMoneyGivenDate // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -181,7 +188,8 @@ abstract class _$$LendingModelImplCopyWith<$Res>
       bool? asJoiner,
       String? balanceAmount,
       @JsonKey(fromJson: timestampFromJson, toJson: timestampToJson)
-      Timestamp? datetime});
+      Timestamp? datetime,
+      String? lastMoneyGivenDate});
 }
 
 /// @nodoc
@@ -210,6 +218,7 @@ class __$$LendingModelImplCopyWithImpl<$Res>
     Object? asJoiner = freezed,
     Object? balanceAmount = freezed,
     Object? datetime = freezed,
+    Object? lastMoneyGivenDate = freezed,
   }) {
     return _then(_$LendingModelImpl(
       IsMoneyLent: freezed == IsMoneyLent
@@ -264,6 +273,10 @@ class __$$LendingModelImplCopyWithImpl<$Res>
           ? _value.datetime
           : datetime // ignore: cast_nullable_to_non_nullable
               as Timestamp?,
+      lastMoneyGivenDate: freezed == lastMoneyGivenDate
+          ? _value.lastMoneyGivenDate
+          : lastMoneyGivenDate // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -286,7 +299,8 @@ class _$LendingModelImpl implements _LendingModel {
       this.asJoiner,
       this.balanceAmount,
       @JsonKey(fromJson: timestampFromJson, toJson: timestampToJson)
-      this.datetime})
+      this.datetime,
+      this.lastMoneyGivenDate})
       : _listOfTImestamp = listOfTImestamp;
 
   factory _$LendingModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -331,10 +345,12 @@ class _$LendingModelImpl implements _LendingModel {
   @override
   @JsonKey(fromJson: timestampFromJson, toJson: timestampToJson)
   final Timestamp? datetime;
+  @override
+  final String? lastMoneyGivenDate;
 
   @override
   String toString() {
-    return 'LendingModel(IsMoneyLent: $IsMoneyLent, id: $id, name: $name, phone: $phone, description: $description, amount: $amount, installmentAmount: $installmentAmount, installmentType: $installmentType, listOfTImestamp: $listOfTImestamp, shareCode: $shareCode, asJoiner: $asJoiner, balanceAmount: $balanceAmount, datetime: $datetime)';
+    return 'LendingModel(IsMoneyLent: $IsMoneyLent, id: $id, name: $name, phone: $phone, description: $description, amount: $amount, installmentAmount: $installmentAmount, installmentType: $installmentType, listOfTImestamp: $listOfTImestamp, shareCode: $shareCode, asJoiner: $asJoiner, balanceAmount: $balanceAmount, datetime: $datetime, lastMoneyGivenDate: $lastMoneyGivenDate)';
   }
 
   @override
@@ -363,7 +379,9 @@ class _$LendingModelImpl implements _LendingModel {
             (identical(other.balanceAmount, balanceAmount) ||
                 other.balanceAmount == balanceAmount) &&
             (identical(other.datetime, datetime) ||
-                other.datetime == datetime));
+                other.datetime == datetime) &&
+            (identical(other.lastMoneyGivenDate, lastMoneyGivenDate) ||
+                other.lastMoneyGivenDate == lastMoneyGivenDate));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -382,7 +400,8 @@ class _$LendingModelImpl implements _LendingModel {
       shareCode,
       asJoiner,
       balanceAmount,
-      datetime);
+      datetime,
+      lastMoneyGivenDate);
 
   /// Create a copy of LendingModel
   /// with the given fields replaced by the non-null parameter values.
@@ -416,7 +435,8 @@ abstract class _LendingModel implements LendingModel {
       final bool? asJoiner,
       final String? balanceAmount,
       @JsonKey(fromJson: timestampFromJson, toJson: timestampToJson)
-      final Timestamp? datetime}) = _$LendingModelImpl;
+      final Timestamp? datetime,
+      final String? lastMoneyGivenDate}) = _$LendingModelImpl;
 
   factory _LendingModel.fromJson(Map<String, dynamic> json) =
       _$LendingModelImpl.fromJson;
@@ -449,6 +469,8 @@ abstract class _LendingModel implements LendingModel {
   @override
   @JsonKey(fromJson: timestampFromJson, toJson: timestampToJson)
   Timestamp? get datetime;
+  @override
+  String? get lastMoneyGivenDate;
 
   /// Create a copy of LendingModel
   /// with the given fields replaced by the non-null parameter values.

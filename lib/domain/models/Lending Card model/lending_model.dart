@@ -25,6 +25,7 @@ class LendingModel with _$LendingModel {
     // ignore: invalid_annotation_target
     @JsonKey(fromJson: timestampFromJson, toJson: timestampToJson)
     Timestamp? datetime,
+    String? lastMoneyGivenDate,
   }) = _LendingModel;
 
   factory LendingModel.fromJson(Map<String, dynamic> json) =>
