@@ -6,6 +6,7 @@ import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -65,12 +66,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
                   final timestamp = data.listOfTImestamp;
 
-                  final dueReminder = timestamp?.any(
-                    (dateAsTimestamp) {
-                      final date = dateAsTimestamp.toDate();
-                      return isDueDateNear(date);
-                    },
-                  );
+                  DateTime? nearestDueDate;
+                  if (timestamp != null && timestamp.isNotEmpty) {
+                    nearestDueDate = timestamp
+                        .map((timestamp) => timestamp.toDate())
+                        .where((date) => date.isAfter(DateTime.now()))
+                        .reduce((a, b) => a.isBefore(b) ? a : b);
+                  }
+
+                  final isNearDue =
+                      nearestDueDate != null && isDueDateNear(nearestDueDate);
 
                   //log(data.toString());
 
@@ -114,13 +119,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                           FaIcon(FontAwesomeIcons.penToSquare))
                                 ],
                               ),
-                              dueReminder == true
-                                  ? Text(
-                                      'Daily due',
-                                      style:
-                                          TextStyle(color: Colors.orangeAccent),
-                                    )
-                                  : SizedBox(),
+                              Text(
+                                'Daily due',
+                                style: TextStyle(color: Colors.orangeAccent),
+                              )
                             ],
                           ),
                         ),
@@ -162,9 +164,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                     icon: FaIcon(FontAwesomeIcons.penToSquare))
                               ],
                             ),
-                            dueReminder == true
+                            isNearDue
                                 ? Text(
-                                    'Due is near!!',
+                                    'Due is near!! (${DateFormat.yMMMd().format(nearestDueDate)})',
                                     style:
                                         TextStyle(color: Colors.orangeAccent),
                                   )
