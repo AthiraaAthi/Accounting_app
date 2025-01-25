@@ -100,7 +100,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                     children: [
                                       Text(data.name ?? ' '),
                                       Text('${data.balanceAmount}/-'),
-                                      Text('Last money given date'),
+                                      Text(
+                                          ' ${data.lastMoneyGivenDate != null ? 'Last money given date:- ${data.lastMoneyGivenDate}' : 'Newly added'}'),
                                     ],
                                   ),
                                   IconButton(
@@ -147,7 +148,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                   children: [
                                     Text(data.name ?? ' '),
                                     Text('${data.balanceAmount}/-'),
-                                    Text('Last money given date'),
+                                    Text(
+                                        '${data.lastMoneyGivenDate != null ? 'Last money given date:- ${data.lastMoneyGivenDate}' : 'Newly added'}')
                                   ],
                                 ),
                                 IconButton(
