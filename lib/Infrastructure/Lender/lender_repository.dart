@@ -63,8 +63,21 @@ class LenderFunctions implements ILenderRepository {
   }
 
   @override
-  Future<void> updateLender(LendingModel lenderDetails) {
-    throw UnimplementedError();
+  Future<void> updateLastDate(String lastDate, dynamic value, String id) async {
+    try {
+      final data = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .collection('lender')
+          .doc(id);
+
+      data.update({
+        lastDate: value,
+      });
+      log('Last date updated successfully!');
+    } catch (e) {
+      log('Error updating last date: $e');
+    }
   }
 }
 
