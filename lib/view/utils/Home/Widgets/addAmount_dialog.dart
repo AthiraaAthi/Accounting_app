@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_nav/Application/Lender/lender_bloc.dart';
 
 import 'package:curved_nav/Infrastructure/Lender/details.repository.dart';
+import 'package:curved_nav/Infrastructure/Lender/lender_repository.dart';
 
 import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
 
@@ -95,6 +96,10 @@ class AddPaymentDialog extends StatelessWidget {
               final model = HistoryModel(
                   amount: amount, asPayment: asPayment, date: date);
               HistoryFunctions().addDetails(model, id!);
+              final lastDate =
+                  '${dateTime.day}/${dateTime.month}/${dateTime.year}';
+              LenderFunctions()
+                  .updateLastDate('lastMoneyGivenDate', lastDate, id);
               context.read<LenderBloc>().add(History(id: id));
               Navigator.pop(context);
             },
