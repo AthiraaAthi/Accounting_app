@@ -101,6 +101,7 @@ class AddPaymentDialog extends StatelessWidget {
               LenderFunctions()
                   .updateLastDate('lastMoneyGivenDate', lastDate, id);
               context.read<LenderBloc>().add(History(id: id));
+              context.read<LenderBloc>().add(LenderEvent.getData());
               Navigator.pop(context);
             },
             child: Text(
