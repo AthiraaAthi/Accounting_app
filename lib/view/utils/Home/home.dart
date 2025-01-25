@@ -1,4 +1,5 @@
 import 'package:curved_nav/Application/Lender/lender_bloc.dart';
+import 'package:curved_nav/Infrastructure/Lender/lender_repository.dart';
 import 'package:curved_nav/view/utils/Home/Widgets/alertDialog_widget.dart';
 import 'package:curved_nav/view/utils/Home/selection_card/selection_card.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
@@ -62,7 +63,70 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 itemBuilder: (context, index) {
                   final data = state.data[index];
 
+                  final timestamp = data.listOfTImestamp;
+
+                  final dueReminder = timestamp?.any(
+                    (dateAsTimestamp) {
+                      final date = dateAsTimestamp.toDate();
+                      return isDueDateNear(date);
+                    },
+                  );
+
                   //log(data.toString());
+
+                  if (data.installmentType == '1') {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 6),
+                      child: Card(
+                        color: const Color.fromARGB(255, 235, 235, 235),
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 18, right: 18, bottom: 12, top: 18),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(data.name ?? ' '),
+                                      Text('${data.balanceAmount}/-'),
+                                      Text('Last money given date'),
+                                    ],
+                                  ),
+                                  IconButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  SelectionCard(
+                                                isCreator: true,
+                                                model: data,
+                                              ),
+                                            ));
+                                      },
+                                      icon:
+                                          FaIcon(FontAwesomeIcons.penToSquare))
+                                ],
+                              ),
+                              dueReminder == true
+                                  ? Text(
+                                      'Daily due',
+                                      style:
+                                          TextStyle(color: Colors.orangeAccent),
+                                    )
+                                  : SizedBox(),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  }
                   return Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
@@ -98,10 +162,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                     icon: FaIcon(FontAwesomeIcons.penToSquare))
                               ],
                             ),
-                            Text(
-                              'Due Date',
-                              style: TextStyle(color: Colors.orangeAccent),
-                            )
+                            dueReminder == true
+                                ? Text(
+                                    'Due is near!!',
+                                    style:
+                                        TextStyle(color: Colors.orangeAccent),
+                                  )
+                                : SizedBox(),
                           ],
                         ),
                       ),

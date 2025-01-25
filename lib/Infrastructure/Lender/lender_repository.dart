@@ -67,3 +67,9 @@ class LenderFunctions implements ILenderRepository {
     throw UnimplementedError();
   }
 }
+
+bool isDueDateNear(DateTime dueDate, {int thresholdDays = 3}) {
+  final currentDate = DateTime.now();
+  final difference = dueDate.difference(currentDate).inDays;
+  return difference >= 0 && difference <= thresholdDays;
+}
