@@ -28,6 +28,11 @@ class SelectionCard extends StatefulWidget {
 
 class _SelectionCardState extends State<SelectionCard> {
   DateTime? dateTime;
+
+  DateTime normalizeDate(DateTime date) {
+    return DateTime(date.year, date.month, date.day);
+  }
+
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback(
@@ -137,12 +142,47 @@ class _SelectionCardState extends State<SelectionCard> {
             Container(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: ListTile(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  tileColor: lightBlue,
-                  leading: Text("Selected date Event"),
-                  trailing: Text("No Data"),
+                child: BlocBuilder<CalenderBloc, CalenderState>(
+                  builder: (context, state) {
+                    final selectedDate = state.dateTime ?? DateTime.now();
+
+                    return BlocBuilder<LenderBloc, LenderState>(
+                      builder: (context, state) {
+                        if (state.isLoading) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        final selectedDateEvents = state.historyData
+                            .where((e) =>
+                                normalizeDate(e.date!.toDate()) ==
+                                normalizeDate(selectedDate))
+                            .toList();
+
+                        if (selectedDateEvents.isEmpty) {
+                          return ListTile(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            tileColor: lightBlue,
+                            leading: Text("Selected date Event"),
+                            trailing: Text("No event"),
+                          );
+                        }
+
+                        final data = selectedDateEvents[0];
+                        final eventText =
+                            data.asPayment! ? "Payment Added" : "Amount Added";
+
+                        return ListTile(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          tileColor: lightBlue,
+                          leading: Text("Selected date Event"),
+                          trailing: Text(eventText),
+                        );
+                      },
+                    );
+                  },
                 ),
               ),
             ),
