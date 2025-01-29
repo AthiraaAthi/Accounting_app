@@ -168,17 +168,45 @@ class _SelectionCardState extends State<SelectionCard> {
                             trailing: Text("No event"),
                           );
                         }
+                        final firstEvent = selectedDateEvents[0];
+                        final firstEventText = firstEvent.asPayment!
+                            ? "Payment Added"
+                            : "Amount Added";
 
-                        final data = selectedDateEvents[0];
-                        final eventText =
-                            data.asPayment! ? "Payment Added" : "Amount Added";
+                        final secondEvent = selectedDateEvents.length > 1
+                            ? selectedDateEvents[1]
+                            : null;
+                        final secondEventText = secondEvent != null
+                            ? (secondEvent.asPayment!
+                                ? "Payment Added"
+                                : "Amount Added")
+                            : null;
 
-                        return ListTile(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          tileColor: lightBlue,
-                          leading: Text("Selected date Event"),
-                          trailing: Text(eventText),
+                        return Column(
+                          children: [
+                            ListTile(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              tileColor: lightBlue,
+                              leading: Text("Selected date Event"),
+                              trailing: Text(firstEventText),
+                            ),
+                            if (secondEvent != null)
+                              SizedBox(
+                                height: 10,
+                              ),
+                            if (secondEvent != null)
+                              ListTile(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                tileColor: lightBlue,
+                                leading: Text("Selected date event"),
+                                trailing: Text(secondEventText!),
+                              ),
+                            if (secondEvent == null) SizedBox(),
+                          ],
                         );
                       },
                     );
