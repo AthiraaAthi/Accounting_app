@@ -30,7 +30,7 @@ class AddPaymentDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextEditingController addAmountController = TextEditingController();
-    final id = state.id;
+    final id = state.id!;
     return AlertDialog(
       backgroundColor: white,
       title: Center(child: Text("Enter Amount")),
@@ -95,13 +95,13 @@ class AddPaymentDialog extends StatelessWidget {
               final date = Timestamp.fromDate(dateTime);
               final model = HistoryModel(
                   amount: amount, asPayment: asPayment, date: date);
-              HistoryFunctions().addDetails(model, id!);
+              HistoryFunctions().addDetails(model, id);
               final lastDate =
                   '${dateTime.day}/${dateTime.month}/${dateTime.year}';
               LenderFunctions()
                   .updateLastDate('lastMoneyGivenDate', lastDate, id);
-              context.read<LenderBloc>().add(History(id: id));
-              context.read<LenderBloc>().add(LenderEvent.getData());
+
+              context.read<LenderBloc>().add(LenderEvent.history(id: id));
               Navigator.pop(context);
             },
             child: Text(
