@@ -12,11 +12,11 @@ import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalenderWidget extends StatefulWidget {
-  final LendingModel state;
+  final LendingModel lendingModel;
 
   const CalenderWidget({
     super.key,
-    required this.state,
+    required this.lendingModel,
   });
 
   @override
@@ -34,11 +34,11 @@ class _CalenderWidgetState extends State<CalenderWidget> {
           data: Theme.of(context).copyWith(
             colorScheme: ColorScheme.light(
                 primary: ColorConstant.defBlue,
-                onPrimary: Colors.white, // header text color
+                onPrimary: Colors.white,
                 onSurface: Colors.black),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                foregroundColor: ColorConstant.defBlue, // button text color
+                foregroundColor: ColorConstant.defBlue,
               ),
             ),
           ),
@@ -74,14 +74,18 @@ class _CalenderWidgetState extends State<CalenderWidget> {
   Color? txtclr;
   @override
   Widget build(BuildContext context) {
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    //   context
+    //       .read<LenderBloc>()
+    //       .add(LenderEvent.history(id: widget.lendingModel.id!));
+    // });
     final dateTimeList =
-        widget.state.listOfTImestamp!.map((e) => e.toDate()).toList();
-    final date = widget.state.datetime!.toDate();
-
-    log(date.toString());
+        widget.lendingModel.listOfTImestamp!.map((e) => e.toDate()).toList();
+    final date = widget.lendingModel.datetime!.toDate();
     return BlocBuilder<LenderBloc, LenderState>(
       builder: (context, state) {
         final model = state.historyData;
+
         final listEvent = model
             .map(
               (e) => e.date!.toDate(),
@@ -95,21 +99,20 @@ class _CalenderWidgetState extends State<CalenderWidget> {
           );
         }
 
-        if (listEvent
-            .map(normalizeDate)
-            .contains(normalizeDate(DateTime.now()))) {
-          final eventsForDay = state.historyData
-              .where((e) =>
-                  normalizeDate(e.date!.toDate()) ==
-                  normalizeDate(DateTime.now()))
-              .toList();
+        final eventsForToday = state.historyData
+            .where((e) =>
+                normalizeDate(e.date!.toDate()) ==
+                normalizeDate(DateTime.now()))
+            .toList();
 
-          eventsForDay.sort((a, b) => b.date!.compareTo(a.date!));
-
-          final latestEvent = eventsForDay.first;
+        if (eventsForToday.isNotEmpty) {
+          eventsForToday.sort((a, b) => b.date!.compareTo(a.date!));
+          final latestEvent = eventsForToday.first;
 
           clr = latestEvent.asPayment! ? lightGreen : lightRed;
           txtclr = latestEvent.asPayment! ? black : white;
+        } else {
+          clr = null;
         }
 
         return TableCalendar(
@@ -117,9 +120,15 @@ class _CalenderWidgetState extends State<CalenderWidget> {
               cellMargin: EdgeInsets.all(2),
               todayDecoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: focusdDate != DateTime.now()
-                    ? (clr == null ? primaryColorBlue.withOpacity(0.5) : clr)
-                    : primaryColorBlue,
+                color: (listEvent
+                        .map(normalizeDate)
+                        .contains(normalizeDate(DateTime.now())))
+                    ? clr ?? primaryColorBlue 
+                    : (dateTimeList
+                            .map(normalizeDate)
+                            .contains(normalizeDate(DateTime.now())))
+                        ? Colors.orange
+                        : primaryColorBlue.withOpacity(0.5),
               ),
               todayTextStyle: TextStyle(color: clr == null ? white : txtclr),
               selectedDecoration: BoxDecoration(
@@ -182,9 +191,10 @@ class _CalenderWidgetState extends State<CalenderWidget> {
                   ),
                 );
               }
-              if (dateTimeList
-                  .map(normalizeDate)
-                  .contains(normalizeDate(day))) {
+              if (!listEvent.map(normalizeDate).contains(normalizeDate(day)) &&
+                  dateTimeList
+                      .map(normalizeDate)
+                      .contains(normalizeDate(day))) {
                 return Container(
                   margin: const EdgeInsets.all(4),
                   decoration: BoxDecoration(
