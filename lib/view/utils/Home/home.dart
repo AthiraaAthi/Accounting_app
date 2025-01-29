@@ -79,57 +79,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
                   //log(data.toString());
 
-                  if (data.installmentType == '1') {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 6),
-                      child: Card(
-                        color: const Color.fromARGB(255, 235, 235, 235),
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 18, right: 18, bottom: 12, top: 18),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(data.name ?? ' '),
-                                      Text('${data.balanceAmount}/-'),
-                                      Text(
-                                          ' ${data.lastMoneyGivenDate != null ? 'Last money given date:- ${data.lastMoneyGivenDate}' : 'Newly added'}'),
-                                    ],
-                                  ),
-                                  IconButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  SelectionCard(
-                                                isCreator: true,
-                                                model: data,
-                                              ),
-                                            ));
-                                      },
-                                      icon:
-                                          FaIcon(FontAwesomeIcons.penToSquare))
-                                ],
-                              ),
-                              Text(
-                                'Daily due',
-                                style: TextStyle(color: Colors.orangeAccent),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  }
+                  final dueText = data.installmentType == '1'
+                      ? 'Daily due'
+                      : 'Due is near!! (${DateFormat.yMMMd().format(nearestDueDate!)})';
+
                   return Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
@@ -162,13 +115,15 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                               model: data,
                                             ),
                                           ));
+                                      LenderFunctions()
+                                          .removeTodayPendingDate(data.id!);
                                     },
                                     icon: FaIcon(FontAwesomeIcons.penToSquare))
                               ],
                             ),
                             isNearDue
                                 ? Text(
-                                    'Due is near!! (${DateFormat.yMMMd().format(nearestDueDate)})',
+                                    dueText,
                                     style:
                                         TextStyle(color: Colors.orangeAccent),
                                   )
