@@ -124,15 +124,30 @@ class _SelectionCardState extends State<SelectionCard> {
                         backgroundColor:
                             WidgetStatePropertyAll(primaryColorBlue)),
                     onPressed: () {
-                      showDialog(
-                        barrierDismissible: false,
-                        context: context,
-                        builder: (context) => AddPaymentDialog(
-                          type: TypeOfAdding.addPayment,
-                          state: widget.model,
-                          dateTime: dateTime!,
-                        ),
-                      );
+                      final historyState = context.read<LenderBloc>().state;
+                      final eventsForSelectedDate = historyState.historyData
+                          .where((e) =>
+                              normalizeDate(e.date!.toDate()) ==
+                              normalizeDate(dateTime!))
+                          .toList();
+
+                      if (eventsForSelectedDate.length >= 2) {
+                        log("Exceed limit for this date");
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                              content: Text('Exceed limit for this date.')),
+                        );
+                      } else {
+                        showDialog(
+                          barrierDismissible: false,
+                          context: context,
+                          builder: (context) => AddPaymentDialog(
+                            type: TypeOfAdding.addPayment,
+                            state: widget.model,
+                            dateTime: dateTime!,
+                          ),
+                        );
+                      }
                     },
                     child: Text("Add Payment"))
                 : SizedBox(),
