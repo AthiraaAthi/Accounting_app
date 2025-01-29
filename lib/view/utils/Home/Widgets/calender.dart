@@ -123,12 +123,12 @@ class _CalenderWidgetState extends State<CalenderWidget> {
                 color: (listEvent
                         .map(normalizeDate)
                         .contains(normalizeDate(DateTime.now())))
-                    ? clr ?? primaryColorBlue 
+                    ? clr ?? primaryColorBlue
                     : (dateTimeList
                             .map(normalizeDate)
                             .contains(normalizeDate(DateTime.now())))
                         ? Colors.orange
-                        : primaryColorBlue.withOpacity(0.5),
+                        : primaryColorBlue.withValues(alpha: 0.5),
               ),
               todayTextStyle: TextStyle(color: clr == null ? white : txtclr),
               selectedDecoration: BoxDecoration(
