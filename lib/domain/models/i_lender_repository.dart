@@ -8,4 +8,5 @@ abstract class ILenderRepository {
   Future<void> updateLastDate(String lastDate, dynamic value, String id);
   Future<void> deleteLender(String id);
   Future<Either<MainFailures, List<LendingModel>>> getDetails();
+  Future<void> removeTodayPendingDate(String docId);
 }

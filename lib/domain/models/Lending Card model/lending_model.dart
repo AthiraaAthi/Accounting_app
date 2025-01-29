@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_annotation_target
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -15,14 +17,11 @@ class LendingModel with _$LendingModel {
     String? amount,
     String? installmentAmount,
     String? installmentType,
-
-    // ignore: invalid_annotation_target
     @JsonKey(fromJson: _timestampListFromJson, toJson: _timestampListToJson)
     List<Timestamp>? listOfTImestamp,
     String? shareCode,
     bool? asJoiner,
     String? balanceAmount,
-    // ignore: invalid_annotation_target
     @JsonKey(fromJson: timestampFromJson, toJson: timestampToJson)
     Timestamp? datetime,
     String? lastMoneyGivenDate,

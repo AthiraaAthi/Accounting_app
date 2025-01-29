@@ -27,14 +27,12 @@ mixin _$LendingModel {
   String? get description => throw _privateConstructorUsedError;
   String? get amount => throw _privateConstructorUsedError;
   String? get installmentAmount => throw _privateConstructorUsedError;
-  String? get installmentType =>
-      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
+  String? get installmentType => throw _privateConstructorUsedError;
   @JsonKey(fromJson: _timestampListFromJson, toJson: _timestampListToJson)
   List<Timestamp>? get listOfTImestamp => throw _privateConstructorUsedError;
   String? get shareCode => throw _privateConstructorUsedError;
   bool? get asJoiner => throw _privateConstructorUsedError;
-  String? get balanceAmount =>
-      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
+  String? get balanceAmount => throw _privateConstructorUsedError;
   @JsonKey(fromJson: timestampFromJson, toJson: timestampToJson)
   Timestamp? get datetime => throw _privateConstructorUsedError;
   String? get lastMoneyGivenDate => throw _privateConstructorUsedError;
@@ -322,9 +320,7 @@ class _$LendingModelImpl implements _LendingModel {
   final String? installmentAmount;
   @override
   final String? installmentType;
-// ignore: invalid_annotation_target
   final List<Timestamp>? _listOfTImestamp;
-// ignore: invalid_annotation_target
   @override
   @JsonKey(fromJson: _timestampListFromJson, toJson: _timestampListToJson)
   List<Timestamp>? get listOfTImestamp {
@@ -341,7 +337,6 @@ class _$LendingModelImpl implements _LendingModel {
   final bool? asJoiner;
   @override
   final String? balanceAmount;
-// ignore: invalid_annotation_target
   @override
   @JsonKey(fromJson: timestampFromJson, toJson: timestampToJson)
   final Timestamp? datetime;
@@ -456,7 +451,7 @@ abstract class _LendingModel implements LendingModel {
   @override
   String? get installmentAmount;
   @override
-  String? get installmentType; // ignore: invalid_annotation_target
+  String? get installmentType;
   @override
   @JsonKey(fromJson: _timestampListFromJson, toJson: _timestampListToJson)
   List<Timestamp>? get listOfTImestamp;
@@ -465,7 +460,7 @@ abstract class _LendingModel implements LendingModel {
   @override
   bool? get asJoiner;
   @override
-  String? get balanceAmount; // ignore: invalid_annotation_target
+  String? get balanceAmount;
   @override
   @JsonKey(fromJson: timestampFromJson, toJson: timestampToJson)
   Timestamp? get datetime;
