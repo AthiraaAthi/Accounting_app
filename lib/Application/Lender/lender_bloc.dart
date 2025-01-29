@@ -34,7 +34,6 @@ class LenderBloc extends Bloc<LenderEvent, LenderState> {
             isLoading: false,
             getFailureOrSuccess: some(success),
             joinData: state.joinData,
-            historyData: state.historyData,
             data: success);
       }));
     });
@@ -51,12 +50,14 @@ class LenderBloc extends Bloc<LenderEvent, LenderState> {
             isLoading: false,
             getFailureOrSuccess: some(success),
             data: state.data,
-            historyData: state.historyData,
             joinData: success);
       }));
     });
     on<History>((event, emit) async {
-      emit(state.copyWith(isLoading: true, getFailureOrSuccess: none()));
+      emit(
+        state.copyWith(
+            isLoading: true, getFailureOrSuccess: none(), historyData: []),
+      );
       final Either<MainFailures, List<HistoryModel>> getHistory =
           await iHistoryRepository.getDetails(event.id);
       emit(getHistory.fold(
@@ -65,8 +66,6 @@ class LenderBloc extends Bloc<LenderEvent, LenderState> {
           (success) => state.copyWith(
               isLoading: false,
               getFailureOrSuccess: some(success),
-              data: state.data,
-              joinData: state.data,
               historyData: success)));
     });
   }
