@@ -95,13 +95,29 @@ class AddPaymentDialog extends StatelessWidget {
               final date = Timestamp.fromDate(dateTime);
               final model = HistoryModel(
                   amount: amount, asPayment: asPayment, date: date);
+
+              final balanceAmount = state.balanceAmount;
+              int parseSafe(String value) {
+                return int.tryParse(value) ?? 0;
+              }
+
+              final newBalance = type == TypeOfAdding.addPayment
+                  ? parseSafe(balanceAmount!) -
+                      parseSafe(addAmountController.text)
+                  : parseSafe(balanceAmount!) +
+                      parseSafe(addAmountController.text);
+              log(newBalance.toString());
+
               HistoryFunctions().addDetails(model, id);
               final lastDate =
                   '${dateTime.day}/${dateTime.month}/${dateTime.year}';
               LenderFunctions()
                   .updateLastDate('lastMoneyGivenDate', lastDate, id);
+              LenderFunctions().updateBalanceAmount(
+                  'balanceAmount', newBalance.toString(), id);
 
               context.read<LenderBloc>().add(LenderEvent.history(id: id));
+              context.read<LenderBloc>().add(GetData());
               Navigator.pop(context);
             },
             child: Text(
