@@ -38,6 +38,7 @@ class _SelectionCardState extends State<SelectionCard> {
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
         context.read<LenderBloc>().add(History(id: widget.model.id!));
+        context.read<LenderBloc>().add(GetData());
       },
     );
 
