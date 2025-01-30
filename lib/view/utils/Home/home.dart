@@ -1,10 +1,12 @@
 import 'package:curved_nav/Application/Lender/lender_bloc.dart';
+import 'package:curved_nav/Infrastructure/Lender/lender_repository.dart';
 import 'package:curved_nav/view/utils/Home/Widgets/alertDialog_widget.dart';
 import 'package:curved_nav/view/utils/Home/selection_card/selection_card.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -62,7 +64,25 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 itemBuilder: (context, index) {
                   final data = state.data[index];
 
+                  final timestamp = data.listOfTImestamp;
+
+                  DateTime? nearestDueDate;
+                  if (timestamp != null && timestamp.isNotEmpty) {
+                    nearestDueDate = timestamp
+                        .map((timestamp) => timestamp.toDate())
+                        .where((date) => date.isAfter(DateTime.now()))
+                        .reduce((a, b) => a.isBefore(b) ? a : b);
+                  }
+
+                  final isNearDue =
+                      nearestDueDate != null && isDueDateNear(nearestDueDate);
+
                   //log(data.toString());
+
+                  final dueText = data.installmentType == '1'
+                      ? 'Daily due'
+                      : 'Due is near!! (${DateFormat.yMMMd().format(nearestDueDate!)})';
+
                   return Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
@@ -81,7 +101,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                   children: [
                                     Text(data.name ?? ' '),
                                     Text('${data.balanceAmount}/-'),
-                                    Text('Last money given date'),
+                                    Text(
+                                        '${data.lastMoneyGivenDate != null ? 'Last money given date:- ${data.lastMoneyGivenDate}' : 'Newly added'}')
                                   ],
                                 ),
                                 IconButton(
@@ -94,14 +115,19 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                               model: data,
                                             ),
                                           ));
+                                      LenderFunctions()
+                                          .removeTodayPendingDate(data.id!);
                                     },
                                     icon: FaIcon(FontAwesomeIcons.penToSquare))
                               ],
                             ),
-                            Text(
-                              'Due Date',
-                              style: TextStyle(color: Colors.orangeAccent),
-                            )
+                            isNearDue
+                                ? Text(
+                                    dueText,
+                                    style:
+                                        TextStyle(color: Colors.orangeAccent),
+                                  )
+                                : SizedBox(),
                           ],
                         ),
                       ),

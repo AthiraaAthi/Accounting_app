@@ -43,6 +43,9 @@ class HistoryScreen extends StatelessWidget {
                   itemCount: sortedData.length,
                   itemBuilder: (context, index) {
                     final data = sortedData[index];
+                    final date = data.date!.toDate();
+                    final formatedDate =
+                        '${date.day}/${date.month}/${date.year}';
                     return Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 6),
@@ -50,8 +53,8 @@ class HistoryScreen extends StatelessWidget {
                         subtitle: Text("Balance Amount:1000"),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
-                        tileColor: lightGreen,
-                        title: Text('01/01/2000---${index + 1}'),
+                        tileColor: data.asPayment! ? lightGreen : lightRed,
+                        title: Text(formatedDate),
                         trailing: Text('-${data.amount}/-'),
                       ),
                     );

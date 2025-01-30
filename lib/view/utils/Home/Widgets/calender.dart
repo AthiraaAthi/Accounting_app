@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:curved_nav/Application/Calender/calender_bloc.dart';
+import 'package:curved_nav/Application/Lender/lender_bloc.dart';
 import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
 
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
@@ -11,11 +12,11 @@ import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalenderWidget extends StatefulWidget {
-  final LendingModel state;
+  final LendingModel lendingModel;
 
   const CalenderWidget({
     super.key,
-    required this.state,
+    required this.lendingModel,
   });
 
   @override
@@ -33,11 +34,11 @@ class _CalenderWidgetState extends State<CalenderWidget> {
           data: Theme.of(context).copyWith(
             colorScheme: ColorScheme.light(
                 primary: ColorConstant.defBlue,
-                onPrimary: Colors.white, // header text color
+                onPrimary: Colors.white,
                 onSurface: Colors.black),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                foregroundColor: ColorConstant.defBlue, // button text color
+                foregroundColor: ColorConstant.defBlue,
               ),
             ),
           ),
@@ -69,77 +70,150 @@ class _CalenderWidgetState extends State<CalenderWidget> {
     return DateTime(date.year, date.month, date.day);
   }
 
+  Color? clr;
+  Color? txtclr;
   @override
   Widget build(BuildContext context) {
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    //   context
+    //       .read<LenderBloc>()
+    //       .add(LenderEvent.history(id: widget.lendingModel.id!));
+    // });
     final dateTimeList =
-        widget.state.listOfTImestamp!.map((e) => e.toDate()).toList();
-    final date = widget.state.datetime!.toDate();
+        widget.lendingModel.listOfTImestamp!.map((e) => e.toDate()).toList();
+    final date = widget.lendingModel.datetime!.toDate();
+    return BlocBuilder<LenderBloc, LenderState>(
+      builder: (context, state) {
+        final model = state.historyData;
 
-    log(date.toString());
-    return TableCalendar(
-      calendarStyle: CalendarStyle(
-          cellMargin: EdgeInsets.all(2),
-          todayDecoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: focusdDate != DateTime.now()
-                ? primaryColorBlue.withOpacity(0.5)
-                : primaryColorBlue,
-          ),
-          selectedDecoration: BoxDecoration(
-            color: primaryColorBlue,
-            shape: BoxShape.circle,
-          ),
-          markerSize: 0),
-      rowHeight: 40,
-      availableCalendarFormats: {CalendarFormat.month: "Month"},
-      calendarFormat: CalendarFormat.month,
-      focusedDay: focusdDate,
-      firstDay: date,
-      lastDay: DateTime.utc(2100, 12, 31),
-      selectedDayPredicate: (day) {
-        return isSameDay(selectedDate, day);
-      },
-      onPageChanged: (focusedDay) {
-        setState(() {
-          focusdDate = focusedDay;
-        });
-      },
-      onDaySelected: (selectedDay, focusedDay) {
-        setState(() {
-          selectedDate = selectedDay;
-          focusdDate = focusedDay;
-        });
-        context.read<CalenderBloc>().add(GetDate(datetime: selectedDate));
-      },
-      // enabledDayPredicate: (day) {
+        final listEvent = model
+            .map(
+              (e) => e.date!.toDate(),
+            )
+            .toList();
 
-      // },
-      onHeaderTapped: (focusedDay) {
-        selectDate(context);
-      },
-      eventLoader: (day) {
-        return dateTimeList.where((event) => isSameDay(event, day)).toList();
-      },
-      calendarBuilders: CalendarBuilders(
-        defaultBuilder: (context, day, focusedDay) {
-          if (dateTimeList.map(normalizeDate).contains(normalizeDate(day))) {
-            return Container(
-              margin: const EdgeInsets.all(4),
-              decoration: BoxDecoration(
+        log(listEvent.toString());
+        if (state.isLoading) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        final eventsForToday = state.historyData
+            .where((e) =>
+                normalizeDate(e.date!.toDate()) ==
+                normalizeDate(DateTime.now()))
+            .toList();
+
+        if (eventsForToday.isNotEmpty) {
+          eventsForToday.sort((a, b) => b.date!.compareTo(a.date!));
+          final latestEvent = eventsForToday.first;
+
+          clr = latestEvent.asPayment! ? lightGreen : lightRed;
+          txtclr = latestEvent.asPayment! ? black : white;
+        } else {
+          clr = null;
+        }
+
+        return TableCalendar(
+          calendarStyle: CalendarStyle(
+              cellMargin: EdgeInsets.all(2),
+              todayDecoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.orange,
+                color: (listEvent
+                        .map(normalizeDate)
+                        .contains(normalizeDate(DateTime.now())))
+                    ? clr ?? primaryColorBlue 
+                    : (dateTimeList
+                            .map(normalizeDate)
+                            .contains(normalizeDate(DateTime.now())))
+                        ? Colors.orange
+                        : primaryColorBlue.withOpacity(0.5),
               ),
-              child: Center(
-                child: Text(
-                  '${day.day}',
-                  style: const TextStyle(color: Colors.white),
-                ),
+              todayTextStyle: TextStyle(color: clr == null ? white : txtclr),
+              selectedDecoration: BoxDecoration(
+                color: primaryColorBlue,
+                shape: BoxShape.circle,
               ),
-            );
-          }
-          return null;
-        },
-      ),
+              markerSize: 0),
+          rowHeight: 40,
+          availableCalendarFormats: {CalendarFormat.month: "Month"},
+          calendarFormat: CalendarFormat.month,
+          focusedDay: focusdDate,
+          firstDay: date,
+          lastDay: DateTime.utc(2100, 12, 31),
+          selectedDayPredicate: (day) {
+            return isSameDay(selectedDate, day);
+          },
+          onPageChanged: (focusedDay) {
+            setState(() {
+              focusdDate = focusedDay;
+            });
+          },
+          onDaySelected: (selectedDay, focusedDay) {
+            setState(() {
+              selectedDate = selectedDay;
+              focusdDate = focusedDay;
+            });
+            context.read<CalenderBloc>().add(GetDate(datetime: selectedDate));
+          },
+          onHeaderTapped: (focusedDay) {
+            selectDate(context);
+          },
+          eventLoader: (day) {
+            return dateTimeList
+                .where((event) => isSameDay(event, day))
+                .toList();
+          },
+          calendarBuilders: CalendarBuilders(
+            defaultBuilder: (context, day, focusedDay) {
+              if (listEvent.map(normalizeDate).contains(normalizeDate(day))) {
+                final eventsForDay = state.historyData
+                    .where((e) =>
+                        normalizeDate(e.date!.toDate()) == normalizeDate(day))
+                    .toList();
+
+                eventsForDay.sort((a, b) => b.date!.compareTo(a.date!));
+
+                final latestEvent = eventsForDay.first;
+                return Container(
+                  margin: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: latestEvent.asPayment! ? lightGreen : lightRed,
+                  ),
+                  child: Center(
+                    child: Text(
+                      '${day.day}',
+                      style: TextStyle(
+                          color: latestEvent.asPayment! ? black : white),
+                    ),
+                  ),
+                );
+              }
+              if (!listEvent.map(normalizeDate).contains(normalizeDate(day)) &&
+                  dateTimeList
+                      .map(normalizeDate)
+                      .contains(normalizeDate(day))) {
+                return Container(
+                  margin: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.orange,
+                  ),
+                  child: Center(
+                    child: Text(
+                      '${day.day}',
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  ),
+                );
+              }
+              return null;
+            },
+          ),
+        );
+      },
     );
   }
 }

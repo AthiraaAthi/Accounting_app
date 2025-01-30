@@ -33,6 +33,8 @@ class LenderBloc extends Bloc<LenderEvent, LenderState> {
         return state.copyWith(
             isLoading: false,
             getFailureOrSuccess: some(success),
+            joinData: state.joinData,
+            historyData: state.historyData,
             data: success);
       }));
     });
@@ -49,6 +51,7 @@ class LenderBloc extends Bloc<LenderEvent, LenderState> {
             isLoading: false,
             getFailureOrSuccess: some(success),
             data: state.data,
+            historyData: state.historyData,
             joinData: success);
       }));
     });

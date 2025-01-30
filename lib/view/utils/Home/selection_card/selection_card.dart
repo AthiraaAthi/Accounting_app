@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_nav/Application/Calender/calender_bloc.dart';
 import 'package:curved_nav/Application/Lender/lender_bloc.dart';
+
 import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
 import 'package:curved_nav/domain/models/history%20and%20others%20model/history_model.dart';
 import 'package:curved_nav/view/utils/Home/Widgets/calender.dart';
@@ -34,6 +35,7 @@ class _SelectionCardState extends State<SelectionCard> {
         context.read<LenderBloc>().add(History(id: widget.model.id!));
       },
     );
+
     final usedId = FirebaseAuth.instance.currentUser!.uid;
     final snapshot = FirebaseFirestore.instance
         .collection('users')
@@ -99,9 +101,8 @@ class _SelectionCardState extends State<SelectionCard> {
             BlocBuilder<CalenderBloc, CalenderState>(
               builder: (context, state) {
                 dateTime = state.dateTime ?? DateTime.now();
-                log('date is ${dateTime}');
                 return CalenderWidget(
-                  state: widget.model,
+                  lendingModel: widget.model,
                 );
               },
             ),
