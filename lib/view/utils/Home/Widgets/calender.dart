@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:curved_nav/Application/Calender/calender_bloc.dart';
 import 'package:curved_nav/Application/Lender/lender_bloc.dart';
 import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
@@ -74,11 +72,11 @@ class _CalenderWidgetState extends State<CalenderWidget> {
   Color? txtclr;
   @override
   Widget build(BuildContext context) {
-    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-    //   context
-    //       .read<LenderBloc>()
-    //       .add(LenderEvent.history(id: widget.lendingModel.id!));
-    // });
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context
+          .read<LenderBloc>()
+          .add(LenderEvent.history(id: widget.lendingModel.id!));
+    });
     final dateTimeList =
         widget.lendingModel.listOfTImestamp!.map((e) => e.toDate()).toList();
     final date = widget.lendingModel.datetime!.toDate();
@@ -92,7 +90,7 @@ class _CalenderWidgetState extends State<CalenderWidget> {
             )
             .toList();
 
-        log(listEvent.toString());
+        //  log(listEvent.toString());
         if (state.isLoading) {
           return Center(
             child: CircularProgressIndicator(),
@@ -106,7 +104,7 @@ class _CalenderWidgetState extends State<CalenderWidget> {
             .toList();
 
         if (eventsForToday.isNotEmpty) {
-          eventsForToday.sort((a, b) => b.date!.compareTo(a.date!));
+          eventsForToday.sort((a, b) => a.date!.compareTo(b.date!));
           final latestEvent = eventsForToday.first;
 
           clr = latestEvent.asPayment! ? lightGreen : lightRed;
@@ -123,12 +121,12 @@ class _CalenderWidgetState extends State<CalenderWidget> {
                 color: (listEvent
                         .map(normalizeDate)
                         .contains(normalizeDate(DateTime.now())))
-                    ? clr ?? primaryColorBlue 
+                    ? clr ?? primaryColorBlue
                     : (dateTimeList
                             .map(normalizeDate)
                             .contains(normalizeDate(DateTime.now())))
                         ? Colors.orange
-                        : primaryColorBlue.withOpacity(0.5),
+                        : primaryColorBlue.withValues(alpha: 0.5),
               ),
               todayTextStyle: TextStyle(color: clr == null ? white : txtclr),
               selectedDecoration: BoxDecoration(
@@ -173,20 +171,19 @@ class _CalenderWidgetState extends State<CalenderWidget> {
                         normalizeDate(e.date!.toDate()) == normalizeDate(day))
                     .toList();
 
-                eventsForDay.sort((a, b) => b.date!.compareTo(a.date!));
+                final firstAddedEvent = eventsForDay.last;
 
-                final latestEvent = eventsForDay.first;
                 return Container(
                   margin: const EdgeInsets.all(4),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: latestEvent.asPayment! ? lightGreen : lightRed,
+                    color: firstAddedEvent.asPayment! ? lightGreen : lightRed,
                   ),
                   child: Center(
                     child: Text(
                       '${day.day}',
                       style: TextStyle(
-                          color: latestEvent.asPayment! ? black : white),
+                          color: firstAddedEvent.asPayment! ? black : white),
                     ),
                   ),
                 );

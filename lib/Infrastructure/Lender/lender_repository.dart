@@ -116,6 +116,25 @@ class LenderFunctions implements ILenderRepository {
       log('error found: $e');
     }
   }
+
+  @override
+  Future<void> updateBalanceAmount(
+      String balanceAmount, value, String id) async {
+    try {
+      final data = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .collection('lender')
+          .doc(id);
+
+      data.update({
+        balanceAmount: value,
+      });
+      log('Balance Amount updated successfully!');
+    } catch (e) {
+      log('Error updating Balance Amount: $e');
+    }
+  }
 }
 
 bool isDueDateNear(DateTime dueDate, {int thresholdDays = 3}) {

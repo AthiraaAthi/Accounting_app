@@ -28,11 +28,17 @@ class SelectionCard extends StatefulWidget {
 
 class _SelectionCardState extends State<SelectionCard> {
   DateTime? dateTime;
+
+  DateTime normalizeDate(DateTime date) {
+    return DateTime(date.year, date.month, date.day);
+  }
+
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
         context.read<LenderBloc>().add(History(id: widget.model.id!));
+        context.read<LenderBloc>().add(GetData());
       },
     );
 
@@ -119,15 +125,30 @@ class _SelectionCardState extends State<SelectionCard> {
                         backgroundColor:
                             WidgetStatePropertyAll(primaryColorBlue)),
                     onPressed: () {
-                      showDialog(
-                        barrierDismissible: false,
-                        context: context,
-                        builder: (context) => AddPaymentDialog(
-                          type: TypeOfAdding.addPayment,
-                          state: widget.model,
-                          dateTime: dateTime!,
-                        ),
-                      );
+                      final historyState = context.read<LenderBloc>().state;
+                      final eventsForSelectedDate = historyState.historyData
+                          .where((e) =>
+                              normalizeDate(e.date!.toDate()) ==
+                              normalizeDate(dateTime!))
+                          .toList();
+
+                      if (eventsForSelectedDate.length >= 2) {
+                        log("Exceed limit for this date");
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                              content: Text('Exceed limit for this date.')),
+                        );
+                      } else {
+                        showDialog(
+                          barrierDismissible: false,
+                          context: context,
+                          builder: (context) => AddPaymentDialog(
+                            type: TypeOfAdding.addPayment,
+                            state: widget.model,
+                            dateTime: dateTime!,
+                          ),
+                        );
+                      }
                     },
                     child: Text("Add Payment"))
                 : SizedBox(),
@@ -137,12 +158,75 @@ class _SelectionCardState extends State<SelectionCard> {
             Container(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: ListTile(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  tileColor: lightBlue,
-                  leading: Text("Selected date Event"),
-                  trailing: Text("No Data"),
+                child: BlocBuilder<CalenderBloc, CalenderState>(
+                  builder: (context, state) {
+                    final selectedDate = state.dateTime ?? DateTime.now();
+
+                    return BlocBuilder<LenderBloc, LenderState>(
+                      builder: (context, state) {
+                        if (state.isLoading) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        final selectedDateEvents = state.historyData
+                            .where((e) =>
+                                normalizeDate(e.date!.toDate()) ==
+                                normalizeDate(selectedDate))
+                            .toList();
+
+                        if (selectedDateEvents.isEmpty) {
+                          return ListTile(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            tileColor: lightBlue,
+                            leading: Text("Selected date Event"),
+                            trailing: Text("No event"),
+                          );
+                        }
+                        final firstEvent = selectedDateEvents[0];
+                        final firstEventText = firstEvent.asPayment!
+                            ? "Payment Added"
+                            : "Amount Added";
+
+                        final secondEvent = selectedDateEvents.length > 1
+                            ? selectedDateEvents[1]
+                            : null;
+                        final secondEventText = secondEvent != null
+                            ? (secondEvent.asPayment!
+                                ? "Payment Added"
+                                : "Amount Added")
+                            : null;
+
+                        return Column(
+                          children: [
+                            ListTile(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              tileColor: lightBlue,
+                              leading: Text("Selected date Event"),
+                              trailing: Text(firstEventText),
+                            ),
+                            if (secondEvent != null)
+                              SizedBox(
+                                height: 10,
+                              ),
+                            if (secondEvent != null)
+                              ListTile(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                tileColor: lightBlue,
+                                leading: Text("Selected date event"),
+                                trailing: Text(secondEventText!),
+                              ),
+                            if (secondEvent == null) SizedBox(),
+                          ],
+                        );
+                      },
+                    );
+                  },
                 ),
               ),
             ),
