@@ -11,4 +11,5 @@ abstract class ILenderRepository {
   Future<void> deleteLender(String id);
   Future<Either<MainFailures, List<LendingModel>>> getDetails();
   Future<void> removeTodayPendingDate(String docId);
+  Future<Either<MainFailures, List<LendingModel>>> searchResult(String query);
 }
