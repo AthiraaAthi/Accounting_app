@@ -21,6 +21,7 @@ mixin _$LenderEvent {
     required TResult Function() getData,
     required TResult Function(String code) joinGetData,
     required TResult Function(String id) history,
+    required TResult Function(String query) search,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -28,6 +29,7 @@ mixin _$LenderEvent {
     TResult? Function()? getData,
     TResult? Function(String code)? joinGetData,
     TResult? Function(String id)? history,
+    TResult? Function(String query)? search,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -35,6 +37,7 @@ mixin _$LenderEvent {
     TResult Function()? getData,
     TResult Function(String code)? joinGetData,
     TResult Function(String id)? history,
+    TResult Function(String query)? search,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -43,6 +46,7 @@ mixin _$LenderEvent {
     required TResult Function(GetData value) getData,
     required TResult Function(JoinGetData value) joinGetData,
     required TResult Function(History value) history,
+    required TResult Function(Search value) search,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -50,6 +54,7 @@ mixin _$LenderEvent {
     TResult? Function(GetData value)? getData,
     TResult? Function(JoinGetData value)? joinGetData,
     TResult? Function(History value)? history,
+    TResult? Function(Search value)? search,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -57,6 +62,7 @@ mixin _$LenderEvent {
     TResult Function(GetData value)? getData,
     TResult Function(JoinGetData value)? joinGetData,
     TResult Function(History value)? history,
+    TResult Function(Search value)? search,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -127,6 +133,7 @@ class _$GetDataImpl implements GetData {
     required TResult Function() getData,
     required TResult Function(String code) joinGetData,
     required TResult Function(String id) history,
+    required TResult Function(String query) search,
   }) {
     return getData();
   }
@@ -137,6 +144,7 @@ class _$GetDataImpl implements GetData {
     TResult? Function()? getData,
     TResult? Function(String code)? joinGetData,
     TResult? Function(String id)? history,
+    TResult? Function(String query)? search,
   }) {
     return getData?.call();
   }
@@ -147,6 +155,7 @@ class _$GetDataImpl implements GetData {
     TResult Function()? getData,
     TResult Function(String code)? joinGetData,
     TResult Function(String id)? history,
+    TResult Function(String query)? search,
     required TResult orElse(),
   }) {
     if (getData != null) {
@@ -161,6 +170,7 @@ class _$GetDataImpl implements GetData {
     required TResult Function(GetData value) getData,
     required TResult Function(JoinGetData value) joinGetData,
     required TResult Function(History value) history,
+    required TResult Function(Search value) search,
   }) {
     return getData(this);
   }
@@ -171,6 +181,7 @@ class _$GetDataImpl implements GetData {
     TResult? Function(GetData value)? getData,
     TResult? Function(JoinGetData value)? joinGetData,
     TResult? Function(History value)? history,
+    TResult? Function(Search value)? search,
   }) {
     return getData?.call(this);
   }
@@ -181,6 +192,7 @@ class _$GetDataImpl implements GetData {
     TResult Function(GetData value)? getData,
     TResult Function(JoinGetData value)? joinGetData,
     TResult Function(History value)? history,
+    TResult Function(Search value)? search,
     required TResult orElse(),
   }) {
     if (getData != null) {
@@ -265,6 +277,7 @@ class _$JoinGetDataImpl implements JoinGetData {
     required TResult Function() getData,
     required TResult Function(String code) joinGetData,
     required TResult Function(String id) history,
+    required TResult Function(String query) search,
   }) {
     return joinGetData(code);
   }
@@ -275,6 +288,7 @@ class _$JoinGetDataImpl implements JoinGetData {
     TResult? Function()? getData,
     TResult? Function(String code)? joinGetData,
     TResult? Function(String id)? history,
+    TResult? Function(String query)? search,
   }) {
     return joinGetData?.call(code);
   }
@@ -285,6 +299,7 @@ class _$JoinGetDataImpl implements JoinGetData {
     TResult Function()? getData,
     TResult Function(String code)? joinGetData,
     TResult Function(String id)? history,
+    TResult Function(String query)? search,
     required TResult orElse(),
   }) {
     if (joinGetData != null) {
@@ -299,6 +314,7 @@ class _$JoinGetDataImpl implements JoinGetData {
     required TResult Function(GetData value) getData,
     required TResult Function(JoinGetData value) joinGetData,
     required TResult Function(History value) history,
+    required TResult Function(Search value) search,
   }) {
     return joinGetData(this);
   }
@@ -309,6 +325,7 @@ class _$JoinGetDataImpl implements JoinGetData {
     TResult? Function(GetData value)? getData,
     TResult? Function(JoinGetData value)? joinGetData,
     TResult? Function(History value)? history,
+    TResult? Function(Search value)? search,
   }) {
     return joinGetData?.call(this);
   }
@@ -319,6 +336,7 @@ class _$JoinGetDataImpl implements JoinGetData {
     TResult Function(GetData value)? getData,
     TResult Function(JoinGetData value)? joinGetData,
     TResult Function(History value)? history,
+    TResult Function(Search value)? search,
     required TResult orElse(),
   }) {
     if (joinGetData != null) {
@@ -411,6 +429,7 @@ class _$HistoryImpl implements History {
     required TResult Function() getData,
     required TResult Function(String code) joinGetData,
     required TResult Function(String id) history,
+    required TResult Function(String query) search,
   }) {
     return history(id);
   }
@@ -421,6 +440,7 @@ class _$HistoryImpl implements History {
     TResult? Function()? getData,
     TResult? Function(String code)? joinGetData,
     TResult? Function(String id)? history,
+    TResult? Function(String query)? search,
   }) {
     return history?.call(id);
   }
@@ -431,6 +451,7 @@ class _$HistoryImpl implements History {
     TResult Function()? getData,
     TResult Function(String code)? joinGetData,
     TResult Function(String id)? history,
+    TResult Function(String query)? search,
     required TResult orElse(),
   }) {
     if (history != null) {
@@ -445,6 +466,7 @@ class _$HistoryImpl implements History {
     required TResult Function(GetData value) getData,
     required TResult Function(JoinGetData value) joinGetData,
     required TResult Function(History value) history,
+    required TResult Function(Search value) search,
   }) {
     return history(this);
   }
@@ -455,6 +477,7 @@ class _$HistoryImpl implements History {
     TResult? Function(GetData value)? getData,
     TResult? Function(JoinGetData value)? joinGetData,
     TResult? Function(History value)? history,
+    TResult? Function(Search value)? search,
   }) {
     return history?.call(this);
   }
@@ -465,6 +488,7 @@ class _$HistoryImpl implements History {
     TResult Function(GetData value)? getData,
     TResult Function(JoinGetData value)? joinGetData,
     TResult Function(History value)? history,
+    TResult Function(Search value)? search,
     required TResult orElse(),
   }) {
     if (history != null) {
@@ -487,9 +511,162 @@ abstract class History implements LenderEvent {
 }
 
 /// @nodoc
+abstract class _$$SearchImplCopyWith<$Res> {
+  factory _$$SearchImplCopyWith(
+          _$SearchImpl value, $Res Function(_$SearchImpl) then) =
+      __$$SearchImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String query});
+}
+
+/// @nodoc
+class __$$SearchImplCopyWithImpl<$Res>
+    extends _$LenderEventCopyWithImpl<$Res, _$SearchImpl>
+    implements _$$SearchImplCopyWith<$Res> {
+  __$$SearchImplCopyWithImpl(
+      _$SearchImpl _value, $Res Function(_$SearchImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of LenderEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? query = null,
+  }) {
+    return _then(_$SearchImpl(
+      query: null == query
+          ? _value.query
+          : query // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$SearchImpl implements Search {
+  const _$SearchImpl({required this.query});
+
+  @override
+  final String query;
+
+  @override
+  String toString() {
+    return 'LenderEvent.search(query: $query)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SearchImpl &&
+            (identical(other.query, query) || other.query == query));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, query);
+
+  /// Create a copy of LenderEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SearchImplCopyWith<_$SearchImpl> get copyWith =>
+      __$$SearchImplCopyWithImpl<_$SearchImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() getData,
+    required TResult Function(String code) joinGetData,
+    required TResult Function(String id) history,
+    required TResult Function(String query) search,
+  }) {
+    return search(query);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? getData,
+    TResult? Function(String code)? joinGetData,
+    TResult? Function(String id)? history,
+    TResult? Function(String query)? search,
+  }) {
+    return search?.call(query);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? getData,
+    TResult Function(String code)? joinGetData,
+    TResult Function(String id)? history,
+    TResult Function(String query)? search,
+    required TResult orElse(),
+  }) {
+    if (search != null) {
+      return search(query);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(GetData value) getData,
+    required TResult Function(JoinGetData value) joinGetData,
+    required TResult Function(History value) history,
+    required TResult Function(Search value) search,
+  }) {
+    return search(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(GetData value)? getData,
+    TResult? Function(JoinGetData value)? joinGetData,
+    TResult? Function(History value)? history,
+    TResult? Function(Search value)? search,
+  }) {
+    return search?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(GetData value)? getData,
+    TResult Function(JoinGetData value)? joinGetData,
+    TResult Function(History value)? history,
+    TResult Function(Search value)? search,
+    required TResult orElse(),
+  }) {
+    if (search != null) {
+      return search(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class Search implements LenderEvent {
+  const factory Search({required final String query}) = _$SearchImpl;
+
+  String get query;
+
+  /// Create a copy of LenderEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$SearchImplCopyWith<_$SearchImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$LenderState {
   List<LendingModel> get data => throw _privateConstructorUsedError;
   List<LendingModel> get joinData => throw _privateConstructorUsedError;
+  List<LendingModel> get searchData => throw _privateConstructorUsedError;
   List<HistoryModel> get historyData => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   Option<dynamic> get getFailureOrSuccess => throw _privateConstructorUsedError;
@@ -510,6 +687,7 @@ abstract class $LenderStateCopyWith<$Res> {
   $Res call(
       {List<LendingModel> data,
       List<LendingModel> joinData,
+      List<LendingModel> searchData,
       List<HistoryModel> historyData,
       bool isLoading,
       Option<dynamic> getFailureOrSuccess});
@@ -532,6 +710,7 @@ class _$LenderStateCopyWithImpl<$Res, $Val extends LenderState>
   $Res call({
     Object? data = null,
     Object? joinData = null,
+    Object? searchData = null,
     Object? historyData = null,
     Object? isLoading = null,
     Object? getFailureOrSuccess = null,
@@ -544,6 +723,10 @@ class _$LenderStateCopyWithImpl<$Res, $Val extends LenderState>
       joinData: null == joinData
           ? _value.joinData
           : joinData // ignore: cast_nullable_to_non_nullable
+              as List<LendingModel>,
+      searchData: null == searchData
+          ? _value.searchData
+          : searchData // ignore: cast_nullable_to_non_nullable
               as List<LendingModel>,
       historyData: null == historyData
           ? _value.historyData
@@ -572,6 +755,7 @@ abstract class _$$LenderStateImplCopyWith<$Res>
   $Res call(
       {List<LendingModel> data,
       List<LendingModel> joinData,
+      List<LendingModel> searchData,
       List<HistoryModel> historyData,
       bool isLoading,
       Option<dynamic> getFailureOrSuccess});
@@ -592,6 +776,7 @@ class __$$LenderStateImplCopyWithImpl<$Res>
   $Res call({
     Object? data = null,
     Object? joinData = null,
+    Object? searchData = null,
     Object? historyData = null,
     Object? isLoading = null,
     Object? getFailureOrSuccess = null,
@@ -604,6 +789,10 @@ class __$$LenderStateImplCopyWithImpl<$Res>
       joinData: null == joinData
           ? _value._joinData
           : joinData // ignore: cast_nullable_to_non_nullable
+              as List<LendingModel>,
+      searchData: null == searchData
+          ? _value._searchData
+          : searchData // ignore: cast_nullable_to_non_nullable
               as List<LendingModel>,
       historyData: null == historyData
           ? _value._historyData
@@ -627,11 +816,13 @@ class _$LenderStateImpl implements _LenderState {
   const _$LenderStateImpl(
       {required final List<LendingModel> data,
       required final List<LendingModel> joinData,
+      required final List<LendingModel> searchData,
       required final List<HistoryModel> historyData,
       required this.isLoading,
       required this.getFailureOrSuccess})
       : _data = data,
         _joinData = joinData,
+        _searchData = searchData,
         _historyData = historyData;
 
   final List<LendingModel> _data;
@@ -650,6 +841,14 @@ class _$LenderStateImpl implements _LenderState {
     return EqualUnmodifiableListView(_joinData);
   }
 
+  final List<LendingModel> _searchData;
+  @override
+  List<LendingModel> get searchData {
+    if (_searchData is EqualUnmodifiableListView) return _searchData;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_searchData);
+  }
+
   final List<HistoryModel> _historyData;
   @override
   List<HistoryModel> get historyData {
@@ -665,7 +864,7 @@ class _$LenderStateImpl implements _LenderState {
 
   @override
   String toString() {
-    return 'LenderState(data: $data, joinData: $joinData, historyData: $historyData, isLoading: $isLoading, getFailureOrSuccess: $getFailureOrSuccess)';
+    return 'LenderState(data: $data, joinData: $joinData, searchData: $searchData, historyData: $historyData, isLoading: $isLoading, getFailureOrSuccess: $getFailureOrSuccess)';
   }
 
   @override
@@ -675,6 +874,8 @@ class _$LenderStateImpl implements _LenderState {
             other is _$LenderStateImpl &&
             const DeepCollectionEquality().equals(other._data, _data) &&
             const DeepCollectionEquality().equals(other._joinData, _joinData) &&
+            const DeepCollectionEquality()
+                .equals(other._searchData, _searchData) &&
             const DeepCollectionEquality()
                 .equals(other._historyData, _historyData) &&
             (identical(other.isLoading, isLoading) ||
@@ -688,6 +889,7 @@ class _$LenderStateImpl implements _LenderState {
       runtimeType,
       const DeepCollectionEquality().hash(_data),
       const DeepCollectionEquality().hash(_joinData),
+      const DeepCollectionEquality().hash(_searchData),
       const DeepCollectionEquality().hash(_historyData),
       isLoading,
       getFailureOrSuccess);
@@ -705,6 +907,7 @@ abstract class _LenderState implements LenderState {
   const factory _LenderState(
       {required final List<LendingModel> data,
       required final List<LendingModel> joinData,
+      required final List<LendingModel> searchData,
       required final List<HistoryModel> historyData,
       required final bool isLoading,
       required final Option<dynamic> getFailureOrSuccess}) = _$LenderStateImpl;
@@ -713,6 +916,8 @@ abstract class _LenderState implements LenderState {
   List<LendingModel> get data;
   @override
   List<LendingModel> get joinData;
+  @override
+  List<LendingModel> get searchData;
   @override
   List<HistoryModel> get historyData;
   @override

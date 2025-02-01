@@ -41,7 +41,7 @@ class LenderFunctions implements ILenderRepository {
   @override
   Future<Either<MainFailures, List<LendingModel>>> getDetails() async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
-    log(userId);
+
     final getData = await FirebaseFirestore.instance
         .collection('users')
         .doc(userId)
@@ -137,6 +137,32 @@ class LenderFunctions implements ILenderRepository {
       log('Balance Amount updated successfully!');
     } catch (e) {
       log('Error updating Balance Amount: $e');
+    }
+  }
+
+  @override
+  Future<Either<MainFailures, List<LendingModel>>> searchResult(
+      String query) async {
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+
+    final getData = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .collection('lender')
+        .where('name', isGreaterThan: query)
+        .where('name', isLessThanOrEqualTo: '$query\uf8ff')
+        .get();
+    try {
+      final lenderDetails =
+          getData.docs.map((e) => LendingModel.fromJson(e.data())).toList();
+      if (lenderDetails.isEmpty) {
+        return left(MainFailures.clientfailure());
+      }
+      // log(lenderDetails.toString());
+      return right(lenderDetails);
+    } catch (e) {
+      log('error found: $e');
+      return left(MainFailures.serverfailure());
     }
   }
 }
