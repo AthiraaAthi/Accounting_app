@@ -578,9 +578,10 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                             .format(
                                                                 _pickedDate);
                                                       });
+                                                    } else {
+                                                      pickMonthlyDate(
+                                                          DateTime.now());
                                                     }
-                                                    pickMonthlyDate(
-                                                        DateTime.now());
                                                   },
                                                 )
                                               : SizedBox(),
