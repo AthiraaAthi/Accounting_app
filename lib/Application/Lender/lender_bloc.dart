@@ -68,5 +68,22 @@ class LenderBloc extends Bloc<LenderEvent, LenderState> {
               getFailureOrSuccess: some(success),
               historyData: success)));
     });
+    on<Search>((event, emit) async {
+      emit(state.copyWith(isLoading: true, getFailureOrSuccess: none()));
+      final Either<MainFailures, List<LendingModel>> getLenderDetails =
+          await iLenderRepository.searchResult(event.query);
+      emit(getLenderDetails.fold(
+          (failures) => state.copyWith(
+              isLoading: false,
+              getFailureOrSuccess: some(failures)), (success) {
+        // success.sort((first, second) => second.id!.compareTo(first.id!));
+        return state.copyWith(
+            isLoading: false,
+            getFailureOrSuccess: some(success),
+            joinData: state.joinData,
+            data: state.data,
+            searchData: success);
+      }));
+    });
   }
 }
