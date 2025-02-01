@@ -85,45 +85,55 @@ class AddPaymentDialog extends StatelessWidget {
               Navigator.pop(context);
             },
             child: Text('Cancel')),
-        TextButton(
-            onPressed: () {
-              final amount = type == TypeOfAdding.addPayment
-                  ? '-${addAmountController.text}\\-'
-                  : '+${addAmountController.text}\\-';
-              final asPayment = type == TypeOfAdding.addPayment ? true : false;
-              log(asPayment.toString());
-              final date = Timestamp.fromDate(dateTime);
-              final model = HistoryModel(
-                  amount: amount, asPayment: asPayment, date: date);
+        BlocBuilder<LenderBloc, LenderState>(
+          builder: (context, state) {
+            final balanceAmount = state.data
+                .firstWhere((element) => element.id == id)
+                .balanceAmount;
+            log('ua: ${balanceAmount}');
+            return TextButton(
+                onPressed: () async {
+                  final amount = type == TypeOfAdding.addPayment
+                      ? '-${addAmountController.text}\\-'
+                      : '+${addAmountController.text}\\-';
+                  final asPayment =
+                      type == TypeOfAdding.addPayment ? true : false;
+                  log(asPayment.toString());
+                  final date = Timestamp.fromDate(dateTime);
+                  final model = HistoryModel(
+                      amount: amount, asPayment: asPayment, date: date);
 
-              final balanceAmount = state.balanceAmount;
-              int parseSafe(String value) {
-                return int.tryParse(value) ?? 0;
-              }
+                  int parseSafe(String value) {
+                    return int.tryParse(value) ?? 0;
+                  }
 
-              final newBalance = type == TypeOfAdding.addPayment
-                  ? parseSafe(balanceAmount!) -
-                      parseSafe(addAmountController.text)
-                  : parseSafe(balanceAmount!) +
-                      parseSafe(addAmountController.text);
-              log(newBalance.toString());
+                  final newBalance = type == TypeOfAdding.addPayment
+                      ? parseSafe(balanceAmount!) -
+                          parseSafe(addAmountController.text)
+                      : parseSafe(balanceAmount!) +
+                          parseSafe(addAmountController.text);
+                  log('balance amount: ${balanceAmount.toString()}');
+                  log(newBalance.toString());
 
-              HistoryFunctions().addDetails(model, id);
-              final lastDate =
-                  '${dateTime.day}/${dateTime.month}/${dateTime.year}';
-              LenderFunctions()
-                  .updateLastDate('lastMoneyGivenDate', lastDate, id);
-              LenderFunctions().updateBalanceAmount(
-                  'balanceAmount', newBalance.toString(), id);
+                  final lastDate =
+                      '${dateTime.day}/${dateTime.month}/${dateTime.year}';
+                  await LenderFunctions()
+                      .updateLastDate('lastMoneyGivenDate', lastDate, id);
+                  await LenderFunctions().updateBalanceAmount(
+                      'balanceAmount', newBalance.toString(), id);
+                  await HistoryFunctions().addDetails(model, id);
 
-              context.read<LenderBloc>().add(LenderEvent.history(id: id));
-              context.read<LenderBloc>().add(GetData());
-              Navigator.pop(context);
-            },
-            child: Text(
-              'Add',
-              style: TextStyle(color: primaryColorBlue),
-            )),
+                  context.read<LenderBloc>().add(History(id: id));
+                  context.read<LenderBloc>().add(GetData());
+
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  'Add',
+                  style: TextStyle(color: primaryColorBlue),
+                ));
+          },
+        ),
       ],
     );
   }

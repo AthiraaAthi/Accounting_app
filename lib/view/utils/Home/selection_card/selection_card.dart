@@ -38,9 +38,15 @@ class _SelectionCardState extends State<SelectionCard> {
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
         context.read<LenderBloc>().add(History(id: widget.model.id!));
+      },
+    );
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) {
         context.read<LenderBloc>().add(GetData());
       },
     );
+
+    log('balance amount: ${widget.model.balanceAmount}');
 
     final usedId = FirebaseAuth.instance.currentUser!.uid;
     final snapshot = FirebaseFirestore.instance
@@ -348,9 +354,21 @@ class _SelectionCardState extends State<SelectionCard> {
                 'Balance amount:',
                 style: TextStyle(color: white),
               ),
-              Text(
-                "${widget.model.balanceAmount}\\-",
-                style: TextStyle(color: white),
+              BlocBuilder<LenderBloc, LenderState>(
+                builder: (context, state) {
+                  final amount = state.data
+                      .firstWhere((element) => element.id == widget.model.id)
+                      .balanceAmount
+                      .toString();
+                  if (state.isLoading) {
+                    return CircularProgressIndicator();
+                  }
+                  log('updated balance amount: $amount');
+                  return Text(
+                    "${amount}\\-",
+                    style: TextStyle(color: white),
+                  );
+                },
               ),
             ],
           ),

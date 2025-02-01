@@ -1,3 +1,4 @@
+import 'package:curved_nav/Application/Calender/calender_bloc.dart';
 import 'package:curved_nav/Application/Lender/lender_bloc.dart';
 import 'package:curved_nav/Infrastructure/Lender/lender_repository.dart';
 import 'package:curved_nav/view/utils/Home/Widgets/alertDialog_widget.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -107,6 +109,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                 ),
                                 IconButton(
                                     onPressed: () {
+                                      context.read<LenderBloc>().add(GetData());
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -117,6 +120,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                           ));
                                       LenderFunctions()
                                           .removeTodayPendingDate(data.id!);
+                                      context.read<CalenderBloc>().add(
+                                          CalenderEvent.getDate(
+                                              datetime: normalizeDate(
+                                                  DateTime.now())));
                                     },
                                     icon: FaIcon(FontAwesomeIcons.penToSquare))
                               ],
