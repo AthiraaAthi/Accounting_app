@@ -107,29 +107,33 @@ class LenderFunctions implements ILenderRepository {
           }).toList();
 
           await data.update({'listOfTImestamp': filteredTimestamps});
-          log('date filtered');
+          //log('date filtered');
         }
-        log('nothing to filter');
+        //log('nothing to filter');
       }
-      log('does not exist');
+      //log('does not exist');
     } catch (e) {
-      log('error found: $e');
+      //log('error found: $e');
     }
   }
 
   @override
   Future<void> updateBalanceAmount(
-      String balanceAmount, value, String id) async {
+    String balanceAmount,
+    value,
+    String id,
+  ) async {
     try {
-      final data = await FirebaseFirestore.instance
+      final data = FirebaseFirestore.instance
           .collection('users')
           .doc(userId)
           .collection('lender')
           .doc(id);
 
-      data.update({
+      await data.update({
         balanceAmount: value,
       });
+
       log('Balance Amount updated successfully!');
     } catch (e) {
       log('Error updating Balance Amount: $e');
