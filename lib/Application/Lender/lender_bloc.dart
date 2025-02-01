@@ -8,7 +8,6 @@ import 'package:curved_nav/domain/models/i_lender_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-
 part 'lender_event.dart';
 part 'lender_state.dart';
 part 'lender_bloc.freezed.dart';
