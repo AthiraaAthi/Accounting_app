@@ -19,7 +19,7 @@ class _SettingsScreenState extends State<SettingsScreen>
   List<String> options = [
     'Categories',
     "Getting Started",
-    "Help",
+    "Help & Feedback",
     "Privacy Policy",
     "Terms & Conditions"
   ];
