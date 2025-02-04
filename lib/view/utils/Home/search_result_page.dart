@@ -1,12 +1,13 @@
 import 'package:curved_nav/Application/Calender/calender_bloc.dart';
+import 'package:curved_nav/Application/Lender/lender_bloc.dart';
 import 'package:curved_nav/Infrastructure/Lender/lender_repository.dart';
-import 'package:curved_nav/application/Lender/lender_bloc.dart';
 import 'package:curved_nav/view/utils/Home/selection_card/selection_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
+
 import '../color_constant/color_constant.dart';
 
 class SearchResultPage extends StatelessWidget {
