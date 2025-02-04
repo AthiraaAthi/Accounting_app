@@ -1,3 +1,5 @@
+import 'package:curved_nav/Infrastructure/Help/help_repository.dart';
+import 'package:curved_nav/domain/models/help%20model/help_model.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +30,7 @@ class _HelpScreenState extends State<HelpScreen> {
         ),
         backgroundColor: ColorConstant.defBlue,
         title: Text(
-          "Help",
+          "Help & Feedback",
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -89,7 +91,16 @@ class _HelpScreenState extends State<HelpScreen> {
                 padding:
                     const EdgeInsets.symmetric(vertical: 8, horizontal: 30),
               ),
-              onPressed: () {},
+              onPressed: () {
+                final helpModel = HelpModel(
+                  name: nameController.text.trim(),
+                  phone: phoneController.text.trim(),
+                  problem: problemController.text.trim(),
+                );
+                HelpRepository().addHelpRequest(helpModel);
+// Show a snackbar
+                Navigator.pop(context);
+              },
               child: const Text(
                 'submit',
                 style: TextStyle(color: Colors.white, fontSize: 16),
