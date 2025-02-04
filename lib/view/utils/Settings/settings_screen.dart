@@ -1,7 +1,7 @@
 import 'package:curved_nav/view/utils/Settings/options_screens/category_settings.dart';
 import 'package:curved_nav/view/utils/Settings/options_screens/getting_started.dart';
 import 'package:curved_nav/view/utils/Settings/options_screens/help_screen.dart';
-import 'package:curved_nav/view/utils/Settings/options_screens/notifications_screen.dart';
+
 import 'package:curved_nav/view/utils/Settings/options_screens/privacy_policy.dart';
 import 'package:curved_nav/view/utils/Settings/options_screens/terms_conditions.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
@@ -17,7 +17,6 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen>
     with SingleTickerProviderStateMixin {
   List<String> options = [
-    "Notifications",
     'Categories',
     "Getting Started",
     "Help",
@@ -25,7 +24,6 @@ class _SettingsScreenState extends State<SettingsScreen>
     "Terms & Conditions"
   ];
   List<Widget> optionsScreens = [
-    NotificationsScreen(),
     CategorySettings(),
     GettingStarted(),
     HelpScreen(),
