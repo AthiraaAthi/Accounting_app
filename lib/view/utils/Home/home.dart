@@ -1,10 +1,8 @@
-import 'package:curved_nav/Application/Lender/lender_bloc.dart';
-
+import 'package:curved_nav/application/Lender/lender_bloc.dart';
 import 'package:curved_nav/domain/Debounce/debouncer.dart';
 import 'package:curved_nav/view/utils/Home/Widgets/alertDialog_widget.dart';
 import 'package:curved_nav/view/utils/Home/home_idle_page.dart';
 import 'package:curved_nav/view/utils/Home/search_result_page.dart';
-
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
