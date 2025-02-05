@@ -16,10 +16,7 @@ class HelpRepository implements IHelpRepository {
   @override
   Future<void> addHelpRequest(HelpModel helpModel) async {
     try {
-      final data = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userId)
-          .collection('helpRequest');
+      final data = await FirebaseFirestore.instance.collection('helpRequest');
 
       String id = data.doc().id;
       HelpModel model = helpModel.copyWith(
@@ -38,11 +35,8 @@ class HelpRepository implements IHelpRepository {
 
   @override
   Future<Either<MainFailures, List<HelpModel>>> getHelpRequests() async {
-    final getData = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(userId)
-        .collection('helpRequest')
-        .get();
+    final getData =
+        await FirebaseFirestore.instance.collection('helpRequest').get();
 
     try {
       final helpRequestDetails =
