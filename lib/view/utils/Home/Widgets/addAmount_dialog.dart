@@ -31,6 +31,8 @@ class AddPaymentDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextEditingController addAmountController = TextEditingController();
     final id = state.id!;
+    final initalValue =
+        state.installmentAmount!.isNotEmpty ? state.installmentAmount : null;
     return AlertDialog(
       backgroundColor: white,
       title: Center(child: Text("Enter Amount")),
@@ -49,7 +51,9 @@ class AddPaymentDialog extends StatelessWidget {
                   ))),
           Expanded(
               flex: 6,
-              child: TextField(
+              child: TextFormField(
+                initialValue:
+                    type == TypeOfAdding.addPayment ? initalValue : null,
                 controller: addAmountController,
                 textAlign: TextAlign.center,
                 cursorColor: primaryColorBlue,

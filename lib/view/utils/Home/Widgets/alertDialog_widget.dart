@@ -6,6 +6,7 @@ import 'package:curved_nav/Application/Lender/lender_bloc.dart';
 import 'package:curved_nav/Infrastructure/Code%20Generation/code_generator.dart';
 
 import 'package:curved_nav/Infrastructure/Lender/lender_repository.dart';
+import 'package:curved_nav/domain/core/Validator/validator.dart';
 import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
 import 'package:curved_nav/view/utils/Navigation/nav_screen.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
@@ -147,6 +148,8 @@ class _AddCardDaologState extends State<AddCardDaolog>
     }
   }
 
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     late TabController _tabController = TabController(length: 2, vsync: this);
@@ -192,434 +195,624 @@ class _AddCardDaologState extends State<AddCardDaolog>
                       DefaultTabController(
                         initialIndex: 0,
                         length: 2,
-                        child: Column(
-                          children: [
-                            TabBar(
-                              physics: NeverScrollableScrollPhysics(),
-                              controller: _tabController,
-                              indicatorSize: TabBarIndicatorSize.tab,
-                              indicatorPadding:
-                                  EdgeInsets.symmetric(horizontal: 22),
-                              indicatorColor: primaryColorBlue,
-                              indicatorWeight: 4.0,
-                              labelColor: Colors.black,
-                              unselectedLabelColor: Colors.grey,
-                              dividerColor: white,
-                              unselectedLabelStyle: TextStyle(fontSize: 12),
-                              tabs: [
-                                Tab(text: "Create"),
-                                Tab(text: "Join"),
-                              ],
-                            ),
-                            StatefulBuilder(
-                              builder: (context, setState) {
-                                log(isSelected.toString());
-                                _tabController.addListener(() {
-                                  if (_tabController.index == 0) {
-                                    setState(
-                                      () {
-                                        isSelected = true;
-                                      },
-                                    );
-                                  } else if (_tabController.index == 1) {
-                                    setState(
-                                      () {
-                                        isSelected = false;
-                                        // controller.index = 0;
-                                      },
-                                    );
-                                  }
-                                });
-
-                                setState(
-                                  () {
-                                    if (isMoneyLendingSelected) {
-                                      height = 400;
-                                      _tabController.addListener(
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            children: [
+                              TabBar(
+                                physics: NeverScrollableScrollPhysics(),
+                                controller: _tabController,
+                                indicatorSize: TabBarIndicatorSize.tab,
+                                indicatorPadding:
+                                    EdgeInsets.symmetric(horizontal: 22),
+                                indicatorColor: primaryColorBlue,
+                                indicatorWeight: 4.0,
+                                labelColor: Colors.black,
+                                unselectedLabelColor: Colors.grey,
+                                dividerColor: white,
+                                unselectedLabelStyle: TextStyle(fontSize: 12),
+                                tabs: [
+                                  Tab(text: "Create"),
+                                  Tab(text: "Join"),
+                                ],
+                              ),
+                              StatefulBuilder(
+                                builder: (context, setState) {
+                                  log(isSelected.toString());
+                                  _tabController.addListener(() {
+                                    if (_tabController.index == 0) {
+                                      setState(
                                         () {
-                                          if (isMoneyLendingSelected) {
-                                            _tabController.index = 0;
-                                          } else {
-                                            null;
-                                          }
+                                          isSelected = true;
                                         },
                                       );
-                                    } else if (!isSelected) {
-                                      height = 120;
-                                    } else {
-                                      height = 550;
+                                    } else if (_tabController.index == 1) {
+                                      setState(
+                                        () {
+                                          isSelected = false;
+                                          // controller.index = 0;
+                                        },
+                                      );
                                     }
-                                  },
-                                );
+                                  });
 
-                                return AnimatedContainer(
-                                  duration: Duration(milliseconds: 200),
-                                  height: height,
-                                  //  isSelected ? 550 : 120,
-                                  width: 600,
-                                  child: TabBarView(
-                                    physics: NeverScrollableScrollPhysics(),
-                                    controller: _tabController,
-                                    children: [
-                                      SingleChildScrollView(
-                                        child: Column(children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              Text(
-                                                "Money Lender",
-                                              ),
-                                              Switch(
-                                                activeColor:
-                                                    ColorConstant.defBlue,
-                                                value: isMoneyLendingSelected,
-                                                thumbColor:
-                                                    WidgetStatePropertyAll(
-                                                        Colors.white),
-                                                inactiveThumbColor:
-                                                    ColorConstant.defBlue,
-                                                focusColor:
-                                                    ColorConstant.defBlue,
-                                                trackColor:
-                                                    WidgetStatePropertyAll(
-                                                  ColorConstant.defBlue,
+                                  setState(
+                                    () {
+                                      if (isMoneyLendingSelected) {
+                                        height = 400;
+                                        _tabController.addListener(
+                                          () {
+                                            if (isMoneyLendingSelected) {
+                                              _tabController.index = 0;
+                                            } else {
+                                              null;
+                                            }
+                                          },
+                                        );
+                                      } else if (!isSelected) {
+                                        height = 120;
+                                      } else {
+                                        height = 550;
+                                      }
+                                    },
+                                  );
+
+                                  return AnimatedContainer(
+                                    duration: Duration(milliseconds: 200),
+                                    height: height,
+                                    //  isSelected ? 550 : 120,
+                                    width: 600,
+                                    child: TabBarView(
+                                      physics: NeverScrollableScrollPhysics(),
+                                      controller: _tabController,
+                                      children: [
+                                        SingleChildScrollView(
+                                          child: Column(children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                Text(
+                                                  "Money Lender",
                                                 ),
-                                                onChanged: (value) {
-                                                  setState(
-                                                    () {
-                                                      isMoneyLendingSelected =
-                                                          value;
+                                                Switch(
+                                                  activeColor:
+                                                      ColorConstant.defBlue,
+                                                  value: isMoneyLendingSelected,
+                                                  thumbColor:
+                                                      WidgetStatePropertyAll(
+                                                          Colors.white),
+                                                  inactiveThumbColor:
+                                                      ColorConstant.defBlue,
+                                                  focusColor:
+                                                      ColorConstant.defBlue,
+                                                  trackColor:
+                                                      WidgetStatePropertyAll(
+                                                    ColorConstant.defBlue,
+                                                  ),
+                                                  onChanged: (value) {
+                                                    setState(
+                                                      () {
+                                                        isMoneyLendingSelected =
+                                                            value;
+                                                      },
+                                                    );
+                                                  },
+                                                ),
+                                                Text(
+                                                  "To Give",
+                                                ),
+                                              ],
+                                            ),
+                                            TextFormField(
+                                              controller: nameController,
+                                              validator: FieldValidators
+                                                  .requiredValidator,
+                                              decoration: InputDecoration(
+                                                hintText: "Name",
+                                                floatingLabelStyle: TextStyle(
+                                                    color: primaryColorBlue),
+                                                hintStyle:
+                                                    TextStyle(fontSize: 15),
+                                                focusedBorder: OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color:
+                                                            primaryColorBlue),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10)),
+                                                focusedErrorBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  borderSide: BorderSide(
+                                                      color: Colors.red,
+                                                      width: 1.0),
+                                                ),
+                                                errorBorder: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  borderSide: BorderSide(
+                                                      color: Colors.red,
+                                                      width: 1.0),
+                                                ),
+                                                border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10)),
+                                              ),
+                                            ),
+                                            SizedBox(height: 15),
+                                            TextFormField(
+                                              controller: phoneController,
+                                              validator: phoneController
+                                                      .text.isNotEmpty
+                                                  ? FieldValidators
+                                                      .unrequiredPhoneValidator
+                                                  : FieldValidators
+                                                      .optionalValidator,
+                                              decoration: InputDecoration(
+                                                hintText: "Phone (Optional)",
+                                                floatingLabelStyle: TextStyle(
+                                                    color: primaryColorBlue),
+                                                hintStyle:
+                                                    TextStyle(fontSize: 15),
+                                                focusedErrorBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  borderSide: BorderSide(
+                                                      color: Colors.red,
+                                                      width: 1.0),
+                                                ),
+                                                errorBorder: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  borderSide: BorderSide(
+                                                      color: Colors.red,
+                                                      width: 1.0),
+                                                ),
+                                                focusedBorder: OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color:
+                                                            primaryColorBlue),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10)),
+                                                border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10)),
+                                              ),
+                                            ),
+                                            SizedBox(height: 15),
+                                            TextFormField(
+                                              controller: descriptionController,
+                                              maxLines: 4,
+                                              decoration: InputDecoration(
+                                                contentPadding: EdgeInsets.only(
+                                                    left: 50, top: 30),
+                                                focusedBorder: OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color:
+                                                            primaryColorBlue),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10)),
+                                                border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10)),
+                                                hintText:
+                                                    "Description (Optional)",
+                                                floatingLabelStyle: TextStyle(
+                                                    color: primaryColorBlue),
+                                                hintStyle:
+                                                    TextStyle(fontSize: 15),
+                                              ),
+                                            ),
+                                            SizedBox(height: 15),
+                                            TextFormField(
+                                              controller: amountController,
+                                              validator: isMoneyLendingSelected
+                                                  ? FieldValidators
+                                                      .unrequiredAmountValidator
+                                                  : FieldValidators
+                                                      .amountValidator,
+                                              decoration: InputDecoration(
+                                                floatingLabelStyle: TextStyle(
+                                                    color: primaryColorBlue),
+                                                hintText:
+                                                    "Amount (With interest if any)",
+                                                hintStyle:
+                                                    TextStyle(fontSize: 15),
+                                                focusedErrorBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  borderSide: BorderSide(
+                                                      color: Colors.red,
+                                                      width: 1.0),
+                                                ),
+                                                errorBorder: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  borderSide: BorderSide(
+                                                      color: Colors.red,
+                                                      width: 1.0),
+                                                ),
+                                                focusedBorder: OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color:
+                                                            primaryColorBlue),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10)),
+                                                border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10)),
+                                              ),
+                                              keyboardType:
+                                                  TextInputType.number,
+                                            ),
+                                            SizedBox(height: 15),
+                                            isMoneyLendingSelected
+                                                ? SizedBox()
+                                                : TextFormField(
+                                                    controller:
+                                                        installmentAmountController,
+                                                    validator: FieldValidators
+                                                        .unrequiredAmountValidator,
+                                                    decoration: InputDecoration(
+                                                      hintText:
+                                                          "Installment Amount",
+                                                      floatingLabelStyle: TextStyle(
+                                                          color:
+                                                              primaryColorBlue),
+                                                      hintStyle: TextStyle(
+                                                          fontSize: 15),
+                                                      focusedErrorBorder:
+                                                          OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                        borderSide: BorderSide(
+                                                            color: Colors.red,
+                                                            width: 1.0),
+                                                      ),
+                                                      errorBorder:
+                                                          OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                        borderSide: BorderSide(
+                                                            color: Colors.red,
+                                                            width: 1.0),
+                                                      ),
+                                                      focusedBorder:
+                                                          OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                      color:
+                                                                          primaryColorBlue),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10)),
+                                                      border:
+                                                          OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10)),
+                                                    ),
+                                                    keyboardType:
+                                                        TextInputType.number,
+                                                  ),
+                                            SizedBox(height: 15),
+                                            isMoneyLendingSelected
+                                                ? SizedBox()
+                                                : DropdownButtonFormField<
+                                                    String>(
+                                                    dropdownColor: white,
+                                                    validator: FieldValidators
+                                                        .requiredValidator,
+                                                    decoration: InputDecoration(
+                                                      hintText:
+                                                          "Installment Type",
+                                                      hintStyle: TextStyle(
+                                                          fontSize: 15),
+                                                      focusedErrorBorder:
+                                                          OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                        borderSide: BorderSide(
+                                                            color: Colors.red,
+                                                            width: 1.0),
+                                                      ),
+                                                      errorBorder:
+                                                          OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                        borderSide: BorderSide(
+                                                            color: Colors.red,
+                                                            width: 1.0),
+                                                      ),
+                                                      focusedBorder:
+                                                          OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                      color:
+                                                                          primaryColorBlue),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10)),
+                                                      border:
+                                                          OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10)),
+                                                    ),
+                                                    items: const [
+                                                      DropdownMenuItem(
+                                                        value: "1",
+                                                        child: Text("Daily"),
+                                                      ),
+                                                      DropdownMenuItem(
+                                                        value: "2",
+                                                        child: Text("Weekly"),
+                                                      ),
+                                                      DropdownMenuItem(
+                                                        value: "3",
+                                                        child: Text("Monthly"),
+                                                      ),
+                                                    ],
+                                                    onChanged: (value) {
+                                                      dailySelection(value);
+                                                      setState(() {
+                                                        if (value == '2') {
+                                                          isWeeklySelected =
+                                                              true;
+                                                          isMonthSelected =
+                                                              false;
+                                                        } else if (value ==
+                                                            '3') {
+                                                          isMonthSelected =
+                                                              true;
+                                                          isWeeklySelected =
+                                                              false;
+                                                        } else {
+                                                          isWeeklySelected =
+                                                              false;
+                                                          isMonthSelected =
+                                                              false;
+                                                        }
+                                                        instalmentType = value;
+                                                      });
                                                     },
-                                                  );
-                                                },
-                                              ),
-                                              Text(
-                                                "To Give",
-                                              ),
-                                            ],
-                                          ),
-                                          TextField(
-                                            controller: nameController,
-                                            decoration: InputDecoration(
-                                              hintText: "Name",
-                                              floatingLabelStyle: TextStyle(
-                                                  color: primaryColorBlue),
-                                              hintStyle:
-                                                  TextStyle(fontSize: 15),
-                                              focusedBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: primaryColorBlue),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10)),
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10)),
-                                            ),
-                                          ),
-                                          SizedBox(height: 15),
-                                          TextField(
-                                            controller: phoneController,
-                                            decoration: InputDecoration(
-                                              hintText: "Phone (Optional)",
-                                              floatingLabelStyle: TextStyle(
-                                                  color: primaryColorBlue),
-                                              hintStyle:
-                                                  TextStyle(fontSize: 15),
-                                              focusedBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: primaryColorBlue),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10)),
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10)),
-                                            ),
-                                          ),
-                                          SizedBox(height: 15),
-                                          TextField(
-                                            controller: descriptionController,
-                                            maxLines: 4,
-                                            decoration: InputDecoration(
-                                              contentPadding: EdgeInsets.only(
-                                                  left: 50, top: 30),
-                                              focusedBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: primaryColorBlue),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10)),
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10)),
-                                              hintText:
-                                                  "Description (Optional)",
-                                              floatingLabelStyle: TextStyle(
-                                                  color: primaryColorBlue),
-                                              hintStyle:
-                                                  TextStyle(fontSize: 15),
-                                            ),
-                                          ),
-                                          SizedBox(height: 15),
-                                          TextField(
-                                            controller: amountController,
-                                            decoration: InputDecoration(
-                                              floatingLabelStyle: TextStyle(
-                                                  color: primaryColorBlue),
-                                              hintText:
-                                                  "Amount (With interest if any)",
-                                              hintStyle:
-                                                  TextStyle(fontSize: 15),
-                                              focusedBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: primaryColorBlue),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10)),
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10)),
-                                            ),
-                                            keyboardType: TextInputType.number,
-                                          ),
-                                          SizedBox(height: 15),
-                                          isMoneyLendingSelected
-                                              ? SizedBox()
-                                              : TextField(
-                                                  controller:
-                                                      installmentAmountController,
-                                                  decoration: InputDecoration(
-                                                    hintText:
-                                                        "Installment Amount",
-                                                    floatingLabelStyle: TextStyle(
-                                                        color:
-                                                            primaryColorBlue),
-                                                    hintStyle:
-                                                        TextStyle(fontSize: 15),
-                                                    focusedBorder: OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                            color:
-                                                                primaryColorBlue),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10)),
-                                                    border: OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10)),
                                                   ),
-                                                  keyboardType:
-                                                      TextInputType.number,
-                                                ),
-                                          SizedBox(height: 15),
-                                          isMoneyLendingSelected
-                                              ? SizedBox()
-                                              : DropdownButtonFormField<String>(
-                                                  dropdownColor: white,
-                                                  decoration: InputDecoration(
-                                                    hintText:
-                                                        "Installment Type",
-                                                    hintStyle:
-                                                        TextStyle(fontSize: 15),
-                                                    focusedBorder: OutlineInputBorder(
+                                            SizedBox(height: 15),
+                                            isWeeklySelected
+                                                ? DropdownButtonFormField<
+                                                    String>(
+                                                    dropdownColor: white,
+                                                    validator: FieldValidators
+                                                        .requiredValidator,
+                                                    decoration: InputDecoration(
+                                                      hintText:
+                                                          "Pick which week",
+                                                      hintStyle: TextStyle(
+                                                          fontSize: 15),
+                                                      focusedErrorBorder:
+                                                          OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
                                                         borderSide: BorderSide(
-                                                            color:
-                                                                primaryColorBlue),
+                                                            color: Colors.red,
+                                                            width: 1.0),
+                                                      ),
+                                                      errorBorder:
+                                                          OutlineInputBorder(
                                                         borderRadius:
                                                             BorderRadius
-                                                                .circular(10)),
-                                                    border: OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10)),
-                                                  ),
-                                                  items: const [
-                                                    DropdownMenuItem(
-                                                      value: "1",
-                                                      child: Text("Daily"),
+                                                                .circular(10),
+                                                        borderSide: BorderSide(
+                                                            color: Colors.red,
+                                                            width: 1.0),
+                                                      ),
+                                                      focusedBorder:
+                                                          OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                      color:
+                                                                          primaryColorBlue),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10)),
+                                                      border:
+                                                          OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10)),
                                                     ),
-                                                    DropdownMenuItem(
-                                                      value: "2",
-                                                      child: Text("Weekly"),
-                                                    ),
-                                                    DropdownMenuItem(
-                                                      value: "3",
-                                                      child: Text("Monthly"),
-                                                    ),
-                                                  ],
-                                                  onChanged: (value) {
-                                                    dailySelection(value);
-                                                    setState(() {
-                                                      if (value == '2') {
-                                                        isWeeklySelected = true;
-                                                        isMonthSelected = false;
-                                                      } else if (value == '3') {
-                                                        isMonthSelected = true;
-                                                        isWeeklySelected =
-                                                            false;
-                                                      } else {
-                                                        isWeeklySelected =
-                                                            false;
-                                                        isMonthSelected = false;
-                                                      }
-                                                      instalmentType = value;
-                                                    });
-                                                  },
-                                                ),
-                                          SizedBox(height: 15),
-                                          isWeeklySelected
-                                              ? DropdownButtonFormField<String>(
-                                                  dropdownColor: white,
-                                                  decoration: InputDecoration(
-                                                    hintText: "Pick which week",
-                                                    hintStyle:
-                                                        TextStyle(fontSize: 15),
-                                                    focusedBorder: OutlineInputBorder(
+                                                    items: weekdays
+                                                        .map((day) =>
+                                                            DropdownMenuItem(
+                                                              value: day,
+                                                              child: Text(day),
+                                                            ))
+                                                        .toList(),
+                                                    onChanged: (value) {
+                                                      whenWeekSelected(value);
+                                                    },
+                                                  )
+                                                : SizedBox(),
+                                            isMonthSelected
+                                                ? TextFormField(
+                                                    controller:
+                                                        monthlyInstallmentAmountController,
+                                                    validator: FieldValidators
+                                                        .requiredValidator,
+                                                    readOnly: true,
+                                                    decoration: InputDecoration(
+                                                      suffixIcon: Icon(Icons
+                                                          .calendar_today_outlined),
+                                                      hintText:
+                                                          "Pick date of the month",
+                                                      floatingLabelStyle: TextStyle(
+                                                          color:
+                                                              primaryColorBlue),
+                                                      hintStyle: TextStyle(
+                                                          fontSize: 15),
+                                                      focusedErrorBorder:
+                                                          OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
                                                         borderSide: BorderSide(
-                                                            color:
-                                                                primaryColorBlue),
+                                                            color: Colors.red,
+                                                            width: 1.0),
+                                                      ),
+                                                      errorBorder:
+                                                          OutlineInputBorder(
                                                         borderRadius:
                                                             BorderRadius
-                                                                .circular(10)),
-                                                    border: OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10)),
-                                                  ),
-                                                  items: weekdays
-                                                      .map((day) =>
-                                                          DropdownMenuItem(
-                                                            value: day,
-                                                            child: Text(day),
-                                                          ))
-                                                      .toList(),
-                                                  onChanged: (value) {
-                                                    whenWeekSelected(value);
-                                                  },
-                                                )
-                                              : SizedBox(),
-                                          isMonthSelected
-                                              ? TextField(
-                                                  controller:
-                                                      monthlyInstallmentAmountController,
-                                                  readOnly: true,
-                                                  decoration: InputDecoration(
-                                                    suffixIcon: Icon(Icons
-                                                        .calendar_today_outlined),
-                                                    hintText:
-                                                        "Pick date of the month",
-                                                    floatingLabelStyle: TextStyle(
-                                                        color:
-                                                            primaryColorBlue),
-                                                    hintStyle:
-                                                        TextStyle(fontSize: 15),
-                                                    focusedBorder: OutlineInputBorder(
+                                                                .circular(10),
                                                         borderSide: BorderSide(
-                                                            color:
-                                                                primaryColorBlue),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10)),
-                                                    border: OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10)),
-                                                  ),
-                                                  onTap: () async {
-                                                    final _pickedDate =
-                                                        await showDatePicker(
-                                                            builder:
-                                                                (context, _) {
-                                                              return Theme(
-                                                                data: Theme.of(
-                                                                        context)
-                                                                    .copyWith(
-                                                                  colorScheme: ColorScheme
-                                                                      .light(
-                                                                          primary: ColorConstant
-                                                                              .defBlue,
-                                                                          onPrimary: Colors
-                                                                              .white, // header text color
-                                                                          onSurface:
-                                                                              Colors.black),
-                                                                  textButtonTheme:
-                                                                      TextButtonThemeData(
-                                                                    style: TextButton
-                                                                        .styleFrom(
-                                                                      foregroundColor:
-                                                                          ColorConstant
-                                                                              .defBlue, // button text color
+                                                            color: Colors.red,
+                                                            width: 1.0),
+                                                      ),
+                                                      focusedBorder:
+                                                          OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                      color:
+                                                                          primaryColorBlue),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10)),
+                                                      border:
+                                                          OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10)),
+                                                    ),
+                                                    onTap: () async {
+                                                      final _pickedDate =
+                                                          await showDatePicker(
+                                                              builder:
+                                                                  (context, _) {
+                                                                return Theme(
+                                                                  data: Theme.of(
+                                                                          context)
+                                                                      .copyWith(
+                                                                    colorScheme: ColorScheme.light(
+                                                                        primary: ColorConstant.defBlue,
+                                                                        onPrimary: Colors.white, // header text color
+                                                                        onSurface: Colors.black),
+                                                                    textButtonTheme:
+                                                                        TextButtonThemeData(
+                                                                      style: TextButton
+                                                                          .styleFrom(
+                                                                        foregroundColor:
+                                                                            ColorConstant.defBlue, // button text color
+                                                                      ),
                                                                     ),
                                                                   ),
-                                                                ),
-                                                                child: _!,
-                                                              );
-                                                            },
-                                                            context: context,
-                                                            initialDate:
-                                                                DateTime.now(),
-                                                            firstDate:
-                                                                DateTime.now(),
-                                                            lastDate: DateTime(
-                                                                2100, 31, 12));
-                                                    if (_pickedDate != null) {
-                                                      pickMonthlyDate(
-                                                          _pickedDate);
-                                                      setState(() {
-                                                        monthlyInstallmentAmountController
-                                                            .text = DateFormat
-                                                                .yMMMd()
-                                                            .format(
-                                                                _pickedDate);
-                                                      });
-                                                    } else {
-                                                      pickMonthlyDate(
-                                                          DateTime.now());
-                                                    }
-                                                  },
-                                                )
-                                              : SizedBox(),
-                                        ]),
-                                      ),
-                                      Column(
-                                        children: [
-                                          SizedBox(
-                                            height: 30,
-                                          ),
-                                          TextField(
-                                            controller: codeTextController,
-                                            decoration: InputDecoration(
-                                              hintText: "Enter code",
-                                              floatingLabelStyle: TextStyle(
-                                                  color: primaryColorBlue),
-                                              hintStyle:
-                                                  TextStyle(fontSize: 15),
-                                              focusedBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: primaryColorBlue),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10)),
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10)),
+                                                                  child: _!,
+                                                                );
+                                                              },
+                                                              context: context,
+                                                              initialDate:
+                                                                  DateTime
+                                                                      .now(),
+                                                              firstDate:
+                                                                  DateTime
+                                                                      .now(),
+                                                              lastDate:
+                                                                  DateTime(2100,
+                                                                      31, 12));
+                                                      if (_pickedDate != null) {
+                                                        pickMonthlyDate(
+                                                            _pickedDate);
+                                                        setState(() {
+                                                          monthlyInstallmentAmountController
+                                                              .text = DateFormat
+                                                                  .yMMMd()
+                                                              .format(
+                                                                  _pickedDate);
+                                                        });
+                                                      } else {
+                                                        pickMonthlyDate(
+                                                            DateTime.now());
+                                                      }
+                                                    },
+                                                  )
+                                                : SizedBox(),
+                                          ]),
+                                        ),
+                                        Column(
+                                          children: [
+                                            SizedBox(
+                                              height: 30,
                                             ),
-                                          )
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                );
-                              },
-                            )
-                          ],
+                                            TextFormField(
+                                              controller: codeTextController,
+                                              validator: FieldValidators
+                                                  .requiredValidator,
+                                              decoration: InputDecoration(
+                                                hintText: "Enter code",
+                                                floatingLabelStyle: TextStyle(
+                                                    color: primaryColorBlue),
+                                                hintStyle:
+                                                    TextStyle(fontSize: 15),
+                                                focusedErrorBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  borderSide: BorderSide(
+                                                      color: Colors.red,
+                                                      width: 1.0),
+                                                ),
+                                                errorBorder: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  borderSide: BorderSide(
+                                                      color: Colors.red,
+                                                      width: 1.0),
+                                                ),
+                                                focusedBorder: OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color:
+                                                            primaryColorBlue),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10)),
+                                                border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10)),
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                },
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -690,17 +883,23 @@ class _AddCardDaologState extends State<AddCardDaolog>
                           shareCode: shareCode,
                           balanceAmount: amount);
 
-                      isSelected ? LenderFunctions().addLender(model) : null;
-                      isSelected
-                          ? Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => NavScreen(),
-                              ),
-                              (Route<dynamic> route) => false)
-                          : context
-                              .read<LenderBloc>()
-                              .add(JoinGetData(code: codeTextController.text));
+                      if (_formKey.currentState!.validate()) {
+                        isSelected ? LenderFunctions().addLender(model) : null;
+                        isSelected
+                            ? Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => NavScreen(),
+                                ),
+                                (Route<dynamic> route) => false)
+                            : context.read<LenderBloc>().add(
+                                JoinGetData(code: codeTextController.text));
+                        //show snackbar
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                              content: Text('Form submitted successfully!')),
+                        );
+                      }
 
                       isSelected
                           ? Navigator.pushAndRemoveUntil(
@@ -936,7 +1135,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
 //                                   ),
 //                                 ],
 //                               ),
-//                               TextField(
+//                               TextFormField(
 //                                 decoration: InputDecoration(
 //                                   hintText: "Name",
 //                                   floatingLabelStyle:
