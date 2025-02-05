@@ -100,7 +100,7 @@ class _ListScreenState extends State<ListScreen>
               calendarStyle: CalendarStyle(
                   todayDecoration: BoxDecoration(
                     color: focusdDate != DateTime.now()
-                        ? primaryColorBlue.withOpacity(0.5)
+                        ? primaryColorBlue.withValues(alpha: 0.5)
                         : primaryColorBlue,
                     shape: BoxShape.circle,
                   ),
@@ -173,7 +173,7 @@ class _ListScreenState extends State<ListScreen>
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),
                           ),
-                          tileColor: primaryColorBlue.withOpacity(0.2),
+                          tileColor: primaryColorBlue.withValues(alpha: 0.2),
                           title: Text(
                             '${data.category}',
                             style: TextStyle(color: black),
