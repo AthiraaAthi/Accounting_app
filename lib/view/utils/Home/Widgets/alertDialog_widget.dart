@@ -462,8 +462,12 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                 : TextFormField(
                                                     controller:
                                                         installmentAmountController,
-                                                    validator: FieldValidators
-                                                        .unrequiredAmountValidator,
+                                                    validator: installmentAmountController
+                                                            .text.isNotEmpty
+                                                        ? FieldValidators
+                                                            .unrequiredAmountValidator
+                                                        : FieldValidators
+                                                            .optionalValidator,
                                                     decoration: InputDecoration(
                                                       hintText:
                                                           "Installment Amount",
