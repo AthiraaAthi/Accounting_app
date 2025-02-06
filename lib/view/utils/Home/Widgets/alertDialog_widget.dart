@@ -821,9 +821,6 @@ class _AddCardDaologState extends State<AddCardDaolog>
                 actions: [
                   TextButton(
                     onPressed: () {
-                      if (listOfDailyDates.isNotEmpty) {
-                        log(listOfDailyDates.toString());
-                      }
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
@@ -894,106 +891,107 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                 (Route<dynamic> route) => false)
                             : context.read<LenderBloc>().add(
                                 JoinGetData(code: codeTextController.text));
+                        isSelected
+                            ? Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => NavScreen(),
+                                ),
+                                (Route<dynamic> route) => false)
+                            : showDialog(
+                                barrierDismissible: false,
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    backgroundColor: white,
+                                    title: Center(child: Text('Code details')),
+                                    content:
+                                        BlocBuilder<LenderBloc, LenderState>(
+                                      builder: (context, state) {
+                                        if (state.isLoading) {
+                                          return Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Center(
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  color: primaryColorBlue,
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        }
+                                        final data = state.joinData[0];
+                                        log(data.toString());
+                                        return Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text('Name: ${data.name}'),
+                                            Text('Amount: ${data.amount}/-')
+                                          ],
+                                        );
+                                      },
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        style: ButtonStyle(
+                                            foregroundColor:
+                                                WidgetStatePropertyAll(black)),
+                                        child: Text('Cancel'),
+                                      ),
+                                      BlocBuilder<LenderBloc, LenderState>(
+                                        builder: (context, state) {
+                                          return TextButton(
+                                              onPressed: () {
+                                                final joinerData =
+                                                    state.joinData[0];
+                                                final bool asJoiner = true;
+                                                final model = LendingModel(
+                                                  name: joinerData.name,
+                                                  asJoiner: asJoiner,
+                                                  phone: joinerData.phone,
+                                                  description:
+                                                      joinerData.description,
+                                                  amount: joinerData.amount,
+                                                  installmentAmount: joinerData
+                                                      .installmentAmount,
+                                                  installmentType: joinerData
+                                                      .installmentType,
+                                                  listOfTImestamp: joinerData
+                                                      .listOfTImestamp,
+                                                );
+                                                LenderFunctions()
+                                                    .addLender(model);
+                                                Navigator.pushAndRemoveUntil(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          NavScreen(),
+                                                    ),
+                                                    (Route<dynamic> route) =>
+                                                        false);
+                                              },
+                                              style: ButtonStyle(
+                                                  foregroundColor:
+                                                      WidgetStatePropertyAll(
+                                                          primaryColorBlue)),
+                                              child: Text('Add'));
+                                        },
+                                      )
+                                    ],
+                                  );
+                                });
                         //show snackbar
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                               content: Text('Form submitted successfully!')),
                         );
                       }
-
-                      isSelected
-                          ? Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => NavScreen(),
-                              ),
-                              (Route<dynamic> route) => false)
-                          : showDialog(
-                              barrierDismissible: false,
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  backgroundColor: white,
-                                  title: Center(child: Text('Code details')),
-                                  content: BlocBuilder<LenderBloc, LenderState>(
-                                    builder: (context, state) {
-                                      if (state.isLoading) {
-                                        return Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Center(
-                                              child: CircularProgressIndicator(
-                                                color: primaryColorBlue,
-                                              ),
-                                            ),
-                                          ],
-                                        );
-                                      }
-                                      final data = state.joinData[0];
-                                      log(data.toString());
-                                      return Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text('Name: ${data.name}'),
-                                          Text('Amount: ${data.amount}/-')
-                                        ],
-                                      );
-                                    },
-                                  ),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      style: ButtonStyle(
-                                          foregroundColor:
-                                              WidgetStatePropertyAll(black)),
-                                      child: Text('Cancel'),
-                                    ),
-                                    BlocBuilder<LenderBloc, LenderState>(
-                                      builder: (context, state) {
-                                        return TextButton(
-                                            onPressed: () {
-                                              final joinerData =
-                                                  state.joinData[0];
-                                              final bool asJoiner = true;
-                                              final model = LendingModel(
-                                                name: joinerData.name,
-                                                asJoiner: asJoiner,
-                                                phone: joinerData.phone,
-                                                description:
-                                                    joinerData.description,
-                                                amount: joinerData.amount,
-                                                installmentAmount: joinerData
-                                                    .installmentAmount,
-                                                installmentType:
-                                                    joinerData.installmentType,
-                                                listOfTImestamp:
-                                                    joinerData.listOfTImestamp,
-                                              );
-                                              LenderFunctions()
-                                                  .addLender(model);
-                                              Navigator.pushAndRemoveUntil(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        NavScreen(),
-                                                  ),
-                                                  (Route<dynamic> route) =>
-                                                      false);
-                                            },
-                                            style: ButtonStyle(
-                                                foregroundColor:
-                                                    WidgetStatePropertyAll(
-                                                        primaryColorBlue)),
-                                            child: Text('Add'));
-                                      },
-                                    )
-                                  ],
-                                );
-                              });
                     },
                     child: Text(
                       isSelected ? 'Create' : 'Add',
