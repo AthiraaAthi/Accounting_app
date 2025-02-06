@@ -28,7 +28,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       appBar: AppBar(
         backgroundColor: ColorConstant.defBlue,
         title: Text(
-          "LENDO",
+          "FinFloww",
           style: TextStyle(
               color: Colors.white, fontSize: 19, fontWeight: FontWeight.w600),
         ),

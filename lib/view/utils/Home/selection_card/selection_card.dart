@@ -82,7 +82,56 @@ class _SelectionCardState extends State<SelectionCard> {
         ],
         surfaceTintColor: primaryColorBlue,
         foregroundColor: white,
-        title: Text("${widget.model.name}"),
+        title: TextButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    backgroundColor: white,
+                    title: Center(child: Text("Details")),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ListTile(
+                          leading: Text("Name:"),
+                          title: Text(widget.model.name!),
+                        ),
+                        widget.model.phone!.isNotEmpty
+                            ? ListTile(
+                                leading: Text("Phone:"),
+                                title: Text(widget.model.phone!),
+                              )
+                            : SizedBox(),
+                        widget.model.description!.isNotEmpty
+                            ? ListTile(
+                                leading: Text("Description:"),
+                                title: Text("${widget.model.description}"),
+                              )
+                            : SizedBox(),
+                        ListTile(
+                          leading: Text("Full Amount:"),
+                          title: Text("${widget.model.amount}/-"),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "${widget.model.name}",
+                  style: TextStyle(color: white, fontSize: 20),
+                ),
+                Text(
+                  "Tap here...",
+                  style: TextStyle(color: white, fontSize: 11),
+                ),
+              ],
+            )),
         backgroundColor: ColorConstant.defBlue,
         bottom: PreferredSize(
           preferredSize: Size(double.infinity, 50),
