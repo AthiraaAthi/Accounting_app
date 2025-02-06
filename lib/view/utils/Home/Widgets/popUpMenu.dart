@@ -6,6 +6,7 @@ import 'package:curved_nav/Infrastructure/Lender/lender_repository.dart';
 import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
 import 'package:curved_nav/view/utils/Home/Widgets/addAmount_dialog.dart';
 import 'package:curved_nav/view/utils/Navigation/nav_screen.dart';
+import 'package:curved_nav/view/utils/Settings/options_screens/getting_started.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -154,6 +155,11 @@ class MenuButtonWidget extends StatelessWidget {
                   );
                 },
               );
+            } else {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) =>
+                    GettingStarted(type: NavigatingFrom.HelpPage),
+              ));
             }
           },
           itemBuilder: (BuildContext context) {

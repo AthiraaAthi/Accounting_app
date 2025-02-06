@@ -25,7 +25,9 @@ class _SettingsScreenState extends State<SettingsScreen>
   ];
   List<Widget> optionsScreens = [
     CategorySettings(),
-    GettingStarted(),
+    GettingStarted(
+      type: NavigatingFrom.SettingsPage,
+    ),
     HelpScreen(),
     PrivacyPolicy(),
     TermsConditions()

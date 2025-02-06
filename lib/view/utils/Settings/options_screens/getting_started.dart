@@ -3,8 +3,14 @@ import 'package:curved_nav/view/utils/Settings/Widgtes/widgets.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
 
+enum NavigatingFrom {
+  HelpPage,
+  SettingsPage,
+}
+
 class GettingStarted extends StatelessWidget {
-  const GettingStarted({super.key});
+  final NavigatingFrom type;
+  const GettingStarted({super.key, required this.type});
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +33,11 @@ class GettingStarted extends StatelessWidget {
           ),
         ),
         body: DefaultTabController(
+          initialIndex: type == NavigatingFrom.HelpPage
+              ? 2
+              : type == NavigatingFrom.SettingsPage
+                  ? 0
+                  : 0,
           length: 4,
           child: Column(
             children: [
