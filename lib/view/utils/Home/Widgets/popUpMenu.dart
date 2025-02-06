@@ -6,6 +6,7 @@ import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.da
 import 'package:curved_nav/view/utils/Home/Widgets/addAmount_dialog.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MenuButtonWidget extends StatelessWidget {
@@ -96,6 +97,7 @@ class MenuButtonWidget extends StatelessWidget {
               showDialog(
                 context: context,
                 builder: (context) {
+                  final code = model.shareCode!;
                   return AlertDialog(
                     contentPadding: EdgeInsets.symmetric(vertical: 80),
                     backgroundColor: white,
@@ -104,7 +106,7 @@ class MenuButtonWidget extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          'H29A260302',
+                          code,
                           style: TextStyle(fontSize: 30),
                         ),
                         SizedBox(
@@ -114,7 +116,18 @@ class MenuButtonWidget extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  if (model.shareCode != null) {
+                                    Clipboard.setData(
+                                        ClipboardData(text: model.shareCode!));
+                                    Navigator.pop(context);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content:
+                                              Text('Copied to clipboard!')),
+                                    );
+                                  }
+                                },
                                 icon: Icon(
                                   Icons.copy_outlined,
                                   color: black,
