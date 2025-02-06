@@ -18,7 +18,7 @@ class _SettingsScreenState extends State<SettingsScreen>
     with SingleTickerProviderStateMixin {
   List<String> options = [
     'Categories',
-    "Getting Started",
+    "User manual",
     "Help & Feedback",
     "Privacy Policy",
     "Terms & Conditions"
