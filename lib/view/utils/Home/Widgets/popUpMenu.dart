@@ -2,8 +2,10 @@ import 'dart:developer';
 
 import 'package:curved_nav/Application/Calender/calender_bloc.dart';
 import 'package:curved_nav/Application/Lender/lender_bloc.dart';
+import 'package:curved_nav/Infrastructure/Lender/lender_repository.dart';
 import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
 import 'package:curved_nav/view/utils/Home/Widgets/addAmount_dialog.dart';
+import 'package:curved_nav/view/utils/Navigation/nav_screen.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -83,7 +85,14 @@ class MenuButtonWidget extends StatelessWidget {
                           )),
                       TextButton(
                           onPressed: () {
-                            Navigator.pop(context);
+                            LenderFunctions().deleteLender(model.id!);
+                            context.read<LenderBloc>().add(GetData());
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => NavScreen(),
+                                ),
+                                (bool) => false);
                           },
                           child: Text(
                             "Yes",
