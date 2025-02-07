@@ -1,3 +1,4 @@
+import 'package:card_loading/card_loading.dart';
 import 'package:curved_nav/Application/Calender/calender_bloc.dart';
 import 'package:curved_nav/Application/Lender/lender_bloc.dart';
 import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
@@ -92,8 +93,12 @@ class _CalenderWidgetState extends State<CalenderWidget> {
 
         //  log(listEvent.toString());
         if (state.isLoading) {
-          return Center(
-            child: CircularProgressIndicator(),
+          return CardLoading(
+            height: 280,
+            margin: EdgeInsets.symmetric(
+              horizontal: 15,
+            ),
+            borderRadius: BorderRadius.circular(20),
           );
         }
 

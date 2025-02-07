@@ -1,3 +1,4 @@
+import 'package:card_loading/card_loading.dart';
 import 'package:curved_nav/Application/Calender/calender_bloc.dart';
 import 'package:curved_nav/Application/Lender/lender_bloc.dart';
 import 'package:curved_nav/Infrastructure/Lender/lender_repository.dart';
@@ -7,8 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
-
-import '../color_constant/color_constant.dart';
 
 class SearchResultPage extends StatelessWidget {
   const SearchResultPage({
@@ -20,9 +19,31 @@ class SearchResultPage extends StatelessWidget {
     return BlocBuilder<LenderBloc, LenderState>(
       builder: (context, state) {
         if (state.isLoading) {
-          return Center(
-            child: CircularProgressIndicator(
-              color: primaryColorBlue,
+          return SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CardLoading(
+                  height: 115,
+                  margin: EdgeInsets.symmetric(horizontal: 9, vertical: 6.5),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                CardLoading(
+                  height: 115,
+                  margin: EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                CardLoading(
+                  height: 115,
+                  margin: EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                CardLoading(
+                  height: 115,
+                  margin: EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ],
             ),
           );
         } else if (state.searchData.isEmpty) {

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:card_loading/card_loading.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_nav/Application/Calender/calender_bloc.dart';
 import 'package:curved_nav/Application/Lender/lender_bloc.dart';
@@ -220,8 +221,9 @@ class _SelectionCardState extends State<SelectionCard> {
                     return BlocBuilder<LenderBloc, LenderState>(
                       builder: (context, state) {
                         if (state.isLoading) {
-                          return Center(
-                            child: CircularProgressIndicator(),
+                          return CardLoading(
+                            height: 55,
+                            borderRadius: BorderRadius.circular(20),
                           );
                         }
                         final selectedDateEvents = state.historyData
@@ -306,7 +308,7 @@ class _SelectionCardState extends State<SelectionCard> {
                                   pageBuilder: (context, animation,
                                           secondaryAnimation) =>
                                       HistoryScreen(
-                                    state: widget.model,
+                                    lendingModel: widget.model,
                                   ),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
@@ -410,7 +412,7 @@ class _SelectionCardState extends State<SelectionCard> {
                       .balanceAmount
                       .toString();
                   if (state.isLoading) {
-                    return CircularProgressIndicator();
+                    return SizedBox();
                   }
                   log('updated balance amount: $amount');
                   return Text(

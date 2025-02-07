@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:card_loading/card_loading.dart';
 import 'package:curved_nav/Application/Lender/lender_bloc.dart';
 import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
 import 'package:curved_nav/domain/models/history%20and%20others%20model/history_model.dart';
@@ -6,14 +9,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HistoryScreen extends StatelessWidget {
-  final LendingModel state;
-  const HistoryScreen({super.key, required this.state});
+  final LendingModel lendingModel;
+  const HistoryScreen({super.key, required this.lendingModel});
 
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
-        context.read<LenderBloc>().add(History(id: state.id!));
+        context.read<LenderBloc>().add(History(id: lendingModel.id!));
       },
     );
     return Scaffold(
@@ -36,6 +39,42 @@ class HistoryScreen extends StatelessWidget {
             flex: 8,
             child: BlocBuilder<LenderBloc, LenderState>(
               builder: (context, state) {
+                if (state.isLoading) {
+                  return Column(
+                    children: [
+                      CardLoading(
+                        height: 74,
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 6),
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      CardLoading(
+                        height: 74,
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 6),
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      CardLoading(
+                        height: 74,
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 6),
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      CardLoading(
+                        height: 74,
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 6),
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      CardLoading(
+                        height: 74,
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 6),
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                    ],
+                  );
+                }
                 final sortedData = List<HistoryModel>.from(state.historyData);
                 sortedData.sort((a, b) => b.timestamp!.compareTo(a.timestamp!));
                 return ListView.builder(
@@ -75,12 +114,25 @@ class HistoryScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Total Balance :',
+                    'Balance amount:',
                     style: TextStyle(color: white),
                   ),
-                  Text(
-                    "4000\\-",
-                    style: TextStyle(color: white),
+                  BlocBuilder<LenderBloc, LenderState>(
+                    builder: (context, state) {
+                      final amount = state.data
+                          .firstWhere(
+                              (element) => element.id == lendingModel.id)
+                          .balanceAmount
+                          .toString();
+                      if (state.isLoading) {
+                        return SizedBox();
+                      }
+                      log('updated balance amount: $amount');
+                      return Text(
+                        "${amount}\\-",
+                        style: TextStyle(color: white),
+                      );
+                    },
                   ),
                 ],
               ),
