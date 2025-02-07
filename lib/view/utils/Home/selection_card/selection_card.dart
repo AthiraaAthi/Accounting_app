@@ -157,238 +157,249 @@ class _SelectionCardState extends State<SelectionCard> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            BlocBuilder<CalenderBloc, CalenderState>(
-              builder: (context, state) {
-                dateTime = state.dateTime ?? DateTime.now();
-                return CalenderWidget(
-                  lendingModel: widget.model,
-                );
-              },
-            ),
-            Container(
-              height: 20,
-              color: white,
-            ),
-            widget.isCreator
-                ? ElevatedButton(
-                    style: ButtonStyle(
-                        shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10))),
-                        foregroundColor: WidgetStatePropertyAll(white),
-                        backgroundColor:
-                            WidgetStatePropertyAll(primaryColorBlue)),
-                    onPressed: () {
-                      final historyState = context.read<LenderBloc>().state;
-                      final eventsForSelectedDate = historyState.historyData
-                          .where((e) =>
-                              normalizeDate(e.date!.toDate()) ==
-                              normalizeDate(dateTime!))
-                          .toList();
-
-                      if (eventsForSelectedDate.length >= 2) {
-                        log("Exceed limit for this date");
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                              content: Text('Exceed limit for this date.')),
-                        );
-                      } else {
-                        showDialog(
-                          barrierDismissible: false,
-                          context: context,
-                          builder: (context) => AddPaymentDialog(
-                            type: TypeOfAdding.addPayment,
-                            state: widget.model,
-                            dateTime: dateTime!,
-                          ),
-                        );
-                      }
-                    },
-                    child: Text("Add Payment"))
-                : SizedBox(),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: BlocBuilder<CalenderBloc, CalenderState>(
+      body: BlocBuilder<LenderBloc, LenderState>(
+        builder: (context, state) {
+          if (state.isError) {
+            return Center(child: Icon(Icons.wifi));
+          }
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                BlocBuilder<CalenderBloc, CalenderState>(
                   builder: (context, state) {
-                    final selectedDate = state.dateTime ?? DateTime.now();
-
-                    return BlocBuilder<LenderBloc, LenderState>(
-                      builder: (context, state) {
-                        if (state.isLoading) {
-                          return CardLoading(
-                            height: 55,
-                            borderRadius: BorderRadius.circular(20),
-                          );
-                        }
-                        final selectedDateEvents = state.historyData
-                            .where((e) =>
-                                normalizeDate(e.date!.toDate()) ==
-                                normalizeDate(selectedDate))
-                            .toList();
-
-                        if (selectedDateEvents.isEmpty) {
-                          return ListTile(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            tileColor: lightBlue,
-                            leading: Text("Selected date Event"),
-                            trailing: Text("No event"),
-                          );
-                        }
-                        final firstEvent = selectedDateEvents[0];
-                        final firstEventText = firstEvent.asPayment!
-                            ? "Payment Added"
-                            : "Amount Added";
-
-                        final secondEvent = selectedDateEvents.length > 1
-                            ? selectedDateEvents[1]
-                            : null;
-                        final secondEventText = secondEvent != null
-                            ? (secondEvent.asPayment!
-                                ? "Payment Added"
-                                : "Amount Added")
-                            : null;
-
-                        return Column(
-                          children: [
-                            ListTile(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              tileColor: lightBlue,
-                              leading: Text("Selected date Event"),
-                              trailing: Text(firstEventText),
-                            ),
-                            if (secondEvent != null)
-                              SizedBox(
-                                height: 10,
-                              ),
-                            if (secondEvent != null)
-                              ListTile(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                tileColor: lightBlue,
-                                leading: Text("Selected date event"),
-                                trailing: Text(secondEventText!),
-                              ),
-                            if (secondEvent == null) SizedBox(),
-                          ],
-                        );
-                      },
+                    dateTime = state.dateTime ?? DateTime.now();
+                    return CalenderWidget(
+                      lendingModel: widget.model,
                     );
                   },
                 ),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "History",
-                    style: TextStyle(color: black),
-                  ),
-                  BlocBuilder<LenderBloc, LenderState>(
-                    builder: (context, state) {
-                      return InkWell(
-                        onTap: () {
-                          state.historyData.isNotEmpty
-                              ? Navigator.of(context).push(PageRouteBuilder(
-                                  pageBuilder: (context, animation,
-                                          secondaryAnimation) =>
-                                      HistoryScreen(
-                                    lendingModel: widget.model,
-                                  ),
-                                  transitionsBuilder: (context, animation,
-                                      secondaryAnimation, child) {
-                                    var tween = Tween(
-                                      begin: const Offset(1.0, 0.0),
-                                      end: Offset.zero,
-                                    ).chain(CurveTween(curve: Curves.easeIn));
-                                    return SlideTransition(
-                                      position: animation.drive(tween),
-                                      child: child,
-                                    );
-                                  },
-                                ))
-                              : null;
-                        },
-                        child: Text(
-                          "Show more >",
-                          style: TextStyle(
-                              color: primaryColorBlue,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            StreamBuilder<QuerySnapshot>(
-                stream: snapshot,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: SizedBox());
-                  }
+                Container(
+                  height: 20,
+                  color: white,
+                ),
+                widget.isCreator
+                    ? ElevatedButton(
+                        style: ButtonStyle(
+                            shape: WidgetStatePropertyAll(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10))),
+                            foregroundColor: WidgetStatePropertyAll(white),
+                            backgroundColor:
+                                WidgetStatePropertyAll(primaryColorBlue)),
+                        onPressed: () {
+                          final historyState = context.read<LenderBloc>().state;
+                          final eventsForSelectedDate = historyState.historyData
+                              .where((e) =>
+                                  normalizeDate(e.date!.toDate()) ==
+                                  normalizeDate(dateTime!))
+                              .toList();
 
-                  if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                    return Center(child: Text('No history available.'));
-                  }
-                  final docs = snapshot.data!.docs;
-                  final data = docs
-                      .map((doc) => HistoryModel.fromJson(
-                          doc.data() as Map<String, dynamic>))
-                      .toList();
-                  return ListView.separated(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      final items = data[index];
-                      final date = items.date!.toDate();
-                      final formatedDate =
-                          '${date.day}/${date.month}/${date.year}';
-                      log(formatedDate);
-                      return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: ListTile(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            tileColor:
-                                items.asPayment == true ? lightGreen : lightRed,
-                            leading: Text(formatedDate,
-                                style: TextStyle(color: black)),
-                            trailing: Text(
-                              '${items.amount}',
-                              style: TextStyle(color: black),
-                            ),
-                          ));
-                    },
-                    separatorBuilder: (context, index) => SizedBox(
-                      height: 10,
+                          if (eventsForSelectedDate.length >= 2) {
+                            log("Exceed limit for this date");
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                  content: Text('Exceed limit for this date.')),
+                            );
+                          } else {
+                            showDialog(
+                              barrierDismissible: false,
+                              context: context,
+                              builder: (context) => AddPaymentDialog(
+                                type: TypeOfAdding.addPayment,
+                                state: widget.model,
+                                dateTime: dateTime!,
+                              ),
+                            );
+                          }
+                        },
+                        child: Text("Add Payment"))
+                    : SizedBox(),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: BlocBuilder<CalenderBloc, CalenderState>(
+                      builder: (context, state) {
+                        final selectedDate = state.dateTime ?? DateTime.now();
+
+                        return BlocBuilder<LenderBloc, LenderState>(
+                          builder: (context, state) {
+                            if (state.isLoading) {
+                              return CardLoading(
+                                height: 55,
+                                borderRadius: BorderRadius.circular(20),
+                              );
+                            }
+                            final selectedDateEvents = state.historyData
+                                .where((e) =>
+                                    normalizeDate(e.date!.toDate()) ==
+                                    normalizeDate(selectedDate))
+                                .toList();
+
+                            if (selectedDateEvents.isEmpty) {
+                              return ListTile(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                tileColor: lightBlue,
+                                leading: Text("Selected date Event"),
+                                trailing: Text("No event"),
+                              );
+                            }
+                            final firstEvent = selectedDateEvents[0];
+                            final firstEventText = firstEvent.asPayment!
+                                ? "Payment Added"
+                                : "Amount Added";
+
+                            final secondEvent = selectedDateEvents.length > 1
+                                ? selectedDateEvents[1]
+                                : null;
+                            final secondEventText = secondEvent != null
+                                ? (secondEvent.asPayment!
+                                    ? "Payment Added"
+                                    : "Amount Added")
+                                : null;
+
+                            return Column(
+                              children: [
+                                ListTile(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  tileColor: lightBlue,
+                                  leading: Text("Selected date Event"),
+                                  trailing: Text(firstEventText),
+                                ),
+                                if (secondEvent != null)
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                if (secondEvent != null)
+                                  ListTile(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    tileColor: lightBlue,
+                                    leading: Text("Selected date event"),
+                                    trailing: Text(secondEventText!),
+                                  ),
+                                if (secondEvent == null) SizedBox(),
+                              ],
+                            );
+                          },
+                        );
+                      },
                     ),
-                    itemCount: data.length > 4 ? 4 : data.length,
-                  );
-                }),
-            SizedBox(
-              height: 10,
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "History",
+                        style: TextStyle(color: black),
+                      ),
+                      BlocBuilder<LenderBloc, LenderState>(
+                        builder: (context, state) {
+                          return InkWell(
+                            onTap: () {
+                              state.historyData.isNotEmpty
+                                  ? Navigator.of(context).push(PageRouteBuilder(
+                                      pageBuilder: (context, animation,
+                                              secondaryAnimation) =>
+                                          HistoryScreen(
+                                        lendingModel: widget.model,
+                                      ),
+                                      transitionsBuilder: (context, animation,
+                                          secondaryAnimation, child) {
+                                        var tween = Tween(
+                                          begin: const Offset(1.0, 0.0),
+                                          end: Offset.zero,
+                                        ).chain(
+                                            CurveTween(curve: Curves.easeIn));
+                                        return SlideTransition(
+                                          position: animation.drive(tween),
+                                          child: child,
+                                        );
+                                      },
+                                    ))
+                                  : null;
+                            },
+                            child: Text(
+                              "Show more >",
+                              style: TextStyle(
+                                  color: primaryColorBlue,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                StreamBuilder<QuerySnapshot>(
+                    stream: snapshot,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: SizedBox());
+                      }
+
+                      if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                        return Center(child: Text('No history available.'));
+                      }
+                      final docs = snapshot.data!.docs;
+                      final data = docs
+                          .map((doc) => HistoryModel.fromJson(
+                              doc.data() as Map<String, dynamic>))
+                          .toList();
+                      return ListView.separated(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          final items = data[index];
+                          final date = items.date!.toDate();
+                          final formatedDate =
+                              '${date.day}/${date.month}/${date.year}';
+                          log(formatedDate);
+                          return Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: ListTile(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                tileColor: items.asPayment == true
+                                    ? lightGreen
+                                    : lightRed,
+                                leading: Text(formatedDate,
+                                    style: TextStyle(color: black)),
+                                trailing: Text(
+                                  '${items.amount}',
+                                  style: TextStyle(color: black),
+                                ),
+                              ));
+                        },
+                        separatorBuilder: (context, index) => SizedBox(
+                          height: 10,
+                        ),
+                        itemCount: data.length > 4 ? 4 : data.length,
+                      );
+                    }),
+                SizedBox(
+                  height: 10,
+                ),
+              ],
             ),
-          ],
-        ),
+          );
+        },
       ),
       bottomNavigationBar: Container(
         width: double.infinity,

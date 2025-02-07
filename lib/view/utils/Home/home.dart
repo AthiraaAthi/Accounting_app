@@ -33,7 +33,18 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           style: TextStyle(
               color: Colors.white, fontSize: 19, fontWeight: FontWeight.w600),
         ),
-        actions: [AddCardDaolog()],
+        actions: [
+          BlocBuilder<LenderBloc, LenderState>(
+            builder: (context, state) {
+              if (state.isError) {
+                // ScaffoldMessenger.of(context)
+                //     .showSnackBar(SnackBar(content: Text('Unable to add now')));
+                return Icon(Icons.wifi);
+              } else
+                return AddCardDaolog();
+            },
+          )
+        ],
       ),
       body: Column(
         children: [
@@ -59,7 +70,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           ),
           Expanded(child: BlocBuilder<LenderBloc, LenderState>(
             builder: (context, state) {
-              if (state.searchData.isEmpty) {
+              if (state.isError) {
+                return Center(child: Icon(Icons.wifi));
+              } else if (state.searchData.isEmpty) {
                 return HomeIdlePage();
               }
               return SearchResultPage();

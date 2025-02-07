@@ -39,7 +39,9 @@ class HistoryScreen extends StatelessWidget {
             flex: 8,
             child: BlocBuilder<LenderBloc, LenderState>(
               builder: (context, state) {
-                if (state.isLoading) {
+                if (state.isError) {
+                  return Center(child: Icon(Icons.wifi));
+                } else if (state.isLoading) {
                   return Column(
                     children: [
                       CardLoading(

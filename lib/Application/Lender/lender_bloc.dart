@@ -22,32 +22,38 @@ class LenderBloc extends Bloc<LenderEvent, LenderState> {
       this.iLenderRepository, this.iJoinRepository, this.iHistoryRepository)
       : super(LenderState.initial()) {
     on<GetData>((event, emit) async {
-      emit(state.copyWith(isLoading: true, getFailureOrSuccess: none()));
+      emit(state.copyWith(
+          isLoading: true, getFailureOrSuccess: none(), isError: false));
       final Either<MainFailures, List<LendingModel>> getLenderDetails =
           await iLenderRepository.getDetails();
       emit(getLenderDetails.fold(
           (failures) => state.copyWith(
               isLoading: false,
+              isError: true,
               getFailureOrSuccess: some(failures)), (success) {
         // success.sort((first, second) => second.id!.compareTo(first.id!));
         return state.copyWith(
             isLoading: false,
+            isError: false,
             getFailureOrSuccess: some(success),
             joinData: state.joinData,
             data: success);
       }));
     });
     on<JoinGetData>((event, emit) async {
-      emit(state.copyWith(isLoading: true, getFailureOrSuccess: none()));
+      emit(state.copyWith(
+          isLoading: true, getFailureOrSuccess: none(), isError: false));
       final Either<MainFailures, List<LendingModel>> getLenderDetails =
           await iJoinRepository.getJoinCardInformation(event.code);
       emit(getLenderDetails.fold(
           (failures) => state.copyWith(
               isLoading: false,
+              isError: true,
               getFailureOrSuccess: some(failures)), (success) {
         // success.sort((first, second) => second.id!.compareTo(first.id!));
         return state.copyWith(
             isLoading: false,
+            isError: false,
             getFailureOrSuccess: some(success),
             data: state.data,
             joinData: success);
@@ -56,29 +62,38 @@ class LenderBloc extends Bloc<LenderEvent, LenderState> {
     on<History>((event, emit) async {
       emit(
         state.copyWith(
-            isLoading: true, getFailureOrSuccess: none(), historyData: []),
+            isLoading: true,
+            getFailureOrSuccess: none(),
+            historyData: [],
+            isError: false),
       );
       final Either<MainFailures, List<HistoryModel>> getHistory =
           await iHistoryRepository.getDetails(event.id);
       emit(getHistory.fold(
           (failure) => state.copyWith(
-              isLoading: false, getFailureOrSuccess: some(failure)),
+              isLoading: false,
+              isError: true,
+              getFailureOrSuccess: some(failure)),
           (success) => state.copyWith(
               isLoading: false,
+              isError: false,
               getFailureOrSuccess: some(success),
               historyData: success)));
     });
     on<Search>((event, emit) async {
-      emit(state.copyWith(isLoading: true, getFailureOrSuccess: none()));
+      emit(state.copyWith(
+          isLoading: true, isError: false, getFailureOrSuccess: none()));
       final Either<MainFailures, List<LendingModel>> getLenderDetails =
           await iLenderRepository.searchResult(event.query);
       emit(getLenderDetails.fold(
           (failures) => state.copyWith(
               isLoading: false,
+              isError: true,
               getFailureOrSuccess: some(failures)), (success) {
         // success.sort((first, second) => second.id!.compareTo(first.id!));
         return state.copyWith(
             isLoading: false,
+            isError: false,
             getFailureOrSuccess: some(success),
             joinData: state.joinData,
             data: state.data,

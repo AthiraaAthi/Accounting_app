@@ -18,7 +18,9 @@ class SearchResultPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<LenderBloc, LenderState>(
       builder: (context, state) {
-        if (state.isLoading) {
+        if (state.isError) {
+          return Center(child: Icon(Icons.wifi));
+        } else if (state.isLoading) {
           return SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,

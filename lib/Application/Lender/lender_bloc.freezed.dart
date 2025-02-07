@@ -669,6 +669,7 @@ mixin _$LenderState {
   List<LendingModel> get searchData => throw _privateConstructorUsedError;
   List<HistoryModel> get historyData => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
+  bool get isError => throw _privateConstructorUsedError;
   Option<dynamic> get getFailureOrSuccess => throw _privateConstructorUsedError;
 
   /// Create a copy of LenderState
@@ -690,6 +691,7 @@ abstract class $LenderStateCopyWith<$Res> {
       List<LendingModel> searchData,
       List<HistoryModel> historyData,
       bool isLoading,
+      bool isError,
       Option<dynamic> getFailureOrSuccess});
 }
 
@@ -713,6 +715,7 @@ class _$LenderStateCopyWithImpl<$Res, $Val extends LenderState>
     Object? searchData = null,
     Object? historyData = null,
     Object? isLoading = null,
+    Object? isError = null,
     Object? getFailureOrSuccess = null,
   }) {
     return _then(_value.copyWith(
@@ -736,6 +739,10 @@ class _$LenderStateCopyWithImpl<$Res, $Val extends LenderState>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      isError: null == isError
+          ? _value.isError
+          : isError // ignore: cast_nullable_to_non_nullable
+              as bool,
       getFailureOrSuccess: null == getFailureOrSuccess
           ? _value.getFailureOrSuccess
           : getFailureOrSuccess // ignore: cast_nullable_to_non_nullable
@@ -758,6 +765,7 @@ abstract class _$$LenderStateImplCopyWith<$Res>
       List<LendingModel> searchData,
       List<HistoryModel> historyData,
       bool isLoading,
+      bool isError,
       Option<dynamic> getFailureOrSuccess});
 }
 
@@ -779,6 +787,7 @@ class __$$LenderStateImplCopyWithImpl<$Res>
     Object? searchData = null,
     Object? historyData = null,
     Object? isLoading = null,
+    Object? isError = null,
     Object? getFailureOrSuccess = null,
   }) {
     return _then(_$LenderStateImpl(
@@ -802,6 +811,10 @@ class __$$LenderStateImplCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      isError: null == isError
+          ? _value.isError
+          : isError // ignore: cast_nullable_to_non_nullable
+              as bool,
       getFailureOrSuccess: null == getFailureOrSuccess
           ? _value.getFailureOrSuccess
           : getFailureOrSuccess // ignore: cast_nullable_to_non_nullable
@@ -819,6 +832,7 @@ class _$LenderStateImpl implements _LenderState {
       required final List<LendingModel> searchData,
       required final List<HistoryModel> historyData,
       required this.isLoading,
+      required this.isError,
       required this.getFailureOrSuccess})
       : _data = data,
         _joinData = joinData,
@@ -860,11 +874,13 @@ class _$LenderStateImpl implements _LenderState {
   @override
   final bool isLoading;
   @override
+  final bool isError;
+  @override
   final Option<dynamic> getFailureOrSuccess;
 
   @override
   String toString() {
-    return 'LenderState(data: $data, joinData: $joinData, searchData: $searchData, historyData: $historyData, isLoading: $isLoading, getFailureOrSuccess: $getFailureOrSuccess)';
+    return 'LenderState(data: $data, joinData: $joinData, searchData: $searchData, historyData: $historyData, isLoading: $isLoading, isError: $isError, getFailureOrSuccess: $getFailureOrSuccess)';
   }
 
   @override
@@ -880,6 +896,7 @@ class _$LenderStateImpl implements _LenderState {
                 .equals(other._historyData, _historyData) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
+            (identical(other.isError, isError) || other.isError == isError) &&
             (identical(other.getFailureOrSuccess, getFailureOrSuccess) ||
                 other.getFailureOrSuccess == getFailureOrSuccess));
   }
@@ -892,6 +909,7 @@ class _$LenderStateImpl implements _LenderState {
       const DeepCollectionEquality().hash(_searchData),
       const DeepCollectionEquality().hash(_historyData),
       isLoading,
+      isError,
       getFailureOrSuccess);
 
   /// Create a copy of LenderState
@@ -910,6 +928,7 @@ abstract class _LenderState implements LenderState {
       required final List<LendingModel> searchData,
       required final List<HistoryModel> historyData,
       required final bool isLoading,
+      required final bool isError,
       required final Option<dynamic> getFailureOrSuccess}) = _$LenderStateImpl;
 
   @override
@@ -922,6 +941,8 @@ abstract class _LenderState implements LenderState {
   List<HistoryModel> get historyData;
   @override
   bool get isLoading;
+  @override
+  bool get isError;
   @override
   Option<dynamic> get getFailureOrSuccess;
 
