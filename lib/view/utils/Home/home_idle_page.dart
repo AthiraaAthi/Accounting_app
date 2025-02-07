@@ -1,3 +1,4 @@
+import 'package:card_loading/card_loading.dart';
 import 'package:curved_nav/Application/Calender/calender_bloc.dart';
 import 'package:curved_nav/Application/Lender/lender_bloc.dart';
 import 'package:curved_nav/Infrastructure/Lender/lender_repository.dart';
@@ -7,8 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
-
-import '../color_constant/color_constant.dart';
 
 class HomeIdlePage extends StatelessWidget {
   const HomeIdlePage({
@@ -20,10 +19,15 @@ class HomeIdlePage extends StatelessWidget {
     return BlocBuilder<LenderBloc, LenderState>(
       builder: (context, state) {
         if (state.isLoading) {
-          return Center(
-            child: CircularProgressIndicator(
-              color: primaryColorBlue,
-            ),
+          return ListView.builder(
+            itemCount: state.data.length,
+            itemBuilder: (context, index) {
+              return CardLoading(
+                height: 115,
+                margin: EdgeInsets.symmetric(horizontal: 9, vertical: 6.5),
+                borderRadius: BorderRadius.circular(15),
+              );
+            },
           );
         } else if (state.data.isEmpty) {
           return Center(

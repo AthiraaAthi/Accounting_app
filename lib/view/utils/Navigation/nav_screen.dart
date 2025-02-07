@@ -2,6 +2,7 @@ import 'package:curved_nav/view/utils/Home/home.dart';
 import 'package:curved_nav/view/utils/Expense/expense_screen.dart';
 import 'package:curved_nav/view/utils/Settings/settings_screen.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
+import 'package:flutter/services.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -21,11 +22,17 @@ class NavScreen extends StatelessWidget {
       SettingsScreen(),
     ];
     return Scaffold(
-      body: ValueListenableBuilder(
-        valueListenable: _pagenotifier,
-        builder: (context, value, _) {
-          return screens[value];
+      body: PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (didPop, result) {
+          SystemNavigator.pop();
         },
+        child: ValueListenableBuilder(
+          valueListenable: _pagenotifier,
+          builder: (context, value, _) {
+            return screens[value];
+          },
+        ),
       ),
       bottomNavigationBar: ValueListenableBuilder(
         valueListenable: _pagenotifier,

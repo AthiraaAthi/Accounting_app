@@ -8,6 +8,7 @@ class LenderState with _$LenderState {
     required List<LendingModel> searchData,
     required List<HistoryModel> historyData,
     required bool isLoading,
+    required bool isError,
     required Option getFailureOrSuccess,
   }) = _LenderState;
   factory LenderState.initial() => LenderState(
@@ -16,6 +17,7 @@ class LenderState with _$LenderState {
         historyData: [],
         searchData: [],
         isLoading: false,
+        isError: false,
         getFailureOrSuccess: none(),
       );
 }

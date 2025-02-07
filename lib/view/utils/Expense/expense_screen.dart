@@ -67,6 +67,7 @@ class _ListScreenState extends State<ListScreen>
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         centerTitle: false,
         backgroundColor: ColorConstant.defBlue,
         title: const Text(
