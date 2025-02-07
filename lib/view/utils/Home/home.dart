@@ -26,6 +26,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     });
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: ColorConstant.defBlue,
         title: Text(
           "FinFloww",
