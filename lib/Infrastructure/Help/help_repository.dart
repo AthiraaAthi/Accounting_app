@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 import 'package:curved_nav/domain/failures/main_failure.dart';
 import 'package:curved_nav/domain/models/help%20model/help_model.dart';
@@ -35,20 +36,21 @@ class HelpRepository implements IHelpRepository {
 
   @override
   Future<Either<MainFailures, List<HelpModel>>> getHelpRequests() async {
+    final connectivityResult = await Connectivity().checkConnectivity();
     final getData =
         await FirebaseFirestore.instance.collection('helpRequest').get();
 
     try {
       final helpRequestDetails =
           getData.docs.map((e) => HelpModel.fromJson(e.data())).toList();
-      if (helpRequestDetails.isEmpty) {
-        return left(MainFailures.clientfailure());
+      if (connectivityResult == ConnectivityResult.none) {
+        return left(MainFailures.serverfailure());
       }
 
       return right(helpRequestDetails);
     } catch (e) {
       log('error found: $e');
-      return left(MainFailures.serverfailure());
+      return left(MainFailures.clientfailure());
     }
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:curved_nav/domain/failures/main_failure.dart';
 import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
 import 'package:curved_nav/domain/models/i_lender_repository.dart';
@@ -51,6 +52,7 @@ class LenderFunctions implements ILenderRepository {
   @override
   Future<Either<MainFailures, List<LendingModel>>> getDetails() async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
+    final connectivityResult = await Connectivity().checkConnectivity();
 
     final getData = await FirebaseFirestore.instance
         .collection('users')
@@ -61,14 +63,14 @@ class LenderFunctions implements ILenderRepository {
     try {
       final lenderDetails =
           getData.docs.map((e) => LendingModel.fromJson(e.data())).toList();
-      if (lenderDetails.isEmpty) {
-        return left(MainFailures.clientfailure());
+      if (connectivityResult == ConnectivityResult.none) {
+        return left(MainFailures.serverfailure());
       }
       // log(lenderDetails.toString());
       return right(lenderDetails);
     } catch (e) {
       log('error found: $e');
-      return left(MainFailures.serverfailure());
+      return left(MainFailures.clientfailure());
     }
   }
 
@@ -154,7 +156,7 @@ class LenderFunctions implements ILenderRepository {
   Future<Either<MainFailures, List<LendingModel>>> searchResult(
       String query) async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
-
+    final connectivityResult = await Connectivity().checkConnectivity();
     final getData = await FirebaseFirestore.instance
         .collection('users')
         .doc(userId)
@@ -165,14 +167,14 @@ class LenderFunctions implements ILenderRepository {
     try {
       final lenderDetails =
           getData.docs.map((e) => LendingModel.fromJson(e.data())).toList();
-      if (lenderDetails.isEmpty) {
-        return left(MainFailures.clientfailure());
+      if (connectivityResult == ConnectivityResult.none) {
+        return left(MainFailures.serverfailure());
       }
       // log(lenderDetails.toString());
       return right(lenderDetails);
     } catch (e) {
       log('error found: $e');
-      return left(MainFailures.serverfailure());
+      return left(MainFailures.clientfailure());
     }
   }
 }
