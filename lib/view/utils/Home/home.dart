@@ -1,3 +1,4 @@
+import 'package:card_loading/card_loading.dart';
 import 'package:curved_nav/Application/Lender/lender_bloc.dart';
 
 import 'package:curved_nav/domain/Debounce/debouncer.dart';
@@ -60,7 +61,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               ),
               onChanged: (value) {
                 if (value.isNotEmpty) {
-                  HomeIdlePage();
+                  SearchResultPage();
                 }
                 _debouncer.run(() {
                   context.read<LenderBloc>().add(Search(query: value));
@@ -72,10 +73,24 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             builder: (context, state) {
               if (state.isError) {
                 return Center(child: Icon(Icons.wifi));
-              } else if (state.searchData.isEmpty) {
+              } else if (state.isLoading) {
+                return ListView.builder(
+                  itemCount: state.data.isEmpty ? 6 : state.data.length,
+                  itemBuilder: (context, index) {
+                    return CardLoading(
+                      height: 115,
+                      margin:
+                          EdgeInsets.symmetric(horizontal: 9, vertical: 6.5),
+                      borderRadius: BorderRadius.circular(15),
+                    );
+                  },
+                );
+              } else if (state.searchData.isEmpty && state.data.isEmpty) {
+                return Center(child: Text('Click \'+\' to add'));
+              } else if (state.searchData.isNotEmpty) {
+                return SearchResultPage();
+              } else
                 return HomeIdlePage();
-              }
-              return SearchResultPage();
             },
           ))
         ],
