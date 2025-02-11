@@ -16,13 +16,24 @@ class SplashScreen extends StatelessWidget {
       listener: (context, state) {
         if (state.afterLoaded) {
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => NavScreen(),
-              ));
+            context,
+            PageRouteBuilder(
+              transitionDuration: Duration(milliseconds: 500),
+              pageBuilder: (context, animation, secondaryAnimation) =>
+                  NavScreen(),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                return FadeTransition(
+                  opacity: animation,
+                  child: child,
+                );
+              },
+            ),
+          );
         }
       },
       child: Scaffold(
+        backgroundColor: primaryColorBlue,
         body: Center(
           child: CircularProgressIndicator(
             color: primaryColorBlue,
