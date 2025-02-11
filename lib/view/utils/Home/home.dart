@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:card_loading/card_loading.dart';
 import 'package:curved_nav/Application/Lender/lender_bloc.dart';
 
@@ -9,6 +12,7 @@ import 'package:curved_nav/view/utils/Home/search_result_page.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -20,11 +24,33 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   final _debouncer = Debouncer(milliseconds: 1 * 1000);
 
+  bool isConnectedToInternet = true;
+  StreamSubscription? _isSubscribedToInternetConnection;
+
+  @override
+  void initState() {
+    super.initState();
+    _isSubscribedToInternetConnection =
+        InternetConnection().onStatusChange.listen((status) {
+      log(status.toString());
+      setState(() {
+        isConnectedToInternet = status != InternetStatus.disconnected;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _isSubscribedToInternetConnection?.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<LenderBloc>().add(LenderEvent.getData());
     });
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -37,12 +63,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         actions: [
           BlocBuilder<LenderBloc, LenderState>(
             builder: (context, state) {
-              if (state.isError) {
-                // ScaffoldMessenger.of(context)
-                //     .showSnackBar(SnackBar(content: Text('Unable to add now')));
-                return Icon(Icons.wifi);
-              } else
-                return AddCardDaolog();
+              return AddCardDaolog();
             },
           )
         ],
@@ -71,8 +92,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           ),
           Expanded(child: BlocBuilder<LenderBloc, LenderState>(
             builder: (context, state) {
-              if (state.isError) {
-                return Center(child: Icon(Icons.wifi));
+              if (!isConnectedToInternet) {
+                return Center(child: Text('Check your internet connection'));
               } else if (state.isLoading) {
                 return ListView.builder(
                   itemCount: state.data.isEmpty ? 6 : state.data.length,
