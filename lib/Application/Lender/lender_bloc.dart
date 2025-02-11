@@ -22,15 +22,19 @@ class LenderBloc extends Bloc<LenderEvent, LenderState> {
       this.iLenderRepository, this.iJoinRepository, this.iHistoryRepository)
       : super(LenderState.initial()) {
     on<GetData>((event, emit) async {
+      if (state.data.isNotEmpty || state.joinData.isNotEmpty) {
+        return emit(state);
+      }
       emit(state.copyWith(
           isLoading: true, getFailureOrSuccess: none(), isError: false));
       final Either<MainFailures, List<LendingModel>> getLenderDetails =
           await iLenderRepository.getDetails();
-      emit(getLenderDetails.fold(
-          (failures) => state.copyWith(
-              isLoading: false,
-              isError: true,
-              getFailureOrSuccess: some(failures)), (success) {
+      emit(getLenderDetails.fold((failures) {
+        return state.copyWith(
+            isLoading: false,
+            isError: true,
+            getFailureOrSuccess: some(failures));
+      }, (success) {
         // success.sort((first, second) => second.id!.compareTo(first.id!));
         return state.copyWith(
             isLoading: false,
@@ -41,6 +45,9 @@ class LenderBloc extends Bloc<LenderEvent, LenderState> {
       }));
     });
     on<JoinGetData>((event, emit) async {
+      if (state.data.isNotEmpty || state.joinData.isNotEmpty) {
+        return emit(state);
+      }
       emit(state.copyWith(
           isLoading: true, getFailureOrSuccess: none(), isError: false));
       final Either<MainFailures, List<LendingModel>> getLenderDetails =

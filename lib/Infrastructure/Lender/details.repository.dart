@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:curved_nav/domain/failures/main_failure.dart';
 import 'package:curved_nav/domain/models/history%20and%20others%20model/history_model.dart';
 
@@ -35,6 +36,7 @@ class HistoryFunctions implements IHistoryRepository {
   @override
   Future<Either<MainFailures, List<HistoryModel>>> getDetails(
       String lenderId) async {
+    final connectivityResult = await Connectivity().checkConnectivity();
     final data = await FirebaseFirestore.instance
         .collection('users')
         .doc(userId)
@@ -45,14 +47,14 @@ class HistoryFunctions implements IHistoryRepository {
     try {
       final historyDetails =
           data.docs.map((e) => HistoryModel.fromJson(e.data())).toList();
-      if (historyDetails.isNotEmpty) {
-        return right(historyDetails);
+      if (connectivityResult == ConnectivityResult.none) {
+        return left(MainFailures.serverfailure());
       }
-      log('Empty list');
-      return left(MainFailures.clientfailure());
+
+      return right(historyDetails);
     } catch (e) {
       log('error found:$e');
-      return left(MainFailures.serverfailure());
+      return left(MainFailures.clientfailure());
     }
   }
 }

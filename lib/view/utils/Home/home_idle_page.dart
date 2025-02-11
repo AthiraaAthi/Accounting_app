@@ -1,4 +1,3 @@
-import 'package:card_loading/card_loading.dart';
 import 'package:curved_nav/Application/Calender/calender_bloc.dart';
 import 'package:curved_nav/Application/Lender/lender_bloc.dart';
 import 'package:curved_nav/Infrastructure/Lender/lender_repository.dart';
@@ -18,23 +17,6 @@ class HomeIdlePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<LenderBloc, LenderState>(
       builder: (context, state) {
-        if (state.isLoading) {
-          return ListView.builder(
-            itemCount: state.data.length,
-            itemBuilder: (context, index) {
-              return CardLoading(
-                height: 115,
-                margin: EdgeInsets.symmetric(horizontal: 9, vertical: 6.5),
-                borderRadius: BorderRadius.circular(15),
-              );
-            },
-          );
-        } else if (state.data.isEmpty) {
-          return Center(
-            child: Text('No data found'),
-          );
-        }
-
         return ListView.builder(
           itemCount: state.data.length,
           itemBuilder: (context, index) {

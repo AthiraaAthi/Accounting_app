@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:curved_nav/domain/failures/main_failure.dart';
 import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
 import 'package:curved_nav/domain/models/i_join_repository.dart';
@@ -11,6 +12,7 @@ class JoinFunctions implements IJoinRepository {
   Future<Either<MainFailures, List<LendingModel>>> getJoinCardInformation(
       String code) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final connectivityResult = await Connectivity().checkConnectivity();
     try {
       final usersSnapshot = await firestore.collection('users').get();
 
@@ -23,16 +25,18 @@ class JoinFunctions implements IJoinRepository {
         final data = nestedSnapshot.docs
             .map((e) => LendingModel.fromJson(e.data()))
             .toList();
-        if (data.isNotEmpty) {
+        if (connectivityResult == ConnectivityResult.none) {
+          return left(MainFailures.serverfailure());
+        } else
+
           // log('Found Code: ${data}');
 
           return right(data);
-        }
       }
-      return left(MainFailures.clientfailure());
+      return left(MainFailures.serverfailure());
     } catch (e) {
       print('Error searching for shareCode: $e');
-      return left(MainFailures.serverfailure());
+      return left(MainFailures.clientfailure());
     }
   }
 }
