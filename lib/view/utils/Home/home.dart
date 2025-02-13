@@ -33,10 +33,40 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     _isSubscribedToInternetConnection =
         InternetConnection().onStatusChange.listen((status) {
       log(status.toString());
+      if (status == InternetStatus.disconnected && isConnectedToInternet) {
+        isConnectedToInternet = false;
+        _showPersistentSnackbar('No internet', isPersistent: true);
+      } else if (status == InternetStatus.connected && !isConnectedToInternet) {
+        isConnectedToInternet = true;
+        _hideSnackbar();
+        _showTemporarySnackbar('Internet is connected');
+      }
       setState(() {
         isConnectedToInternet = status != InternetStatus.disconnected;
       });
     });
+  }
+
+  void _showPersistentSnackbar(String message, {bool isPersistent = false}) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Center(child: Text(message)),
+        duration: isPersistent ? Duration(days: 1) : Duration(seconds: 2),
+      ),
+    );
+  }
+
+  void _hideSnackbar() {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+  }
+
+  void _showTemporarySnackbar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: Duration(seconds: 2),
+      ),
+    );
   }
 
   @override
