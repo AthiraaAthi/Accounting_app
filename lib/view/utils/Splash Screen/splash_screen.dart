@@ -35,10 +35,10 @@ class SplashScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: primaryColorBlue,
         body: Center(
-          child: CircularProgressIndicator(
-            color: primaryColorBlue,
-          ),
-        ),
+            child: Image.asset(
+          'assets/logo/png logo.png',
+          scale: 4,
+        )),
       ),
     );
   }
