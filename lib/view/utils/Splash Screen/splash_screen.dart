@@ -1,4 +1,5 @@
 import 'package:curved_nav/Application/Splash%20Screen/splash_bloc.dart';
+import 'package:curved_nav/view/utils/Introduction%20screen/onBoarding_screen.dart';
 import 'package:curved_nav/view/utils/Navigation/nav_screen.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class SplashScreen extends StatelessWidget {
             PageRouteBuilder(
               transitionDuration: Duration(milliseconds: 500),
               pageBuilder: (context, animation, secondaryAnimation) =>
-                  NavScreen(),
+                  OnboardingScreen(),
               transitionsBuilder:
                   (context, animation, secondaryAnimation, child) {
                 return FadeTransition(
