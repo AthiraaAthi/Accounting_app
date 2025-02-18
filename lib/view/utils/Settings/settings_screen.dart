@@ -37,6 +37,7 @@ class _SettingsScreenState extends State<SettingsScreen>
     return Scaffold(
         appBar: AppBar(
           backgroundColor: white,
+          automaticallyImplyLeading: false,
         ),
         body: Padding(
           padding: const EdgeInsets.all(15),
