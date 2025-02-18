@@ -5,6 +5,7 @@ import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -159,8 +160,19 @@ class _ListScreenState extends State<ListScreen>
                       ),
                     );
                   } else if (filteredExpenses.isEmpty) {
-                    return Center(
-                      child: Text('No Expense Found'),
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          height: MediaQuery.of(context).size.height * 0.2,
+                          width: MediaQuery.of(context).size.width * 0.2,
+                          'assets/svg/NoData.svg',
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text('No Expense Found'),
+                      ],
                     );
                   }
 

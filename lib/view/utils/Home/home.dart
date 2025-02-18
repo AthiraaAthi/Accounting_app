@@ -12,6 +12,7 @@ import 'package:curved_nav/view/utils/Home/search_result_page.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 class Home extends StatefulWidget {
@@ -123,7 +124,20 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           Expanded(child: BlocBuilder<LenderBloc, LenderState>(
             builder: (context, state) {
               if (!isConnectedToInternet) {
-                return Center(child: Text('Check your internet connection'));
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      height: MediaQuery.of(context).size.height * 0.2,
+                      width: MediaQuery.of(context).size.width * 0.2,
+                      'assets/svg/internet.svg',
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text('Check your internet connection'),
+                  ],
+                );
               } else if (state.isLoading) {
                 return ListView.builder(
                   itemCount: state.data.isEmpty ? 6 : state.data.length,
@@ -137,7 +151,20 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   },
                 );
               } else if (state.searchData.isEmpty && state.data.isEmpty) {
-                return Center(child: Text('Click \'+\' to add'));
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      height: MediaQuery.of(context).size.height * 0.2,
+                      width: MediaQuery.of(context).size.width * 0.2,
+                      'assets/svg/NoData.svg',
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text('Click \'+\' to add'),
+                  ],
+                );
               } else if (state.searchData.isNotEmpty) {
                 return SearchResultPage();
               } else
