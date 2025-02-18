@@ -4,15 +4,17 @@ import 'package:curved_nav/view/utils/Navigation/nav_screen.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_storage/get_storage.dart';
 
 class SplashScreen extends StatelessWidget {
-  const SplashScreen({super.key});
-
+  SplashScreen({super.key});
+  final box = GetStorage();
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((t) {
       context.read<SplashBloc>().add(OnStarted());
     });
+    bool isFirstTime = box.read('first_time') ?? true;
     return BlocListener<SplashBloc, SplashState>(
       listener: (context, state) {
         if (state.afterLoaded) {
@@ -21,7 +23,7 @@ class SplashScreen extends StatelessWidget {
             PageRouteBuilder(
               transitionDuration: Duration(milliseconds: 500),
               pageBuilder: (context, animation, secondaryAnimation) =>
-                  OnboardingScreen(),
+                  isFirstTime ? OnboardingScreen() : NavScreen(),
               transitionsBuilder:
                   (context, animation, secondaryAnimation, child) {
                 return FadeTransition(
