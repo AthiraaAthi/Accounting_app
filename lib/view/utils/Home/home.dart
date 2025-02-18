@@ -51,7 +51,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   void _showPersistentSnackbar(String message, {bool isPersistent = false}) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Center(child: Text(message)),
+        backgroundColor: const Color.fromARGB(255, 255, 17, 0),
+        content: Center(
+            child: Text(
+          message,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        )),
         duration: isPersistent ? Duration(days: 1) : Duration(seconds: 2),
       ),
     );
@@ -64,7 +69,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   void _showTemporarySnackbar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(message),
+        backgroundColor: const Color.fromARGB(255, 11, 223, 0),
+        content: Center(
+            child:
+                Text(message, style: TextStyle(fontWeight: FontWeight.bold))),
         duration: Duration(seconds: 2),
       ),
     );

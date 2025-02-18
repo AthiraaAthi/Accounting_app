@@ -44,7 +44,14 @@ class MenuButtonWidget extends StatelessWidget {
               if (eventsForSelectedDate.length >= 2) {
                 log("Exceed limit for this date");
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Exceed limit for this date.')),
+                  SnackBar(
+                      backgroundColor: const Color.fromARGB(255, 255, 17, 0),
+                      duration: Duration(seconds: 2),
+                      content: Center(
+                          child: Text(
+                        'Exceed limit for this date.',
+                        style: TextStyle(color: white),
+                      ))),
                 );
               } else {
                 showDialog(

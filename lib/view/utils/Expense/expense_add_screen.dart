@@ -345,8 +345,18 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                             //show snackbar
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                  content:
-                                      Text('Form submitted successfully!')),
+                                backgroundColor: primaryColorBlue,
+                                behavior: SnackBarBehavior.floating,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)),
+                                content: Center(
+                                  child: Text(
+                                    'Added!',
+                                    style: TextStyle(color: white),
+                                  ),
+                                ),
+                                duration: Duration(seconds: 2),
+                              ),
                             );
                           }
                         },
