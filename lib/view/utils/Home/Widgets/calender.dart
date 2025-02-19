@@ -119,6 +119,9 @@ class _CalenderWidgetState extends State<CalenderWidget> {
         }
 
         return TableCalendar(
+          headerStyle: HeaderStyle(
+              titleCentered: true,
+              headerPadding: EdgeInsets.symmetric(vertical: 2)),
           calendarStyle: CalendarStyle(
               cellMargin: EdgeInsets.all(2),
               todayDecoration: BoxDecoration(

@@ -35,7 +35,7 @@ class LenderFunctions implements ILenderRepository {
   }
 
   @override
-  Future<void> deleteLender(String id) async {
+  Future<bool> deleteLender(String id) async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
 
     final getData = await FirebaseFirestore.instance
@@ -44,8 +44,10 @@ class LenderFunctions implements ILenderRepository {
         .collection('lender');
     try {
       await getData.doc(id).delete();
+      return true;
     } catch (e) {
       log('error detected while deleting:$e');
+      return false;
     }
   }
 

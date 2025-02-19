@@ -99,6 +99,9 @@ class _ListScreenState extends State<ListScreen>
               availableCalendarFormats: {
                 CalendarFormat.week: 'weeks',
               },
+              headerStyle: HeaderStyle(
+                  titleCentered: true,
+                  headerPadding: EdgeInsets.symmetric(vertical: 2)),
               calendarStyle: CalendarStyle(
                   todayDecoration: BoxDecoration(
                     color: focusdDate != DateTime.now()
@@ -199,29 +202,31 @@ class _ListScreenState extends State<ListScreen>
                   );
                 },
               ))),
-          Expanded(
-              flex: 1,
-              child: BlocBuilder<ExpenseBloc, ExpenseState>(
-                builder: (context, state) {
-                  final filteredExpenses = state.expense.where((element) {
-                    return element.date.day == focusdDate.day &&
-                        element.date.day == selectedDate.day;
-                  }).toList();
-                  final totalExpense = filteredExpenses.fold(0, (sum, element) {
-                    return sum + int.parse(element.amount);
-                  });
-                  if (filteredExpenses.isEmpty) {
-                    return SizedBox();
-                  } else {
-                    return Container(
-                      color: white,
-                      child: Center(
-                          child: Text('Total Expense: ${totalExpense}/-')),
-                    );
-                  }
-                },
-              ))
         ],
+      ),
+      bottomNavigationBar: BlocBuilder<ExpenseBloc, ExpenseState>(
+        builder: (context, state) {
+          final filteredExpenses = state.expense.where((element) {
+            return element.date.day == focusdDate.day &&
+                element.date.day == selectedDate.day;
+          }).toList();
+          final totalExpense = filteredExpenses.fold(0, (sum, element) {
+            return sum + int.parse(element.amount);
+          });
+          if (filteredExpenses.isEmpty) {
+            return SizedBox();
+          } else {
+            return Container(
+              height: 50,
+              color: primaryColorBlue,
+              child: Center(
+                  child: Text(
+                'Total Expense: ${totalExpense}/-',
+                style: TextStyle(color: white),
+              )),
+            );
+          }
+        },
       ),
     );
   }

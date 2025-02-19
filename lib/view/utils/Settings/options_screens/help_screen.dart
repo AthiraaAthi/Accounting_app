@@ -128,7 +128,19 @@ class _HelpScreenState extends State<HelpScreen> {
                     Navigator.pop(context);
                     //show snackbar
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Form submitted successfully!')),
+                      SnackBar(
+                        backgroundColor: primaryColorBlue,
+                        behavior: SnackBarBehavior.floating,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        content: Center(
+                          child: Text(
+                            'Submitted!',
+                            style: TextStyle(color: white),
+                          ),
+                        ),
+                        duration: Duration(seconds: 2),
+                      ),
                     );
                   }
                 },

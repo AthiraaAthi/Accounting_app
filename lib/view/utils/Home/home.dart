@@ -27,6 +27,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   bool isConnectedToInternet = true;
   StreamSubscription? _isSubscribedToInternetConnection;
+  bool _isSnackbarVisible = false;
 
   @override
   void initState() {
@@ -49,25 +50,47 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
 
   void _showPersistentSnackbar(String message, {bool isPersistent = false}) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Center(child: Text(message)),
-        duration: isPersistent ? Duration(days: 1) : Duration(seconds: 2),
-      ),
-    );
+    if (!_isSnackbarVisible) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: const Color.fromARGB(255, 255, 17, 0),
+            content: Center(
+              child: Text(
+                message,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+            duration: Duration(days: 1),
+          ),
+        );
+      });
+      _isSnackbarVisible = true;
+    }
   }
 
   void _hideSnackbar() {
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    });
+    _isSnackbarVisible = false;
   }
 
   void _showTemporarySnackbar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        duration: Duration(seconds: 2),
-      ),
-    );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: const Color.fromARGB(255, 11, 223, 0),
+          content: Center(
+            child: Text(
+              message,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    });
   }
 
   @override
@@ -81,7 +104,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<LenderBloc>().add(LenderEvent.getData());
     });
-
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -94,7 +117,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         actions: [
           BlocBuilder<LenderBloc, LenderState>(
             builder: (context, state) {
-              return AddCardDaolog();
+              return AddCardDaolog(
+                isInternetConnected: isConnectedToInternet,
+              );
             },
           )
         ],
@@ -103,22 +128,27 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: SearchBar(
-              backgroundColor: WidgetStatePropertyAll(
-                  const Color.fromARGB(255, 235, 235, 235)),
-              elevation: WidgetStatePropertyAll(0),
-              hintText: 'Search',
-              leading: Icon(
-                Icons.search_outlined,
+            child: SizedBox(
+              height: size.height * 0.055,
+              child: SearchBar(
+                shape: WidgetStatePropertyAll(RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20))),
+                backgroundColor: WidgetStatePropertyAll(
+                    const Color.fromARGB(255, 235, 235, 235)),
+                elevation: WidgetStatePropertyAll(0),
+                hintText: 'Search',
+                leading: Icon(
+                  Icons.search_outlined,
+                ),
+                onChanged: (value) {
+                  if (value.isNotEmpty) {
+                    SearchResultPage();
+                  }
+                  _debouncer.run(() {
+                    context.read<LenderBloc>().add(Search(query: value));
+                  });
+                },
               ),
-              onChanged: (value) {
-                if (value.isNotEmpty) {
-                  SearchResultPage();
-                }
-                _debouncer.run(() {
-                  context.read<LenderBloc>().add(Search(query: value));
-                });
-              },
             ),
           ),
           Expanded(child: BlocBuilder<LenderBloc, LenderState>(
