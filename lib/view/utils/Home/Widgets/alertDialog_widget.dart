@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -13,11 +12,12 @@ import 'package:curved_nav/view/utils/Navigation/nav_screen.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+
 import 'package:intl/intl.dart';
 
 class AddCardDaolog extends StatefulWidget {
-  const AddCardDaolog({super.key});
+  final bool isInternetConnected;
+  const AddCardDaolog({super.key, required this.isInternetConnected});
 
   @override
   State<AddCardDaolog> createState() => _AddCardDaologState();
@@ -27,7 +27,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
     with TickerProviderStateMixin {
   double? height;
   String? instalmentType;
-  bool isConnectedToInternet = false;
+
   bool isMoneyLendingSelected = false;
   bool isMonthSelected = false;
   bool isWeeklySelected = false;
@@ -49,11 +49,9 @@ class _AddCardDaologState extends State<AddCardDaolog>
   ];
 
   final _formKey = GlobalKey<FormState>();
-  StreamSubscription? _isSubscribedToInternetConnection;
 
   @override
   void dispose() {
-    _isSubscribedToInternetConnection?.cancel();
     super.dispose();
   }
 
@@ -65,22 +63,6 @@ class _AddCardDaologState extends State<AddCardDaolog>
     listOfMonthlyDates = [];
     listOfDates = [];
     timestampList = [];
-    _isSubscribedToInternetConnection =
-        InternetConnection().onStatusChange.listen((event) {
-      log(event.toString());
-      switch (event) {
-        case InternetStatus.connected:
-          setState(() {
-            isConnectedToInternet = true;
-          });
-          break;
-        case InternetStatus.disconnected:
-          setState(() {
-            isConnectedToInternet = false;
-          });
-          break;
-      }
-    });
   }
 
   DateTime normalizeDate(DateTime date) {
@@ -194,11 +176,12 @@ class _AddCardDaologState extends State<AddCardDaolog>
       builder: (context, state) {
         return IconButton(
             onPressed: () {
-              if (!isConnectedToInternet) {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text('Internet is offline'),
-                  backgroundColor: Colors.red,
-                ));
+              if (!widget.isInternetConnected) {
+                null;
+                // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                //   content: Text('Internet is offline'),
+                //   backgroundColor: Colors.red,
+                // ));
               } else {
                 showDialog(
                   context: context,

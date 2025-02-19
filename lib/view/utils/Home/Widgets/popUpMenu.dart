@@ -100,7 +100,7 @@ class MenuButtonWidget extends StatelessWidget {
                                 MaterialPageRoute(
                                   builder: (context) => NavScreen(),
                                 ),
-                                (bool) => true);
+                                (Route<dynamic> route) => false);
                           },
                           child: Text(
                             "Yes",
