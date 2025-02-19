@@ -28,7 +28,7 @@ class GettingStarted extends StatelessWidget {
           ),
           backgroundColor: ColorConstant.defBlue,
           title: Text(
-            "Use manual",
+            "User manual",
             style: TextStyle(color: Colors.white),
           ),
         ),
@@ -155,13 +155,44 @@ class GettingStarted extends StatelessWidget {
                     child: Column(
                       children: [
                         HelpCardWidget(
-                          title: 'Title Goes here...',
-                          explanation: 'Explanation goes here....',
+                          title: 'Step 1',
+                          explanation:
+                              'Got-to settings and click on help & feedback.',
                           container: Container(
                             width: MediaQuery.of(context).size.width * 0.9,
-                            height: MediaQuery.of(context).size.height * 0.25,
-                            color: primaryColorBlue,
+                            height: MediaQuery.of(context).size.height * 0.5,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: primaryColorBlue,
+                                ),
+                                image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: AssetImage(
+                                        'assets/user manual/settings help.png'))),
                           ),
+                        ),
+                        HelpCardWidget(
+                          title: 'Step 2',
+                          explanation:
+                              'Fill the form and click on submitt button.',
+                          container: Container(
+                            width: MediaQuery.of(context).size.width * 0.9,
+                            height: MediaQuery.of(context).size.height * 0.6,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: primaryColorBlue,
+                                ),
+                                image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: AssetImage(
+                                        'assets/user manual/help page.png'))),
+                          ),
+                        ),
+                        HelpCardWidget(
+                          title: 'Step 3',
+                          explanation:
+                              'we will contact you shortly for enquiry.',
+                          container: Container(),
                         ),
                       ],
                     ),

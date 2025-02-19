@@ -69,6 +69,6 @@ flutter:
   uses-material-design: true
   assets:
     - assets/svg/
-   
+    - assets/user manual/ 
     - assets/logo/
     
