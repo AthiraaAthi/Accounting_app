@@ -79,11 +79,13 @@ class OnboardingScreen extends StatelessWidget {
         );
       },
       dotsDecorator: DotsDecorator(
+        size: const Size(7.0, 7.0),
         activeColor: primaryColorBlue,
-        activeSize: const Size(30.0, 10.0),
+        activeSize: const Size(30.0, 7.0),
         activeShape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
       ),
+      controlsPadding: const EdgeInsets.symmetric(vertical: 10),
       showSkipButton: true,
       skip: const Text("Skip"),
       next: FaIcon(FontAwesomeIcons.arrowRight),
@@ -96,9 +98,9 @@ class OnboardingScreen extends StatelessWidget {
           shape: WidgetStatePropertyAll(
             CircleBorder(
               side: BorderSide(
-                  width: 10,
-                  strokeAlign: BorderSide.strokeAlignOutside,
-                  color: primaryColorBlue),
+                  color: primaryColorBlue,
+                  width: 7,
+                  strokeAlign: BorderSide.strokeAlignOutside),
             ),
           ),
           backgroundColor: WidgetStatePropertyAll(primaryColorBlue),

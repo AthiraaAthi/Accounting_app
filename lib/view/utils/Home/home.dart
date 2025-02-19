@@ -27,6 +27,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   bool isConnectedToInternet = true;
   StreamSubscription? _isSubscribedToInternetConnection;
+  bool _isSnackbarVisible = false;
 
   @override
   void initState() {
@@ -49,33 +50,47 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
 
   void _showPersistentSnackbar(String message, {bool isPersistent = false}) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: const Color.fromARGB(255, 255, 17, 0),
-        content: Center(
-            child: Text(
-          message,
-          style: TextStyle(fontWeight: FontWeight.bold),
-        )),
-        duration: isPersistent ? Duration(days: 1) : Duration(seconds: 2),
-      ),
-    );
+    if (!_isSnackbarVisible) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: const Color.fromARGB(255, 255, 17, 0),
+            content: Center(
+              child: Text(
+                message,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+            duration: Duration(days: 1),
+          ),
+        );
+      });
+      _isSnackbarVisible = true;
+    }
   }
 
   void _hideSnackbar() {
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    });
+    _isSnackbarVisible = false;
   }
 
   void _showTemporarySnackbar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: const Color.fromARGB(255, 11, 223, 0),
-        content: Center(
-            child:
-                Text(message, style: TextStyle(fontWeight: FontWeight.bold))),
-        duration: Duration(seconds: 2),
-      ),
-    );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: const Color.fromARGB(255, 11, 223, 0),
+          content: Center(
+            child: Text(
+              message,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    });
   }
 
   @override
@@ -102,7 +117,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         actions: [
           BlocBuilder<LenderBloc, LenderState>(
             builder: (context, state) {
-              return AddCardDaolog();
+              return AddCardDaolog(
+                isInternetConnected: isConnectedToInternet,
+              );
             },
           )
         ],
