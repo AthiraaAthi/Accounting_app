@@ -89,7 +89,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<LenderBloc>().add(LenderEvent.getData());
     });
-
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -111,22 +111,27 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: SearchBar(
-              backgroundColor: WidgetStatePropertyAll(
-                  const Color.fromARGB(255, 235, 235, 235)),
-              elevation: WidgetStatePropertyAll(0),
-              hintText: 'Search',
-              leading: Icon(
-                Icons.search_outlined,
+            child: SizedBox(
+              height: size.height * 0.055,
+              child: SearchBar(
+                shape: WidgetStatePropertyAll(RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20))),
+                backgroundColor: WidgetStatePropertyAll(
+                    const Color.fromARGB(255, 235, 235, 235)),
+                elevation: WidgetStatePropertyAll(0),
+                hintText: 'Search',
+                leading: Icon(
+                  Icons.search_outlined,
+                ),
+                onChanged: (value) {
+                  if (value.isNotEmpty) {
+                    SearchResultPage();
+                  }
+                  _debouncer.run(() {
+                    context.read<LenderBloc>().add(Search(query: value));
+                  });
+                },
               ),
-              onChanged: (value) {
-                if (value.isNotEmpty) {
-                  SearchResultPage();
-                }
-                _debouncer.run(() {
-                  context.read<LenderBloc>().add(Search(query: value));
-                });
-              },
             ),
           ),
           Expanded(child: BlocBuilder<LenderBloc, LenderState>(

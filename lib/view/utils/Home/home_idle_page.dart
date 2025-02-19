@@ -80,7 +80,10 @@ class HomeIdlePage extends StatelessWidget {
                                         datetime:
                                             normalizeDate(DateTime.now())));
                               },
-                              icon: FaIcon(FontAwesomeIcons.penToSquare))
+                              icon: FaIcon(
+                                FontAwesomeIcons.penToSquare,
+                                size: 20,
+                              ))
                         ],
                       ),
                       isNearDue

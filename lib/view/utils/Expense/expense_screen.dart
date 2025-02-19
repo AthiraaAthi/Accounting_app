@@ -99,6 +99,9 @@ class _ListScreenState extends State<ListScreen>
               availableCalendarFormats: {
                 CalendarFormat.week: 'weeks',
               },
+              headerStyle: HeaderStyle(
+                  titleCentered: true,
+                  headerPadding: EdgeInsets.symmetric(vertical: 2)),
               calendarStyle: CalendarStyle(
                   todayDecoration: BoxDecoration(
                     color: focusdDate != DateTime.now()

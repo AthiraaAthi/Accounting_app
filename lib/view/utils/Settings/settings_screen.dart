@@ -34,6 +34,7 @@ class _SettingsScreenState extends State<SettingsScreen>
   ];
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
           backgroundColor: white,
@@ -50,7 +51,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
               ),
               SizedBox(
-                height: 30,
+                height: size.height * 0.04,
               ),
               ListView.builder(
                 shrinkWrap: true,
@@ -58,6 +59,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                 itemBuilder: (context, index) => Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: ListTile(
+                    minTileHeight: size.height * 0.065,
                     onTap: () {
                       Navigator.push(
                           context,

@@ -46,12 +46,22 @@ class NavScreen extends StatelessWidget {
               selectedItemColor: primaryColorBlue,
               items: [
                 SalomonBottomBarItem(
-                    icon: FaIcon(FontAwesomeIcons.calendarCheck),
+                    icon: FaIcon(
+                      FontAwesomeIcons.calendarCheck,
+                      size: 20,
+                    ),
                     title: Text('Expense')),
                 SalomonBottomBarItem(
-                    icon: Icon(Icons.home_outlined), title: Text('Home')),
+                    icon: Icon(
+                      Icons.home_outlined,
+                      size: 20,
+                    ),
+                    title: Text('Home')),
                 SalomonBottomBarItem(
-                    icon: Icon(Icons.settings_outlined),
+                    icon: Icon(
+                      Icons.settings_outlined,
+                      size: 20,
+                    ),
                     title: Text('Settings')),
               ]);
         },
