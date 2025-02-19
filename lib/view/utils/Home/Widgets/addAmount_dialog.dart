@@ -16,7 +16,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 enum TypeOfAdding { addPayment, addAmount }
 
-class AddPaymentDialog extends StatelessWidget {
+class AddPaymentDialog extends StatefulWidget {
   final LendingModel state;
   final TypeOfAdding type;
   final DateTime dateTime;
@@ -28,11 +28,25 @@ class AddPaymentDialog extends StatelessWidget {
   });
 
   @override
+  State<AddPaymentDialog> createState() => _AddPaymentDialogState();
+}
+
+class _AddPaymentDialogState extends State<AddPaymentDialog> {
+  String? initialValue;
+
+  @override
   Widget build(BuildContext context) {
     final TextEditingController addAmountController = TextEditingController();
-    final id = state.id!;
-    final initalValue =
-        state.installmentAmount!.isNotEmpty ? state.installmentAmount : null;
+    final id = widget.state.id!;
+
+    setState(() {
+      initialValue = widget.state.installmentAmount!.isNotEmpty
+          ? widget.state.installmentAmount
+          : null;
+      widget.type == TypeOfAdding.addPayment
+          ? addAmountController.text = initialValue!
+          : null;
+    });
     return AlertDialog(
       backgroundColor: white,
       title: Center(child: Text("Enter Amount")),
@@ -52,8 +66,6 @@ class AddPaymentDialog extends StatelessWidget {
           Expanded(
               flex: 6,
               child: TextFormField(
-                initialValue:
-                    type == TypeOfAdding.addPayment ? initalValue : null,
                 controller: addAmountController,
                 textAlign: TextAlign.center,
                 cursorColor: primaryColorBlue,
@@ -97,13 +109,13 @@ class AddPaymentDialog extends StatelessWidget {
             log('ua: ${balanceAmount}');
             return TextButton(
                 onPressed: () async {
-                  final amount = type == TypeOfAdding.addPayment
+                  final amount = widget.type == TypeOfAdding.addPayment
                       ? '-${addAmountController.text}\\-'
                       : '+${addAmountController.text}\\-';
                   final asPayment =
-                      type == TypeOfAdding.addPayment ? true : false;
+                      widget.type == TypeOfAdding.addPayment ? true : false;
                   log(asPayment.toString());
-                  final date = Timestamp.fromDate(dateTime);
+                  final date = Timestamp.fromDate(widget.dateTime);
                   final model = HistoryModel(
                       amount: amount, asPayment: asPayment, date: date);
 
@@ -111,7 +123,7 @@ class AddPaymentDialog extends StatelessWidget {
                     return int.tryParse(value) ?? 0;
                   }
 
-                  final newBalance = type == TypeOfAdding.addPayment
+                  final newBalance = widget.type == TypeOfAdding.addPayment
                       ? parseSafe(balanceAmount!) -
                           parseSafe(addAmountController.text)
                       : parseSafe(balanceAmount!) +
@@ -120,7 +132,7 @@ class AddPaymentDialog extends StatelessWidget {
                   log(newBalance.toString());
 
                   final lastDate =
-                      '${dateTime.day}/${dateTime.month}/${dateTime.year}';
+                      '${widget.dateTime.day}/${widget.dateTime.month}/${widget.dateTime.year}';
                   await LenderFunctions()
                       .updateLastDate('lastMoneyGivenDate', lastDate, id);
                   await LenderFunctions().updateBalanceAmount(
