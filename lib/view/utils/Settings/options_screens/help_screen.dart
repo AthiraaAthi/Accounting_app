@@ -1,8 +1,12 @@
+import 'dart:developer';
+
 import 'package:curved_nav/Infrastructure/Help/help_repository.dart';
+import 'package:curved_nav/domain/Advertisement/ad_helper.dart';
 import 'package:curved_nav/domain/core/Validator/validator.dart';
 import 'package:curved_nav/domain/models/help%20model/help_model.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class HelpScreen extends StatefulWidget {
   const HelpScreen({super.key});
@@ -17,6 +21,29 @@ class _HelpScreenState extends State<HelpScreen> {
   final TextEditingController problemController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+
+  BannerAd? _bannerAd;
+
+  @override
+  void initState() {
+    super.initState();
+    BannerAd(
+            size: AdSize.banner,
+            adUnitId: AdHelper.bannerAdUnitId,
+            listener: BannerAdListener(
+              onAdLoaded: (ad) {
+                setState(() {
+                  _bannerAd = ad as BannerAd;
+                });
+              },
+              onAdFailedToLoad: (ad, error) {
+                log('Failed to load ad: $error');
+                ad.dispose();
+              },
+            ),
+            request: AdRequest())
+        .load();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -153,6 +180,13 @@ class _HelpScreenState extends State<HelpScreen> {
           ),
         ),
       ),
+      bottomNavigationBar: _bannerAd == null
+          ? const SizedBox()
+          : Container(
+              height: _bannerAd!.size.height.toDouble(),
+              width: _bannerAd!.size.width.toDouble(),
+              child: AdWidget(ad: _bannerAd!),
+            ),
     );
   }
 }
