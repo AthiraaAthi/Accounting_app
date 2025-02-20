@@ -183,19 +183,56 @@ class _ListScreenState extends State<ListScreen>
                     itemCount: filteredExpenses.length,
                     itemBuilder: (context, index) {
                       final data = filteredExpenses[index];
+                      final date = DateFormat.yMd().format(data.date);
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: ListTile(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
+                        child: GestureDetector(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  backgroundColor: white,
+                                  title: Center(child: Text('Expense Details')),
+                                  content: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text('Category: ${data.category}'),
+                                      Text('Amount: ${data.amount}/-'),
+                                      Text('Date: $date'),
+                                      Text('Description: ${data.description}'),
+                                    ],
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      style: ButtonStyle(
+                                          foregroundColor:
+                                              WidgetStatePropertyAll(
+                                                  primaryColorBlue)),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text('Close'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          child: ListTile(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            tileColor: primaryColorBlue.withValues(alpha: 0.2),
+                            title: Text(
+                              '${data.category}',
+                              style: TextStyle(color: black),
+                            ),
+                            subtitle: Text('${data.amount}/-'),
+                            trailing: Icon(Icons.keyboard_arrow_right_outlined),
                           ),
-                          tileColor: primaryColorBlue.withValues(alpha: 0.2),
-                          title: Text(
-                            '${data.category}',
-                            style: TextStyle(color: black),
-                          ),
-                          subtitle: Text('${data.amount}/-'),
-                          trailing: Icon(Icons.keyboard_arrow_right_outlined),
                         ),
                       );
                     },
