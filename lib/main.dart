@@ -23,6 +23,7 @@ import 'package:hive_flutter/adapters.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -38,6 +39,7 @@ void main() async {
   await UserRepository().handleUserRegistration();
   await AppClear().performPeriodicCleanup();
   await GetStorage.init();
+
   runApp(const MyApp());
 }
 
