@@ -60,7 +60,7 @@ flutter_launcher_icons:
   image_path_android: "assets/logo/png logo.png"
 
   android: true # can specify file name here e.g. "ic_launcher"
-  adaptive_icon_background: "#1d13d9" # Change to match your icon's background
+  adaptive_icon_background: "#275df5" # Change to match your icon's background
   adaptive_icon_foreground: "assets/logo/png logo.png"
 
   min_sdk_android: 21 # android min sdk min:16, default 21

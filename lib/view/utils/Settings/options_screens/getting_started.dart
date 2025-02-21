@@ -94,7 +94,7 @@ class GettingStarted extends StatelessWidget {
                           title: 'Home Page.',
                           explanation: 'This is the Homes page looks like.',
                           container: Container(
-                            width: MediaQuery.of(context).size.width * 0.9,
+                            width: 370.28571428571433,
                             height: MediaQuery.of(context).size.height * 0.85,
                             decoration: BoxDecoration(
                                 border: Border.all(
@@ -110,7 +110,7 @@ class GettingStarted extends StatelessWidget {
                           title: 'Account adding (step 1).',
                           explanation: 'Tap on \'+\' to add account.',
                           container: Container(
-                            width: MediaQuery.of(context).size.width * 0.9,
+                            width: 370.28571428571433,
                             height: MediaQuery.of(context).size.height * 0.28,
                             decoration: BoxDecoration(
                                 border: Border.all(
@@ -127,7 +127,7 @@ class GettingStarted extends StatelessWidget {
                           explanation:
                               'Fill the required fields to create account. you can set the installment type to daily, weekly and monthly.',
                           container: Container(
-                            width: MediaQuery.of(context).size.width * 0.9,
+                            width: 370.28571428571433,
                             height: MediaQuery.of(context).size.height * 0.8,
                             decoration: BoxDecoration(
                                 border: Border.all(
@@ -144,7 +144,7 @@ class GettingStarted extends StatelessWidget {
                           explanation:
                               'You can also join and view the account by tapping join section. enter the code and confirm to join the account. you can get the code from the account owner.',
                           container: Container(
-                            width: MediaQuery.of(context).size.width * 0.9,
+                            width: 370.28571428571433,
                             height: MediaQuery.of(context).size.height * 0.5,
                             decoration: BoxDecoration(
                                 border: Border.all(
@@ -161,7 +161,7 @@ class GettingStarted extends StatelessWidget {
                           explanation:
                               'Tap on the edit button \'pencil\' to view the account details.',
                           container: Container(
-                            width: MediaQuery.of(context).size.width * 0.9,
+                            width: 370.28571428571433,
                             height: MediaQuery.of(context).size.height * 0.85,
                             decoration: BoxDecoration(
                                 border: Border.all(
@@ -178,7 +178,7 @@ class GettingStarted extends StatelessWidget {
                           explanation:
                               'You can search the account by tapping on the search icon and enter the account name.',
                           container: Container(
-                            width: MediaQuery.of(context).size.width * 0.9,
+                            width: 370.28571428571433,
                             height: MediaQuery.of(context).size.height * 0.25,
                             decoration: BoxDecoration(
                                 border: Border.all(
@@ -200,7 +200,7 @@ class GettingStarted extends StatelessWidget {
                           title: 'Expense page.',
                           explanation: 'This is the Expense page looks like.',
                           container: Container(
-                            width: MediaQuery.of(context).size.width * 0.9,
+                            width: 370.28571428571433,
                             height: MediaQuery.of(context).size.height * 0.85,
                             decoration: BoxDecoration(
                                 border: Border.all(
@@ -217,7 +217,7 @@ class GettingStarted extends StatelessWidget {
                           explanation:
                               'Tap on the \'+\' button to add expense.',
                           container: Container(
-                            width: MediaQuery.of(context).size.width * 0.9,
+                            width: 370.28571428571433,
                             height: MediaQuery.of(context).size.height * 0.22,
                             decoration: BoxDecoration(
                                 border: Border.all(
@@ -234,7 +234,7 @@ class GettingStarted extends StatelessWidget {
                           explanation:
                               'Fill the amount section, category section, description is optional, and date (default date is present day).',
                           container: Container(
-                            width: MediaQuery.of(context).size.width * 0.9,
+                            width: 370.28571428571433,
                             height: MediaQuery.of(context).size.height * 0.5,
                             decoration: BoxDecoration(
                                 border: Border.all(
@@ -251,7 +251,7 @@ class GettingStarted extends StatelessWidget {
                           explanation:
                               'You can add category by tapping on the \'add category\' button.',
                           container: Container(
-                            width: MediaQuery.of(context).size.width * 0.9,
+                            width: 370.28571428571433,
                             height: MediaQuery.of(context).size.height * 0.75,
                             decoration: BoxDecoration(
                                 border: Border.all(
@@ -267,7 +267,7 @@ class GettingStarted extends StatelessWidget {
                           title: ' ',
                           explanation: ' ',
                           container: Container(
-                            width: MediaQuery.of(context).size.width * 0.9,
+                            width: 370.28571428571433,
                             height: MediaQuery.of(context).size.height * 0.5,
                             decoration: BoxDecoration(
                                 border: Border.all(
@@ -284,7 +284,7 @@ class GettingStarted extends StatelessWidget {
                           explanation:
                               'You can also view,add and delete category by going to Settings>Categories.',
                           container: Container(
-                            width: MediaQuery.of(context).size.width * 0.9,
+                            width: 370.28571428571433,
                             height: MediaQuery.of(context).size.height * 0.5,
                             decoration: BoxDecoration(
                                 border: Border.all(
@@ -307,7 +307,7 @@ class GettingStarted extends StatelessWidget {
                           explanation:
                               'This is the selected card details looks like.',
                           container: Container(
-                            width: MediaQuery.of(context).size.width * 0.9,
+                            width: 370.28571428571433,
                             height: MediaQuery.of(context).size.height * 0.85,
                             decoration: BoxDecoration(
                                 border: Border.all(
@@ -324,7 +324,7 @@ class GettingStarted extends StatelessWidget {
                           explanation:
                               'Tap on Name section to view the account details.',
                           container: Container(
-                            width: MediaQuery.of(context).size.width * 0.9,
+                            width: 370.28571428571433,
                             height: MediaQuery.of(context).size.height * 0.2,
                             decoration: BoxDecoration(
                                 border: Border.all(
@@ -341,7 +341,7 @@ class GettingStarted extends StatelessWidget {
                           explanation:
                               'Tap the right corner (three dot) of the screen to view more account settings.',
                           container: Container(
-                            width: MediaQuery.of(context).size.width * 0.9,
+                            width: 370.28571428571433,
                             height: MediaQuery.of(context).size.height * 0.6,
                             decoration: BoxDecoration(
                                 border: Border.all(
@@ -358,7 +358,7 @@ class GettingStarted extends StatelessWidget {
                           explanation:
                               'Just tap on the add payment button to add new payment method. also you can add more amount by tapping on the add amount button on more account settings.',
                           container: Container(
-                            width: MediaQuery.of(context).size.width * 0.9,
+                            width: 370.28571428571433,
                             height: MediaQuery.of(context).size.height * 0.6,
                             decoration: BoxDecoration(
                                 border: Border.all(
@@ -375,7 +375,7 @@ class GettingStarted extends StatelessWidget {
                           explanation:
                               'You can scroll through every payment history on history section. tap \'show more\' to view more history.',
                           container: Container(
-                            width: MediaQuery.of(context).size.width * 0.9,
+                            width: 370.28571428571433,
                             height: MediaQuery.of(context).size.height * 0.6,
                             decoration: BoxDecoration(
                                 border: Border.all(
@@ -398,7 +398,7 @@ class GettingStarted extends StatelessWidget {
                           explanation:
                               'Got-to settings and click on help & feedback.',
                           container: Container(
-                            width: MediaQuery.of(context).size.width * 0.9,
+                            width: 370.28571428571433,
                             height: MediaQuery.of(context).size.height * 0.5,
                             decoration: BoxDecoration(
                                 border: Border.all(
@@ -415,7 +415,7 @@ class GettingStarted extends StatelessWidget {
                           explanation:
                               'Fill the form and click on submitt button.',
                           container: Container(
-                            width: MediaQuery.of(context).size.width * 0.9,
+                            width: 370.28571428571433,
                             height: MediaQuery.of(context).size.height * 0.6,
                             decoration: BoxDecoration(
                                 border: Border.all(
