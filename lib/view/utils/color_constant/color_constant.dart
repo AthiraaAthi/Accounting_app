@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ColorConstant {
-  static Color defBlue = Color(0xff1D13D9);
+  static Color defBlue = Color.fromARGB(255, 39, 93, 245);
 }
 
 const Color black = Colors.black;
