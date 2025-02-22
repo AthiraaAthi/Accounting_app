@@ -12,6 +12,7 @@ part 'ad_bloc.freezed.dart';
 class AdBloc extends Bloc<AdEvent, AdState> {
   AdBloc() : super(AdState.initial()) {
     BannerAd? _bannerAd;
+    InterstitialAd? _interstatialAd;
     on<_Started>((event, emit) {
       BannerAd(
               size: AdSize.banner,
@@ -21,13 +22,31 @@ class AdBloc extends Bloc<AdEvent, AdState> {
                   _bannerAd = ad as BannerAd;
                 },
                 onAdFailedToLoad: (ad, error) {
-                  log('Failed to load ad: $error');
+                  log('Failed to load BannerAd: $error');
                   ad.dispose();
                 },
               ),
               request: AdRequest())
           .load();
       emit(AdState(ads: _bannerAd));
+    });
+    on<_Interstatial>((event, emit) {
+      InterstitialAd.load(
+          adUnitId: AdHelper.interstatialAdUnitId,
+          request: AdRequest(),
+          adLoadCallback: InterstitialAdLoadCallback(
+            onAdLoaded: (ad) {
+              ad.fullScreenContentCallback = FullScreenContentCallback(
+                onAdDismissedFullScreenContent: (ad) {},
+              );
+              _interstatialAd = ad;
+            },
+            onAdFailedToLoad: (error) {
+              log('InterstitialAd failed to load: $error');
+            },
+          ));
+
+      _interstatialAd?.show();
     });
   }
 }

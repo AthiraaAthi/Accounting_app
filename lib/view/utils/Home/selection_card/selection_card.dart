@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:card_loading/card_loading.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:curved_nav/Application/Advertisment/ad_bloc.dart';
 import 'package:curved_nav/Application/Calender/calender_bloc.dart';
 import 'package:curved_nav/Application/Lender/lender_bloc.dart';
 
@@ -44,6 +45,11 @@ class _SelectionCardState extends State<SelectionCard> {
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
         context.read<LenderBloc>().add(GetData());
+      },
+    );
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) {
+        context.read<AdBloc>().add(AdEvent.interstatial());
       },
     );
 
