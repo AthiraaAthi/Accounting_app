@@ -42,7 +42,7 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
     setState(() {
       initialValue = widget.state.installmentAmount!.isNotEmpty
           ? widget.state.installmentAmount
-          : null;
+          : addAmountController.text;
       widget.type == TypeOfAdding.addPayment
           ? addAmountController.text = initialValue!
           : null;
@@ -54,15 +54,6 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Expanded(
-              flex: 2,
-              child: IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.remove_circle_outline,
-                    size: 38,
-                    color: Colors.grey,
-                  ))),
           Expanded(
               flex: 6,
               child: TextFormField(
@@ -82,15 +73,6 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                     focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.transparent))),
               )),
-          Expanded(
-              flex: 2,
-              child: IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.add_circle_outline,
-                    size: 38,
-                    color: Colors.grey,
-                  ))),
         ],
       ),
       actions: [

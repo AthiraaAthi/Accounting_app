@@ -46,13 +46,22 @@ class OnboardingScreen extends StatelessWidget {
               'assets/svg/expense.svg',
             )),
         PageViewModel(
-            title: 'Simple & User-Friendly',
+            title: 'Terms and Conditions',
             body:
-                'With a clean and intuitive design, FinFloww makes managing your money smooth and hassle-free.',
+                'By using FinFloww, you agree to our terms and conditions. Goto Settings > Terms and Conditions to read them.',
             image: SvgPicture.asset(
               height: MediaQuery.of(context).size.height * 0.2,
               width: MediaQuery.of(context).size.width * 0.2,
-              'assets/svg/ui.svg',
+              'assets/svg/terms.svg',
+            )),
+        PageViewModel(
+            title: 'User manual',
+            body:
+                'Goto Settins > User manual to read the user manual of FinFloww.',
+            image: SvgPicture.asset(
+              height: MediaQuery.of(context).size.height * 0.2,
+              width: MediaQuery.of(context).size.width * 0.2,
+              'assets/svg/help.svg',
             )),
         PageViewModel(
             title: 'Ready to Take Control?',

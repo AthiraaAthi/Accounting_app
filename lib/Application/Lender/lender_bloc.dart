@@ -32,7 +32,7 @@ class LenderBloc extends Bloc<LenderEvent, LenderState> {
             isError: true,
             getFailureOrSuccess: some(failures));
       }, (success) {
-        // success.sort((first, second) => second.id!.compareTo(first.id!));
+        success.sort((a, b) => b.datetime!.compareTo(a.datetime!));
         return state.copyWith(
             isLoading: false,
             isError: false,
@@ -51,7 +51,7 @@ class LenderBloc extends Bloc<LenderEvent, LenderState> {
               isLoading: false,
               isError: true,
               getFailureOrSuccess: some(failures)), (success) {
-        // success.sort((first, second) => second.id!.compareTo(first.id!));
+        success.sort((a, b) => b.datetime!.compareTo(a.datetime!));
         return state.copyWith(
             isLoading: false,
             isError: false,
@@ -74,12 +74,14 @@ class LenderBloc extends Bloc<LenderEvent, LenderState> {
           (failure) => state.copyWith(
               isLoading: false,
               isError: true,
-              getFailureOrSuccess: some(failure)),
-          (success) => state.copyWith(
-              isLoading: false,
-              isError: false,
-              getFailureOrSuccess: some(success),
-              historyData: success)));
+              getFailureOrSuccess: some(failure)), (success) {
+        success.sort((a, b) => b.date!.compareTo(a.date!));
+        return state.copyWith(
+            isLoading: false,
+            isError: false,
+            getFailureOrSuccess: some(success),
+            historyData: success);
+      }));
     });
     on<Search>((event, emit) async {
       emit(state.copyWith(
@@ -91,7 +93,7 @@ class LenderBloc extends Bloc<LenderEvent, LenderState> {
               isLoading: false,
               isError: true,
               getFailureOrSuccess: some(failures)), (success) {
-        // success.sort((first, second) => second.id!.compareTo(first.id!));
+        success.sort((a, b) => b.datetime!.compareTo(a.datetime!));
         return state.copyWith(
             isLoading: false,
             isError: false,

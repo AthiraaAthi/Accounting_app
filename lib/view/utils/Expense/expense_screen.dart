@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:curved_nav/Application/Advertisment/ad_bloc.dart';
 import 'package:curved_nav/Application/Expense/expense_bloc.dart';
 import 'package:curved_nav/view/utils/Expense/expense_add_screen.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
@@ -64,6 +65,9 @@ class _ListScreenState extends State<ListScreen>
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) => context.read<ExpenseBloc>().add(GetExpense()),
+    );
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) => context.read<AdBloc>().add(AdEvent.interstatial()),
     );
 
     return Scaffold(
