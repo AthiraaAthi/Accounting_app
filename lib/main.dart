@@ -10,8 +10,9 @@ import 'package:curved_nav/domain/core/d_i/injectable.dart';
 import 'package:curved_nav/domain/models/Expense%20model/expense_model.dart';
 import 'package:curved_nav/domain/models/category%20model/category_model.dart';
 import 'package:curved_nav/firebase_options.dart';
+import 'package:curved_nav/view/utils/Introduction%20screen/onBoarding_screen.dart';
+import 'package:curved_nav/view/utils/Navigation/nav_screen.dart';
 
-import 'package:curved_nav/view/utils/Splash%20Screen/splash_screen.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -40,14 +41,16 @@ void main() async {
   await AppClear().performPeriodicCleanup();
   await GetStorage.init();
 
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+  final box = GetStorage();
 
   @override
   Widget build(BuildContext context) {
+    bool isFirstTime = box.read('first_time') ?? true;
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -69,7 +72,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         theme: ThemeData(scaffoldBackgroundColor: white),
         debugShowCheckedModeBanner: false,
-        home: SplashScreen(),
+        home: isFirstTime ? OnboardingScreen() : NavScreen(),
       ),
     );
   }
