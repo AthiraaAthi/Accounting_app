@@ -65,7 +65,6 @@ class LenderFunctions implements ILenderRepository {
       final lenderDetails =
           getData.docs.map((e) => LendingModel.fromJson(e.data())).toList();
 
-      // log(lenderDetails.toString());
       return right(lenderDetails);
     } catch (e) {
       log('error found: $e');
@@ -118,14 +117,9 @@ class LenderFunctions implements ILenderRepository {
           }).toList();
 
           await data.update({'listOfTImestamp': filteredTimestamps});
-          //log('date filtered');
         }
-        //log('nothing to filter');
       }
-      //log('does not exist');
-    } catch (e) {
-      //log('error found: $e');
-    }
+    } catch (e) {}
   }
 
   @override
@@ -167,7 +161,6 @@ class LenderFunctions implements ILenderRepository {
       final lenderDetails =
           getData.docs.map((e) => LendingModel.fromJson(e.data())).toList();
 
-      // log(lenderDetails.toString());
       return right(lenderDetails);
     } catch (e) {
       log('error found: $e');

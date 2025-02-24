@@ -3,8 +3,6 @@ import 'package:curved_nav/Application/Calender/calender_bloc.dart';
 import 'package:curved_nav/Application/Category/category_bloc.dart';
 import 'package:curved_nav/Application/Expense/expense_bloc.dart';
 import 'package:curved_nav/Application/Lender/lender_bloc.dart';
-import 'package:curved_nav/Application/Splash%20Screen/splash_bloc.dart';
-import 'package:curved_nav/Infrastructure/App%20Install%20and%20Uninstall/app_clear.dart';
 
 import 'package:curved_nav/Infrastructure/User/user_repository.dart';
 import 'package:curved_nav/domain/core/d_i/injectable.dart';
@@ -40,7 +38,7 @@ void main() async {
     Hive.registerAdapter(ExpenseModelAdapter());
   }
   await UserRepository().handleUserRegistration();
-  await AppClear().performPeriodicCleanup();
+
   await GetStorage.init();
 
   runApp(MyApp());
@@ -66,9 +64,6 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => CalenderBloc(),
-        ),
-        BlocProvider(
-          create: (context) => SplashBloc(),
         ),
         BlocProvider(
           create: (context) => AdBloc(),

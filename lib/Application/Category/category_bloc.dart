@@ -28,45 +28,6 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
               getFailureOrSuccessState: some(success),
               categoryNames: success)));
     });
-    // on<AddCategory>((event, emit) async {
-    //   emit(state.copyWith(isLoading: true, getFailureOrSuccessState: none()));
-
-    //   await iCategoryRepository.categoryAdd(event.values);
-
-    //   final updatedList = await iCategoryRepository.categoryGet();
-    //   emit(updatedList.fold(
-    //     (failures) => state.copyWith(
-    //       isLoading: false,
-    //       getFailureOrSuccessState: some(failures),
-    //     ),
-    //     (success) => state.copyWith(
-    //       isLoading: false,
-    //       getFailureOrSuccessState: some(success),
-    //       categoryNames: success,
-    //     ),
-    //   ));
-    // });
-
-    // on<DeleteCategory>((event, emit) async {
-    //   emit(state.copyWith(isLoading: true, getFailureOrSuccessState: none()));
-
-    //   log("Deleting category ID: ${event.id}");
-    //   await iCategoryRepository.categoryDelete(event.id);
-
-    //   final updatedList = await iCategoryRepository.categoryGet();
-    //   updatedList.fold(
-    //     (failures) => log("Failed to fetch categories: $failures"),
-    //     (success) {
-    //       log("Updated categories after delete: $success");
-    //       emit(state.copyWith(
-    //         isLoading: false,
-    //         categoryNames: success.isEmpty ? [] : success,
-    //         getFailureOrSuccessState: some(success),
-    //       ));
-    //     },
-    //   );
-    //   log(state.categoryNames.toString());
-    // });
     on<AddCategory>((event, emit) async {
       emit(state.copyWith(isLoading: false, getFailureOrSuccessState: none()));
       final result = await iCategoryRepository.categoryGet();

@@ -28,9 +28,6 @@ class JoinFunctions implements IJoinRepository {
         if (connectivityResult == ConnectivityResult.none) {
           return left(MainFailures.serverfailure());
         } else
-
-          // log('Found Code: ${data}');
-
           return right(data);
       }
       return left(MainFailures.serverfailure());
