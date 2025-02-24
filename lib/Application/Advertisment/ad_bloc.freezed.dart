@@ -20,18 +20,21 @@ mixin _$AdEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function() interstatial,
+    required TResult Function() appOpens,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function()? interstatial,
+    TResult? Function()? appOpens,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function()? interstatial,
+    TResult Function()? appOpens,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -39,18 +42,21 @@ mixin _$AdEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
     required TResult Function(_Interstatial value) interstatial,
+    required TResult Function(_AppOpens value) appOpens,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
     TResult? Function(_Interstatial value)? interstatial,
+    TResult? Function(_AppOpens value)? appOpens,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
     TResult Function(_Interstatial value)? interstatial,
+    TResult Function(_AppOpens value)? appOpens,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -119,6 +125,7 @@ class _$StartedImpl implements _Started {
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function() interstatial,
+    required TResult Function() appOpens,
   }) {
     return started();
   }
@@ -128,6 +135,7 @@ class _$StartedImpl implements _Started {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function()? interstatial,
+    TResult? Function()? appOpens,
   }) {
     return started?.call();
   }
@@ -137,6 +145,7 @@ class _$StartedImpl implements _Started {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function()? interstatial,
+    TResult Function()? appOpens,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -150,6 +159,7 @@ class _$StartedImpl implements _Started {
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
     required TResult Function(_Interstatial value) interstatial,
+    required TResult Function(_AppOpens value) appOpens,
   }) {
     return started(this);
   }
@@ -159,6 +169,7 @@ class _$StartedImpl implements _Started {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
     TResult? Function(_Interstatial value)? interstatial,
+    TResult? Function(_AppOpens value)? appOpens,
   }) {
     return started?.call(this);
   }
@@ -168,6 +179,7 @@ class _$StartedImpl implements _Started {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
     TResult Function(_Interstatial value)? interstatial,
+    TResult Function(_AppOpens value)? appOpens,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -224,6 +236,7 @@ class _$InterstatialImpl implements _Interstatial {
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function() interstatial,
+    required TResult Function() appOpens,
   }) {
     return interstatial();
   }
@@ -233,6 +246,7 @@ class _$InterstatialImpl implements _Interstatial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function()? interstatial,
+    TResult? Function()? appOpens,
   }) {
     return interstatial?.call();
   }
@@ -242,6 +256,7 @@ class _$InterstatialImpl implements _Interstatial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function()? interstatial,
+    TResult Function()? appOpens,
     required TResult orElse(),
   }) {
     if (interstatial != null) {
@@ -255,6 +270,7 @@ class _$InterstatialImpl implements _Interstatial {
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
     required TResult Function(_Interstatial value) interstatial,
+    required TResult Function(_AppOpens value) appOpens,
   }) {
     return interstatial(this);
   }
@@ -264,6 +280,7 @@ class _$InterstatialImpl implements _Interstatial {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
     TResult? Function(_Interstatial value)? interstatial,
+    TResult? Function(_AppOpens value)? appOpens,
   }) {
     return interstatial?.call(this);
   }
@@ -273,6 +290,7 @@ class _$InterstatialImpl implements _Interstatial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
     TResult Function(_Interstatial value)? interstatial,
+    TResult Function(_AppOpens value)? appOpens,
     required TResult orElse(),
   }) {
     if (interstatial != null) {
@@ -287,9 +305,119 @@ abstract class _Interstatial implements AdEvent {
 }
 
 /// @nodoc
+abstract class _$$AppOpensImplCopyWith<$Res> {
+  factory _$$AppOpensImplCopyWith(
+          _$AppOpensImpl value, $Res Function(_$AppOpensImpl) then) =
+      __$$AppOpensImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$AppOpensImplCopyWithImpl<$Res>
+    extends _$AdEventCopyWithImpl<$Res, _$AppOpensImpl>
+    implements _$$AppOpensImplCopyWith<$Res> {
+  __$$AppOpensImplCopyWithImpl(
+      _$AppOpensImpl _value, $Res Function(_$AppOpensImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of AdEvent
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$AppOpensImpl implements _AppOpens {
+  const _$AppOpensImpl();
+
+  @override
+  String toString() {
+    return 'AdEvent.appOpens()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$AppOpensImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function() interstatial,
+    required TResult Function() appOpens,
+  }) {
+    return appOpens();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function()? interstatial,
+    TResult? Function()? appOpens,
+  }) {
+    return appOpens?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function()? interstatial,
+    TResult Function()? appOpens,
+    required TResult orElse(),
+  }) {
+    if (appOpens != null) {
+      return appOpens();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_Interstatial value) interstatial,
+    required TResult Function(_AppOpens value) appOpens,
+  }) {
+    return appOpens(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(_Interstatial value)? interstatial,
+    TResult? Function(_AppOpens value)? appOpens,
+  }) {
+    return appOpens?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_Interstatial value)? interstatial,
+    TResult Function(_AppOpens value)? appOpens,
+    required TResult orElse(),
+  }) {
+    if (appOpens != null) {
+      return appOpens(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _AppOpens implements AdEvent {
+  const factory _AppOpens() = _$AppOpensImpl;
+}
+
+/// @nodoc
 mixin _$AdState {
   BannerAd? get ads => throw _privateConstructorUsedError;
-  InterstitialAd? get iAds => throw _privateConstructorUsedError;
 
   /// Create a copy of AdState
   /// with the given fields replaced by the non-null parameter values.
@@ -302,7 +430,7 @@ abstract class $AdStateCopyWith<$Res> {
   factory $AdStateCopyWith(AdState value, $Res Function(AdState) then) =
       _$AdStateCopyWithImpl<$Res, AdState>;
   @useResult
-  $Res call({BannerAd? ads, InterstitialAd? iAds});
+  $Res call({BannerAd? ads});
 }
 
 /// @nodoc
@@ -321,17 +449,12 @@ class _$AdStateCopyWithImpl<$Res, $Val extends AdState>
   @override
   $Res call({
     Object? ads = freezed,
-    Object? iAds = freezed,
   }) {
     return _then(_value.copyWith(
       ads: freezed == ads
           ? _value.ads
           : ads // ignore: cast_nullable_to_non_nullable
               as BannerAd?,
-      iAds: freezed == iAds
-          ? _value.iAds
-          : iAds // ignore: cast_nullable_to_non_nullable
-              as InterstitialAd?,
     ) as $Val);
   }
 }
@@ -343,7 +466,7 @@ abstract class _$$AdStateImplCopyWith<$Res> implements $AdStateCopyWith<$Res> {
       __$$AdStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({BannerAd? ads, InterstitialAd? iAds});
+  $Res call({BannerAd? ads});
 }
 
 /// @nodoc
@@ -360,17 +483,12 @@ class __$$AdStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? ads = freezed,
-    Object? iAds = freezed,
   }) {
     return _then(_$AdStateImpl(
       ads: freezed == ads
           ? _value.ads
           : ads // ignore: cast_nullable_to_non_nullable
               as BannerAd?,
-      iAds: freezed == iAds
-          ? _value.iAds
-          : iAds // ignore: cast_nullable_to_non_nullable
-              as InterstitialAd?,
     ));
   }
 }
@@ -378,16 +496,14 @@ class __$$AdStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$AdStateImpl implements _AdState {
-  const _$AdStateImpl({this.ads, this.iAds});
+  const _$AdStateImpl({this.ads});
 
   @override
   final BannerAd? ads;
-  @override
-  final InterstitialAd? iAds;
 
   @override
   String toString() {
-    return 'AdState(ads: $ads, iAds: $iAds)';
+    return 'AdState(ads: $ads)';
   }
 
   @override
@@ -395,12 +511,11 @@ class _$AdStateImpl implements _AdState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AdStateImpl &&
-            (identical(other.ads, ads) || other.ads == ads) &&
-            (identical(other.iAds, iAds) || other.iAds == iAds));
+            (identical(other.ads, ads) || other.ads == ads));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, ads, iAds);
+  int get hashCode => Object.hash(runtimeType, ads);
 
   /// Create a copy of AdState
   /// with the given fields replaced by the non-null parameter values.
@@ -412,13 +527,10 @@ class _$AdStateImpl implements _AdState {
 }
 
 abstract class _AdState implements AdState {
-  const factory _AdState({final BannerAd? ads, final InterstitialAd? iAds}) =
-      _$AdStateImpl;
+  const factory _AdState({final BannerAd? ads}) = _$AdStateImpl;
 
   @override
   BannerAd? get ads;
-  @override
-  InterstitialAd? get iAds;
 
   /// Create a copy of AdState
   /// with the given fields replaced by the non-null parameter values.

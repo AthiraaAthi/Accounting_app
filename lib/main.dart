@@ -5,6 +5,7 @@ import 'package:curved_nav/Application/Expense/expense_bloc.dart';
 import 'package:curved_nav/Application/Lender/lender_bloc.dart';
 
 import 'package:curved_nav/Infrastructure/User/user_repository.dart';
+import 'package:curved_nav/domain/Advertisement/ad_helper.dart';
 import 'package:curved_nav/domain/core/d_i/injectable.dart';
 import 'package:curved_nav/domain/models/Expense%20model/expense_model.dart';
 import 'package:curved_nav/domain/models/category%20model/category_model.dart';
@@ -40,13 +41,38 @@ void main() async {
   await UserRepository().handleUserRegistration();
 
   await GetStorage.init();
-
+  AppOpenAdManager.loadAd();
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   final box = GetStorage();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      AppOpenAdManager.showAdIfAvailable();
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

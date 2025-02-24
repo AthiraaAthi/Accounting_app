@@ -4,4 +4,5 @@ part of 'ad_bloc.dart';
 class AdEvent with _$AdEvent {
   const factory AdEvent.started() = _Started;
   const factory AdEvent.interstatial() = _Interstatial;
+  const factory AdEvent.appOpens() = _AppOpens;
 }
