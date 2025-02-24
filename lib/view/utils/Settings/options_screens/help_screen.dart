@@ -130,7 +130,7 @@ class HelpScreen extends StatelessWidget {
                       if (_formKey.currentState!.validate()) {
                         HelpRepository().addHelpRequest(helpModel);
                         Navigator.pop(context);
-                        //show snackbar
+
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             backgroundColor: primaryColorBlue,

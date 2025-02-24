@@ -73,11 +73,6 @@ class _CalenderWidgetState extends State<CalenderWidget> {
   Color? txtclr;
   @override
   Widget build(BuildContext context) {
-    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-    //   context
-    //       .read<LenderBloc>()
-    //       .add(LenderEvent.history(id: widget.lendingModel.id!));
-    // });
     final dateTimeList =
         widget.lendingModel.listOfTImestamp!.map((e) => e.toDate()).toList();
     final date = widget.lendingModel.datetime!.toDate();
@@ -91,7 +86,6 @@ class _CalenderWidgetState extends State<CalenderWidget> {
             )
             .toList();
 
-        //  log(listEvent.toString());
         if (state.isLoading) {
           return CardLoading(
             height: 280,

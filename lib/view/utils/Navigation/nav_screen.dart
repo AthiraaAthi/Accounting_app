@@ -69,31 +69,3 @@ class NavScreen extends StatelessWidget {
     );
   }
 }
-
-// GNav(
-//             onTabChange: (value) {
-//               _pagenotifier.value = value;
-//             },
-//             tabBorderRadius: 15,
-//             gap: 8,
-//             selectedIndex: value,
-//             tabs: [
-//               GButton(
-//                 icon: Icons.calculate_outlined,
-//                 text: 'Expense',
-//                 textColor: primaryColorBlue,
-//                 iconActiveColor: primaryColorBlue,
-//                 backgroundColor: primaryColorBlue.withOpacity(0.2),
-//                 borderRadius: BorderRadius.circular(20),
-//                 padding: EdgeInsets.all(10),
-//               ),
-//               GButton(
-//                 icon: Icons.home_outlined,
-//                 text: 'home',
-//               ),
-//               GButton(
-//                 icon: Icons.settings_outlined,
-//                 text: 'Settings',
-//               ),
-//             ],
-//           );

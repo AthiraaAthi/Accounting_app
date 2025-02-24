@@ -26,7 +26,6 @@ Timestamp? timestampFromJson(dynamic json) {
   return json is Timestamp ? json : Timestamp.fromMillisecondsSinceEpoch(json);
 }
 
-// toJson function to convert a Dart object to JSON
 dynamic timestampToJson(Timestamp? timestamp) {
   return timestamp?.millisecondsSinceEpoch;
 }

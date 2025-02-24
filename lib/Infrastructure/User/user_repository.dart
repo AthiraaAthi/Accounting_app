@@ -11,19 +11,19 @@ class UserRepository implements IUserDetection {
     final userId = await getUserIdFromLocal();
 
     if (userId != null) {
-      // Check if the user still exists in Firestore
       final userDoc = await FirebaseFirestore.instance
           .collection('users')
           .doc(userId)
           .get();
-      if (!userDoc.exists) {
-        // Register as a new user
+      if (userDoc.exists) {
+        await userDoc.reference
+            .update({'lastAppUsed': FieldValue.serverTimestamp()});
+      } else {
         String newUserId = await signInAnonymously();
         await registerUser(newUserId);
         await saveUserIdLocally(newUserId);
       }
     } else {
-      // No local user ID; register a new user
       String newUserId = await signInAnonymously();
       await registerUser(newUserId);
       await saveUserIdLocally(newUserId);
@@ -34,11 +34,10 @@ class UserRepository implements IUserDetection {
 Future<void> registerUser(String userId) async {
   final userRef = FirebaseFirestore.instance.collection('users').doc(userId);
 
-  // Create the user document
   await userRef.set({
     'userId': userId,
     'registeredAt': FieldValue.serverTimestamp(),
-    'expiresAt': DateTime.now().add(Duration(days: 1)), // Example TTL: 7 days
+    'lastAppUsed': FieldValue.serverTimestamp(),
   });
 }
 

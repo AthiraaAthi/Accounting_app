@@ -13,6 +13,7 @@ class AdBloc extends Bloc<AdEvent, AdState> {
   AdBloc() : super(AdState.initial()) {
     BannerAd? _bannerAd;
     InterstitialAd? _interstatialAd;
+
     on<_Started>((event, emit) {
       BannerAd(
               size: AdSize.banner,
@@ -38,6 +39,9 @@ class AdBloc extends Bloc<AdEvent, AdState> {
             onAdLoaded: (ad) {
               ad.fullScreenContentCallback = FullScreenContentCallback(
                 onAdDismissedFullScreenContent: (ad) {},
+                onAdFailedToShowFullScreenContent: (ad, error) {
+                  ad.dispose();
+                },
               );
               _interstatialAd = ad;
             },

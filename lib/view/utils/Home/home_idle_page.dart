@@ -35,8 +35,6 @@ class HomeIdlePage extends StatelessWidget {
             final isNearDue =
                 nearestDueDate != null && isDueDateNear(nearestDueDate);
 
-            //log(data.toString());
-
             final dueText = data.installmentType == '1'
                 ? 'Daily due'
                 : 'Due is near!! (${DateFormat.yMMMd().format(nearestDueDate!)})';

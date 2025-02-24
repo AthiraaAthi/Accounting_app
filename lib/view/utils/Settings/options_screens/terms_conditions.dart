@@ -64,7 +64,7 @@ class _TermsConditionsState extends State<TermsConditions> {
                   Text("1. Introduction", style: pointsStyle),
                   titleSpace,
                   Text(
-                    '''Welcome to LENDO ("we", "our", "us"). These Terms and Conditions govern your use of our mobile application available on the Google Play Store. By downloading and using our app, you agree to comply with these terms.''',
+                    '''Welcome to FinFloww ("we", "our", "us"). These Terms and Conditions govern your use of our mobile application available on the Google Play Store. By downloading and using our app, you agree to comply with these terms.''',
                     style: explainationStyle,
                     textAlign: TextAlign.justify,
                   ),
@@ -75,7 +75,7 @@ class _TermsConditionsState extends State<TermsConditions> {
                   ),
                   titleSpace,
                   Text(
-                    '''LENDO is an accounting application designed for money lenders and borrowers to track payments, pending dues, and financial transactions.''',
+                    '''FinFloww is an accounting application designed for money lenders and borrowers to track payments, pending dues, and financial transactions.''',
                     style: explainationStyle,
                     textAlign: TextAlign.justify,
                   ),

@@ -1,0 +1,2 @@
+C:/Users/harig/Documents/GitHub/Accounting_app/android/app/.cxx/RelWithDebInfo/4m53f4m6/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/harig/Documents/GitHub/Accounting_app/android/app/.cxx/RelWithDebInfo/4m53f4m6/x86_64/CMakeFiles/rebuild_cache.dir
