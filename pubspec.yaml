@@ -44,9 +44,9 @@ dependencies:
   shared_preferences: ^2.3.4
   syncfusion_flutter_datepicker: ^28.1.35
   table_calendar: ^3.1.2
-  
 
 dev_dependencies:
+  build_runner: ^2.4.15
   change_app_package_name: ^1.4.0
   flutter_lints: ^5.0.0
   flutter_test:
@@ -56,14 +56,14 @@ dev_dependencies:
   injectable_generator: ^2.0.1
 
 flutter_launcher_icons:
-  # image_path: "assets/logo/app logo.jpg"
+  
   image_path_android: "assets/logo/png_logo.png"
 
-  android: true # can specify file name here e.g. "ic_launcher"
-  adaptive_icon_background: "#275df5" # Change to match your icon's background
+  android: true 
+  adaptive_icon_background: "#275df5"
   adaptive_icon_foreground: "assets/logo/png_logo.png"
 
-  min_sdk_android: 21 # android min sdk min:16, default 21
+  min_sdk_android: 21
 
 flutter:
 
