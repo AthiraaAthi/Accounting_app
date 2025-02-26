@@ -10,8 +10,8 @@ part 'ad_state.dart';
 part 'ad_bloc.freezed.dart';
 
 class AdBloc extends Bloc<AdEvent, AdState> {
+  BannerAd? _bannerAd;
   AdBloc() : super(AdState.initial()) {
-    BannerAd? _bannerAd;
     InterstitialAd? _interstatialAd;
 
     on<_Started>((event, emit) {
@@ -21,6 +21,7 @@ class AdBloc extends Bloc<AdEvent, AdState> {
               listener: BannerAdListener(
                 onAdLoaded: (ad) {
                   _bannerAd = ad as BannerAd;
+                  emit(AdState(ads: _bannerAd));
                 },
                 onAdFailedToLoad: (ad, error) {
                   log('Failed to load BannerAd: $error');
@@ -29,7 +30,6 @@ class AdBloc extends Bloc<AdEvent, AdState> {
               ),
               request: AdRequest())
           .load();
-      emit(AdState(ads: _bannerAd));
     });
     on<_Interstatial>((event, emit) {
       InterstitialAd.load(
@@ -52,5 +52,10 @@ class AdBloc extends Bloc<AdEvent, AdState> {
 
       _interstatialAd?.show();
     });
+  }
+  @override
+  Future<void> close() {
+    _bannerAd!.dispose();
+    return super.close();
   }
 }
