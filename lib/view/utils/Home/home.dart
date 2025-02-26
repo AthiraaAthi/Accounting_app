@@ -135,92 +135,107 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               )
             ],
           ),
-          body: Column(
+          body: Stack(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  height: size.height * 0.055,
-                  child: SearchBar(
-                    shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20))),
-                    backgroundColor: WidgetStatePropertyAll(
-                        const Color.fromARGB(255, 235, 235, 235)),
-                    elevation: WidgetStatePropertyAll(0),
-                    hintText: 'Search',
-                    leading: Icon(
-                      Icons.search_outlined,
-                    ),
-                    onChanged: (value) {
-                      if (value.isNotEmpty) {
-                        SearchResultPage();
-                      }
-                      _debouncer.run(() {
-                        context.read<LenderBloc>().add(Search(query: value));
-                      });
-                    },
-                  ),
-                ),
-              ),
-              Expanded(child: BlocBuilder<LenderBloc, LenderState>(
-                builder: (context, state) {
-                  if (!isConnectedToInternet) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(
-                          height: MediaQuery.of(context).size.height * 0.2,
-                          width: MediaQuery.of(context).size.width * 0.2,
-                          'assets/svg/internet.svg',
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text('Check your internet connection'),
-                      ],
-                    );
-                  } else if (state.isLoading) {
-                    return ListView.builder(
-                      itemCount: state.data.isEmpty ? 6 : state.data.length,
-                      itemBuilder: (context, index) {
-                        return CardLoading(
-                          height: 115,
-                          margin: EdgeInsets.symmetric(
-                              horizontal: 9, vertical: 6.5),
-                          borderRadius: BorderRadius.circular(15),
-                        );
-                      },
-                    );
-                  } else if (state.searchData.isEmpty && state.data.isEmpty) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(
-                          height: MediaQuery.of(context).size.height * 0.2,
-                          width: MediaQuery.of(context).size.width * 0.2,
-                          'assets/svg/NoData.svg',
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text('Click \'+\' to add'),
-                      ],
-                    );
-                  } else if (state.searchData.isNotEmpty) {
-                    return SearchResultPage();
-                  } else
-                    return HomeIdlePage();
-                },
-              ))
-            ],
-          ),
-          bottomNavigationBar: state.ads == null
-              ? const SizedBox()
-              : Container(
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
                   height: state.ads!.size.height.toDouble(),
                   width: state.ads!.size.width.toDouble(),
                   child: AdWidget(ad: state.ads!),
                 ),
+              ),
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(
+                      height: size.height * 0.055,
+                      child: SearchBar(
+                        shape: WidgetStatePropertyAll(RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20))),
+                        backgroundColor: WidgetStatePropertyAll(
+                            const Color.fromARGB(255, 235, 235, 235)),
+                        elevation: WidgetStatePropertyAll(0),
+                        hintText: 'Search',
+                        leading: Icon(
+                          Icons.search_outlined,
+                        ),
+                        onChanged: (value) {
+                          if (value.isNotEmpty) {
+                            SearchResultPage();
+                          }
+                          _debouncer.run(() {
+                            context
+                                .read<LenderBloc>()
+                                .add(Search(query: value));
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                  Expanded(child: BlocBuilder<LenderBloc, LenderState>(
+                    builder: (context, state) {
+                      if (!isConnectedToInternet) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(
+                              height: MediaQuery.of(context).size.height * 0.2,
+                              width: MediaQuery.of(context).size.width * 0.2,
+                              'assets/svg/internet.svg',
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text('Check your internet connection'),
+                          ],
+                        );
+                      } else if (state.isLoading) {
+                        return ListView.builder(
+                          itemCount: state.data.isEmpty ? 6 : state.data.length,
+                          itemBuilder: (context, index) {
+                            return CardLoading(
+                              height: 115,
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: 9, vertical: 6.5),
+                              borderRadius: BorderRadius.circular(15),
+                            );
+                          },
+                        );
+                      } else if (state.searchData.isEmpty &&
+                          state.data.isEmpty) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(
+                              height: MediaQuery.of(context).size.height * 0.2,
+                              width: MediaQuery.of(context).size.width * 0.2,
+                              'assets/svg/NoData.svg',
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text('Click \'+\' to add'),
+                          ],
+                        );
+                      } else if (state.searchData.isNotEmpty) {
+                        return SearchResultPage();
+                      } else
+                        return HomeIdlePage();
+                    },
+                  ))
+                ],
+              ),
+            ],
+          ),
+          // bottomNavigationBar: state.ads == null
+          //     ? const SizedBox()
+          //     : Container(
+          //         height: state.ads!.size.height.toDouble(),
+          //         width: state.ads!.size.width.toDouble(),
+          //         child: AdWidget(ad: state.ads!),
+          //       ),
         );
       },
     );
