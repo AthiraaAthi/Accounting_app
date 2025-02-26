@@ -72,9 +72,11 @@ class SearchResultPage extends StatelessWidget {
             final isNearDue =
                 nearestDueDate != null && isDueDateNear(nearestDueDate);
 
-            final dueText = data.installmentType == '1'
-                ? 'Daily due'
-                : 'Due is near!! (${DateFormat.yMMMd().format(nearestDueDate!)})';
+            final dueText = data.IsMoneyLent == true
+                ? ' '
+                : data.installmentType == '1'
+                    ? 'Daily due'
+                    : 'Due is near!! (${DateFormat.yMMMd().format(nearestDueDate!)})';
 
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
