@@ -26,142 +26,141 @@ class HistoryScreen extends StatelessWidget {
         context.read<AdBloc>().add(AdEvent.started());
       },
     );
-    return BlocBuilder<AdBloc, AdState>(
-      builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: Icon(
-                  Icons.keyboard_arrow_left,
-                  size: 30,
-                )),
-            backgroundColor: primaryColorBlue,
-            foregroundColor: white,
-            title: Text("History"),
-          ),
-          body: Column(
-            children: [
-              Expanded(
-                flex: 8,
-                child: BlocBuilder<LenderBloc, LenderState>(
-                  builder: (context, state) {
-                    if (state.isError) {
-                      return Center(child: Icon(Icons.wifi));
-                    } else if (state.isLoading) {
-                      return Column(
-                        children: [
-                          CardLoading(
-                            height: 74,
-                            margin: EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 6),
-                            borderRadius: BorderRadius.circular(14),
-                          ),
-                          CardLoading(
-                            height: 74,
-                            margin: EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 6),
-                            borderRadius: BorderRadius.circular(14),
-                          ),
-                          CardLoading(
-                            height: 74,
-                            margin: EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 6),
-                            borderRadius: BorderRadius.circular(14),
-                          ),
-                          CardLoading(
-                            height: 74,
-                            margin: EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 6),
-                            borderRadius: BorderRadius.circular(14),
-                          ),
-                          CardLoading(
-                            height: 74,
-                            margin: EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 6),
-                            borderRadius: BorderRadius.circular(14),
-                          ),
-                        ],
-                      );
-                    }
-                    final sortedData =
-                        List<HistoryModel>.from(state.historyData);
-                    sortedData
-                        .sort((a, b) => b.timestamp!.compareTo(a.timestamp!));
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: sortedData.length,
-                      itemBuilder: (context, index) {
-                        final data = sortedData[index];
-                        final date = data.date!.toDate();
-                        final formatedDate =
-                            '${date.day}/${date.month}/${date.year}';
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 6),
-                          child: ListTile(
-                            subtitle: Text("Balance Amount:1000"),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            tileColor: data.asPayment! ? lightGreen : lightRed,
-                            title: Text(formatedDate),
-                            trailing: Text('-${data.amount}/-'),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: primaryColorBlue,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(
+              Icons.keyboard_arrow_left,
+              size: 30,
+            )),
+        backgroundColor: primaryColorBlue,
+        foregroundColor: white,
+        title: Text("History"),
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            flex: 8,
+            child: BlocBuilder<LenderBloc, LenderState>(
+              builder: (context, state) {
+                if (state.isError) {
+                  return Center(child: Icon(Icons.wifi));
+                } else if (state.isLoading) {
+                  return Column(
                     children: [
-                      Text(
-                        'Balance amount:',
-                        style: TextStyle(color: white),
+                      CardLoading(
+                        height: 74,
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 6),
+                        borderRadius: BorderRadius.circular(14),
                       ),
-                      BlocBuilder<LenderBloc, LenderState>(
-                        builder: (context, state) {
-                          final amount = state.data
-                              .firstWhere(
-                                  (element) => element.id == lendingModel.id)
-                              .balanceAmount
-                              .toString();
-                          if (state.isLoading) {
-                            return SizedBox();
-                          }
-                          log('updated balance amount: $amount');
-                          return Text(
-                            "${amount}\\-",
-                            style: TextStyle(color: white),
-                          );
-                        },
+                      CardLoading(
+                        height: 74,
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 6),
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      CardLoading(
+                        height: 74,
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 6),
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      CardLoading(
+                        height: 74,
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 6),
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      CardLoading(
+                        height: 74,
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 6),
+                        borderRadius: BorderRadius.circular(14),
                       ),
                     ],
-                  ),
-                ),
-              )
-            ],
+                  );
+                }
+                final sortedData = List<HistoryModel>.from(state.historyData);
+                sortedData.sort((a, b) => b.timestamp!.compareTo(a.timestamp!));
+                return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: sortedData.length,
+                  itemBuilder: (context, index) {
+                    final data = sortedData[index];
+                    final date = data.date!.toDate();
+                    final formatedDate =
+                        '${date.day}/${date.month}/${date.year}';
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 6),
+                      child: ListTile(
+                        subtitle: Text("Balance Amount:1000"),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        tileColor: data.asPayment! ? lightGreen : lightRed,
+                        title: Text(formatedDate),
+                        trailing: Text('-${data.amount}/-'),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
           ),
-          bottomNavigationBar: state.ads == null
-              ? const SizedBox()
-              : Container(
-                  height: state.ads!.size.height.toDouble(),
-                  width: state.ads!.size.width.toDouble(),
-                  child: AdWidget(ad: state.ads!),
-                ),
-        );
-      },
+          Container(
+            width: double.infinity,
+            height: 50,
+            decoration: BoxDecoration(
+              color: primaryColorBlue,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Balance amount:',
+                    style: TextStyle(color: white),
+                  ),
+                  BlocBuilder<LenderBloc, LenderState>(
+                    builder: (context, state) {
+                      final amount = state.data
+                          .firstWhere(
+                              (element) => element.id == lendingModel.id)
+                          .balanceAmount
+                          .toString();
+                      if (state.isLoading) {
+                        return SizedBox();
+                      }
+                      log('updated balance amount: $amount');
+                      return Text(
+                        "${amount}\\-",
+                        style: TextStyle(color: white),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+      bottomNavigationBar: BlocBuilder<AdBloc, AdState>(
+        builder: (context, state) {
+          if (state.ads == null) {
+            return const SizedBox();
+          }
+          return Container(
+            height: state.ads!.size.height.toDouble(),
+            width: state.ads!.size.width.toDouble(),
+            child: AdWidget(ad: state.ads!),
+          );
+        },
+      ),
     );
   }
 }
