@@ -88,13 +88,15 @@ class OnboardingScreen extends StatelessWidget {
         );
       },
       dotsDecorator: DotsDecorator(
-        size: const Size(7.0, 7.0),
+        size: const Size(5.0, 5.0),
         activeColor: primaryColorBlue,
-        activeSize: const Size(30.0, 7.0),
+        activeSize: const Size(30.0, 5.0),
         activeShape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
       ),
-      controlsPadding: const EdgeInsets.symmetric(vertical: 10),
+      nextFlex: 0,
+      skipOrBackFlex: 0,
+      controlsPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       showSkipButton: true,
       skip: const Text("Skip"),
       next: FaIcon(FontAwesomeIcons.arrowRight),
