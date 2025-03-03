@@ -15,13 +15,13 @@ class AdBloc extends Bloc<AdEvent, AdState> {
     InterstitialAd? _interstatialAd;
 
     on<_Started>((event, emit) {
+      _bannerAd?.dispose();
       BannerAd(
               size: AdSize.banner,
               adUnitId: AdHelper.bannerAdUnitId,
               listener: BannerAdListener(
                 onAdLoaded: (ad) {
                   _bannerAd = ad as BannerAd;
-                  emit(AdState(ads: _bannerAd));
                 },
                 onAdFailedToLoad: (ad, error) {
                   log('Failed to load BannerAd: $error');
@@ -30,6 +30,7 @@ class AdBloc extends Bloc<AdEvent, AdState> {
               ),
               request: AdRequest())
           .load();
+      emit(AdState(ads: _bannerAd));
     });
     on<_Interstatial>((event, emit) {
       InterstitialAd.load(
