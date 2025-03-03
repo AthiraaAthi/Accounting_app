@@ -15,7 +15,6 @@ class AdBloc extends Bloc<AdEvent, AdState> {
     InterstitialAd? _interstatialAd;
 
     on<_Started>((event, emit) {
-      _bannerAd?.dispose();
       BannerAd(
               size: AdSize.banner,
               adUnitId: AdHelper.bannerAdUnitId,

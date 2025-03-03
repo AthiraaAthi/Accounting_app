@@ -97,312 +97,300 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
       },
     );
 
-    return BlocBuilder<AdBloc, AdState>(
-      builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            leading: InkWell(
-              onTap: () {
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => NavScreen(),
-                    ),
-                    (Route<dynamic> route) => false);
-              },
-              child: Icon(
-                Icons.keyboard_arrow_left,
-                size: 30,
-                color: Colors.white,
-              ),
-            ),
-            backgroundColor: ColorConstant.defBlue,
-            title: Text(
-              "Expense Screen",
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.white,
-              ),
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        leading: InkWell(
+          onTap: () {
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NavScreen(),
+                ),
+                (Route<dynamic> route) => false);
+          },
+          child: Icon(
+            Icons.keyboard_arrow_left,
+            size: 30,
+            color: Colors.white,
           ),
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 40, left: 20, right: 20),
-              child: Form(
-                key: _formkey,
-                child: Column(
-                  children: [
-                    TextFormField(
-                      controller: _amountController,
-                      decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide(
-                                color: ColorConstant.defBlue, width: 2.0),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide:
-                                BorderSide(color: Colors.red, width: 1.0),
-                          ),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide:
-                                BorderSide(color: Colors.red, width: 1.0),
-                          ),
-                          hintText: "Amount",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15))),
-                      validator: FieldValidators.amountValidator,
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    TextFormField(
-                      controller: _categoryController,
-                      readOnly: true,
-                      validator: FieldValidators.requiredValidator,
-                      decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide(
-                                color: ColorConstant.defBlue, width: 2.0),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide:
-                                BorderSide(color: Colors.red, width: 1.0),
-                          ),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide:
-                                BorderSide(color: Colors.red, width: 1.0),
-                          ),
-                          hintText: "Category",
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              Icons.arrow_drop_down,
-                              size: 40,
-                              color: ColorConstant.defBlue,
-                            ),
-                            onPressed: () {
-                              showModalBottomSheet(
-                                context: context,
-                                showDragHandle: true,
-                                backgroundColor: white,
-                                builder: (context) {
-                                  return BlocBuilder<CategoryBloc,
-                                      CategoryState>(
-                                    builder: (context, state) {
-                                      log(state.categoryNames.toString());
-                                      if (state.categoryNames.isEmpty) {
-                                        return Wrap(
-                                          children: [
-                                            Center(
+        ),
+        backgroundColor: ColorConstant.defBlue,
+        title: Text(
+          "Expense Screen",
+          style: TextStyle(
+            fontSize: 18,
+            color: Colors.white,
+          ),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 40, left: 20, right: 20),
+          child: Form(
+            key: _formkey,
+            child: Column(
+              children: [
+                TextFormField(
+                  controller: _amountController,
+                  decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: BorderSide(
+                            color: ColorConstant.defBlue, width: 2.0),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: BorderSide(color: Colors.red, width: 1.0),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: BorderSide(color: Colors.red, width: 1.0),
+                      ),
+                      hintText: "Amount",
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15))),
+                  validator: FieldValidators.amountValidator,
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                TextFormField(
+                  controller: _categoryController,
+                  readOnly: true,
+                  validator: FieldValidators.requiredValidator,
+                  decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: BorderSide(
+                            color: ColorConstant.defBlue, width: 2.0),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: BorderSide(color: Colors.red, width: 1.0),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: BorderSide(color: Colors.red, width: 1.0),
+                      ),
+                      hintText: "Category",
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          Icons.arrow_drop_down,
+                          size: 40,
+                          color: ColorConstant.defBlue,
+                        ),
+                        onPressed: () {
+                          showModalBottomSheet(
+                            context: context,
+                            showDragHandle: true,
+                            backgroundColor: white,
+                            builder: (context) {
+                              return BlocBuilder<CategoryBloc, CategoryState>(
+                                builder: (context, state) {
+                                  log(state.categoryNames.toString());
+                                  if (state.categoryNames.isEmpty) {
+                                    return Wrap(
+                                      children: [
+                                        Center(
+                                          child: Text(
+                                            'No category',
+                                            style: TextStyle(
+                                                color: black, fontSize: 14),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 10, horizontal: 15),
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: TextButton(
+                                              onPressed: () {
+                                                showDialog(
+                                                  context: context,
+                                                  barrierDismissible: false,
+                                                  builder: (context) =>
+                                                      CategoryAddDialog(),
+                                                );
+                                              },
                                               child: Text(
-                                                'No category',
+                                                'Add Category',
                                                 style: TextStyle(
-                                                    color: black, fontSize: 14),
+                                                    fontSize: 17, color: black),
                                               ),
                                             ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 10,
-                                                      horizontal: 15),
-                                              child: Align(
-                                                alignment: Alignment.centerLeft,
-                                                child: TextButton(
-                                                  onPressed: () {
-                                                    showDialog(
-                                                      context: context,
-                                                      barrierDismissible: false,
-                                                      builder: (context) =>
-                                                          CategoryAddDialog(),
-                                                    );
-                                                  },
-                                                  child: Text(
-                                                    'Add Category',
-                                                    style: TextStyle(
-                                                        fontSize: 17,
-                                                        color: black),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        );
-                                      }
-                                      return Wrap(
-                                        children: [
-                                          ListView.builder(
-                                            shrinkWrap: true,
-                                            itemCount:
-                                                state.categoryNames.length,
-                                            itemBuilder: (context, index) {
-                                              final names = state
-                                                  .categoryNames[index]
-                                                  .categoryName;
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  }
+                                  return Wrap(
+                                    children: [
+                                      ListView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: state.categoryNames.length,
+                                        itemBuilder: (context, index) {
+                                          final names = state
+                                              .categoryNames[index]
+                                              .categoryName;
 
-                                              return ListTile(
-                                                title: Text(
-                                                  names,
-                                                  style:
-                                                      TextStyle(fontSize: 15),
-                                                ),
-                                                trailing: Radio(
-                                                  value: names,
-                                                  activeColor: primaryColorBlue,
-                                                  groupValue:
-                                                      _categoryController.text,
-                                                  fillColor:
-                                                      WidgetStatePropertyAll(
-                                                          primaryColorBlue),
-                                                  onChanged: (String? value) {
-                                                    setState(() {
-                                                      _categoryController.text =
-                                                          value!;
-                                                    });
-                                                    Navigator.pop(context);
-                                                  },
-                                                ),
+                                          return ListTile(
+                                            title: Text(
+                                              names,
+                                              style: TextStyle(fontSize: 15),
+                                            ),
+                                            trailing: Radio(
+                                              value: names,
+                                              activeColor: primaryColorBlue,
+                                              groupValue:
+                                                  _categoryController.text,
+                                              fillColor: WidgetStatePropertyAll(
+                                                  primaryColorBlue),
+                                              onChanged: (String? value) {
+                                                setState(() {
+                                                  _categoryController.text =
+                                                      value!;
+                                                });
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 10, horizontal: 15),
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: TextButton(
+                                            onPressed: () {
+                                              showDialog(
+                                                context: context,
+                                                barrierDismissible: false,
+                                                builder: (context) =>
+                                                    CategoryAddDialog(),
                                               );
                                             },
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 10, horizontal: 15),
-                                            child: Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: TextButton(
-                                                onPressed: () {
-                                                  showDialog(
-                                                    context: context,
-                                                    barrierDismissible: false,
-                                                    builder: (context) =>
-                                                        CategoryAddDialog(),
-                                                  );
-                                                },
-                                                child: Text(
-                                                  'Add Category',
-                                                  style: TextStyle(
-                                                      fontSize: 17,
-                                                      color: black),
-                                                ),
-                                              ),
+                                            child: Text(
+                                              'Add Category',
+                                              style: TextStyle(
+                                                  fontSize: 17, color: black),
                                             ),
                                           ),
-                                        ],
-                                      );
-                                    },
+                                        ),
+                                      ),
+                                    ],
                                   );
                                 },
                               );
                             },
-                          ),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15))),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    TextFormField(
-                      controller: _descriptionController,
-                      maxLines: 3,
-                      decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide(
-                                color: ColorConstant.defBlue, width: 2.0),
-                          ),
-                          hintText: "Description",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15))),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    TextField(
-                      controller: _dateController,
-                      readOnly: true,
-                      onTap: () {
-                        _selectDate(context);
-                      },
-                      decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide(
-                                color: ColorConstant.defBlue, width: 2.0),
-                          ),
-                          hintText: "Date",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15))),
-                    ),
-                    SizedBox(
-                      height: 50,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                backgroundColor: ColorConstant.defBlue),
-                            onPressed: () {
-                              final amount = _amountController.text;
-                              final category = _categoryController.text;
-                              final description = _descriptionController.text;
-                              final date = _pickedDate;
-                              final expenseModel = ExpenseModel(
-                                  amount: amount,
-                                  category: category,
-                                  description: description,
-                                  date: date);
-                              if (_formkey.currentState!.validate()) {
-                                ExpenseFunctions().expenseAdd(expenseModel);
-                                context.read<ExpenseBloc>().add(AddExpense());
-                                Navigator.pop(context);
-                                //show snackbar
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    backgroundColor: primaryColorBlue,
-                                    behavior: SnackBarBehavior.floating,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    content: Center(
-                                      child: Text(
-                                        'Added!',
-                                        style: TextStyle(color: white),
-                                      ),
-                                    ),
-                                    duration: Duration(seconds: 2),
-                                  ),
-                                );
-                              }
-                            },
-                            child: Text(
-                              "Add",
-                              style: TextStyle(color: Colors.white),
-                            ))
-                      ],
-                    )
-                  ],
+                          );
+                        },
+                      ),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15))),
                 ),
-              ),
+                SizedBox(
+                  height: 15,
+                ),
+                TextFormField(
+                  controller: _descriptionController,
+                  maxLines: 3,
+                  decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: BorderSide(
+                            color: ColorConstant.defBlue, width: 2.0),
+                      ),
+                      hintText: "Description",
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15))),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                TextField(
+                  controller: _dateController,
+                  readOnly: true,
+                  onTap: () {
+                    _selectDate(context);
+                  },
+                  decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: BorderSide(
+                            color: ColorConstant.defBlue, width: 2.0),
+                      ),
+                      hintText: "Date",
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15))),
+                ),
+                SizedBox(
+                  height: 50,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            backgroundColor: ColorConstant.defBlue),
+                        onPressed: () {
+                          final amount = _amountController.text;
+                          final category = _categoryController.text;
+                          final description = _descriptionController.text;
+                          final date = _pickedDate;
+                          final expenseModel = ExpenseModel(
+                              amount: amount,
+                              category: category,
+                              description: description,
+                              date: date);
+                          if (_formkey.currentState!.validate()) {
+                            ExpenseFunctions().expenseAdd(expenseModel);
+                            context.read<ExpenseBloc>().add(AddExpense());
+                            Navigator.pop(context);
+                            //show snackbar
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                backgroundColor: primaryColorBlue,
+                                behavior: SnackBarBehavior.floating,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)),
+                                content: Center(
+                                  child: Text(
+                                    'Added!',
+                                    style: TextStyle(color: white),
+                                  ),
+                                ),
+                                duration: Duration(seconds: 2),
+                              ),
+                            );
+                          }
+                        },
+                        child: Text(
+                          "Add",
+                          style: TextStyle(color: Colors.white),
+                        ))
+                  ],
+                )
+              ],
             ),
           ),
-          bottomNavigationBar: state.ads == null
-              ? const SizedBox()
-              : Container(
-                  height: state.ads!.size.height.toDouble(),
-                  width: state.ads!.size.width.toDouble(),
-                  child: AdWidget(ad: state.ads!),
-                ),
-        );
-      },
+        ),
+      ),
+      bottomNavigationBar: BlocBuilder<AdBloc, AdState>(
+        builder: (context, state) {
+          if (state.ads == null) {
+            return const SizedBox();
+          }
+          return Container(
+            height: state.ads!.size.height.toDouble(),
+            width: state.ads!.size.width.toDouble(),
+            child: AdWidget(ad: state.ads!),
+          );
+        },
+      ),
     );
   }
 }
