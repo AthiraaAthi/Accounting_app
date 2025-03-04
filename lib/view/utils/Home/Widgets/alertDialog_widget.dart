@@ -1009,7 +1009,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                       ),
                                       (Route<dynamic> route) => false)
                                   : context.read<LenderBloc>().add(JoinGetData(
-                                      code: codeTextController.text));
+                                      code: codeTextController.text.trim()));
                               isSelected
                                   ? Navigator.pushAndRemoveUntil(
                                       context,
@@ -1042,18 +1042,32 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                   ],
                                                 );
                                               }
-                                              final data = state.joinData[0];
-                                              log(data.toString());
-                                              return Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text('Name: ${data.name}'),
-                                                  Text(
-                                                      'Amount: ${data.amount}/-')
-                                                ],
-                                              );
+                                              if (state.joinData.isNotEmpty) {
+                                                final data = state.joinData[0];
+
+                                                return Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text('Name: ${data.name}'),
+                                                    Text(
+                                                        'Amount: ${data.amount}/-')
+                                                  ],
+                                                );
+                                              } else {
+                                                return Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                        'Cannot find the profile, check the code'),
+                                                  ],
+                                                );
+                                              }
                                             },
                                           ),
                                           actions: [
@@ -1073,7 +1087,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                 return TextButton(
                                                     onPressed: () {
                                                       final joinerData =
-                                                          state.joinData[0];
+                                                          state.joinData.first;
                                                       final bool asJoiner =
                                                           true;
                                                       final model =

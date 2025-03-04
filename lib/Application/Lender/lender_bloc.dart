@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:curved_nav/domain/failures/main_failure.dart';
 import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
@@ -46,12 +48,14 @@ class LenderBloc extends Bloc<LenderEvent, LenderState> {
           isLoading: true, getFailureOrSuccess: none(), isError: false));
       final Either<MainFailures, List<LendingModel>> getLenderDetails =
           await iJoinRepository.getJoinCardInformation(event.code);
-      emit(getLenderDetails.fold(
-          (failures) => state.copyWith(
-              isLoading: false,
-              isError: true,
-              getFailureOrSuccess: some(failures)), (success) {
-        success.sort((a, b) => b.datetime!.compareTo(a.datetime!));
+      emit(getLenderDetails.fold((failures) {
+        log('error: $failures');
+        return state.copyWith(
+            isLoading: false,
+            isError: true,
+            getFailureOrSuccess: some(failures));
+      }, (success) {
+        // success.sort((a, b) => b.datetime!.compareTo(a.datetime!));
         return state.copyWith(
             isLoading: false,
             isError: false,
