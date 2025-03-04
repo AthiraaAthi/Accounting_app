@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:curved_nav/Application/Calender/calender_bloc.dart';
 import 'package:curved_nav/Application/Lender/lender_bloc.dart';
 import 'package:curved_nav/Infrastructure/Lender/lender_repository.dart';
+import 'package:curved_nav/domain/Share/share.dart';
 
 import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
 import 'package:curved_nav/view/utils/Home/Widgets/addAmount_dialog.dart';
@@ -157,7 +158,11 @@ class MenuButtonWidget extends StatelessWidget {
                                   color: black,
                                 )),
                             IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  if (model.shareCode != null) {
+                                    shareCode(model.shareCode!);
+                                  }
+                                },
                                 icon: Icon(
                                   Icons.share_outlined,
                                   color: black,
