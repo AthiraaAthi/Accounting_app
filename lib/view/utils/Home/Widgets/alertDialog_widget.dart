@@ -1087,21 +1087,27 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                 return TextButton(
                                                     onPressed: () {
                                                       final joinerData =
-                                                          state.joinData.first;
+                                                          state.joinData[0];
                                                       final bool asJoiner =
                                                           true;
                                                       final model =
                                                           LendingModel(
+                                                        balanceAmount:
+                                                            joinerData
+                                                                .balanceAmount,
                                                         name: joinerData.name,
                                                         asJoiner: asJoiner,
                                                         phone: joinerData.phone,
                                                         description: joinerData
                                                             .description,
+                                                        IsMoneyLent: false,
                                                         amount:
                                                             joinerData.amount,
                                                         installmentAmount:
                                                             joinerData
                                                                 .installmentAmount,
+                                                        datetime:
+                                                            joinerData.datetime,
                                                         installmentType:
                                                             joinerData
                                                                 .installmentType,
@@ -1111,6 +1117,31 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                       );
                                                       LenderFunctions()
                                                           .addLender(model);
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                        SnackBar(
+                                                          backgroundColor:
+                                                              primaryColorBlue,
+                                                          behavior:
+                                                              SnackBarBehavior
+                                                                  .floating,
+                                                          shape: RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          20)),
+                                                          content: Center(
+                                                            child: Text(
+                                                              'Added!',
+                                                              style: TextStyle(
+                                                                  color: white),
+                                                            ),
+                                                          ),
+                                                          duration: Duration(
+                                                              seconds: 2),
+                                                        ),
+                                                      );
                                                       Navigator
                                                           .pushAndRemoveUntil(
                                                               context,
@@ -1134,21 +1165,24 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                         );
                                       });
 
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  backgroundColor: primaryColorBlue,
-                                  behavior: SnackBarBehavior.floating,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20)),
-                                  content: Center(
-                                    child: Text(
-                                      'Added!',
-                                      style: TextStyle(color: white),
-                                    ),
-                                  ),
-                                  duration: Duration(seconds: 2),
-                                ),
-                              );
+                              isSelected
+                                  ? ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        backgroundColor: primaryColorBlue,
+                                        behavior: SnackBarBehavior.floating,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20)),
+                                        content: Center(
+                                          child: Text(
+                                            'Added!',
+                                            style: TextStyle(color: white),
+                                          ),
+                                        ),
+                                        duration: Duration(seconds: 2),
+                                      ),
+                                    )
+                                  : null;
                             }
                           },
                           child: Text(

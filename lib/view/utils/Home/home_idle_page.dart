@@ -89,7 +89,9 @@ class HomeIdlePage extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) => SelectionCard(
-                                            isCreator: true,
+                                            isCreator: data.asJoiner == null
+                                                ? true
+                                                : false,
                                             model: data,
                                           ),
                                         ));
