@@ -318,6 +318,8 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                     ],
                                                   ),
                                                   TextFormField(
+                                                    cursorColor:
+                                                        primaryColorBlue,
                                                     controller: nameController,
                                                     validator: FieldValidators
                                                         .requiredValidator,
@@ -366,6 +368,8 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                   ),
                                                   SizedBox(height: 15),
                                                   TextFormField(
+                                                    cursorColor:
+                                                        primaryColorBlue,
                                                     controller: phoneController,
                                                     validator: phoneController
                                                             .text.isNotEmpty
@@ -419,6 +423,8 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                   ),
                                                   SizedBox(height: 15),
                                                   TextFormField(
+                                                    cursorColor:
+                                                        primaryColorBlue,
                                                     controller:
                                                         descriptionController,
                                                     maxLines: 4,
@@ -450,6 +456,8 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                   ),
                                                   SizedBox(height: 15),
                                                   TextFormField(
+                                                    cursorColor:
+                                                        primaryColorBlue,
                                                     controller:
                                                         amountController,
                                                     validator: isMoneyLendingSelected
@@ -507,6 +515,8 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                   isMoneyLendingSelected
                                                       ? SizedBox()
                                                       : TextFormField(
+                                                          cursorColor:
+                                                              primaryColorBlue,
                                                           controller:
                                                               installmentAmountController,
                                                           validator: installmentAmountController
@@ -752,6 +762,8 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                       : SizedBox(),
                                                   isMonthSelected
                                                       ? TextFormField(
+                                                          cursorColor:
+                                                              primaryColorBlue,
                                                           controller:
                                                               monthlyInstallmentAmountController,
                                                           validator: FieldValidators
@@ -879,6 +891,8 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                     height: 30,
                                                   ),
                                                   TextFormField(
+                                                    cursorColor:
+                                                        primaryColorBlue,
                                                     controller:
                                                         codeTextController,
                                                     validator: FieldValidators
