@@ -59,7 +59,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
               Text("1. Introduction", style: pointsStyle),
               titleSpace,
               Text(
-                '''Welcome to FinFloww. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile application (the "FinFloww"). By using the App, you agree to the collection and use of information in accordance with this policy.aaaaa''',
+                '''Welcome to FinFloww. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile application (the "FinFloww"). By using the App, you agree to the collection and use of information in accordance with this policy.''',
                 style: explainationStyle,
                 textAlign: TextAlign.justify,
               ),
