@@ -423,10 +423,6 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                         descriptionController,
                                                     maxLines: 4,
                                                     decoration: InputDecoration(
-                                                      contentPadding:
-                                                          EdgeInsets.only(
-                                                              left: 50,
-                                                              top: 30),
                                                       focusedBorder:
                                                           OutlineInputBorder(
                                                               borderSide:
