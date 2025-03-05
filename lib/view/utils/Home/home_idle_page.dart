@@ -22,8 +22,8 @@ class HomeIdlePage extends StatelessWidget {
         final adstate = state;
         if (state.ads == null)
           return SizedBox(
-            height: adstate.ads!.size.height.toDouble(),
-            width: adstate.ads!.size.width.toDouble(),
+            height: 0,
+            width: 0,
           );
         return Stack(
           children: [
