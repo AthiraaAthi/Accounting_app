@@ -20,7 +20,6 @@ HelpModel _$HelpModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$HelpModel {
-  bool? get IsMoneyLent => throw _privateConstructorUsedError;
   String? get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get phone => throw _privateConstructorUsedError;
@@ -41,12 +40,7 @@ abstract class $HelpModelCopyWith<$Res> {
   factory $HelpModelCopyWith(HelpModel value, $Res Function(HelpModel) then) =
       _$HelpModelCopyWithImpl<$Res, HelpModel>;
   @useResult
-  $Res call(
-      {bool? IsMoneyLent,
-      String? id,
-      String? name,
-      String? phone,
-      String? problem});
+  $Res call({String? id, String? name, String? phone, String? problem});
 }
 
 /// @nodoc
@@ -64,17 +58,12 @@ class _$HelpModelCopyWithImpl<$Res, $Val extends HelpModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? IsMoneyLent = freezed,
     Object? id = freezed,
     Object? name = freezed,
     Object? phone = freezed,
     Object? problem = freezed,
   }) {
     return _then(_value.copyWith(
-      IsMoneyLent: freezed == IsMoneyLent
-          ? _value.IsMoneyLent
-          : IsMoneyLent // ignore: cast_nullable_to_non_nullable
-              as bool?,
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -103,12 +92,7 @@ abstract class _$$HelpModelImplCopyWith<$Res>
       __$$HelpModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {bool? IsMoneyLent,
-      String? id,
-      String? name,
-      String? phone,
-      String? problem});
+  $Res call({String? id, String? name, String? phone, String? problem});
 }
 
 /// @nodoc
@@ -124,17 +108,12 @@ class __$$HelpModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? IsMoneyLent = freezed,
     Object? id = freezed,
     Object? name = freezed,
     Object? phone = freezed,
     Object? problem = freezed,
   }) {
     return _then(_$HelpModelImpl(
-      IsMoneyLent: freezed == IsMoneyLent
-          ? _value.IsMoneyLent
-          : IsMoneyLent // ignore: cast_nullable_to_non_nullable
-              as bool?,
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -158,14 +137,11 @@ class __$$HelpModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$HelpModelImpl implements _HelpModel {
-  _$HelpModelImpl(
-      {this.IsMoneyLent, this.id, this.name, this.phone, this.problem});
+  _$HelpModelImpl({this.id, this.name, this.phone, this.problem});
 
   factory _$HelpModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$HelpModelImplFromJson(json);
 
-  @override
-  final bool? IsMoneyLent;
   @override
   final String? id;
   @override
@@ -177,7 +153,7 @@ class _$HelpModelImpl implements _HelpModel {
 
   @override
   String toString() {
-    return 'HelpModel(IsMoneyLent: $IsMoneyLent, id: $id, name: $name, phone: $phone, problem: $problem)';
+    return 'HelpModel(id: $id, name: $name, phone: $phone, problem: $problem)';
   }
 
   @override
@@ -185,8 +161,6 @@ class _$HelpModelImpl implements _HelpModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$HelpModelImpl &&
-            (identical(other.IsMoneyLent, IsMoneyLent) ||
-                other.IsMoneyLent == IsMoneyLent) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.phone, phone) || other.phone == phone) &&
@@ -195,8 +169,7 @@ class _$HelpModelImpl implements _HelpModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, IsMoneyLent, id, name, phone, problem);
+  int get hashCode => Object.hash(runtimeType, id, name, phone, problem);
 
   /// Create a copy of HelpModel
   /// with the given fields replaced by the non-null parameter values.
@@ -216,8 +189,7 @@ class _$HelpModelImpl implements _HelpModel {
 
 abstract class _HelpModel implements HelpModel {
   factory _HelpModel(
-      {final bool? IsMoneyLent,
-      final String? id,
+      {final String? id,
       final String? name,
       final String? phone,
       final String? problem}) = _$HelpModelImpl;
@@ -225,8 +197,6 @@ abstract class _HelpModel implements HelpModel {
   factory _HelpModel.fromJson(Map<String, dynamic> json) =
       _$HelpModelImpl.fromJson;
 
-  @override
-  bool? get IsMoneyLent;
   @override
   String? get id;
   @override
