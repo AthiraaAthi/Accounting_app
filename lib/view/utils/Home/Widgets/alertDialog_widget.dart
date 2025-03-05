@@ -297,6 +297,12 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                             WidgetStatePropertyAll(
                                                           ColorConstant.defBlue,
                                                         ),
+                                                        trackOutlineWidth:
+                                                            WidgetStatePropertyAll(
+                                                                0),
+                                                        trackOutlineColor:
+                                                            WidgetStatePropertyAll(
+                                                                primaryColorBlue),
                                                         onChanged: (value) {
                                                           setState(
                                                             () {
@@ -307,7 +313,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                         },
                                                       ),
                                                       Text(
-                                                        "To Give",
+                                                        "Debt to",
                                                       ),
                                                     ],
                                                   ),
