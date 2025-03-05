@@ -23,7 +23,15 @@ class ExpenseFunctions implements IExpenseRepository {
   }
 
   @override
-  Future<void> expenseDelete(String id) async {}
+  Future<void> expenseDelete(String id) async {
+    try {
+      final _expenseDatabase =
+          await Hive.openBox<ExpenseModel>(expense_db_name);
+      return _expenseDatabase.delete(id);
+    } catch (e) {
+      log('err while deleting: $e');
+    }
+  }
 
   @override
   Future<Either<MainFailures, List<ExpenseModel>>> expenseGet() async {
