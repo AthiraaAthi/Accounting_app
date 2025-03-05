@@ -55,7 +55,7 @@ class LenderBloc extends Bloc<LenderEvent, LenderState> {
             isError: true,
             getFailureOrSuccess: some(failures));
       }, (success) {
-        // success.sort((a, b) => b.datetime!.compareTo(a.datetime!));
+        success.sort((a, b) => b.datetime!.compareTo(a.datetime!));
         return state.copyWith(
             isLoading: false,
             isError: false,
