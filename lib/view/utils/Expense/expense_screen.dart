@@ -58,6 +58,7 @@ class _ListScreenState extends State<ListScreen>
   @override
   void initState() {
     super.initState();
+    context.read<AdBloc>().add(AdEvent.interstatial());
     date = DateFormat.yMd().format(DateTime.now());
   }
 
@@ -65,9 +66,6 @@ class _ListScreenState extends State<ListScreen>
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) => context.read<ExpenseBloc>().add(GetExpense()),
-    );
-    WidgetsBinding.instance.addPostFrameCallback(
-      (timeStamp) => context.read<AdBloc>().add(AdEvent.interstatial()),
     );
 
     return Scaffold(
