@@ -80,12 +80,11 @@ class _SelectionCardState extends State<SelectionCard> {
                 );
               },
               icon: Icon(Icons.info_outline)),
-          widget.isCreator
-              ? MenuButtonWidget(
-                  model: widget.model,
-                  type: TypeOfAdding.addAmount,
-                )
-              : SizedBox(),
+          MenuButtonWidget(
+            isCreator: widget.isCreator,
+            model: widget.model,
+            type: TypeOfAdding.addAmount,
+          ),
         ],
         surfaceTintColor: primaryColorBlue,
         foregroundColor: white,

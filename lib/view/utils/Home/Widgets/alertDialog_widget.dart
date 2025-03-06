@@ -1108,6 +1108,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                           true;
                                                       final model =
                                                           LendingModel(
+                                                        id: joinerData.id,
                                                         balanceAmount:
                                                             joinerData
                                                                 .balanceAmount,
