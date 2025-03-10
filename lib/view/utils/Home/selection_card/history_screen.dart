@@ -1,14 +1,12 @@
-import 'dart:developer';
-
 import 'package:card_loading/card_loading.dart';
 import 'package:curved_nav/Application/Advertisment/ad_bloc.dart';
+import 'package:curved_nav/Application/Join/join_bloc.dart';
 import 'package:curved_nav/Application/Lender/lender_bloc.dart';
 import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
 import 'package:curved_nav/domain/models/history%20and%20others%20model/history_model.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class HistoryScreen extends StatelessWidget {
   final LendingModel lendingModel;
@@ -18,12 +16,13 @@ class HistoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
-        context.read<LenderBloc>().add(History(id: lendingModel.id!));
+        context.read<LenderBloc>().add(
+            History(id: lendingModel.id!, isJoiner: lendingModel.asJoiner!));
       },
     );
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
-        context.read<AdBloc>().add(AdEvent.started());
+        context.read<AdBloc>().add(AdEvent.interstatial());
       },
     );
     return Scaffold(
@@ -103,7 +102,7 @@ class HistoryScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10)),
                         tileColor: data.asPayment! ? lightGreen : lightRed,
                         title: Text(formatedDate),
-                        trailing: Text('-${data.amount}/-'),
+                        trailing: Text('${data.amount}'),
                       ),
                     );
                   },
@@ -126,40 +125,48 @@ class HistoryScreen extends StatelessWidget {
                     'Balance amount:',
                     style: TextStyle(color: white),
                   ),
-                  BlocBuilder<LenderBloc, LenderState>(
-                    builder: (context, state) {
-                      final amount = state.data
-                          .firstWhere(
-                              (element) => element.id == lendingModel.id)
-                          .balanceAmount
-                          .toString();
-                      if (state.isLoading) {
-                        return SizedBox();
-                      }
-                      log('updated balance amount: $amount');
-                      return Text(
-                        "${amount}\\-",
-                        style: TextStyle(color: white),
-                      );
-                    },
-                  ),
+                  lendingModel.asJoiner!
+                      ? BlocBuilder<JoinBloc, JoinState>(
+                          builder: (context, state) {
+                            final amount = state.joinData
+                                .firstWhere(
+                                    (element) => element.id == lendingModel.id)
+                                .balanceAmount
+                                .toString();
+                            if (state.isLoading) {
+                              return SizedBox();
+                            } else if (amount.isEmpty) {
+                              return SizedBox();
+                            }
+
+                            return Text(
+                              "${amount}\\-",
+                              style: TextStyle(color: white),
+                            );
+                          },
+                        )
+                      : BlocBuilder<LenderBloc, LenderState>(
+                          builder: (context, state) {
+                            final amount = state.data
+                                .firstWhere(
+                                    (element) => element.id == lendingModel.id)
+                                .balanceAmount
+                                .toString();
+                            if (state.isLoading) {
+                              return SizedBox();
+                            }
+
+                            return Text(
+                              "${amount}\\-",
+                              style: TextStyle(color: white),
+                            );
+                          },
+                        ),
                 ],
               ),
             ),
           )
         ],
-      ),
-      bottomNavigationBar: BlocBuilder<AdBloc, AdState>(
-        builder: (context, state) {
-          if (state.ads == null) {
-            return const SizedBox();
-          }
-          return Container(
-            height: state.ads!.size.height.toDouble(),
-            width: state.ads!.size.width.toDouble(),
-            child: AdWidget(ad: state.ads!),
-          );
-        },
       ),
     );
   }

@@ -23,7 +23,8 @@ class LenderFunctions implements ILenderRepository {
       final docRef = data.doc();
 
       String id = docRef.id;
-      LendingModel model = lenderDetails.copyWith(id: id);
+      String user = userId;
+      LendingModel model = lenderDetails.copyWith(id: id, userId: user);
 
       docRef.set(model.toJson());
 

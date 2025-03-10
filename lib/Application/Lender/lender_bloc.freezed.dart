@@ -20,7 +20,7 @@ mixin _$LenderEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() getData,
     required TResult Function(String code) joinGetData,
-    required TResult Function(String id) history,
+    required TResult Function(String id, bool isJoiner) history,
     required TResult Function(String query) search,
   }) =>
       throw _privateConstructorUsedError;
@@ -28,7 +28,7 @@ mixin _$LenderEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getData,
     TResult? Function(String code)? joinGetData,
-    TResult? Function(String id)? history,
+    TResult? Function(String id, bool isJoiner)? history,
     TResult? Function(String query)? search,
   }) =>
       throw _privateConstructorUsedError;
@@ -36,7 +36,7 @@ mixin _$LenderEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getData,
     TResult Function(String code)? joinGetData,
-    TResult Function(String id)? history,
+    TResult Function(String id, bool isJoiner)? history,
     TResult Function(String query)? search,
     required TResult orElse(),
   }) =>
@@ -132,7 +132,7 @@ class _$GetDataImpl implements GetData {
   TResult when<TResult extends Object?>({
     required TResult Function() getData,
     required TResult Function(String code) joinGetData,
-    required TResult Function(String id) history,
+    required TResult Function(String id, bool isJoiner) history,
     required TResult Function(String query) search,
   }) {
     return getData();
@@ -143,7 +143,7 @@ class _$GetDataImpl implements GetData {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getData,
     TResult? Function(String code)? joinGetData,
-    TResult? Function(String id)? history,
+    TResult? Function(String id, bool isJoiner)? history,
     TResult? Function(String query)? search,
   }) {
     return getData?.call();
@@ -154,7 +154,7 @@ class _$GetDataImpl implements GetData {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getData,
     TResult Function(String code)? joinGetData,
-    TResult Function(String id)? history,
+    TResult Function(String id, bool isJoiner)? history,
     TResult Function(String query)? search,
     required TResult orElse(),
   }) {
@@ -276,7 +276,7 @@ class _$JoinGetDataImpl implements JoinGetData {
   TResult when<TResult extends Object?>({
     required TResult Function() getData,
     required TResult Function(String code) joinGetData,
-    required TResult Function(String id) history,
+    required TResult Function(String id, bool isJoiner) history,
     required TResult Function(String query) search,
   }) {
     return joinGetData(code);
@@ -287,7 +287,7 @@ class _$JoinGetDataImpl implements JoinGetData {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getData,
     TResult? Function(String code)? joinGetData,
-    TResult? Function(String id)? history,
+    TResult? Function(String id, bool isJoiner)? history,
     TResult? Function(String query)? search,
   }) {
     return joinGetData?.call(code);
@@ -298,7 +298,7 @@ class _$JoinGetDataImpl implements JoinGetData {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getData,
     TResult Function(String code)? joinGetData,
-    TResult Function(String id)? history,
+    TResult Function(String id, bool isJoiner)? history,
     TResult Function(String query)? search,
     required TResult orElse(),
   }) {
@@ -364,7 +364,7 @@ abstract class _$$HistoryImplCopyWith<$Res> {
           _$HistoryImpl value, $Res Function(_$HistoryImpl) then) =
       __$$HistoryImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String id});
+  $Res call({String id, bool isJoiner});
 }
 
 /// @nodoc
@@ -381,12 +381,17 @@ class __$$HistoryImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? isJoiner = null,
   }) {
     return _then(_$HistoryImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      isJoiner: null == isJoiner
+          ? _value.isJoiner
+          : isJoiner // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -394,14 +399,16 @@ class __$$HistoryImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$HistoryImpl implements History {
-  const _$HistoryImpl({required this.id});
+  const _$HistoryImpl({required this.id, required this.isJoiner});
 
   @override
   final String id;
+  @override
+  final bool isJoiner;
 
   @override
   String toString() {
-    return 'LenderEvent.history(id: $id)';
+    return 'LenderEvent.history(id: $id, isJoiner: $isJoiner)';
   }
 
   @override
@@ -409,11 +416,13 @@ class _$HistoryImpl implements History {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$HistoryImpl &&
-            (identical(other.id, id) || other.id == id));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.isJoiner, isJoiner) ||
+                other.isJoiner == isJoiner));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id);
+  int get hashCode => Object.hash(runtimeType, id, isJoiner);
 
   /// Create a copy of LenderEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -428,10 +437,10 @@ class _$HistoryImpl implements History {
   TResult when<TResult extends Object?>({
     required TResult Function() getData,
     required TResult Function(String code) joinGetData,
-    required TResult Function(String id) history,
+    required TResult Function(String id, bool isJoiner) history,
     required TResult Function(String query) search,
   }) {
-    return history(id);
+    return history(id, isJoiner);
   }
 
   @override
@@ -439,10 +448,10 @@ class _$HistoryImpl implements History {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getData,
     TResult? Function(String code)? joinGetData,
-    TResult? Function(String id)? history,
+    TResult? Function(String id, bool isJoiner)? history,
     TResult? Function(String query)? search,
   }) {
-    return history?.call(id);
+    return history?.call(id, isJoiner);
   }
 
   @override
@@ -450,12 +459,12 @@ class _$HistoryImpl implements History {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getData,
     TResult Function(String code)? joinGetData,
-    TResult Function(String id)? history,
+    TResult Function(String id, bool isJoiner)? history,
     TResult Function(String query)? search,
     required TResult orElse(),
   }) {
     if (history != null) {
-      return history(id);
+      return history(id, isJoiner);
     }
     return orElse();
   }
@@ -499,9 +508,11 @@ class _$HistoryImpl implements History {
 }
 
 abstract class History implements LenderEvent {
-  const factory History({required final String id}) = _$HistoryImpl;
+  const factory History(
+      {required final String id, required final bool isJoiner}) = _$HistoryImpl;
 
   String get id;
+  bool get isJoiner;
 
   /// Create a copy of LenderEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -580,7 +591,7 @@ class _$SearchImpl implements Search {
   TResult when<TResult extends Object?>({
     required TResult Function() getData,
     required TResult Function(String code) joinGetData,
-    required TResult Function(String id) history,
+    required TResult Function(String id, bool isJoiner) history,
     required TResult Function(String query) search,
   }) {
     return search(query);
@@ -591,7 +602,7 @@ class _$SearchImpl implements Search {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getData,
     TResult? Function(String code)? joinGetData,
-    TResult? Function(String id)? history,
+    TResult? Function(String id, bool isJoiner)? history,
     TResult? Function(String query)? search,
   }) {
     return search?.call(query);
@@ -602,7 +613,7 @@ class _$SearchImpl implements Search {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getData,
     TResult Function(String code)? joinGetData,
-    TResult Function(String id)? history,
+    TResult Function(String id, bool isJoiner)? history,
     TResult Function(String query)? search,
     required TResult orElse(),
   }) {

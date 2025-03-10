@@ -72,14 +72,17 @@ class LenderBloc extends Bloc<LenderEvent, LenderState> {
             historyData: [],
             isError: false),
       );
-      final Either<MainFailures, List<HistoryModel>> getHistory =
-          await iHistoryRepository.getDetails(event.id);
+      final Either<MainFailures, List<HistoryModel>> getHistory = event.isJoiner
+          ? await iHistoryRepository.getJoinerDetails(event.id)
+          : await iHistoryRepository.getDetails(event.id);
+
       emit(getHistory.fold(
           (failure) => state.copyWith(
               isLoading: false,
               isError: true,
               getFailureOrSuccess: some(failure)), (success) {
         success.sort((a, b) => b.date!.compareTo(a.date!));
+        log(success.toString());
         return state.copyWith(
             isLoading: false,
             isError: false,

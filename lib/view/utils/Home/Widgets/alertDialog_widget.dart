@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:curved_nav/Application/Lender/lender_bloc.dart';
 import 'package:curved_nav/Infrastructure/Code%20Generation/code_generator.dart';
-
+import 'package:curved_nav/Infrastructure/Lender/join_repository.dart';
 import 'package:curved_nav/Infrastructure/Lender/lender_repository.dart';
 import 'package:curved_nav/domain/core/Validator/validator.dart';
 import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
@@ -1004,6 +1004,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                 name: name,
                                 phone: phone,
                                 amount: amount,
+                                asJoiner: false,
                                 description: descriptionamount,
                                 installmentAmount: installmentAmount,
                                 IsMoneyLent: isMoneyLent,
@@ -1106,34 +1107,40 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                           state.joinData[0];
                                                       final bool asJoiner =
                                                           true;
-                                                      final model =
-                                                          LendingModel(
-                                                        id: joinerData.id,
-                                                        balanceAmount:
-                                                            joinerData
-                                                                .balanceAmount,
-                                                        name: joinerData.name,
-                                                        asJoiner: asJoiner,
-                                                        phone: joinerData.phone,
-                                                        description: joinerData
-                                                            .description,
-                                                        IsMoneyLent: false,
-                                                        amount:
-                                                            joinerData.amount,
-                                                        installmentAmount:
-                                                            joinerData
-                                                                .installmentAmount,
-                                                        datetime:
-                                                            joinerData.datetime,
-                                                        installmentType:
-                                                            joinerData
-                                                                .installmentType,
-                                                        listOfTImestamp:
-                                                            joinerData
-                                                                .listOfTImestamp,
-                                                      );
-                                                      LenderFunctions()
-                                                          .addLender(model);
+                                                      final model = LendingModel(
+                                                          duplicateFrom:
+                                                              joinerData.id,
+                                                          userId:
+                                                              joinerData.userId,
+                                                          balanceAmount:
+                                                              joinerData
+                                                                  .balanceAmount,
+                                                          name: joinerData.name,
+                                                          asJoiner: asJoiner,
+                                                          phone:
+                                                              joinerData.phone,
+                                                          description:
+                                                              joinerData
+                                                                  .description,
+                                                          IsMoneyLent: false,
+                                                          amount:
+                                                              joinerData.amount,
+                                                          installmentAmount:
+                                                              joinerData
+                                                                  .installmentAmount,
+                                                          datetime: joinerData
+                                                              .datetime,
+                                                          installmentType:
+                                                              joinerData
+                                                                  .installmentType,
+                                                          listOfTImestamp:
+                                                              joinerData
+                                                                  .listOfTImestamp,
+                                                          lastMoneyGivenDate:
+                                                              joinerData
+                                                                  .lastMoneyGivenDate);
+                                                      fetchAndCopyData(model);
+
                                                       ScaffoldMessenger.of(
                                                               context)
                                                           .showSnackBar(

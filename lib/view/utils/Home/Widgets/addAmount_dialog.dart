@@ -88,6 +88,8 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
             final balanceAmount = state.data
                 .firstWhere((element) => element.id == id)
                 .balanceAmount;
+            final asJoiner =
+                state.data.firstWhere((element) => element.id == id).asJoiner;
             log('ua: ${balanceAmount}');
             return TextButton(
                 onPressed: () async {
@@ -121,7 +123,9 @@ class _AddPaymentDialogState extends State<AddPaymentDialog> {
                       'balanceAmount', newBalance.toString(), id);
                   await HistoryFunctions().addDetails(model, id);
 
-                  context.read<LenderBloc>().add(History(id: id));
+                  context
+                      .read<LenderBloc>()
+                      .add(History(id: id, isJoiner: asJoiner!));
                   context.read<LenderBloc>().add(GetData());
 
                   Navigator.pop(context);

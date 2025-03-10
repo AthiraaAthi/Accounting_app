@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:curved_nav/Application/Calender/calender_bloc.dart';
 import 'package:curved_nav/Application/Lender/lender_bloc.dart';
+import 'package:curved_nav/Infrastructure/Lender/join_repository.dart';
 import 'package:curved_nav/Infrastructure/Lender/lender_repository.dart';
 import 'package:curved_nav/domain/Share/share.dart';
 
@@ -35,6 +36,137 @@ class MenuButtonWidget extends StatelessWidget {
       builder: (context, state) {
         return isCreator
             ? PopupMenuButton<String>(
+                color: white,
+                icon: const Icon(Icons.more_vert),
+                onSelected: (String value) {
+                  if (value == '1') {
+                    showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 50, horizontal: 10),
+                          backgroundColor: white,
+                          content: Text(
+                            "Do You Want to Delete this Account?",
+                          ),
+                          actions: [
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text(
+                                  "No",
+                                  style: TextStyle(color: black),
+                                )),
+                            TextButton(
+                                onPressed: () {
+                                  JoinFunctions().deleteJoinCard(model.id!);
+                                  context.read<LenderBloc>().add(GetData());
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => NavScreen(),
+                                      ),
+                                      (Route<dynamic> route) => false);
+                                },
+                                child: Text(
+                                  "Yes",
+                                  style: TextStyle(color: lightRed),
+                                )),
+                          ],
+                        );
+                      },
+                    );
+                  } else if (value == '2') {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        final code = model.shareCode!;
+                        return AlertDialog(
+                          contentPadding: EdgeInsets.symmetric(vertical: 80),
+                          backgroundColor: white,
+                          content: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                code,
+                                style: TextStyle(fontSize: 30),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  IconButton(
+                                      onPressed: () {
+                                        if (model.shareCode != null) {
+                                          Clipboard.setData(ClipboardData(
+                                              text: model.shareCode!));
+                                          Navigator.pop(context);
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                                backgroundColor:
+                                                    primaryColorBlue,
+                                                behavior:
+                                                    SnackBarBehavior.floating,
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20)),
+                                                content: Center(
+                                                    child: Text(
+                                                        'Copied to clipboard!'))),
+                                          );
+                                        }
+                                      },
+                                      icon: Icon(
+                                        Icons.copy_outlined,
+                                        color: black,
+                                      )),
+                                  IconButton(
+                                      onPressed: () {
+                                        if (model.shareCode != null) {
+                                          shareCode(model.shareCode!);
+                                        }
+                                      },
+                                      icon: Icon(
+                                        Icons.share_outlined,
+                                        color: black,
+                                      )),
+                                ],
+                              )
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  } else {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          GettingStarted(type: NavigatingFrom.HelpPage),
+                    ));
+                  }
+                },
+                itemBuilder: (BuildContext context) {
+                  return [
+                    PopupMenuItem(
+                      value: '1',
+                      child: Text('Delete Account'),
+                    ),
+                    PopupMenuItem(
+                      value: '2',
+                      child: Text('Help'),
+                    ),
+                  ];
+                },
+              )
+            : PopupMenuButton<String>(
                 color: white,
                 icon: const Icon(Icons.more_vert),
                 onSelected: (String value) {
@@ -206,137 +338,6 @@ class MenuButtonWidget extends StatelessWidget {
                     ),
                     PopupMenuItem(
                       value: '4',
-                      child: Text('Help'),
-                    ),
-                  ];
-                },
-              )
-            : PopupMenuButton<String>(
-                color: white,
-                icon: const Icon(Icons.more_vert),
-                onSelected: (String value) {
-                  if (value == '1') {
-                    showDialog(
-                      barrierDismissible: false,
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          contentPadding: EdgeInsets.symmetric(
-                              vertical: 50, horizontal: 10),
-                          backgroundColor: white,
-                          content: Text(
-                            "Do You Want to Delete this Account?",
-                          ),
-                          actions: [
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text(
-                                  "No",
-                                  style: TextStyle(color: black),
-                                )),
-                            TextButton(
-                                onPressed: () {
-                                  LenderFunctions().deleteLender(model.id!);
-                                  context.read<LenderBloc>().add(GetData());
-                                  Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => NavScreen(),
-                                      ),
-                                      (Route<dynamic> route) => false);
-                                },
-                                child: Text(
-                                  "Yes",
-                                  style: TextStyle(color: lightRed),
-                                )),
-                          ],
-                        );
-                      },
-                    );
-                  } else if (value == '2') {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        final code = model.shareCode!;
-                        return AlertDialog(
-                          contentPadding: EdgeInsets.symmetric(vertical: 80),
-                          backgroundColor: white,
-                          content: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                code,
-                                style: TextStyle(fontSize: 30),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  IconButton(
-                                      onPressed: () {
-                                        if (model.shareCode != null) {
-                                          Clipboard.setData(ClipboardData(
-                                              text: model.shareCode!));
-                                          Navigator.pop(context);
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            SnackBar(
-                                                backgroundColor:
-                                                    primaryColorBlue,
-                                                behavior:
-                                                    SnackBarBehavior.floating,
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20)),
-                                                content: Center(
-                                                    child: Text(
-                                                        'Copied to clipboard!'))),
-                                          );
-                                        }
-                                      },
-                                      icon: Icon(
-                                        Icons.copy_outlined,
-                                        color: black,
-                                      )),
-                                  IconButton(
-                                      onPressed: () {
-                                        if (model.shareCode != null) {
-                                          shareCode(model.shareCode!);
-                                        }
-                                      },
-                                      icon: Icon(
-                                        Icons.share_outlined,
-                                        color: black,
-                                      )),
-                                ],
-                              )
-                            ],
-                          ),
-                        );
-                      },
-                    );
-                  } else {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) =>
-                          GettingStarted(type: NavigatingFrom.HelpPage),
-                    ));
-                  }
-                },
-                itemBuilder: (BuildContext context) {
-                  return [
-                    PopupMenuItem(
-                      value: '1',
-                      child: Text('Delete Account'),
-                    ),
-                    PopupMenuItem(
-                      value: '2',
                       child: Text('Help'),
                     ),
                   ];

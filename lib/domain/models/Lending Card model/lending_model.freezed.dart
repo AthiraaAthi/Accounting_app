@@ -36,6 +36,8 @@ mixin _$LendingModel {
   @JsonKey(fromJson: timestampFromJson, toJson: timestampToJson)
   Timestamp? get datetime => throw _privateConstructorUsedError;
   String? get lastMoneyGivenDate => throw _privateConstructorUsedError;
+  String? get userId => throw _privateConstructorUsedError;
+  String? get duplicateFrom => throw _privateConstructorUsedError;
 
   /// Serializes this LendingModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -69,7 +71,9 @@ abstract class $LendingModelCopyWith<$Res> {
       String? balanceAmount,
       @JsonKey(fromJson: timestampFromJson, toJson: timestampToJson)
       Timestamp? datetime,
-      String? lastMoneyGivenDate});
+      String? lastMoneyGivenDate,
+      String? userId,
+      String? duplicateFrom});
 }
 
 /// @nodoc
@@ -101,6 +105,8 @@ class _$LendingModelCopyWithImpl<$Res, $Val extends LendingModel>
     Object? balanceAmount = freezed,
     Object? datetime = freezed,
     Object? lastMoneyGivenDate = freezed,
+    Object? userId = freezed,
+    Object? duplicateFrom = freezed,
   }) {
     return _then(_value.copyWith(
       IsMoneyLent: freezed == IsMoneyLent
@@ -159,6 +165,14 @@ class _$LendingModelCopyWithImpl<$Res, $Val extends LendingModel>
           ? _value.lastMoneyGivenDate
           : lastMoneyGivenDate // ignore: cast_nullable_to_non_nullable
               as String?,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      duplicateFrom: freezed == duplicateFrom
+          ? _value.duplicateFrom
+          : duplicateFrom // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -187,7 +201,9 @@ abstract class _$$LendingModelImplCopyWith<$Res>
       String? balanceAmount,
       @JsonKey(fromJson: timestampFromJson, toJson: timestampToJson)
       Timestamp? datetime,
-      String? lastMoneyGivenDate});
+      String? lastMoneyGivenDate,
+      String? userId,
+      String? duplicateFrom});
 }
 
 /// @nodoc
@@ -217,6 +233,8 @@ class __$$LendingModelImplCopyWithImpl<$Res>
     Object? balanceAmount = freezed,
     Object? datetime = freezed,
     Object? lastMoneyGivenDate = freezed,
+    Object? userId = freezed,
+    Object? duplicateFrom = freezed,
   }) {
     return _then(_$LendingModelImpl(
       IsMoneyLent: freezed == IsMoneyLent
@@ -275,6 +293,14 @@ class __$$LendingModelImplCopyWithImpl<$Res>
           ? _value.lastMoneyGivenDate
           : lastMoneyGivenDate // ignore: cast_nullable_to_non_nullable
               as String?,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      duplicateFrom: freezed == duplicateFrom
+          ? _value.duplicateFrom
+          : duplicateFrom // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -298,7 +324,9 @@ class _$LendingModelImpl implements _LendingModel {
       this.balanceAmount,
       @JsonKey(fromJson: timestampFromJson, toJson: timestampToJson)
       this.datetime,
-      this.lastMoneyGivenDate})
+      this.lastMoneyGivenDate,
+      this.userId,
+      this.duplicateFrom})
       : _listOfTImestamp = listOfTImestamp;
 
   factory _$LendingModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -342,10 +370,14 @@ class _$LendingModelImpl implements _LendingModel {
   final Timestamp? datetime;
   @override
   final String? lastMoneyGivenDate;
+  @override
+  final String? userId;
+  @override
+  final String? duplicateFrom;
 
   @override
   String toString() {
-    return 'LendingModel(IsMoneyLent: $IsMoneyLent, id: $id, name: $name, phone: $phone, description: $description, amount: $amount, installmentAmount: $installmentAmount, installmentType: $installmentType, listOfTImestamp: $listOfTImestamp, shareCode: $shareCode, asJoiner: $asJoiner, balanceAmount: $balanceAmount, datetime: $datetime, lastMoneyGivenDate: $lastMoneyGivenDate)';
+    return 'LendingModel(IsMoneyLent: $IsMoneyLent, id: $id, name: $name, phone: $phone, description: $description, amount: $amount, installmentAmount: $installmentAmount, installmentType: $installmentType, listOfTImestamp: $listOfTImestamp, shareCode: $shareCode, asJoiner: $asJoiner, balanceAmount: $balanceAmount, datetime: $datetime, lastMoneyGivenDate: $lastMoneyGivenDate, userId: $userId, duplicateFrom: $duplicateFrom)';
   }
 
   @override
@@ -376,7 +408,10 @@ class _$LendingModelImpl implements _LendingModel {
             (identical(other.datetime, datetime) ||
                 other.datetime == datetime) &&
             (identical(other.lastMoneyGivenDate, lastMoneyGivenDate) ||
-                other.lastMoneyGivenDate == lastMoneyGivenDate));
+                other.lastMoneyGivenDate == lastMoneyGivenDate) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.duplicateFrom, duplicateFrom) ||
+                other.duplicateFrom == duplicateFrom));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -396,7 +431,9 @@ class _$LendingModelImpl implements _LendingModel {
       asJoiner,
       balanceAmount,
       datetime,
-      lastMoneyGivenDate);
+      lastMoneyGivenDate,
+      userId,
+      duplicateFrom);
 
   /// Create a copy of LendingModel
   /// with the given fields replaced by the non-null parameter values.
@@ -431,7 +468,9 @@ abstract class _LendingModel implements LendingModel {
       final String? balanceAmount,
       @JsonKey(fromJson: timestampFromJson, toJson: timestampToJson)
       final Timestamp? datetime,
-      final String? lastMoneyGivenDate}) = _$LendingModelImpl;
+      final String? lastMoneyGivenDate,
+      final String? userId,
+      final String? duplicateFrom}) = _$LendingModelImpl;
 
   factory _LendingModel.fromJson(Map<String, dynamic> json) =
       _$LendingModelImpl.fromJson;
@@ -466,6 +505,10 @@ abstract class _LendingModel implements LendingModel {
   Timestamp? get datetime;
   @override
   String? get lastMoneyGivenDate;
+  @override
+  String? get userId;
+  @override
+  String? get duplicateFrom;
 
   /// Create a copy of LendingModel
   /// with the given fields replaced by the non-null parameter values.

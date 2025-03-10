@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:developer';
-
 import 'package:card_loading/card_loading.dart';
-import 'package:curved_nav/Application/Advertisment/ad_bloc.dart';
+import 'package:curved_nav/Application/Join/join_bloc.dart';
 import 'package:curved_nav/Application/Lender/lender_bloc.dart';
+import 'package:curved_nav/domain/Advertisement/ad_helper.dart';
 
 import 'package:curved_nav/domain/Debounce/debouncer.dart';
 import 'package:curved_nav/view/utils/Home/Widgets/alertDialog_widget.dart';
@@ -14,6 +14,7 @@ import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
@@ -31,12 +32,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   StreamSubscription? _isSubscribedToInternetConnection;
   bool _isSnackbarVisible = false;
 
+  BannerAd? _bannerAd;
+
   @override
   void initState() {
     super.initState();
     _isSubscribedToInternetConnection =
         InternetConnection().onStatusChange.listen((status) {
-      log(status.toString());
       if (status == InternetStatus.disconnected && isConnectedToInternet) {
         isConnectedToInternet = false;
         _showPersistentSnackbar('No internet', isPersistent: true);
@@ -49,6 +51,22 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         isConnectedToInternet = status != InternetStatus.disconnected;
       });
     });
+    BannerAd(
+            size: AdSize.banner,
+            adUnitId: AdHelper.bannerAdUnitId,
+            listener: BannerAdListener(
+              onAdLoaded: (ad) {
+                setState(() {
+                  _bannerAd = ad as BannerAd;
+                });
+              },
+              onAdFailedToLoad: (ad, error) {
+                log('Failed to load BannerAd: $error');
+                ad.dispose();
+              },
+            ),
+            request: AdRequest())
+        .load();
   }
 
   void _showPersistentSnackbar(String message, {bool isPersistent = false}) {
@@ -106,11 +124,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<LenderBloc>().add(LenderEvent.getData());
     });
-    WidgetsBinding.instance.addPostFrameCallback(
-      (timeStamp) {
-        context.read<AdBloc>().add(AdEvent.started());
-      },
-    );
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<JoinBloc>().add(JoinEvent.started());
+    });
+
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -188,21 +205,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     );
                   },
                 );
-              } else if (state.searchData.isEmpty && state.data.isEmpty) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      height: MediaQuery.of(context).size.height * 0.2,
-                      width: MediaQuery.of(context).size.width * 0.2,
-                      'assets/svg/NoData.svg',
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text('Click \'+\' to add'),
-                  ],
-                );
               } else if (state.searchData.isNotEmpty) {
                 return SearchResultPage();
               } else
@@ -211,6 +213,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           ))
         ],
       ),
+      bottomNavigationBar: _bannerAd != null
+          ? Container(
+              height: _bannerAd!.size.height.toDouble(),
+              width: _bannerAd!.size.width.toDouble(),
+              child: AdWidget(ad: _bannerAd!),
+            )
+          : SizedBox(
+              height: 0,
+              width: 0,
+            ),
     );
   }
 }

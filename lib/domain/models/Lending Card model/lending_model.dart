@@ -25,6 +25,8 @@ class LendingModel with _$LendingModel {
     @JsonKey(fromJson: timestampFromJson, toJson: timestampToJson)
     Timestamp? datetime,
     String? lastMoneyGivenDate,
+    String? userId,
+    String? duplicateFrom,
   }) = _LendingModel;
 
   factory LendingModel.fromJson(Map<String, dynamic> json) =>
