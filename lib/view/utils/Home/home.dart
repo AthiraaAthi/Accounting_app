@@ -26,7 +26,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
-  final _debouncer = Debouncer(milliseconds: 1 * 1000);
+  final _debouncer = Debouncer(milliseconds: 300);
 
   bool isConnectedToInternet = true;
   StreamSubscription? _isSubscribedToInternetConnection;
@@ -155,23 +155,31 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             padding: const EdgeInsets.all(8.0),
             child: SizedBox(
               height: size.height * 0.055,
-              child: SearchBar(
-                shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20))),
-                backgroundColor: WidgetStatePropertyAll(
-                    const Color.fromARGB(255, 235, 235, 235)),
-                elevation: WidgetStatePropertyAll(0),
-                hintText: 'Search',
-                leading: Icon(
-                  Icons.search_outlined,
-                ),
-                onChanged: (value) {
-                  if (value.isNotEmpty) {
-                    SearchResultPage();
-                  }
-                  _debouncer.run(() {
-                    context.read<LenderBloc>().add(Search(query: value));
-                  });
+              child: BlocBuilder<LenderBloc, LenderState>(
+                builder: (context, state) {
+                  return SearchBar(
+                    shape: WidgetStatePropertyAll(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20))),
+                    backgroundColor: WidgetStatePropertyAll(
+                        const Color.fromARGB(255, 235, 235, 235)),
+                    elevation: WidgetStatePropertyAll(0),
+                    hintText: 'Search name',
+                    leading: Icon(
+                      Icons.search_outlined,
+                    ),
+                    onChanged: (value) {
+                      if (value.isNotEmpty) {
+                        _debouncer.run(() {
+                          context
+                              .read<LenderBloc>()
+                              .add(Search(query: value.toLowerCase().trim()));
+                        });
+                      } else {
+                        _debouncer.dispose();
+                        context.read<LenderBloc>().add(ClearSearch());
+                      }
+                    },
+                  );
                 },
               ),
             ),
@@ -207,8 +215,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 );
               } else if (state.searchData.isNotEmpty) {
                 return SearchResultPage();
-              } else
+              } else if (state.isIdle) {
                 return HomeIdlePage();
+              }
+              return HomeIdlePage();
             },
           ))
         ],

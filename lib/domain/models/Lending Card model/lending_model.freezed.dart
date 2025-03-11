@@ -38,6 +38,7 @@ mixin _$LendingModel {
   String? get lastMoneyGivenDate => throw _privateConstructorUsedError;
   String? get userId => throw _privateConstructorUsedError;
   String? get duplicateFrom => throw _privateConstructorUsedError;
+  String? get searchQuery => throw _privateConstructorUsedError;
 
   /// Serializes this LendingModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -73,7 +74,8 @@ abstract class $LendingModelCopyWith<$Res> {
       Timestamp? datetime,
       String? lastMoneyGivenDate,
       String? userId,
-      String? duplicateFrom});
+      String? duplicateFrom,
+      String? searchQuery});
 }
 
 /// @nodoc
@@ -107,6 +109,7 @@ class _$LendingModelCopyWithImpl<$Res, $Val extends LendingModel>
     Object? lastMoneyGivenDate = freezed,
     Object? userId = freezed,
     Object? duplicateFrom = freezed,
+    Object? searchQuery = freezed,
   }) {
     return _then(_value.copyWith(
       IsMoneyLent: freezed == IsMoneyLent
@@ -173,6 +176,10 @@ class _$LendingModelCopyWithImpl<$Res, $Val extends LendingModel>
           ? _value.duplicateFrom
           : duplicateFrom // ignore: cast_nullable_to_non_nullable
               as String?,
+      searchQuery: freezed == searchQuery
+          ? _value.searchQuery
+          : searchQuery // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -203,7 +210,8 @@ abstract class _$$LendingModelImplCopyWith<$Res>
       Timestamp? datetime,
       String? lastMoneyGivenDate,
       String? userId,
-      String? duplicateFrom});
+      String? duplicateFrom,
+      String? searchQuery});
 }
 
 /// @nodoc
@@ -235,6 +243,7 @@ class __$$LendingModelImplCopyWithImpl<$Res>
     Object? lastMoneyGivenDate = freezed,
     Object? userId = freezed,
     Object? duplicateFrom = freezed,
+    Object? searchQuery = freezed,
   }) {
     return _then(_$LendingModelImpl(
       IsMoneyLent: freezed == IsMoneyLent
@@ -301,6 +310,10 @@ class __$$LendingModelImplCopyWithImpl<$Res>
           ? _value.duplicateFrom
           : duplicateFrom // ignore: cast_nullable_to_non_nullable
               as String?,
+      searchQuery: freezed == searchQuery
+          ? _value.searchQuery
+          : searchQuery // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -326,7 +339,8 @@ class _$LendingModelImpl implements _LendingModel {
       this.datetime,
       this.lastMoneyGivenDate,
       this.userId,
-      this.duplicateFrom})
+      this.duplicateFrom,
+      this.searchQuery})
       : _listOfTImestamp = listOfTImestamp;
 
   factory _$LendingModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -374,10 +388,12 @@ class _$LendingModelImpl implements _LendingModel {
   final String? userId;
   @override
   final String? duplicateFrom;
+  @override
+  final String? searchQuery;
 
   @override
   String toString() {
-    return 'LendingModel(IsMoneyLent: $IsMoneyLent, id: $id, name: $name, phone: $phone, description: $description, amount: $amount, installmentAmount: $installmentAmount, installmentType: $installmentType, listOfTImestamp: $listOfTImestamp, shareCode: $shareCode, asJoiner: $asJoiner, balanceAmount: $balanceAmount, datetime: $datetime, lastMoneyGivenDate: $lastMoneyGivenDate, userId: $userId, duplicateFrom: $duplicateFrom)';
+    return 'LendingModel(IsMoneyLent: $IsMoneyLent, id: $id, name: $name, phone: $phone, description: $description, amount: $amount, installmentAmount: $installmentAmount, installmentType: $installmentType, listOfTImestamp: $listOfTImestamp, shareCode: $shareCode, asJoiner: $asJoiner, balanceAmount: $balanceAmount, datetime: $datetime, lastMoneyGivenDate: $lastMoneyGivenDate, userId: $userId, duplicateFrom: $duplicateFrom, searchQuery: $searchQuery)';
   }
 
   @override
@@ -411,7 +427,9 @@ class _$LendingModelImpl implements _LendingModel {
                 other.lastMoneyGivenDate == lastMoneyGivenDate) &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.duplicateFrom, duplicateFrom) ||
-                other.duplicateFrom == duplicateFrom));
+                other.duplicateFrom == duplicateFrom) &&
+            (identical(other.searchQuery, searchQuery) ||
+                other.searchQuery == searchQuery));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -433,7 +451,8 @@ class _$LendingModelImpl implements _LendingModel {
       datetime,
       lastMoneyGivenDate,
       userId,
-      duplicateFrom);
+      duplicateFrom,
+      searchQuery);
 
   /// Create a copy of LendingModel
   /// with the given fields replaced by the non-null parameter values.
@@ -470,7 +489,8 @@ abstract class _LendingModel implements LendingModel {
       final Timestamp? datetime,
       final String? lastMoneyGivenDate,
       final String? userId,
-      final String? duplicateFrom}) = _$LendingModelImpl;
+      final String? duplicateFrom,
+      final String? searchQuery}) = _$LendingModelImpl;
 
   factory _LendingModel.fromJson(Map<String, dynamic> json) =
       _$LendingModelImpl.fromJson;
@@ -509,6 +529,8 @@ abstract class _LendingModel implements LendingModel {
   String? get userId;
   @override
   String? get duplicateFrom;
+  @override
+  String? get searchQuery;
 
   /// Create a copy of LendingModel
   /// with the given fields replaced by the non-null parameter values.

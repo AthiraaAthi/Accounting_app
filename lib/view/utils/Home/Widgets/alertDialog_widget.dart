@@ -966,7 +966,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
                         ),
                         TextButton(
                           onPressed: () {
-                            final name = nameController.text;
+                            final name = nameController.text.trim();
                             final phone = phoneController.text;
                             final amount = amountController.text;
                             final descriptionamount =
@@ -1002,6 +1002,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
 
                             final model = LendingModel(
                                 name: name,
+                                searchQuery: name.toLowerCase().trim(),
                                 phone: phone,
                                 amount: amount,
                                 asJoiner: false,

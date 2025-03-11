@@ -155,8 +155,8 @@ class LenderFunctions implements ILenderRepository {
         .collection('users')
         .doc(userId)
         .collection('lender')
-        .where('name', isGreaterThan: query)
-        .where('name', isLessThanOrEqualTo: '$query\uf8ff')
+        .where('searchQuery', isGreaterThan: query)
+        .where('searchQuery', isLessThanOrEqualTo: '$query\uf8ff')
         .get();
     try {
       final lenderDetails =
