@@ -22,6 +22,9 @@ _$LendingModelImpl _$$LendingModelImplFromJson(Map<String, dynamic> json) =>
       balanceAmount: json['balanceAmount'] as String?,
       datetime: timestampFromJson(json['datetime']),
       lastMoneyGivenDate: json['lastMoneyGivenDate'] as String?,
+      userId: json['userId'] as String?,
+      duplicateFrom: json['duplicateFrom'] as String?,
+      searchQuery: json['searchQuery'] as String?,
     );
 
 Map<String, dynamic> _$$LendingModelImplToJson(_$LendingModelImpl instance) =>
@@ -40,4 +43,7 @@ Map<String, dynamic> _$$LendingModelImplToJson(_$LendingModelImpl instance) =>
       'balanceAmount': instance.balanceAmount,
       'datetime': timestampToJson(instance.datetime),
       'lastMoneyGivenDate': instance.lastMoneyGivenDate,
+      'userId': instance.userId,
+      'duplicateFrom': instance.duplicateFrom,
+      'searchQuery': instance.searchQuery,
     };

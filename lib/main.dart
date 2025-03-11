@@ -2,8 +2,8 @@ import 'package:curved_nav/Application/Advertisment/ad_bloc.dart';
 import 'package:curved_nav/Application/Calender/calender_bloc.dart';
 import 'package:curved_nav/Application/Category/category_bloc.dart';
 import 'package:curved_nav/Application/Expense/expense_bloc.dart';
+import 'package:curved_nav/Application/Join/join_bloc.dart';
 import 'package:curved_nav/Application/Lender/lender_bloc.dart';
-
 import 'package:curved_nav/Infrastructure/User/user_repository.dart';
 import 'package:curved_nav/domain/Advertisement/ad_helper.dart';
 import 'package:curved_nav/domain/core/d_i/injectable.dart';
@@ -12,15 +12,12 @@ import 'package:curved_nav/domain/models/category%20model/category_model.dart';
 import 'package:curved_nav/firebase_options.dart';
 import 'package:curved_nav/view/utils/Introduction%20screen/onBoarding_screen.dart';
 import 'package:curved_nav/view/utils/Navigation/nav_screen.dart';
-
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:firebase_core/firebase_core.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-
 import 'package:hive_flutter/adapters.dart';
 
 void main() async {
@@ -64,6 +61,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => getit<LenderBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => getit<JoinBloc>(),
         ),
         BlocProvider(
           create: (context) => CalenderBloc(),

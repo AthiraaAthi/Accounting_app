@@ -47,6 +47,7 @@ class HelpScreen extends StatelessWidget {
           child: Column(
             children: [
               TextFormField(
+                  cursorColor: primaryColorBlue,
                   controller: nameController,
                   decoration: InputDecoration(
                     hintText: 'your name',
@@ -68,6 +69,7 @@ class HelpScreen extends StatelessWidget {
                 height: 30,
               ),
               TextFormField(
+                cursorColor: primaryColorBlue,
                 controller: phoneController,
                 keyboardType: TextInputType.phone,
                 decoration: InputDecoration(
@@ -91,6 +93,7 @@ class HelpScreen extends StatelessWidget {
                 height: 30,
               ),
               TextFormField(
+                cursorColor: primaryColorBlue,
                 controller: problemController,
                 maxLines: 4,
                 decoration: InputDecoration(

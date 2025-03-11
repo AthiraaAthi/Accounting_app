@@ -1,0 +1,2 @@
+C:/Users/harig/Documents/GitHub/Accounting_app/android/app/.cxx/Debug/6vn6n570/x86/CMakeFiles/edit_cache.dir
+C:/Users/harig/Documents/GitHub/Accounting_app/android/app/.cxx/Debug/6vn6n570/x86/CMakeFiles/rebuild_cache.dir

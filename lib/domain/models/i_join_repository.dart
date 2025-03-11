@@ -5,4 +5,7 @@ import 'package:dartz/dartz.dart';
 abstract class IJoinRepository {
   Future<Either<MainFailures, List<LendingModel>>> getJoinCardInformation(
       String code);
+  Future<Either<MainFailures, List<LendingModel>>> getJoinCard();
+  Future<void> addJoinCard(LendingModel model);
+  Future<bool> deleteJoinCard(String id);
 }

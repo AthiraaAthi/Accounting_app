@@ -25,6 +25,9 @@ class LendingModel with _$LendingModel {
     @JsonKey(fromJson: timestampFromJson, toJson: timestampToJson)
     Timestamp? datetime,
     String? lastMoneyGivenDate,
+    String? userId,
+    String? duplicateFrom,
+    String? searchQuery,
   }) = _LendingModel;
 
   factory LendingModel.fromJson(Map<String, dynamic> json) =>
@@ -35,10 +38,8 @@ List<Timestamp>? _timestampListFromJson(List<dynamic>? jsonList) {
   if (jsonList == null) return null;
 
   return jsonList.map((e) {
-    if (e is Timestamp) return e; // Already a Timestamp
-    if (e is String)
-      return Timestamp.fromDate(
-          DateTime.parse(e)); // Convert String to Timestamp
+    if (e is Timestamp) return e;
+    if (e is String) return Timestamp.fromDate(DateTime.parse(e));
     throw Exception('Invalid data type for timestamp');
   }).toList();
 }
@@ -56,7 +57,6 @@ Timestamp? timestampFromJson(dynamic json) {
   return json is Timestamp ? json : Timestamp.fromMillisecondsSinceEpoch(json);
 }
 
-// toJson function to convert a Dart object to JSON
 dynamic timestampToJson(Timestamp? timestamp) {
   return timestamp?.millisecondsSinceEpoch;
 }

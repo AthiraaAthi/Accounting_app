@@ -14,7 +14,7 @@ class AdBloc extends Bloc<AdEvent, AdState> {
   AdBloc() : super(AdState.initial()) {
     InterstitialAd? _interstatialAd;
 
-    on<_Started>((event, emit) {
+    on<Started>((event, emit) async {
       BannerAd(
               size: AdSize.banner,
               adUnitId: AdHelper.bannerAdUnitId,
@@ -55,7 +55,7 @@ class AdBloc extends Bloc<AdEvent, AdState> {
   }
   @override
   Future<void> close() {
-    _bannerAd!.dispose();
+    _bannerAd?.dispose();
     return super.close();
   }
 }

@@ -18,6 +18,7 @@ class CategoryAddDialog extends StatelessWidget {
       backgroundColor: white,
       title: Text('Add category'),
       content: TextField(
+        cursorColor: primaryColorBlue,
         autofocus: true,
         controller: _amountController,
         decoration: InputDecoration(

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:curved_nav/Application/Advertisment/ad_bloc.dart';
 import 'package:curved_nav/Application/Category/category_bloc.dart';
 import 'package:curved_nav/Infrastructure/Category/category_repository.dart';
@@ -58,7 +56,6 @@ class CategorySettings extends StatelessWidget {
       ),
       body: BlocBuilder<CategoryBloc, CategoryState>(
         builder: (context, state) {
-          log(state.categoryNames.toString());
           if (state.isLoading) {
             return Center(child: Text('No categories,'));
           } else if (state.categoryNames.isEmpty) {
@@ -69,7 +66,6 @@ class CategorySettings extends StatelessWidget {
             return ListView.builder(
               itemCount: state.categoryNames.length,
               itemBuilder: (context, index) {
-                log(state.categoryNames[index].categoryName);
                 final names = state.categoryNames[index].categoryName;
 
                 return ListTile(
