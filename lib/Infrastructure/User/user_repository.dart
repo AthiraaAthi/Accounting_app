@@ -1,3 +1,6 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_nav/domain/functions/user_detection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,24 +12,33 @@ class UserRepository implements IUserDetection {
   @override
   Future<void> handleUserRegistration() async {
     final userId = await getUserIdFromLocal();
+    final bool isOnline = await isConnected();
 
     if (userId != null) {
-      final userDoc = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userId)
-          .get();
-      if (userDoc.exists) {
-        await userDoc.reference
-            .update({'lastAppUsed': FieldValue.serverTimestamp()});
+      if (isOnline) {
+        try {
+          final userDoc = await FirebaseFirestore.instance
+              .collection('users')
+              .doc(userId)
+              .get();
+          if (userDoc.exists) {
+            await userDoc.reference
+                .update({'lastAppUsed': FieldValue.serverTimestamp()});
+          } else {
+            await registerNewUser();
+          }
+        } catch (e) {
+          log('Firestore Error: $e');
+        }
       } else {
-        String newUserId = await signInAnonymously();
-        await registerUser(newUserId);
-        await saveUserIdLocally(newUserId);
+        log('Offline - Using stored userId: $userId');
       }
     } else {
-      String newUserId = await signInAnonymously();
-      await registerUser(newUserId);
-      await saveUserIdLocally(newUserId);
+      if (isOnline) {
+        await registerNewUser();
+      } else {
+        log('Offline - Cannot register user, but app will still open.');
+      }
     }
   }
 }
@@ -55,4 +67,19 @@ Future<void> saveUserIdLocally(String userId) async {
 Future<String?> getUserIdFromLocal() async {
   final prefs = await SharedPreferences.getInstance();
   return prefs.getString('userId');
+}
+
+Future<void> registerNewUser() async {
+  String newUserId = await signInAnonymously();
+  await registerUser(newUserId);
+  await saveUserIdLocally(newUserId);
+}
+
+Future<bool> isConnected() async {
+  try {
+    final result = await InternetAddress.lookup('google.com');
+    return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
+  } catch (_) {
+    return false;
+  }
 }
