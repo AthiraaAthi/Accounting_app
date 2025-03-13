@@ -50,19 +50,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAGaxX6rN2js9DyAiGbpQ1gkGefoN-nX1w',
-    appId: '1:180958546681:android:b7d27c68c9a4d54db7b028',
-    messagingSenderId: '180958546681',
-    projectId: 'accountin-app',
-    storageBucket: 'accountin-app.firebasestorage.app',
+    apiKey: 'AIzaSyBDzcf5QWMbV27UGHHthefwYSaG4wveZ8M',
+    appId: '1:453704966983:android:b85f8b5f20568bac592262',
+    messagingSenderId: '453704966983',
+    projectId: 'finfloww-8c542',
+    storageBucket: 'finfloww-8c542.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAE6HmAhjTNJDNpGHOB7TPgxk2tMHKEQgM',
-    appId: '1:180958546681:ios:367838be23df7877b7b028',
-    messagingSenderId: '180958546681',
-    projectId: 'accountin-app',
-    storageBucket: 'accountin-app.firebasestorage.app',
-    iosBundleId: 'com.lookthrough.app',
+    apiKey: 'AIzaSyCd-SBzVcKd11fnAPpNehqYKFAN1EwowLU',
+    appId: '1:453704966983:ios:fa9f8a2d40d148b8592262',
+    messagingSenderId: '453704966983',
+    projectId: 'finfloww-8c542',
+    storageBucket: 'finfloww-8c542.firebasestorage.app',
+    iosBundleId: 'com.finfloww.app',
   );
 }
