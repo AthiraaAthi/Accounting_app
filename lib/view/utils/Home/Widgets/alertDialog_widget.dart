@@ -168,7 +168,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
         TextEditingController();
 
     final TextEditingController monthlyInstallmentAmountController =
-        TextEditingController(text: 'Select date');
+        TextEditingController(text: DateFormat.yMMMd().format(DateTime.now()));
     final TextEditingController codeTextController = TextEditingController();
 
     return BlocBuilder<LenderBloc, LenderState>(
@@ -695,6 +695,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                           dropdownColor: white,
                                                           validator: FieldValidators
                                                               .requiredValidator,
+                                                          value: weekdays[0],
                                                           decoration:
                                                               InputDecoration(
                                                             hintText:

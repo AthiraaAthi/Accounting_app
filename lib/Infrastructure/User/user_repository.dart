@@ -12,6 +12,7 @@ class UserRepository implements IUserDetection {
   @override
   Future<void> handleUserRegistration() async {
     final userId = await getUserIdFromLocal();
+    log("Retrieved userId: $userId");
     final bool isOnline = await isConnected();
 
     if (userId != null) {
@@ -24,7 +25,9 @@ class UserRepository implements IUserDetection {
           if (userDoc.exists) {
             await userDoc.reference
                 .update({'lastAppUsed': FieldValue.serverTimestamp()});
+            log('exist user');
           } else {
+            log('new user');
             await registerNewUser();
           }
         } catch (e) {
@@ -35,6 +38,7 @@ class UserRepository implements IUserDetection {
       }
     } else {
       if (isOnline) {
+        log('new user 2');
         await registerNewUser();
       } else {
         log('Offline - Cannot register user, but app will still open.');
