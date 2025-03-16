@@ -51,6 +51,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isFirstTime = box.read('first_time') ?? true;
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(

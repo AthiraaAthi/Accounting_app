@@ -1,16 +1,49 @@
+import 'dart:async';
+
 import 'package:curved_nav/view/utils/Navigation/nav_screen.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
-class OnboardingScreen extends StatelessWidget {
+class OnboardingScreen extends StatefulWidget {
   OnboardingScreen({super.key});
 
+  @override
+  State<OnboardingScreen> createState() => _OnboardingScreenState();
+}
+
+class _OnboardingScreenState extends State<OnboardingScreen> {
   final introKey = GlobalKey<IntroductionScreenState>();
+
   final box = GetStorage();
+  bool isConnectedToInternet = true;
+  StreamSubscription? _isSubscribedToInternetConnection;
+
+  @override
+  void initState() {
+    super.initState();
+    _isSubscribedToInternetConnection =
+        InternetConnection().onStatusChange.listen((status) {
+      if (status == InternetStatus.disconnected && isConnectedToInternet) {
+        isConnectedToInternet = false;
+      } else if (status == InternetStatus.connected && !isConnectedToInternet) {
+        isConnectedToInternet = true;
+      }
+      setState(() {
+        isConnectedToInternet = status != InternetStatus.disconnected;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _isSubscribedToInternetConnection?.cancel();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,17 +108,45 @@ class OnboardingScreen extends StatelessWidget {
       ],
       onDone: () {
         box.write('first_time', false);
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => NavScreen()),
-        );
+        isConnectedToInternet
+            ? Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => NavScreen()),
+              )
+            : ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  backgroundColor: primaryColorBlue,
+                  content: Center(
+                    child: Text(
+                      'Please turn on the internet and try again!',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  duration: Duration(seconds: 2),
+                ),
+              );
+        ;
       },
       onSkip: () {
         box.write('first_time', false);
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => NavScreen()),
-        );
+        isConnectedToInternet
+            ? Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => NavScreen()),
+              )
+            : ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  backgroundColor: primaryColorBlue,
+                  content: Center(
+                    child: Text(
+                      'Please turn on the internet and try again!',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  duration: Duration(seconds: 2),
+                ),
+              );
+        ;
       },
       dotsDecorator: DotsDecorator(
         size: const Size(5.0, 5.0),
