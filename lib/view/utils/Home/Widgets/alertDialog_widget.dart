@@ -50,6 +50,8 @@ class _AddCardDaologState extends State<AddCardDaolog>
 
   final _formKey = GlobalKey<FormState>();
 
+  late TabController _tabController;
+
   @override
   void initState() {
     super.initState();
@@ -58,6 +60,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
     listOfMonthlyDates = [];
     listOfDates = [];
     timestampList = [];
+    _tabController = TabController(length: 2, vsync: this);
   }
 
   DateTime normalizeDate(DateTime date) {
@@ -161,7 +164,19 @@ class _AddCardDaologState extends State<AddCardDaolog>
   final TextEditingController monthlyInstallmentAmountController =
       TextEditingController(text: DateFormat.yMMMd().format(DateTime.now()));
   final TextEditingController codeTextController = TextEditingController();
-  late TabController _tabController = TabController(length: 2, vsync: this);
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    phoneController.dispose();
+    amountController.dispose();
+    descriptionController.dispose();
+    installmentAmountController.dispose();
+    monthlyInstallmentAmountController.dispose();
+    codeTextController.dispose();
+    _tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -1225,18 +1240,5 @@ class _AddCardDaologState extends State<AddCardDaolog>
             ));
       },
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    nameController.dispose();
-    phoneController.dispose();
-    amountController.dispose();
-    descriptionController.dispose();
-    installmentAmountController.dispose();
-    monthlyInstallmentAmountController.dispose();
-    codeTextController.dispose();
-    _tabController.dispose();
   }
 }
