@@ -51,11 +51,6 @@ class _AddCardDaologState extends State<AddCardDaolog>
   final _formKey = GlobalKey<FormState>();
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   void initState() {
     super.initState();
     listOfDailyDates = [];
@@ -156,21 +151,20 @@ class _AddCardDaologState extends State<AddCardDaolog>
     }
   }
 
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController amountController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+  final TextEditingController installmentAmountController =
+      TextEditingController();
+
+  final TextEditingController monthlyInstallmentAmountController =
+      TextEditingController(text: DateFormat.yMMMd().format(DateTime.now()));
+  final TextEditingController codeTextController = TextEditingController();
+  late TabController _tabController = TabController(length: 2, vsync: this);
+
   @override
   Widget build(BuildContext context) {
-    late TabController _tabController = TabController(length: 2, vsync: this);
-
-    final TextEditingController nameController = TextEditingController();
-    final TextEditingController phoneController = TextEditingController();
-    final TextEditingController amountController = TextEditingController();
-    final TextEditingController descriptionController = TextEditingController();
-    final TextEditingController installmentAmountController =
-        TextEditingController();
-
-    final TextEditingController monthlyInstallmentAmountController =
-        TextEditingController(text: DateFormat.yMMMd().format(DateTime.now()));
-    final TextEditingController codeTextController = TextEditingController();
-
     return BlocBuilder<LenderBloc, LenderState>(
       builder: (context, state) {
         return IconButton(
@@ -1231,5 +1225,18 @@ class _AddCardDaologState extends State<AddCardDaolog>
             ));
       },
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    nameController.dispose();
+    phoneController.dispose();
+    amountController.dispose();
+    descriptionController.dispose();
+    installmentAmountController.dispose();
+    monthlyInstallmentAmountController.dispose();
+    codeTextController.dispose();
+    _tabController.dispose();
   }
 }

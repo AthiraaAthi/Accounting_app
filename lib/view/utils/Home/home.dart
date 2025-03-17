@@ -116,6 +116,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   void dispose() {
     _isSubscribedToInternetConnection?.cancel();
+    _bannerAd?.dispose();
+    _debouncer.dispose();
     super.dispose();
   }
 
