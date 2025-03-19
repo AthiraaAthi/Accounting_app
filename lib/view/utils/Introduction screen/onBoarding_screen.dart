@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:curved_nav/view/utils/Navigation/nav_screen.dart';
 import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
@@ -20,29 +18,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final introKey = GlobalKey<IntroductionScreenState>();
 
   final box = GetStorage();
-  bool isConnectedToInternet = true;
-  StreamSubscription? _isSubscribedToInternetConnection;
 
   @override
   void initState() {
     super.initState();
-    _isSubscribedToInternetConnection =
-        InternetConnection().onStatusChange.listen((status) {
-      if (status == InternetStatus.disconnected && isConnectedToInternet) {
-        isConnectedToInternet = false;
-      } else if (status == InternetStatus.connected && !isConnectedToInternet) {
-        isConnectedToInternet = true;
-      }
-      setState(() {
-        isConnectedToInternet = status != InternetStatus.disconnected;
-      });
-    });
   }
 
   @override
   void dispose() {
     super.dispose();
-    _isSubscribedToInternetConnection?.cancel();
   }
 
   @override
@@ -106,47 +90,29 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               'assets/svg/explore.svg',
             )),
       ],
-      onDone: () {
+      onDone: () async {
         box.write('first_time', false);
-        isConnectedToInternet
-            ? Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => NavScreen()),
-              )
-            : ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  backgroundColor: primaryColorBlue,
-                  content: Center(
-                    child: Text(
-                      'Please turn on the internet and try again!',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  duration: Duration(seconds: 2),
-                ),
-              );
-        ;
+        bool isOnline = await InternetConnection().hasInternetAccess;
+        if (isOnline) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => NavScreen()),
+          );
+        } else {
+          _showNoInternetSnackbar();
+        }
       },
-      onSkip: () {
+      onSkip: () async {
         box.write('first_time', false);
-        isConnectedToInternet
-            ? Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => NavScreen()),
-              )
-            : ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  backgroundColor: primaryColorBlue,
-                  content: Center(
-                    child: Text(
-                      'Please turn on the internet and try again!',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  duration: Duration(seconds: 2),
-                ),
-              );
-        ;
+        bool isOnline = await InternetConnection().hasInternetAccess;
+        if (isOnline) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => NavScreen()),
+          );
+        } else {
+          _showNoInternetSnackbar();
+        }
       },
       dotsDecorator: DotsDecorator(
         size: const Size(5.0, 5.0),
@@ -177,6 +143,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           ),
           backgroundColor: WidgetStatePropertyAll(primaryColorBlue),
           iconColor: WidgetStatePropertyAll(white)),
+    );
+  }
+
+  void _showNoInternetSnackbar() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: primaryColorBlue,
+        content: Center(
+          child: Text(
+            'Please turn on the internet and try again!',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+        duration: Duration(seconds: 2),
+      ),
     );
   }
 }
