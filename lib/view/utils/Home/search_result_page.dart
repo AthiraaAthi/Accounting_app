@@ -96,7 +96,7 @@ class SearchResultPage extends StatelessWidget {
                               Text(data.name ?? ' '),
                               Text('${data.balanceAmount}/-'),
                               Text(
-                                  '${data.lastMoneyGivenDate != null ? 'Last money given date:- ${data.lastMoneyGivenDate}' : 'Newly added'}')
+                                  '${data.lastMoneyGivenDate != null ? 'Last modified date:- ${data.lastMoneyGivenDate}' : 'Newly added'}')
                             ],
                           ),
                           IconButton(
