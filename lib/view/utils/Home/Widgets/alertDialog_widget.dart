@@ -70,7 +70,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
   void dailySelection(String? value) {
     if (value == "1") {
       DateTime today = normalizeDate(DateTime.now());
-      List<DateTime> dailyDates = List.generate(50, (index) {
+      List<DateTime> dailyDates = List.generate(1000, (index) {
         return normalizeDate(today.add(Duration(days: index)));
       });
 
@@ -117,7 +117,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
 
       DateTime firstTargetDay = today.add(Duration(days: daysToAdd));
 
-      List<DateTime> weeklyDates = List.generate(50, (index) {
+      List<DateTime> weeklyDates = List.generate(500, (index) {
         return normalizeDate(firstTargetDay.add(Duration(days: 7 * index)));
       });
 
@@ -137,7 +137,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
       int day = pickedDate.day;
       DateTime today = normalizeDate(DateTime.now());
 
-      final monthlyDates = List.generate(15, (index) {
+      final monthlyDates = List.generate(120, (index) {
         DateTime monthStart = DateTime(today.year, today.month + index, 1);
         int daysInMonth =
             DateTime(monthStart.year, monthStart.month + 1, 0).day;
@@ -162,7 +162,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
       TextEditingController();
 
   final TextEditingController monthlyInstallmentAmountController =
-      TextEditingController(text: DateFormat.yMMMd().format(DateTime.now()));
+      TextEditingController();
   final TextEditingController codeTextController = TextEditingController();
 
   @override
@@ -886,9 +886,11 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                                         _pickedDate);
                                                               });
                                                             } else {
-                                                              pickMonthlyDate(
-                                                                  DateTime
-                                                                      .now());
+                                                              setState(() {
+                                                                pickMonthlyDate(
+                                                                    DateTime
+                                                                        .now());
+                                                              });
                                                             }
                                                           },
                                                         )
@@ -1007,6 +1009,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
                               shareCode = generateRandomCode(10);
                             });
                             log(shareCode!);
+
                             final timeStamp =
                                 Timestamp.fromDate(DateTime.now());
 
