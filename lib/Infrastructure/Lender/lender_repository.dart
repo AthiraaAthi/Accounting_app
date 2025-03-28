@@ -23,7 +23,8 @@ class LenderFunctions implements ILenderRepository {
       final docRef = data.doc();
 
       String id = docRef.id;
-      LendingModel model = lenderDetails.copyWith(id: id);
+      String user = userId;
+      LendingModel model = lenderDetails.copyWith(id: id, userId: user);
 
       docRef.set(model.toJson());
 
@@ -154,8 +155,8 @@ class LenderFunctions implements ILenderRepository {
         .collection('users')
         .doc(userId)
         .collection('lender')
-        .where('name', isGreaterThan: query)
-        .where('name', isLessThanOrEqualTo: '$query\uf8ff')
+        .where('searchQuery', isGreaterThan: query)
+        .where('searchQuery', isLessThanOrEqualTo: '$query\uf8ff')
         .get();
     try {
       final lenderDetails =
@@ -169,7 +170,7 @@ class LenderFunctions implements ILenderRepository {
   }
 }
 
-bool isDueDateNear(DateTime dueDate, {int thresholdDays = 3}) {
+bool isDueDateNear(DateTime dueDate, {int thresholdDays = 2}) {
   final currentDate = DateTime.now();
   final difference = dueDate.difference(currentDate).inDays;
   return difference >= 0 && difference <= thresholdDays;

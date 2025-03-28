@@ -8,7 +8,6 @@ part of 'help_model.dart';
 
 _$HelpModelImpl _$$HelpModelImplFromJson(Map<String, dynamic> json) =>
     _$HelpModelImpl(
-      IsMoneyLent: json['IsMoneyLent'] as bool?,
       id: json['id'] as String?,
       name: json['name'] as String?,
       phone: json['phone'] as String?,
@@ -17,7 +16,6 @@ _$HelpModelImpl _$$HelpModelImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$HelpModelImplToJson(_$HelpModelImpl instance) =>
     <String, dynamic>{
-      'IsMoneyLent': instance.IsMoneyLent,
       'id': instance.id,
       'name': instance.name,
       'phone': instance.phone,

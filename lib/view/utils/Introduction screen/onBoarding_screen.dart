@@ -4,13 +4,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
-class OnboardingScreen extends StatelessWidget {
+class OnboardingScreen extends StatefulWidget {
   OnboardingScreen({super.key});
 
+  @override
+  State<OnboardingScreen> createState() => _OnboardingScreenState();
+}
+
+class _OnboardingScreenState extends State<OnboardingScreen> {
   final introKey = GlobalKey<IntroductionScreenState>();
+
   final box = GetStorage();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,19 +90,29 @@ class OnboardingScreen extends StatelessWidget {
               'assets/svg/explore.svg',
             )),
       ],
-      onDone: () {
+      onDone: () async {
         box.write('first_time', false);
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => NavScreen()),
-        );
+        bool isOnline = await InternetConnection().hasInternetAccess;
+        if (isOnline) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => NavScreen()),
+          );
+        } else {
+          _showNoInternetSnackbar();
+        }
       },
-      onSkip: () {
+      onSkip: () async {
         box.write('first_time', false);
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => NavScreen()),
-        );
+        bool isOnline = await InternetConnection().hasInternetAccess;
+        if (isOnline) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => NavScreen()),
+          );
+        } else {
+          _showNoInternetSnackbar();
+        }
       },
       dotsDecorator: DotsDecorator(
         size: const Size(5.0, 5.0),
@@ -116,6 +143,21 @@ class OnboardingScreen extends StatelessWidget {
           ),
           backgroundColor: WidgetStatePropertyAll(primaryColorBlue),
           iconColor: WidgetStatePropertyAll(white)),
+    );
+  }
+
+  void _showNoInternetSnackbar() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: primaryColorBlue,
+        content: Center(
+          child: Text(
+            'Please turn on the internet and try again!',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+        duration: Duration(seconds: 2),
+      ),
     );
   }
 }

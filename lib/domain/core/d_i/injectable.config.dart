@@ -10,6 +10,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:curved_nav/Application/Category/category_bloc.dart' as _i402;
 import 'package:curved_nav/Application/Expense/expense_bloc.dart' as _i1062;
+import 'package:curved_nav/Application/Join/join_bloc.dart' as _i368;
 import 'package:curved_nav/Application/Lender/lender_bloc.dart' as _i203;
 import 'package:curved_nav/domain/functions/user_detection.dart' as _i155;
 import 'package:curved_nav/domain/models/i_category_repository.dart' as _i794;
@@ -48,6 +49,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i794.ICategoryRepository>(
         () => _i660.CategoryFunctions());
     gh.lazySingleton<_i2.IHistoryRepository>(() => _i559.HistoryFunctions());
+    gh.factory<_i368.JoinBloc>(
+        () => _i368.JoinBloc(gh<_i988.IJoinRepository>()));
     gh.lazySingleton<_i155.IUserDetection>(() => _i572.UserRepository());
     gh.lazySingleton<_i338.IExpenseRepository>(() => _i360.ExpenseFunctions());
     gh.lazySingleton<_i367.ILenderRepository>(() => _i783.LenderFunctions());

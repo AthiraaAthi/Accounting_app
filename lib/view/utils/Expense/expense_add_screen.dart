@@ -131,6 +131,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
             child: Column(
               children: [
                 TextFormField(
+                  cursorColor: primaryColorBlue,
                   controller: _amountController,
                   decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
@@ -155,6 +156,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                   height: 15,
                 ),
                 TextFormField(
+                  cursorColor: primaryColorBlue,
                   controller: _categoryController,
                   readOnly: true,
                   validator: FieldValidators.requiredValidator,
@@ -293,6 +295,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                   height: 15,
                 ),
                 TextFormField(
+                  cursorColor: primaryColorBlue,
                   controller: _descriptionController,
                   maxLines: 3,
                   decoration: InputDecoration(
@@ -309,6 +312,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                   height: 15,
                 ),
                 TextField(
+                  cursorColor: primaryColorBlue,
                   controller: _dateController,
                   readOnly: true,
                   onTap: () {

@@ -40,21 +40,21 @@ mixin _$AdEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
+    required TResult Function(Started value) started,
     required TResult Function(_Interstatial value) interstatial,
     required TResult Function(_AppOpens value) appOpens,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
+    TResult? Function(Started value)? started,
     TResult? Function(_Interstatial value)? interstatial,
     TResult? Function(_AppOpens value)? appOpens,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
+    TResult Function(Started value)? started,
     TResult Function(_Interstatial value)? interstatial,
     TResult Function(_AppOpens value)? appOpens,
     required TResult orElse(),
@@ -103,7 +103,7 @@ class __$$StartedImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$StartedImpl implements _Started {
+class _$StartedImpl implements Started {
   const _$StartedImpl();
 
   @override
@@ -157,7 +157,7 @@ class _$StartedImpl implements _Started {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
+    required TResult Function(Started value) started,
     required TResult Function(_Interstatial value) interstatial,
     required TResult Function(_AppOpens value) appOpens,
   }) {
@@ -167,7 +167,7 @@ class _$StartedImpl implements _Started {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
+    TResult? Function(Started value)? started,
     TResult? Function(_Interstatial value)? interstatial,
     TResult? Function(_AppOpens value)? appOpens,
   }) {
@@ -177,7 +177,7 @@ class _$StartedImpl implements _Started {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
+    TResult Function(Started value)? started,
     TResult Function(_Interstatial value)? interstatial,
     TResult Function(_AppOpens value)? appOpens,
     required TResult orElse(),
@@ -189,8 +189,8 @@ class _$StartedImpl implements _Started {
   }
 }
 
-abstract class _Started implements AdEvent {
-  const factory _Started() = _$StartedImpl;
+abstract class Started implements AdEvent {
+  const factory Started() = _$StartedImpl;
 }
 
 /// @nodoc
@@ -268,7 +268,7 @@ class _$InterstatialImpl implements _Interstatial {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
+    required TResult Function(Started value) started,
     required TResult Function(_Interstatial value) interstatial,
     required TResult Function(_AppOpens value) appOpens,
   }) {
@@ -278,7 +278,7 @@ class _$InterstatialImpl implements _Interstatial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
+    TResult? Function(Started value)? started,
     TResult? Function(_Interstatial value)? interstatial,
     TResult? Function(_AppOpens value)? appOpens,
   }) {
@@ -288,7 +288,7 @@ class _$InterstatialImpl implements _Interstatial {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
+    TResult Function(Started value)? started,
     TResult Function(_Interstatial value)? interstatial,
     TResult Function(_AppOpens value)? appOpens,
     required TResult orElse(),
@@ -379,7 +379,7 @@ class _$AppOpensImpl implements _AppOpens {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
+    required TResult Function(Started value) started,
     required TResult Function(_Interstatial value) interstatial,
     required TResult Function(_AppOpens value) appOpens,
   }) {
@@ -389,7 +389,7 @@ class _$AppOpensImpl implements _AppOpens {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
+    TResult? Function(Started value)? started,
     TResult? Function(_Interstatial value)? interstatial,
     TResult? Function(_AppOpens value)? appOpens,
   }) {
@@ -399,7 +399,7 @@ class _$AppOpensImpl implements _AppOpens {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
+    TResult Function(Started value)? started,
     TResult Function(_Interstatial value)? interstatial,
     TResult Function(_AppOpens value)? appOpens,
     required TResult orElse(),

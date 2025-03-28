@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "180958546681",
-    "project_id": "accountin-app",
-    "storage_bucket": "accountin-app.firebasestorage.app"
+    "project_number": "453704966983",
+    "project_id": "finfloww-8c542",
+    "storage_bucket": "finfloww-8c542.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:180958546681:android:b7d27c68c9a4d54db7b028",
+        "mobilesdk_app_id": "1:453704966983:android:b85f8b5f20568bac592262",
         "android_client_info": {
-          "package_name": "com.lookthrough.app"
+          "package_name": "com.finfloww.app"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAGaxX6rN2js9DyAiGbpQ1gkGefoN-nX1w"
+          "current_key": "AIzaSyBDzcf5QWMbV27UGHHthefwYSaG4wveZ8M"
         }
       ],
       "services": {

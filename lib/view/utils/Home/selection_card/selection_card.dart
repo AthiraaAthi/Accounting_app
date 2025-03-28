@@ -4,6 +4,7 @@ import 'package:card_loading/card_loading.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_nav/Application/Advertisment/ad_bloc.dart';
 import 'package:curved_nav/Application/Calender/calender_bloc.dart';
+import 'package:curved_nav/Application/Join/join_bloc.dart';
 import 'package:curved_nav/Application/Lender/lender_bloc.dart';
 
 import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
@@ -39,7 +40,9 @@ class _SelectionCardState extends State<SelectionCard> {
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
-        context.read<LenderBloc>().add(History(id: widget.model.id!));
+        context
+            .read<LenderBloc>()
+            .add(History(id: widget.model.id!, isJoiner: widget.isCreator));
       },
     );
     WidgetsBinding.instance.addPostFrameCallback(
@@ -53,17 +56,24 @@ class _SelectionCardState extends State<SelectionCard> {
       },
     );
 
-    log('balance amount: ${widget.model.balanceAmount}');
-
     final usedId = FirebaseAuth.instance.currentUser!.uid;
-    final snapshot = FirebaseFirestore.instance
-        .collection('users')
-        .doc(usedId)
-        .collection('lender')
-        .doc(widget.model.id)
-        .collection('details')
-        .orderBy('timestamp', descending: true)
-        .snapshots();
+    final snapshot = widget.isCreator
+        ? FirebaseFirestore.instance
+            .collection('users')
+            .doc(usedId)
+            .collection('joined lender')
+            .doc(widget.model.id)
+            .collection('details')
+            .orderBy('timestamp', descending: true)
+            .snapshots()
+        : FirebaseFirestore.instance
+            .collection('users')
+            .doc(usedId)
+            .collection('lender')
+            .doc(widget.model.id)
+            .collection('details')
+            .orderBy('timestamp', descending: true)
+            .snapshots();
     final payType = widget.model.installmentType == '1'
         ? 'Daily Pay'
         : widget.model.installmentType == '2'
@@ -80,12 +90,11 @@ class _SelectionCardState extends State<SelectionCard> {
                 );
               },
               icon: Icon(Icons.info_outline)),
-          widget.isCreator
-              ? MenuButtonWidget(
-                  model: widget.model,
-                  type: TypeOfAdding.addAmount,
-                )
-              : SizedBox(),
+          MenuButtonWidget(
+            isCreator: widget.isCreator,
+            model: widget.model,
+            type: TypeOfAdding.addAmount,
+          ),
         ],
         surfaceTintColor: primaryColorBlue,
         foregroundColor: white,
@@ -184,7 +193,8 @@ class _SelectionCardState extends State<SelectionCard> {
                   color: white,
                 ),
                 widget.isCreator
-                    ? ElevatedButton(
+                    ? SizedBox()
+                    : ElevatedButton(
                         style: ButtonStyle(
                             shape: WidgetStatePropertyAll(
                                 RoundedRectangleBorder(
@@ -225,8 +235,7 @@ class _SelectionCardState extends State<SelectionCard> {
                             );
                           }
                         },
-                        child: Text("Add Payment"))
-                    : SizedBox(),
+                        child: Text("Add Payment")),
                 SizedBox(
                   height: 10,
                 ),
@@ -382,7 +391,7 @@ class _SelectionCardState extends State<SelectionCard> {
                           final date = items.date!.toDate();
                           final formatedDate =
                               '${date.day}/${date.month}/${date.year}';
-                          log(formatedDate);
+
                           return Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 10),
@@ -429,22 +438,43 @@ class _SelectionCardState extends State<SelectionCard> {
                 'Balance amount:',
                 style: TextStyle(color: white),
               ),
-              BlocBuilder<LenderBloc, LenderState>(
-                builder: (context, state) {
-                  final amount = state.data
-                      .firstWhere((element) => element.id == widget.model.id)
-                      .balanceAmount
-                      .toString();
-                  if (state.isLoading) {
-                    return SizedBox();
-                  }
-                  log('updated balance amount: $amount');
-                  return Text(
-                    "${amount}\\-",
-                    style: TextStyle(color: white),
-                  );
-                },
-              ),
+              widget.isCreator
+                  ? BlocBuilder<JoinBloc, JoinState>(
+                      builder: (context, state) {
+                        final amount = state.joinData
+                            .firstWhere(
+                                (element) => element.id == widget.model.id)
+                            .balanceAmount
+                            .toString();
+                        if (state.isLoading) {
+                          return SizedBox();
+                        } else if (amount.isEmpty) {
+                          return SizedBox();
+                        }
+
+                        return Text(
+                          "${amount}\\-",
+                          style: TextStyle(color: white),
+                        );
+                      },
+                    )
+                  : BlocBuilder<LenderBloc, LenderState>(
+                      builder: (context, state) {
+                        final amount = state.data
+                            .firstWhere(
+                                (element) => element.id == widget.model.id)
+                            .balanceAmount
+                            .toString();
+                        if (state.isLoading) {
+                          return SizedBox();
+                        }
+
+                        return Text(
+                          "${amount}\\-",
+                          style: TextStyle(color: white),
+                        );
+                      },
+                    )
             ],
           ),
         ),

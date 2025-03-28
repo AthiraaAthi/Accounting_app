@@ -35,12 +35,38 @@ class HistoryFunctions implements IHistoryRepository {
 
   @override
   Future<Either<MainFailures, List<HistoryModel>>> getDetails(
-      String lenderId) async {
+    String lenderId,
+  ) async {
     final connectivityResult = await Connectivity().checkConnectivity();
     final data = await FirebaseFirestore.instance
         .collection('users')
         .doc(userId)
         .collection('lender')
+        .doc(lenderId)
+        .collection('details')
+        .get();
+    try {
+      final historyDetails =
+          data.docs.map((e) => HistoryModel.fromJson(e.data())).toList();
+      if (connectivityResult == ConnectivityResult.none) {
+        return left(MainFailures.serverfailure());
+      }
+
+      return right(historyDetails);
+    } catch (e) {
+      log('error found:$e');
+      return left(MainFailures.clientfailure());
+    }
+  }
+
+  @override
+  Future<Either<MainFailures, List<HistoryModel>>> getJoinerDetails(
+      String lenderId) async {
+    final connectivityResult = await Connectivity().checkConnectivity();
+    final data = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .collection('joined lender')
         .doc(lenderId)
         .collection('details')
         .get();

@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:curved_nav/Application/Lender/lender_bloc.dart';
 import 'package:curved_nav/Infrastructure/Code%20Generation/code_generator.dart';
-
+import 'package:curved_nav/Infrastructure/Lender/join_repository.dart';
 import 'package:curved_nav/Infrastructure/Lender/lender_repository.dart';
 import 'package:curved_nav/domain/core/Validator/validator.dart';
 import 'package:curved_nav/domain/models/Lending%20Card%20model/lending_model.dart';
@@ -50,10 +50,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
 
   final _formKey = GlobalKey<FormState>();
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
+  late TabController _tabController;
 
   @override
   void initState() {
@@ -63,6 +60,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
     listOfMonthlyDates = [];
     listOfDates = [];
     timestampList = [];
+    _tabController = TabController(length: 2, vsync: this);
   }
 
   DateTime normalizeDate(DateTime date) {
@@ -72,7 +70,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
   void dailySelection(String? value) {
     if (value == "1") {
       DateTime today = normalizeDate(DateTime.now());
-      List<DateTime> dailyDates = List.generate(50, (index) {
+      List<DateTime> dailyDates = List.generate(1000, (index) {
         return normalizeDate(today.add(Duration(days: index)));
       });
 
@@ -119,7 +117,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
 
       DateTime firstTargetDay = today.add(Duration(days: daysToAdd));
 
-      List<DateTime> weeklyDates = List.generate(50, (index) {
+      List<DateTime> weeklyDates = List.generate(500, (index) {
         return normalizeDate(firstTargetDay.add(Duration(days: 7 * index)));
       });
 
@@ -139,7 +137,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
       int day = pickedDate.day;
       DateTime today = normalizeDate(DateTime.now());
 
-      final monthlyDates = List.generate(15, (index) {
+      final monthlyDates = List.generate(120, (index) {
         DateTime monthStart = DateTime(today.year, today.month + index, 1);
         int daysInMonth =
             DateTime(monthStart.year, monthStart.month + 1, 0).day;
@@ -156,21 +154,32 @@ class _AddCardDaologState extends State<AddCardDaolog>
     }
   }
 
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController amountController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+  final TextEditingController installmentAmountController =
+      TextEditingController();
+
+  final TextEditingController monthlyInstallmentAmountController =
+      TextEditingController();
+  final TextEditingController codeTextController = TextEditingController();
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    phoneController.dispose();
+    amountController.dispose();
+    descriptionController.dispose();
+    installmentAmountController.dispose();
+    monthlyInstallmentAmountController.dispose();
+    codeTextController.dispose();
+    _tabController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    late TabController _tabController = TabController(length: 2, vsync: this);
-
-    final TextEditingController nameController = TextEditingController();
-    final TextEditingController phoneController = TextEditingController();
-    final TextEditingController amountController = TextEditingController();
-    final TextEditingController descriptionController = TextEditingController();
-    final TextEditingController installmentAmountController =
-        TextEditingController();
-
-    final TextEditingController monthlyInstallmentAmountController =
-        TextEditingController(text: 'Select date');
-    final TextEditingController codeTextController = TextEditingController();
-
     return BlocBuilder<LenderBloc, LenderState>(
       builder: (context, state) {
         return IconButton(
@@ -297,6 +306,12 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                             WidgetStatePropertyAll(
                                                           ColorConstant.defBlue,
                                                         ),
+                                                        trackOutlineWidth:
+                                                            WidgetStatePropertyAll(
+                                                                0),
+                                                        trackOutlineColor:
+                                                            WidgetStatePropertyAll(
+                                                                primaryColorBlue),
                                                         onChanged: (value) {
                                                           setState(
                                                             () {
@@ -307,11 +322,13 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                         },
                                                       ),
                                                       Text(
-                                                        "To Give",
+                                                        "Debt to",
                                                       ),
                                                     ],
                                                   ),
                                                   TextFormField(
+                                                    cursorColor:
+                                                        primaryColorBlue,
                                                     controller: nameController,
                                                     validator: FieldValidators
                                                         .requiredValidator,
@@ -360,6 +377,8 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                   ),
                                                   SizedBox(height: 15),
                                                   TextFormField(
+                                                    cursorColor:
+                                                        primaryColorBlue,
                                                     controller: phoneController,
                                                     validator: phoneController
                                                             .text.isNotEmpty
@@ -413,14 +432,12 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                   ),
                                                   SizedBox(height: 15),
                                                   TextFormField(
+                                                    cursorColor:
+                                                        primaryColorBlue,
                                                     controller:
                                                         descriptionController,
                                                     maxLines: 4,
                                                     decoration: InputDecoration(
-                                                      contentPadding:
-                                                          EdgeInsets.only(
-                                                              left: 50,
-                                                              top: 30),
                                                       focusedBorder:
                                                           OutlineInputBorder(
                                                               borderSide:
@@ -448,6 +465,8 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                   ),
                                                   SizedBox(height: 15),
                                                   TextFormField(
+                                                    cursorColor:
+                                                        primaryColorBlue,
                                                     controller:
                                                         amountController,
                                                     validator: isMoneyLendingSelected
@@ -505,6 +524,8 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                   isMoneyLendingSelected
                                                       ? SizedBox()
                                                       : TextFormField(
+                                                          cursorColor:
+                                                              primaryColorBlue,
                                                           controller:
                                                               installmentAmountController,
                                                           validator: installmentAmountController
@@ -683,6 +704,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                           dropdownColor: white,
                                                           validator: FieldValidators
                                                               .requiredValidator,
+                                                          value: weekdays[0],
                                                           decoration:
                                                               InputDecoration(
                                                             hintText:
@@ -750,6 +772,8 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                       : SizedBox(),
                                                   isMonthSelected
                                                       ? TextFormField(
+                                                          cursorColor:
+                                                              primaryColorBlue,
                                                           controller:
                                                               monthlyInstallmentAmountController,
                                                           validator: FieldValidators
@@ -862,9 +886,11 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                                         _pickedDate);
                                                               });
                                                             } else {
-                                                              pickMonthlyDate(
-                                                                  DateTime
-                                                                      .now());
+                                                              setState(() {
+                                                                pickMonthlyDate(
+                                                                    DateTime
+                                                                        .now());
+                                                              });
                                                             }
                                                           },
                                                         )
@@ -877,6 +903,8 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                     height: 30,
                                                   ),
                                                   TextFormField(
+                                                    cursorColor:
+                                                        primaryColorBlue,
                                                     controller:
                                                         codeTextController,
                                                     validator: FieldValidators
@@ -950,7 +978,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
                         ),
                         TextButton(
                           onPressed: () {
-                            final name = nameController.text;
+                            final name = nameController.text.trim();
                             final phone = phoneController.text;
                             final amount = amountController.text;
                             final descriptionamount =
@@ -981,13 +1009,16 @@ class _AddCardDaologState extends State<AddCardDaolog>
                               shareCode = generateRandomCode(10);
                             });
                             log(shareCode!);
+
                             final timeStamp =
                                 Timestamp.fromDate(DateTime.now());
 
                             final model = LendingModel(
                                 name: name,
+                                searchQuery: name.toLowerCase().trim(),
                                 phone: phone,
                                 amount: amount,
+                                asJoiner: false,
                                 description: descriptionamount,
                                 installmentAmount: installmentAmount,
                                 IsMoneyLent: isMoneyLent,
@@ -1009,7 +1040,7 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                       ),
                                       (Route<dynamic> route) => false)
                                   : context.read<LenderBloc>().add(JoinGetData(
-                                      code: codeTextController.text));
+                                      code: codeTextController.text.trim()));
                               isSelected
                                   ? Navigator.pushAndRemoveUntil(
                                       context,
@@ -1042,18 +1073,32 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                   ],
                                                 );
                                               }
-                                              final data = state.joinData[0];
-                                              log(data.toString());
-                                              return Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text('Name: ${data.name}'),
-                                                  Text(
-                                                      'Amount: ${data.amount}/-')
-                                                ],
-                                              );
+                                              if (state.joinData.isNotEmpty) {
+                                                final data = state.joinData[0];
+
+                                                return Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text('Name: ${data.name}'),
+                                                    Text(
+                                                        'Amount: ${data.amount}/-')
+                                                  ],
+                                                );
+                                              } else {
+                                                return Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                        'Cannot find the profile, check the code'),
+                                                  ],
+                                                );
+                                              }
                                             },
                                           ),
                                           actions: [
@@ -1076,27 +1121,65 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                                           state.joinData[0];
                                                       final bool asJoiner =
                                                           true;
-                                                      final model =
-                                                          LendingModel(
-                                                        name: joinerData.name,
-                                                        asJoiner: asJoiner,
-                                                        phone: joinerData.phone,
-                                                        description: joinerData
-                                                            .description,
-                                                        amount:
-                                                            joinerData.amount,
-                                                        installmentAmount:
-                                                            joinerData
-                                                                .installmentAmount,
-                                                        installmentType:
-                                                            joinerData
-                                                                .installmentType,
-                                                        listOfTImestamp:
-                                                            joinerData
-                                                                .listOfTImestamp,
+                                                      final model = LendingModel(
+                                                          duplicateFrom:
+                                                              joinerData.id,
+                                                          userId:
+                                                              joinerData.userId,
+                                                          balanceAmount:
+                                                              joinerData
+                                                                  .balanceAmount,
+                                                          name: joinerData.name,
+                                                          asJoiner: asJoiner,
+                                                          phone:
+                                                              joinerData.phone,
+                                                          description:
+                                                              joinerData
+                                                                  .description,
+                                                          IsMoneyLent: false,
+                                                          amount:
+                                                              joinerData.amount,
+                                                          installmentAmount:
+                                                              joinerData
+                                                                  .installmentAmount,
+                                                          datetime: joinerData
+                                                              .datetime,
+                                                          installmentType:
+                                                              joinerData
+                                                                  .installmentType,
+                                                          listOfTImestamp:
+                                                              joinerData
+                                                                  .listOfTImestamp,
+                                                          lastMoneyGivenDate:
+                                                              joinerData
+                                                                  .lastMoneyGivenDate);
+                                                      fetchAndCopyData(model);
+
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                        SnackBar(
+                                                          backgroundColor:
+                                                              primaryColorBlue,
+                                                          behavior:
+                                                              SnackBarBehavior
+                                                                  .floating,
+                                                          shape: RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          20)),
+                                                          content: Center(
+                                                            child: Text(
+                                                              'Added!',
+                                                              style: TextStyle(
+                                                                  color: white),
+                                                            ),
+                                                          ),
+                                                          duration: Duration(
+                                                              seconds: 2),
+                                                        ),
                                                       );
-                                                      LenderFunctions()
-                                                          .addLender(model);
                                                       Navigator
                                                           .pushAndRemoveUntil(
                                                               context,
@@ -1120,21 +1203,24 @@ class _AddCardDaologState extends State<AddCardDaolog>
                                         );
                                       });
 
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  backgroundColor: primaryColorBlue,
-                                  behavior: SnackBarBehavior.floating,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20)),
-                                  content: Center(
-                                    child: Text(
-                                      'Added!',
-                                      style: TextStyle(color: white),
-                                    ),
-                                  ),
-                                  duration: Duration(seconds: 2),
-                                ),
-                              );
+                              isSelected
+                                  ? ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        backgroundColor: primaryColorBlue,
+                                        behavior: SnackBarBehavior.floating,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20)),
+                                        content: Center(
+                                          child: Text(
+                                            'Added!',
+                                            style: TextStyle(color: white),
+                                          ),
+                                        ),
+                                        duration: Duration(seconds: 2),
+                                      ),
+                                    )
+                                  : null;
                             }
                           },
                           child: Text(

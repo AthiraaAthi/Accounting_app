@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:developer';
-
 import 'package:card_loading/card_loading.dart';
-import 'package:curved_nav/Application/Advertisment/ad_bloc.dart';
+import 'package:curved_nav/Application/Join/join_bloc.dart';
 import 'package:curved_nav/Application/Lender/lender_bloc.dart';
+import 'package:curved_nav/domain/Advertisement/ad_helper.dart';
 
 import 'package:curved_nav/domain/Debounce/debouncer.dart';
 import 'package:curved_nav/view/utils/Home/Widgets/alertDialog_widget.dart';
@@ -14,6 +14,7 @@ import 'package:curved_nav/view/utils/color_constant/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
@@ -25,18 +26,19 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
-  final _debouncer = Debouncer(milliseconds: 1 * 1000);
+  final _debouncer = Debouncer(milliseconds: 300);
 
   bool isConnectedToInternet = true;
   StreamSubscription? _isSubscribedToInternetConnection;
   bool _isSnackbarVisible = false;
+
+  BannerAd? _bannerAd;
 
   @override
   void initState() {
     super.initState();
     _isSubscribedToInternetConnection =
         InternetConnection().onStatusChange.listen((status) {
-      log(status.toString());
       if (status == InternetStatus.disconnected && isConnectedToInternet) {
         isConnectedToInternet = false;
         _showPersistentSnackbar('No internet', isPersistent: true);
@@ -49,6 +51,22 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         isConnectedToInternet = status != InternetStatus.disconnected;
       });
     });
+    BannerAd(
+            size: AdSize.banner,
+            adUnitId: AdHelper.bannerAdUnitId,
+            listener: BannerAdListener(
+              onAdLoaded: (ad) {
+                setState(() {
+                  _bannerAd = ad as BannerAd;
+                });
+              },
+              onAdFailedToLoad: (ad, error) {
+                log('Failed to load BannerAd: $error');
+                ad.dispose();
+              },
+            ),
+            request: AdRequest())
+        .load();
   }
 
   void _showPersistentSnackbar(String message, {bool isPersistent = false}) {
@@ -98,6 +116,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   void dispose() {
     _isSubscribedToInternetConnection?.cancel();
+    _bannerAd?.dispose();
+    _debouncer.dispose();
     super.dispose();
   }
 
@@ -106,11 +126,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<LenderBloc>().add(LenderEvent.getData());
     });
-    WidgetsBinding.instance.addPostFrameCallback(
-      (timeStamp) {
-        context.read<AdBloc>().add(AdEvent.started());
-      },
-    );
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<JoinBloc>().add(JoinEvent.started());
+    });
+
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -138,23 +157,31 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             padding: const EdgeInsets.all(8.0),
             child: SizedBox(
               height: size.height * 0.055,
-              child: SearchBar(
-                shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20))),
-                backgroundColor: WidgetStatePropertyAll(
-                    const Color.fromARGB(255, 235, 235, 235)),
-                elevation: WidgetStatePropertyAll(0),
-                hintText: 'Search',
-                leading: Icon(
-                  Icons.search_outlined,
-                ),
-                onChanged: (value) {
-                  if (value.isNotEmpty) {
-                    SearchResultPage();
-                  }
-                  _debouncer.run(() {
-                    context.read<LenderBloc>().add(Search(query: value));
-                  });
+              child: BlocBuilder<LenderBloc, LenderState>(
+                builder: (context, state) {
+                  return SearchBar(
+                    shape: WidgetStatePropertyAll(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20))),
+                    backgroundColor: WidgetStatePropertyAll(
+                        const Color.fromARGB(255, 235, 235, 235)),
+                    elevation: WidgetStatePropertyAll(0),
+                    hintText: 'Search name',
+                    leading: Icon(
+                      Icons.search_outlined,
+                    ),
+                    onChanged: (value) {
+                      if (value.isNotEmpty) {
+                        _debouncer.run(() {
+                          context
+                              .read<LenderBloc>()
+                              .add(Search(query: value.toLowerCase().trim()));
+                        });
+                      } else {
+                        _debouncer.dispose();
+                        context.read<LenderBloc>().add(ClearSearch());
+                      }
+                    },
+                  );
                 },
               ),
             ),
@@ -188,29 +215,26 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     );
                   },
                 );
-              } else if (state.searchData.isEmpty && state.data.isEmpty) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      height: MediaQuery.of(context).size.height * 0.2,
-                      width: MediaQuery.of(context).size.width * 0.2,
-                      'assets/svg/NoData.svg',
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text('Click \'+\' to add'),
-                  ],
-                );
               } else if (state.searchData.isNotEmpty) {
                 return SearchResultPage();
-              } else
+              } else if (state.isIdle) {
                 return HomeIdlePage();
+              }
+              return HomeIdlePage();
             },
           ))
         ],
       ),
+      bottomNavigationBar: _bannerAd != null
+          ? Container(
+              height: _bannerAd!.size.height.toDouble(),
+              width: _bannerAd!.size.width.toDouble(),
+              child: AdWidget(ad: _bannerAd!),
+            )
+          : SizedBox(
+              height: 0,
+              width: 0,
+            ),
     );
   }
 }

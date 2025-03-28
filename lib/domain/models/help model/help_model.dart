@@ -6,7 +6,6 @@ part 'help_model.g.dart';
 @freezed
 class HelpModel with _$HelpModel {
   factory HelpModel({
-    bool? IsMoneyLent,
     String? id,
     String? name,
     String? phone,
