@@ -25,6 +25,7 @@ class HistoryScreen extends StatelessWidget {
         context.read<AdBloc>().add(AdEvent.interstatial());
       },
     );
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -41,6 +42,53 @@ class HistoryScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
+          Container(
+            width: double.infinity,
+            height: 70,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: BlocBuilder<LenderBloc, LenderState>(
+                builder: (context, state) {
+                  final totalPayment = state.historyData
+                      .where(
+                        (element) {
+                          return element.asPayment!;
+                        },
+                      )
+                      .toList()
+                      .length;
+                  final totaladdAmount = state.historyData
+                      .where(
+                        (element) {
+                          return element.asPayment == false;
+                        },
+                      )
+                      .toList()
+                      .length;
+
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Total payment :     '),
+                          Text('Total added amount :     '),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(totalPayment.toString()),
+                          Text(totaladdAmount.toString()),
+                        ],
+                      )
+                    ],
+                  );
+                },
+              ),
+            ),
+          ),
           Expanded(
             flex: 8,
             child: BlocBuilder<LenderBloc, LenderState>(
@@ -94,10 +142,9 @@ class HistoryScreen extends StatelessWidget {
                     final formatedDate =
                         '${date.day}/${date.month}/${date.year}';
                     return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 6),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 15, vertical: 6),
                       child: ListTile(
-                        subtitle: Text("Balance Amount:1000"),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
                         tileColor: data.asPayment! ? lightGreen : lightRed,
