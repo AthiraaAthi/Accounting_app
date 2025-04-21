@@ -6,7 +6,7 @@ import 'package:curved_nav/Application/Lender/lender_bloc.dart';
 import 'package:curved_nav/domain/Advertisement/ad_helper.dart';
 
 import 'package:curved_nav/domain/Debounce/debouncer.dart';
-import 'package:curved_nav/view/utils/Home/Widgets/alertDialog_widget.dart';
+import 'package:curved_nav/view/utils/Home/Widgets/add_card.dart';
 import 'package:curved_nav/view/utils/Home/home_idle_page.dart';
 import 'package:curved_nav/view/utils/Home/search_result_page.dart';
 
@@ -142,13 +142,21 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               color: Colors.white, fontSize: 19, fontWeight: FontWeight.w600),
         ),
         actions: [
-          BlocBuilder<LenderBloc, LenderState>(
-            builder: (context, state) {
-              return AddCardDaolog(
-                isInternetConnected: isConnectedToInternet,
-              );
-            },
-          )
+          IconButton(
+              onPressed: () {
+                if (isConnectedToInternet) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AddCard(),
+                      ));
+                }
+              },
+              icon: Icon(
+                Icons.add,
+                color: white,
+                size: 30,
+              ))
         ],
       ),
       body: Column(
