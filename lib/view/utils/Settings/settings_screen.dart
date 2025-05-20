@@ -81,7 +81,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                 style: TextStyle(fontSize: 23, fontWeight: FontWeight.w500),
               ),
               Text(
-                "v1.1.0",
+                "v1.1.2",
                 style: TextStyle(
                     color: const Color.fromARGB(255, 198, 196, 196),
                     fontWeight: FontWeight.w500),
