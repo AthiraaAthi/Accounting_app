@@ -40,6 +40,7 @@ void main() async {
   await UserRepository().handleUserRegistration();
 
   await GetStorage.init();
+
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
