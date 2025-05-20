@@ -21,50 +21,52 @@ class NavScreen extends StatelessWidget {
       Home(),
       SettingsScreen(),
     ];
-    return Scaffold(
-      body: PopScope(
-        canPop: false,
-        onPopInvokedWithResult: (didPop, result) {
-          SystemNavigator.pop();
-        },
-        child: ValueListenableBuilder(
+    return SafeArea(
+      child: Scaffold(
+        body: PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (didPop, result) {
+            SystemNavigator.pop();
+          },
+          child: ValueListenableBuilder(
+            valueListenable: _pagenotifier,
+            builder: (context, value, _) {
+              return screens[value];
+            },
+          ),
+        ),
+        bottomNavigationBar: ValueListenableBuilder(
           valueListenable: _pagenotifier,
           builder: (context, value, _) {
-            return screens[value];
+            return SalomonBottomBar(
+                backgroundColor: white,
+                currentIndex: value,
+                onTap: (value) {
+                  _pagenotifier.value = value;
+                },
+                selectedItemColor: primaryColorBlue,
+                items: [
+                  SalomonBottomBarItem(
+                      icon: FaIcon(
+                        FontAwesomeIcons.calendarCheck,
+                        size: 20,
+                      ),
+                      title: Text('Expense')),
+                  SalomonBottomBarItem(
+                      icon: Icon(
+                        Icons.home_outlined,
+                        size: 20,
+                      ),
+                      title: Text('Home')),
+                  SalomonBottomBarItem(
+                      icon: Icon(
+                        Icons.settings_outlined,
+                        size: 20,
+                      ),
+                      title: Text('Settings')),
+                ]);
           },
         ),
-      ),
-      bottomNavigationBar: ValueListenableBuilder(
-        valueListenable: _pagenotifier,
-        builder: (context, value, _) {
-          return SalomonBottomBar(
-              backgroundColor: white,
-              currentIndex: value,
-              onTap: (value) {
-                _pagenotifier.value = value;
-              },
-              selectedItemColor: primaryColorBlue,
-              items: [
-                SalomonBottomBarItem(
-                    icon: FaIcon(
-                      FontAwesomeIcons.calendarCheck,
-                      size: 20,
-                    ),
-                    title: Text('Expense')),
-                SalomonBottomBarItem(
-                    icon: Icon(
-                      Icons.home_outlined,
-                      size: 20,
-                    ),
-                    title: Text('Home')),
-                SalomonBottomBarItem(
-                    icon: Icon(
-                      Icons.settings_outlined,
-                      size: 20,
-                    ),
-                    title: Text('Settings')),
-              ]);
-        },
       ),
     );
   }
