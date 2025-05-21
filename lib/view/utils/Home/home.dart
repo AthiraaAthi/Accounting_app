@@ -51,22 +51,24 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         isConnectedToInternet = status != InternetStatus.disconnected;
       });
     });
-    BannerAd(
-            size: AdSize.banner,
-            adUnitId: AdHelper.bannerAdUnitId,
-            listener: BannerAdListener(
-              onAdLoaded: (ad) {
-                setState(() {
-                  _bannerAd = ad as BannerAd;
-                });
-              },
-              onAdFailedToLoad: (ad, error) {
-                log('Failed to load BannerAd: $error');
-                ad.dispose();
-              },
-            ),
-            request: AdRequest())
-        .load();
+    if (isActive) {
+      BannerAd(
+              size: AdSize.banner,
+              adUnitId: AdHelper.bannerAdUnitId,
+              listener: BannerAdListener(
+                onAdLoaded: (ad) {
+                  setState(() {
+                    _bannerAd = ad as BannerAd;
+                  });
+                },
+                onAdFailedToLoad: (ad, error) {
+                  log('Failed to load BannerAd: $error');
+                  ad.dispose();
+                },
+              ),
+              request: AdRequest())
+          .load();
+    }
   }
 
   void _showPersistentSnackbar(String message, {bool isPersistent = false}) {

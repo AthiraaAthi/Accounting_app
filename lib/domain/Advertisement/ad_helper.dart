@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
+final bool isActive = false;
+
 class AdHelper {
   static String get bannerAdUnitId {
     if (Platform.isAndroid) {
@@ -35,18 +37,20 @@ class AdHelper {
 AppOpenAd? _appOpenAd;
 
 loadAd() {
-  AppOpenAd.load(
-    adUnitId: AdHelper.appOpensAdUnitId,
-    request: const AdRequest(),
-    adLoadCallback: AppOpenAdLoadCallback(
-      onAdLoaded: (ad) {
-        _appOpenAd = ad;
-        _appOpenAd!.show();
-      },
-      onAdFailedToLoad: (error) {
-        _appOpenAd!.dispose();
-        log('failed to show app open ad: $error');
-      },
-    ),
-  );
+  if (isActive) {
+    AppOpenAd.load(
+      adUnitId: AdHelper.appOpensAdUnitId,
+      request: const AdRequest(),
+      adLoadCallback: AppOpenAdLoadCallback(
+        onAdLoaded: (ad) {
+          _appOpenAd = ad;
+          _appOpenAd!.show();
+        },
+        onAdFailedToLoad: (error) {
+          _appOpenAd!.dispose();
+          log('failed to show app open ad: $error');
+        },
+      ),
+    );
+  }
 }
