@@ -11,46 +11,51 @@ part 'ad_bloc.freezed.dart';
 
 class AdBloc extends Bloc<AdEvent, AdState> {
   BannerAd? _bannerAd;
+  final bool isActive = false;
   AdBloc() : super(AdState.initial()) {
     InterstitialAd? _interstatialAd;
 
     on<Started>((event, emit) async {
-      BannerAd(
-              size: AdSize.banner,
-              adUnitId: AdHelper.bannerAdUnitId,
-              listener: BannerAdListener(
-                onAdLoaded: (ad) {
-                  _bannerAd = ad as BannerAd;
-                },
-                onAdFailedToLoad: (ad, error) {
-                  log('Failed to load BannerAd: $error');
-                  ad.dispose();
-                },
-              ),
-              request: AdRequest())
-          .load();
-      emit(AdState(ads: _bannerAd));
+      if (isActive) {
+        BannerAd(
+                size: AdSize.banner,
+                adUnitId: AdHelper.bannerAdUnitId,
+                listener: BannerAdListener(
+                  onAdLoaded: (ad) {
+                    _bannerAd = ad as BannerAd;
+                  },
+                  onAdFailedToLoad: (ad, error) {
+                    log('Failed to load BannerAd: $error');
+                    ad.dispose();
+                  },
+                ),
+                request: AdRequest())
+            .load();
+        emit(AdState(ads: _bannerAd));
+      }
     });
     on<_Interstatial>((event, emit) {
-      InterstitialAd.load(
-          adUnitId: AdHelper.interstatialAdUnitId,
-          request: AdRequest(),
-          adLoadCallback: InterstitialAdLoadCallback(
-            onAdLoaded: (ad) {
-              ad.fullScreenContentCallback = FullScreenContentCallback(
-                onAdDismissedFullScreenContent: (ad) {},
-                onAdFailedToShowFullScreenContent: (ad, error) {
-                  ad.dispose();
-                },
-              );
-              _interstatialAd = ad;
-            },
-            onAdFailedToLoad: (error) {
-              log('InterstitialAd failed to load: $error');
-            },
-          ));
+      if (isActive) {
+        InterstitialAd.load(
+            adUnitId: AdHelper.interstatialAdUnitId,
+            request: AdRequest(),
+            adLoadCallback: InterstitialAdLoadCallback(
+              onAdLoaded: (ad) {
+                ad.fullScreenContentCallback = FullScreenContentCallback(
+                  onAdDismissedFullScreenContent: (ad) {},
+                  onAdFailedToShowFullScreenContent: (ad, error) {
+                    ad.dispose();
+                  },
+                );
+                _interstatialAd = ad;
+              },
+              onAdFailedToLoad: (error) {
+                log('InterstitialAd failed to load: $error');
+              },
+            ));
 
-      _interstatialAd?.show();
+        _interstatialAd?.show();
+      }
     });
   }
   @override
