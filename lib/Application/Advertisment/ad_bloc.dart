@@ -11,7 +11,7 @@ part 'ad_bloc.freezed.dart';
 
 class AdBloc extends Bloc<AdEvent, AdState> {
   BannerAd? _bannerAd;
-  final bool isActive = false;
+  final bool isActive = true;
   AdBloc() : super(AdState.initial()) {
     InterstitialAd? _interstatialAd;
 
